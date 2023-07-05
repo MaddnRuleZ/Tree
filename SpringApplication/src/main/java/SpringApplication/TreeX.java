@@ -1,4 +1,4 @@
-package SpringApplication;
+package main.java.SpringApplication;
 
 public class TreeX {
     private Root root;

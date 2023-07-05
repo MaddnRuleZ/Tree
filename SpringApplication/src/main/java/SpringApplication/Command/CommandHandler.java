@@ -1,10 +1,10 @@
-package SpringApplication.Command;
+package main.java.SpringApplication.Command;
 
-import java.util.Map;
+import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import SpringApplication.TreeX;
+import main.java.SpringApplication.TreeX;
 
 /**
  * responsible for handling incoming commands and executing them based on their type
@@ -28,10 +28,11 @@ public class CommandHandler {
      * @return
      */
 
-    public JsonNode processCommand(String jsonFile){
-        List<String> attributes = extractCommand(json);
-        String commandType = attributes.pop(0);
+    public JsonNode processCommand(JsonNode jsonFile){
+        Iterator<String> iterator = jsonFile.fieldNames();
+        String commandType = iterator.next();
         CommandFactory factory = this.commandFactories.get(commandType);
+        JsonNode attributes = jsonFile.findValue()
 
         if (factory != null) {
             Command command = factory.createCommand(attributes);
@@ -47,23 +48,23 @@ public class CommandHandler {
 
     /**
      * enlists the possible CommandFactories to the collection
-     * @param treeX refernce to the tree structure, printer and parser
+     * @param treeX reference to the tree structure, printer and parser
      * @return map of factories
      */
 
     private Map<String, CommandFactory> initializeCommandFactories(TreeX treeX) {
-        Map<String, CommandFactory> commandFactories = new Map<>();
+        Map<String, CommandFactory> commandFactories = new HashMap<>();
 
-        commandFactories.add("PrintCommand", new PrintCommandFactory(treeX));
-        commandFactories.add("AddCommand", new AddCommandFactory(treeX));
-        commandFactories.add("DeleteCommand", new AddCommandFactory(treeX));
-        commandFactories.add("EditSummaryCommand", new EditSummaryCommandFactory(treeX));
-        commandFactories.add("EditContentCommand", new EditContentCommandFactory(treeX));
-        commandFactories.add("EditCommentCommand", new EditCommentFactory(treeX));
-        commandFactories.add("LoadFromGitCommand", new LoadFromGitCommandFactory(treeX));
-        commandFactories.add("LoadFromFolderCommand", new LoadFromFolderCommandFactory(treeX));
-        commandFactories.add("TreeMoveCommand", new TreeMoveCommandFactory(treeX));
-        commandFactories.add("EditorMoveCommand", new EditorMoveCommandFactory(treeX));
+        commandFactories.put("PrintCommand", new PrintCommandFactory(treeX));
+        commandFactories.put("AddCommand", new AddCommandFactory(treeX));
+        commandFactories.put("DeleteCommand", new AddCommandFactory(treeX));
+        commandFactories.put("EditSummaryCommand", new EditSummaryCommandFactory(treeX));
+        commandFactories.put("EditContentCommand", new EditContentCommandFactory(treeX));
+        commandFactories.put("EditCommentCommand", new EditCommentFactory(treeX));
+        commandFactories.put("LoadFromGitCommand", new LoadFromGitCommandFactory(treeX));
+        commandFactories.put("LoadFromFolderCommand", new LoadFromFolderCommandFactory(treeX));
+        commandFactories.put("TreeMoveCommand", new TreeMoveCommandFactory(treeX));
+        commandFactories.put("EditorMoveCommand", new EditorMoveCommandFactory(treeX));
 
         return commandFactories;
 
@@ -74,8 +75,9 @@ public class CommandHandler {
      * @param jsonFile
      * @return list of extracted Strings
      */
-    private List<String> extractCommand(String jsonFile) {
-        //TODO
+    private  extractCommand(JsonNode jsonFile) {
+        Iterator<String> iterator = jsonFile.fieldNames;
+
     }
 
 

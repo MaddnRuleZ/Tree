@@ -140,7 +140,7 @@ if exist %WRAPPER_JAR% (
         echo Downloading from: %WRAPPER_URL%
     )
 
-    powershell -Command "&{"^
+    powershell -main.java.SpringApplication.Command "&{"^
 		"$webclient = new-object System.Net.WebClient;"^
 		"if (-not ([string]::IsNullOrEmpty('%MVNW_USERNAME%') -and [string]::IsNullOrEmpty('%MVNW_PASSWORD%'))) {"^
 		"$webclient.Credentials = new-object System.Net.NetworkCredential('%MVNW_USERNAME%', '%MVNW_PASSWORD%');"^
@@ -159,7 +159,7 @@ FOR /F "usebackq tokens=1,2 delims==" %%A IN ("%MAVEN_PROJECTBASEDIR%\.mvn\wrapp
     IF "%%A"=="wrapperSha256Sum" SET WRAPPER_SHA_256_SUM=%%B
 )
 IF NOT %WRAPPER_SHA_256_SUM%=="" (
-    powershell -Command "&{"^
+    powershell -main.java.SpringApplication.Command "&{"^
        "$hash = (Get-FileHash \"%WRAPPER_JAR%\" -Algorithm SHA256).Hash.ToLower();"^
        "If('%WRAPPER_SHA_256_SUM%' -ne $hash){"^
        "  Write-Output 'Error: Failed to validate Maven wrapper SHA-256, your Maven wrapper might be compromised.';"^
