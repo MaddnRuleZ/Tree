@@ -64,6 +64,7 @@ public class CommandHandler {
         Map<String, CommandFactory> commandFactories = new HashMap<>();
 
         commandFactories.put("PrintCommand", new PrintCommandFactory(treeX));
+        /*
         commandFactories.put("AddCommand", new AddCommandFactory(treeX));
         commandFactories.put("DeleteCommand", new AddCommandFactory(treeX));
         commandFactories.put("EditSummaryCommand", new EditSummaryCommandFactory(treeX));
@@ -73,6 +74,8 @@ public class CommandHandler {
         commandFactories.put("LoadFromFolderCommand", new LoadFromFolderCommandFactory(treeX));
         commandFactories.put("TreeMoveCommand", new TreeMoveCommandFactory(treeX));
         commandFactories.put("EditorMoveCommand", new EditorMoveCommandFactory(treeX));
+
+         */
 
         return commandFactories;
 
