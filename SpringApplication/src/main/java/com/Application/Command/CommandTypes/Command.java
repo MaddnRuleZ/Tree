@@ -1,8 +1,14 @@
 package main.java.com.Application.Command.CommandTypes;
 
 public abstract class Command {
-    private Root root;
+    /**
+     * root of tree structure
+     */
+    //private Root root;
 
+    /**
+     * executes the command
+     */
     public abstract void execute();
 
 }
