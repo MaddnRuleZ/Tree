@@ -1,4 +1,4 @@
-package SpringApplication.Command.CommandTypes;
+package main.java.com.Application.Command.CommandTypes;
 
 public abstract class Command {
     private Root root;

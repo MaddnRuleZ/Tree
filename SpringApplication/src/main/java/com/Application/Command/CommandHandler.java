@@ -1,10 +1,11 @@
-package main.java.SpringApplication.Command;
-
-import java.util.*;
+package main.java.com.Application.Command;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import main.java.com.Application.TreeX;
 
-import main.java.SpringApplication.TreeX;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * responsible for handling incoming commands and executing them based on their type
@@ -29,12 +30,17 @@ public class CommandHandler {
      */
 
     public JsonNode processCommand(JsonNode jsonFile){
+
+        if (jsonFile.isEmpty()) {
+            //TODO
+        }
+
         Iterator<String> iterator = jsonFile.fieldNames();
         String commandType = iterator.next();
         CommandFactory factory = this.commandFactories.get(commandType);
-        JsonNode attributes = jsonFile.findValue()
 
         if (factory != null) {
+            JsonNode attributes = jsonFile.findValue(commandType);
             Command command = factory.createCommand(attributes);
             command.execute();
         } else {
@@ -70,15 +76,6 @@ public class CommandHandler {
 
     }
 
-    /**
-     * generates a list of String out of an jsonString
-     * @param jsonFile
-     * @return list of extracted Strings
-     */
-    private  extractCommand(JsonNode jsonFile) {
-        Iterator<String> iterator = jsonFile.fieldNames;
-
-    }
 
 
 }

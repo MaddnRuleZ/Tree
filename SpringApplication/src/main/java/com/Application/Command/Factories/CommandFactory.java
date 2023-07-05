@@ -1,4 +1,4 @@
-package SpringApplication.Command.Factories;
+package main.java.com.Application.Command.Factories;
 
 public interface CommandFactory {
     
