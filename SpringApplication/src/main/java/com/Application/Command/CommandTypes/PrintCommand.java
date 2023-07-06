@@ -6,12 +6,18 @@ package com.Application.Command.CommandTypes;
  * that have been made in the tree structure
  */
 public class PrintCommand extends Command {
-    // private Root root;
+    // private final Root root;
     // private ExportPrinter printer;
 
 
     @Override
-    public void execute() {
+    public String execute() {
         //TODO
+        return null;
+    }
+
+    @Override
+    public String generateResponse() {
+        return null;
     }
 }

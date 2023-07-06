@@ -73,15 +73,15 @@ public class CommandHandler {
 
         commandFactories.put("PrintCommand", new PrintCommandFactory(treeX));
         /*
-        commandFactories.put("AddCommand", new AddCommandFactory(treeX));
-        commandFactories.put("DeleteCommand", new AddCommandFactory(treeX));
-        commandFactories.put("EditSummaryCommand", new EditSummaryCommandFactory(treeX));
-        commandFactories.put("EditContentCommand", new EditContentCommandFactory(treeX));
-        commandFactories.put("EditCommentCommand", new EditCommentFactory(treeX));
-        commandFactories.put("LoadFromGitCommand", new LoadFromGitCommandFactory(treeX));
-        commandFactories.put("LoadFromFolderCommand", new LoadFromFolderCommandFactory(treeX));
-        commandFactories.put("TreeMoveCommand", new TreeMoveCommandFactory(treeX));
-        commandFactories.put("EditorMoveCommand", new EditorMoveCommandFactory(treeX));
+        commandFactories.put("AddElement", new AddCommandFactory(treeX));
+        commandFactories.put("DeleteElement", new AddCommandFactory(treeX));
+        commandFactories.put("EditSummary", new EditSummaryCommandFactory(treeX));
+        commandFactories.put("EditContent", new EditContentCommandFactory(treeX));
+        commandFactories.put("EditComment", new EditCommentFactory(treeX));
+        commandFactories.put("LoadFromGit", new LoadFromGitCommandFactory(treeX));
+        commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(treeX));
+        commandFactories.put("TreeMove", new TreeMoveCommandFactory(treeX));
+        commandFactories.put("EditorMove", new EditorMoveCommandFactory(treeX));
          */
 
         return commandFactories;

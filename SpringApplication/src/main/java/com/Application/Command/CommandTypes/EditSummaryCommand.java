@@ -4,12 +4,10 @@ import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 
 import java.util.UUID;
 
-public class AddCommand extends Command implements IEditorResponse {
-    //private final Root root;
-    private UUID parent;
-    private UUID previousElement;
-    private String content;
-
+public class EditSummaryCommand extends Command implements IEditorResponse {
+    //private Root root;
+    private UUID element;
+    private UUID summary;
 
     @Override
     public String execute() {

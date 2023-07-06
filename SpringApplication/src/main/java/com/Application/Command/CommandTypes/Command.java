@@ -9,6 +9,12 @@ public abstract class Command {
     /**
      * executes the command
      */
-    public abstract void execute();
+    public abstract String execute();
+
+    /**
+     * generates the Json response String
+     * @return response
+     */
+    public abstract String generateResponse();
 
 }

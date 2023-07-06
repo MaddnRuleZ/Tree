@@ -4,12 +4,9 @@ import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 
 import java.util.UUID;
 
-public class AddCommand extends Command implements IEditorResponse {
-    //private final Root root;
-    private UUID parent;
-    private UUID previousElement;
-    private String content;
-
+public class DeleteElementCommand extends Command implements IEditorResponse {
+    private UUID element;
+    private boolean cascading;
 
     @Override
     public String execute() {
