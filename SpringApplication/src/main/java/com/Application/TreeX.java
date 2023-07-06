@@ -1,9 +1,12 @@
 package com.Application;
 
+import org.springframework.stereotype.Component;
+
 /**
  * holds the tree structure and classes responsible for translating
  * the structure in different formats
  */
+@Component
 public class TreeX {
 
     /**

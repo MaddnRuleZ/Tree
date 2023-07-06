@@ -3,11 +3,10 @@ package com.Application.Command;
 import com.Application.Command.CommandTypes.Command;
 import com.Application.Command.Factories.CommandFactory;
 import com.Application.Command.Factories.PrintCommandFactory;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.Application.Exceptions.NumParamsException;
 import com.Application.Exceptions.UnrecognizedCommandException;
 import com.Application.TreeX;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,7 +15,6 @@ import java.util.Map;
 /**
  * responsible for handling incoming commands and executing them based on their type
  */
-@Component
 public class CommandHandler {
 
     /**
@@ -24,7 +22,8 @@ public class CommandHandler {
      */
     private final Map<String, CommandFactory> commandFactories;
 
-    public CommandHandler(TreeX treeX){
+    public CommandHandler(){
+        TreeX treeX = new TreeX();
         this.commandFactories = initializeCommandFactories(treeX);
     }
 
