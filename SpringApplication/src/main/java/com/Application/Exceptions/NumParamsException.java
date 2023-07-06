@@ -1,4 +1,4 @@
-package main.java.com.Application.Exceptions;
+package com.Application.Exceptions;
 
 /**
  * thrown, if the received JsonFile contains more than one command

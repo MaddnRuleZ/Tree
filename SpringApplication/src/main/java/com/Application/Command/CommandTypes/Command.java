@@ -1,4 +1,4 @@
-package main.java.com.Application.Command.CommandTypes;
+package com.Application.Command.CommandTypes;
 
 public abstract class Command {
     /**

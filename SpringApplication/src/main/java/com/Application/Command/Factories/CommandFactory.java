@@ -1,6 +1,6 @@
-package main.java.com.Application.Command.Factories;
+package com.Application.Command.Factories;
 
-import main.java.com.Application.Command.CommandTypes.Command;
+import com.Application.Command.CommandTypes.Command;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public interface CommandFactory {

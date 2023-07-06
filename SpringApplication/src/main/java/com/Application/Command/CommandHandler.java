@@ -1,12 +1,13 @@
-package main.java.com.Application.Command;
+package com.Application.Command;
 
+import com.Application.Command.CommandTypes.Command;
+import com.Application.Command.Factories.CommandFactory;
+import com.Application.Command.Factories.PrintCommandFactory;
 import com.fasterxml.jackson.databind.JsonNode;
-import main.java.com.Application.Exceptions.NumParamsException;
-import main.java.com.Application.Exceptions.UnrecognizedCommandException;
-import main.java.com.Application.TreeX;
-import main.java.com.Application.Command.Factories.*;
-import main.java.com.Application.Command.CommandTypes.Command;
-import org.springframework.context.annotation.Bean;
+import com.Application.Exceptions.NumParamsException;
+import com.Application.Exceptions.UnrecognizedCommandException;
+import com.Application.TreeX;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import java.util.Map;
 /**
  * responsible for handling incoming commands and executing them based on their type
  */
+@Component
 public class CommandHandler {
 
     /**
@@ -37,7 +39,7 @@ public class CommandHandler {
     public JsonNode processCommand(JsonNode jsonFile) throws UnrecognizedCommandException, NumParamsException {
 
         if (jsonFile.isEmpty()) {
-            //TODO Fehlerbehandlung
+            throw new NumParamsException("No content");
         }
 
         Iterator<String> iterator = jsonFile.fieldNames();

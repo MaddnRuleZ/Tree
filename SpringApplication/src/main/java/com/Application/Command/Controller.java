@@ -1,8 +1,8 @@
-package main.java.com.Application.Command;
+package com.Application.Command;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import main.java.com.Application.Exceptions.NumParamsException;
-import main.java.com.Application.Exceptions.UnrecognizedCommandException;
+import com.Application.Exceptions.NumParamsException;
+import com.Application.Exceptions.UnrecognizedCommandException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

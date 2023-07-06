@@ -1,11 +1,11 @@
-package main.java.com.Application.Command.Factories;
+package com.Application.Command.Factories;
 
+import com.Application.Command.CommandTypes.AddCommand;
+import com.Application.Command.CommandTypes.Command;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import main.java.com.Application.Command.CommandTypes.AddCommand;
-import main.java.com.Application.Command.CommandTypes.Command;
-import main.java.com.Application.TreeX;
+import com.Application.TreeX;
 
 public class AddCommandFactory implements CommandFactory {
     //private Root root;

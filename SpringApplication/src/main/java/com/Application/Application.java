@@ -1,6 +1,6 @@
-package main.java.com.Application;
+package com.Application;
 
-import main.java.com.Application.Command.CommandHandler;
+import com.Application.Command.CommandHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

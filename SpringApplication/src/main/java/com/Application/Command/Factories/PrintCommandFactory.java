@@ -1,10 +1,9 @@
-package main.java.com.Application.Command.Factories;
+package com.Application.Command.Factories;
 
+import com.Application.Command.CommandTypes.PrintCommand;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import main.java.com.Application.Command.CommandTypes.Command;
-import main.java.com.Application.Command.CommandTypes.PrintCommand;
-import main.java.com.Application.TreeX;
+import com.Application.TreeX;
+import com.Application.Command.CommandTypes.Command;
 
 public class PrintCommandFactory implements CommandFactory {
     //private Printer printer;
