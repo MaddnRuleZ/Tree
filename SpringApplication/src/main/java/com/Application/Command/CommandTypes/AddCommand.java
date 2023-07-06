@@ -5,10 +5,10 @@ import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import java.util.UUID;
 
 public class AddCommand extends Command implements IEditorResponse {
-    //private final Root root;
-    private UUID parent;
-    private UUID previousElement;
+    //private Root root;
     private String content;
+    private UUID parent;
+    private UUID previousChild;
 
 
     @Override
@@ -20,6 +20,20 @@ public class AddCommand extends Command implements IEditorResponse {
     @Override
     public String generateResponse() {
         //TODO
-        return null;
+        return "";
     }
+
+    public String getContent() {
+        return content;
+    }
+
+    public UUID getParent() {
+        return parent;
+    }
+
+    public UUID getPreviousChild() {
+        return previousChild;
+    }
+
+
 }

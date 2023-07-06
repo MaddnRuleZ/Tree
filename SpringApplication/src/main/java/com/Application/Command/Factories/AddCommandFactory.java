@@ -2,6 +2,7 @@ package com.Application.Command.Factories;
 
 import com.Application.Command.CommandTypes.AddCommand;
 import com.Application.Command.CommandTypes.Command;
+import com.Application.Exceptions.NumParamsException;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,14 +15,18 @@ public class AddCommandFactory implements CommandFactory {
         //this.root = treeX.getRoot();
     }
     @Override
-    @JsonIgnoreProperties(value = {"root"})
-    public Command createCommand(JsonNode attributes) {
+    public Command createCommand(JsonNode attributes) throws NumParamsException {
 
         ObjectMapper mapper = new ObjectMapper();
-        Command command = mapper.convertValue(attributes, AddCommand.class);
+
+        AddCommand command = mapper.convertValue(attributes, AddCommand.class);
+
+        if (command.getContent() == null || command.getParent() == null || command.getPreviousChild() == null ){
+            throw new NumParamsException("Missing Parameter in AddCommand");
+        }
 
         //TODO
-        return null;
+        return command;
     }
 
 }
