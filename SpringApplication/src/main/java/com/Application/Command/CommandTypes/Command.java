@@ -4,7 +4,7 @@ public abstract class Command {
     /**
      * root of tree structure
      */
-    //private Root root;
+    //private final Root root;
 
     /**
      * executes the command

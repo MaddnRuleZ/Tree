@@ -1,7 +1,8 @@
 package main.java.com.Application.Command;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import main.java.com.Application.Exceptions.NumParamsException;
+import main.java.com.Application.Exceptions.UnrecognizedCommandException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,24 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class ApiController {
+public class Controller {
 
     private final CommandHandler commandHandler;
 
     @Autowired
-    public ApiController(CommandHandler commandHandler) {
+    public Controller(CommandHandler commandHandler) {
         this.commandHandler = commandHandler;
     }
 
-    @PostMapping("/process")
-    public ResponseEntity<String> processRequest(@RequestBody JsonNode json) {
-        commandHandler.processJson(json);
-
-        //TODO: createResponse
+    @PostMapping("/")
+    public ResponseEntity<JsonNode> processRequest(@RequestBody JsonNode json) {
+        try {
+            JsonNode response = commandHandler.processCommand(json);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (UnrecognizedCommandException | NumParamsException e) {
+            JsonNode errorResponse = null; //TODO write ErrorResponse
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
-    private JsonNode createResponseJson() {
-        // TODO
-        return null;
-    }
 }

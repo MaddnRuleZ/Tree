@@ -1,9 +1,12 @@
 package main.java.com.Application.Command;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import main.java.com.Application.Exceptions.NumParamsException;
+import main.java.com.Application.Exceptions.UnrecognizedCommandException;
 import main.java.com.Application.TreeX;
 import main.java.com.Application.Command.Factories.*;
 import main.java.com.Application.Command.CommandTypes.Command;
+import org.springframework.context.annotation.Bean;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,7 +20,7 @@ public class CommandHandler {
     /**
      * contains a collection of command factories that are used to create specific types of commands
      */
-    private Map<String, CommandFactory> commandFactories;
+    private final Map<String, CommandFactory> commandFactories;
 
     public CommandHandler(TreeX treeX){
         this.commandFactories = initializeCommandFactories(treeX);
@@ -27,29 +30,33 @@ public class CommandHandler {
      * recognizes the command type specified in the Json file, extracts
      * the given attributes, and creates the corresponding command
      * using the appropriate command factory, then executes the command
-     * @param jsonFile
-     * @return
+     * @param jsonFile contains command that has to be processed
+     * @return jsonFile of tree structure, if it was possible to execute command
      */
 
-    public JsonNode processCommand(JsonNode jsonFile){
+    public JsonNode processCommand(JsonNode jsonFile) throws UnrecognizedCommandException, NumParamsException {
 
         if (jsonFile.isEmpty()) {
-            //TODO
+            //TODO Fehlerbehandlung
         }
 
         Iterator<String> iterator = jsonFile.fieldNames();
         String commandType = iterator.next();
+        if (iterator.hasNext()) {
+            throw new NumParamsException("Too many arguments");
+        }
         CommandFactory factory = this.commandFactories.get(commandType);
 
         if (factory != null) {
             JsonNode attributes = jsonFile.findValue(commandType);
             Command command = factory.createCommand(attributes);
-            command.execute();
+            //command.execute();
         } else {
-            //TODO Fehlerbehandlung CommandType nicht erkannt
+            throw new UnrecognizedCommandException(commandType);
         }
 
         //TODO Response
+
         return null;
     }
 
@@ -74,13 +81,10 @@ public class CommandHandler {
         commandFactories.put("LoadFromFolderCommand", new LoadFromFolderCommandFactory(treeX));
         commandFactories.put("TreeMoveCommand", new TreeMoveCommandFactory(treeX));
         commandFactories.put("EditorMoveCommand", new EditorMoveCommandFactory(treeX));
-
          */
 
         return commandFactories;
 
     }
-
-
 
 }
