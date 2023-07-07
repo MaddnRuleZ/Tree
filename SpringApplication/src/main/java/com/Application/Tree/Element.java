@@ -116,7 +116,6 @@ public abstract class Element implements JsonParser {
      */
     // mini Parser For Comments, Summaries and NewLines, okay by now resorted to c,s,p. Max: nC, 1S nP
     public void generateTextFromIndices(String[] text, int endIndex) {
-        //elementContainers = new ArrayList<>();
 
         if (endIndex != 0) {
             options = extractOptionsString(text[this.startIndex]);
