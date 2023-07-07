@@ -1,4 +1,4 @@
-package Tree.additionalInfo;
+package main.java.com.Application.Tree.additionalInfo;
 
 
 /**
