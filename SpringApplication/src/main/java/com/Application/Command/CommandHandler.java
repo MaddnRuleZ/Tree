@@ -4,7 +4,7 @@ import com.Application.Command.CommandTypes.Command;
 import com.Application.Command.Factories.*;
 import com.Application.Exceptions.NumParamsException;
 import com.Application.Exceptions.UnrecognizedCommandException;
-import com.Application.TreeX;
+import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.HashMap;
@@ -22,8 +22,8 @@ public class CommandHandler {
     private final Map<String, CommandFactory> commandFactories;
 
     public CommandHandler(){
-        TreeX treeX = new TreeX();
-        this.commandFactories = initializeCommandFactories(treeX);
+        User user = new User();
+        this.commandFactories = initializeCommandFactories(user);
     }
 
     /**
@@ -61,24 +61,23 @@ public class CommandHandler {
 
     /**
      * enlists the possible CommandFactories to the collection
-     * @param treeX reference to the tree structure, printer and parser
+     * @param user reference to the tree structure, printer and parser
      * @return map of factories
      */
 
-    private Map<String, CommandFactory> initializeCommandFactories(TreeX treeX) {
+    private Map<String, CommandFactory> initializeCommandFactories(User user) {
         Map<String, CommandFactory> commandFactories = new HashMap<>();
 
-        commandFactories.put("PrintCommand", new PrintCommandFactory(treeX));
-        commandFactories.put("AddElement", new AddCommandFactory(treeX));
-        /*
-        commandFactories.put("DeleteElement", new AddCommandFactory(treeX));
-        commandFactories.put("EditSummary", new EditSummaryCommandFactory(treeX));
-        commandFactories.put("EditContent", new EditContentCommandFactory(treeX));
-        commandFactories.put("EditComment", new EditCommentFactory(treeX));
-        commandFactories.put("LoadFromGit", new LoadFromGitCommandFactory(treeX));
-        commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(treeX));
-        commandFactories.put("TreeMove", new TreeMoveCommandFactory(treeX));
-        commandFactories.put("EditorMove", new EditorMoveCommandFactory(treeX));
+        commandFactories.put("PrintCommand", new PrintCommandFactory(user));
+        commandFactories.put("AddElement", new AddCommandFactory(user));
+        commandFactories.put("DeleteElement", new DeleteCommandFactory(user));
+       commandFactories.put("EditSummary", new EditSummaryCommandFactory(user));
+        commandFactories.put("EditContent", new EditContentCommandFactory(user));
+        commandFactories.put("EditComment", new EditCommentCommandFactory(user));
+         /*commandFactories.put("LoadFromGit", new LoadFromGitCommandFactory(user));
+        commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(user));
+        commandFactories.put("TreeMove", new TreeMoveCommandFactory(user));
+        commandFactories.put("EditorMove", new EditorMoveCommandFactory(user));
          */
 
         return commandFactories;

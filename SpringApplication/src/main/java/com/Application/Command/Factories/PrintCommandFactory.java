@@ -1,25 +1,30 @@
 package com.Application.Command.Factories;
 
-import com.Application.Command.CommandTypes.PrintCommand;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.Application.TreeX;
+import com.Application.Command.CommandTypes.AddCommand;
 import com.Application.Command.CommandTypes.Command;
+import com.Application.Command.CommandTypes.PrintCommand;
+import com.Application.Exceptions.NumParamsException;
+import com.Application.Printer.Printer;
+import com.Application.Tree.elements.Root;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.Application.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PrintCommandFactory implements CommandFactory {
-    //private Printer printer;
-    //private Root root;
+    private final Printer printer;
+    private final Root root;
 
-    public PrintCommandFactory(TreeX treeX) {
-        //this.root = treeX.getRoot();
-        //this.printer = treeX.getExportPrinter();
+    public PrintCommandFactory(User user) {
+        this.root = user.getRoot();
+        this.printer = user.getPrinter();
     }
 
     @Override
     public Command createCommand(JsonNode attributes) {
         PrintCommand command = new PrintCommand();
+        command.setPrinter(this.printer);
+        command.setRoot(this.root);
 
-
-        //TODO
         return command;
     }
 }

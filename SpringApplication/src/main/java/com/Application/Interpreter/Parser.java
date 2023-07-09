@@ -1,4 +1,4 @@
-package interpreter;
+package com.Application.Interpreter;
 
 import Tree.Element;
 import Tree.elements.parents.Paragraph;

@@ -1,11 +1,6 @@
 package com.Application.Command.CommandTypes;
 
-public abstract class Command {
-    /**
-     * root of tree structure
-     */
-    //private final Root root;
-
+public interface Command {
     /**
      * executes the command
      */

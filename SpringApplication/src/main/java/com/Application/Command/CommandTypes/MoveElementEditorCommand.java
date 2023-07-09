@@ -2,11 +2,12 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
+import com.Application.Tree.elements.Root;
 
 import java.util.UUID;
 
-public class MoveElementEditorCommand extends Command implements IMoveElementCommand, IEditorResponse {
-    // private Root root;
+public class MoveElementEditorCommand implements Command, IMoveElementCommand, IEditorResponse {
+    private Root root;
     private String type;
     private UUID parent;
     private UUID previousElement;

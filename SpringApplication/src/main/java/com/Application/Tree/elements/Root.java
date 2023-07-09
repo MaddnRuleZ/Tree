@@ -1,4 +1,4 @@
-package main.java.com.Application.Tree.elements;
+package com.Application.Tree.elements;
 
 public class Root extends Parent {
 
@@ -8,4 +8,15 @@ public class Root extends Parent {
     public Root() {
         super(startPart, endPart, 0);
     }
+
+
+
+    // Singleton-Pattern !!!!
+    public static Root getInstance() {
+        if(this.instance == null) {
+            this.instance = new Root();
+        }
+        return this.instance;
+    }
+
 }
