@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITreeResponse {
     private Root root;
-    private String type;
-    private UUID parent;
+    private UUID element;
+    private UUID newParent;
     private UUID previousElement;
 
 
@@ -28,5 +28,25 @@ public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITr
     @Override
     public boolean moveElement() {
         return IMoveElementCommand.super.moveElement();
+    }
+
+    public Root getRoot() {
+        return root;
+    }
+
+    public UUID getNewParent() {
+        return newParent;
+    }
+
+    public UUID getElement() {
+        return element;
+    }
+
+    public UUID getPreviousElement() {
+        return previousElement;
+    }
+
+    public void setRoot(Root root) {
+        this.root = root;
     }
 }

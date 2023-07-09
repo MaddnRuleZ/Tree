@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 public interface CommandFactory {
 
     /**
-     * creates a coomand from a JSONNOde, sets the attributes of command
+     * creates a command from a JsonNode, sets the attributes of command
      * @param attributes
      * @return created command
      * @throws NumParamsException

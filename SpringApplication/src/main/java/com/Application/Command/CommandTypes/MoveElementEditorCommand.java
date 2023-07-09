@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public class MoveElementEditorCommand implements Command, IMoveElementCommand, IEditorResponse {
     private Root root;
-    private String type;
-    private UUID parent;
+    private UUID element;
+    private UUID newParent;
     private UUID previousElement;
 
     @Override
@@ -27,5 +27,25 @@ public class MoveElementEditorCommand implements Command, IMoveElementCommand, I
     @Override
     public boolean moveElement() {
         return IMoveElementCommand.super.moveElement();
+    }
+
+    public Root getRoot() {
+        return root;
+    }
+
+    public UUID getElement() {
+        return element;
+    }
+
+    public UUID getNewParent() {
+        return newParent;
+    }
+
+    public UUID getPreviousElement() {
+        return previousElement;
+    }
+
+    public void setRoot(Root root) {
+        this.root = root;
     }
 }

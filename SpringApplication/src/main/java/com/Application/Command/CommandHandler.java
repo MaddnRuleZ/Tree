@@ -47,15 +47,11 @@ public class CommandHandler {
         if (factory != null) {
             JsonNode attributes = jsonFile.findValue(commandType);
             Command command = factory.createCommand(attributes);
-            //command.execute();
+            command.execute();
             return command.generateResponse();
         } else {
             throw new UnrecognizedCommandException(commandType);
         }
-
-        //TODO Response
-
-
     }
 
 
@@ -75,10 +71,10 @@ public class CommandHandler {
         commandFactories.put("EditContent", new EditContentCommandFactory(user));
         commandFactories.put("EditComment", new EditCommentCommandFactory(user));
          /*commandFactories.put("LoadFromGit", new LoadFromGitCommandFactory(user));
-        commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(user));
-        commandFactories.put("TreeMove", new TreeMoveCommandFactory(user));
-        commandFactories.put("EditorMove", new EditorMoveCommandFactory(user));
-         */
+        commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(user));*/
+        commandFactories.put("MoveElementTree", new MoveElementTreeCommandFactory(user));
+        commandFactories.put("MoveElementEditor", new MoveElementEditorCommandFactory(user));
+
 
         return commandFactories;
 
