@@ -9,10 +9,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class PrintCommandFactory implements CommandFactory {
     private final Printer printer;
-    private final Root root;
 
     public PrintCommandFactory(User user) {
-        this.root = user.getRoot();
         this.printer = user.getPrinter();
     }
 
@@ -20,7 +18,6 @@ public class PrintCommandFactory implements CommandFactory {
     public Command createCommand(JsonNode attributes) {
         PrintCommand command = new PrintCommand();
         command.setPrinter(this.printer);
-        command.setRoot(this.root);
 
         return command;
     }

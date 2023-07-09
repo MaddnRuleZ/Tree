@@ -9,7 +9,6 @@ import com.Application.Tree.elements.Root;
  * that have been made in the tree structure
  */
 public class PrintCommand implements Command {
-    private Root root;
     private Printer printer;
 
 
@@ -22,14 +21,6 @@ public class PrintCommand implements Command {
     @Override
     public String generateResponse() {
         return null;
-    }
-
-    public Root getRoot() {
-        return root;
-    }
-
-    public void setRoot(Root root) {
-        this.root = root;
     }
 
     public Printer getPrinter() {

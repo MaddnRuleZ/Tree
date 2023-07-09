@@ -4,9 +4,6 @@ import com.Application.Interpreter.Parser;
 import com.Application.Printer.Printer;
 import com.Application.Tree.elements.Root;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -18,7 +15,7 @@ public class User {
     /**
      * starting point of the tree structure
      */
-    private Root root;
+    private final Root root;
     /**
      * tree structure to LaTeX-Code printer
      */
@@ -31,7 +28,7 @@ public class User {
     /**
      * ReadWriteLock on the treeStructure, always locks whole tree
      */
-    private ReentrantReadWriteLock structureLock = new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock structureLock = new ReentrantReadWriteLock();
 
     public User() {
         this.root = Root.getInstance();
