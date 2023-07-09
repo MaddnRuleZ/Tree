@@ -1,9 +1,11 @@
-package Tree.elements;
+package main.java.com.Application.Tree.elements;
 
-import Tree.Element;
+
+import main.java.com.Application.Tree.Element;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Parent extends Element {
     private final List<Element> childElements;

@@ -1,4 +1,4 @@
-package Tree.elements;
+package main.java.com.Application.Tree.elements;
 
 import Tree.Element;
 
@@ -8,6 +8,8 @@ import Tree.Element;
 public class Child extends Element {
 
     /**
+     *
+     *
      *
      * @param startPart
      * @param endPart
