@@ -17,22 +17,28 @@ public class FilePrinter extends Printer {
         this.root = root;
     }
 
-    public boolean exportToFile(Root root) {
-        try {
-            String text = toLaTeX(this.root);
-            File tempFile = createTempFile();
-            Files.writeString(tempFile.toPath(), text);
-            Files.move(tempFile.toPath(), currentFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            // TODO Fehlerbehandlung
-            return false;
-        }
+    public boolean export() throws IOException {
+        String text = toLaTeX(this.root);
+        File tempFile = createTempFile();
+        Files.writeString(tempFile.toPath(), text);
+        Files.move(tempFile.toPath(), currentFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
         return true;
     }
 
     public File createTempFile() {
         String tempPath = this.currentFile.getParent();
-        return new File(tempPath + File.pathSeparator + "tempFile" );
+        return new File(tempPath, generateRandomName());
+    }
+
+    /**
+     * generates a random name for the temp file
+     * @return
+     */
+    public String generateRandomName() {
+        String ext = "tex";
+        // TODO
+        return null;
     }
 
 

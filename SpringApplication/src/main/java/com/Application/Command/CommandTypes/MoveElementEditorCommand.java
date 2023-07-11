@@ -14,15 +14,14 @@ public class MoveElementEditorCommand implements Command, IMoveElementCommand, I
     private UUID previousElement;
 
     @Override
-    public String execute() {
+    public boolean execute() {
         //TODO
-        return null;
+        return false;
     }
 
     @Override
     public String generateResponse() {
-        //TODO
-        return null;
+        return IEditorResponse.super.generateResponse();
     }
 
     @Override

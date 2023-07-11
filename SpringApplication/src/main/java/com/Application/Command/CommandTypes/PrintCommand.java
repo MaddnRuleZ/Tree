@@ -3,7 +3,8 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Printer.Printer;
-import com.Application.Tree.elements.Root;
+
+import java.io.IOException;
 
 /**
  * responsible for overwriting the LaTeX file with changes
@@ -14,13 +15,21 @@ public class PrintCommand implements Command, ILocks {
 
 
     @Override
-    public String execute() {
-        //TODO
-        return null;
+    public boolean execute() {
+        try {
+            acquireStructureReadLock();
+            printer.export();
+        } catch (IOException e) {
+            releaseStructureReadLock();
+            return false;
+        }
+        releaseStructureReadLock();
+        return true;
     }
 
-    @Override
+
     public String generateResponse() {
+        //TODO
         return null;
     }
 

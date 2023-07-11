@@ -12,15 +12,14 @@ public class EditCommentCommand implements Command, IEditorResponse, ILocks {
     private UUID comment;
 
     @Override
-    public String execute() {
+    public boolean execute() {
         //TODO
-        return null;
+        return false;
     }
 
     @Override
     public String generateResponse() {
-        //TODO
-        return null;
+        return IEditorResponse.super.generateResponse();
     }
 
     public Root getRoot() {

@@ -12,17 +12,17 @@ public class EditSummaryCommand implements Command, IEditorResponse, ILocks {
     private UUID summary;
 
     @Override
-    public String execute() {
+    public boolean execute() {
         //TODO
-        return null;
+        return false;
     }
 
 
     @Override
     public String generateResponse() {
-        //TODO
-        return null;
+        return IEditorResponse.super.generateResponse();
     }
+
     public void setRoot(Root root) {
         this.root = root;
     }

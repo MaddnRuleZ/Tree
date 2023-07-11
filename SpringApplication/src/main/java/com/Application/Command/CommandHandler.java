@@ -31,7 +31,7 @@ public class CommandHandler {
      * the given attributes, and creates the corresponding command
      * using the appropriate command factory, then executes the command
      * @param jsonFile contains command that has to be processed
-     * @return jsonFile of tree structure, if it was possible to execute command
+     * @return jsonString of tree structure, if it was possible to execute command
      */
 
     public String processCommand(JsonNode jsonFile) throws UnrecognizedCommandException, NumParamsException {
@@ -47,7 +47,9 @@ public class CommandHandler {
         if (factory != null) {
             JsonNode attributes = jsonFile.findValue(commandType);
             Command command = factory.createCommand(attributes);
-            command.execute();
+            if(!command.execute()) {
+                return command.generateFailureResponse();
+            }
             return command.generateResponse();
         } else {
             throw new UnrecognizedCommandException(commandType);
@@ -70,8 +72,8 @@ public class CommandHandler {
        commandFactories.put("EditSummary", new EditSummaryCommandFactory(user));
         commandFactories.put("EditContent", new EditContentCommandFactory(user));
         commandFactories.put("EditComment", new EditCommentCommandFactory(user));
-         /*commandFactories.put("LoadFromGit", new LoadFromGitCommandFactory(user));
-        commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(user));*/
+         commandFactories.put("LoadFromGit", new LoadFromGitCommandFactory(user));
+        commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(user));
         commandFactories.put("MoveElementTree", new MoveElementTreeCommandFactory(user));
         commandFactories.put("MoveElementEditor", new MoveElementEditorCommandFactory(user));
 

@@ -10,15 +10,14 @@ public class LoadFromFolderCommand implements Command, IEditorResponse, ILocks {
     private String path;
 
     @Override
-    public String execute() {
-        //TODO Parsing
-        FilePrinter printer = new FilePrinter(path, user.getRoot());
-        return null;
+    public boolean execute() {
+        //TODO
+        return false;
     }
 
     @Override
     public String generateResponse() {
-        return null;
+        return IEditorResponse.super.generateResponse();
     }
 
     public User getUser() {

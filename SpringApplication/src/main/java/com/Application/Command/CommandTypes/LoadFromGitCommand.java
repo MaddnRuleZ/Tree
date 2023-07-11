@@ -11,13 +11,14 @@ public class LoadFromGitCommand implements Command, IEditorResponse, ILocks {
    private String password;
 
     @Override
-    public String execute() {
-        return null;
+    public boolean execute() {
+        //TODO
+        return false;
     }
 
     @Override
     public String generateResponse() {
-        return null;
+        return IEditorResponse.super.generateResponse();
     }
 
     public User getUser() {

@@ -12,15 +12,14 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
     private boolean cascading;
 
     @Override
-    public String execute() {
+    public boolean execute() {
         //TODO
-        return null;
+        return false;
     }
 
     @Override
     public String generateResponse() {
-        //TODO
-        return null;
+        return IEditorResponse.super.generateResponse();
     }
 
     public UUID getElement() {

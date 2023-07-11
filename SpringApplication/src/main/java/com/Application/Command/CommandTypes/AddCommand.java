@@ -16,16 +16,12 @@ public class AddCommand implements Command, IEditorResponse, ILocks {
 
 
     @Override
-    public String execute() {
+    public boolean execute() {
         //TODO
-        return null;
+        return false;
     }
 
-    @Override
-    public String generateResponse() {
-        //TODO
-        return "";
-    }
+
 
     public String getContent() {
         return content;
@@ -44,5 +40,10 @@ public class AddCommand implements Command, IEditorResponse, ILocks {
 
     public void setRoot(Root root) {
         this.root = root;
+    }
+
+    @Override
+    public String generateResponse() {
+        return IEditorResponse.super.generateResponse();
     }
 }
