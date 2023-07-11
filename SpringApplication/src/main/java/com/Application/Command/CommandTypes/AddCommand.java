@@ -16,9 +16,23 @@ public class AddCommand implements Command, IEditorResponse, ILocks {
 
 
     @Override
-    public boolean execute() {
+    public String execute() {
         //TODO
-        return false;
+        return generateResponse();
+    }
+
+    @Override
+    public String generateResponse() {
+        String response;
+        try {
+            acquireStructureReadLock();
+            response = IEditorResponse.super.generateResponse();
+            releaseStructureReadLock();
+        } catch (Exception e) {
+            releaseStructureReadLock();
+            response = "Error: " + e.getMessage();
+        }
+        return response;
     }
 
 
@@ -42,8 +56,5 @@ public class AddCommand implements Command, IEditorResponse, ILocks {
         this.root = root;
     }
 
-    @Override
-    public String generateResponse() {
-        return IEditorResponse.super.generateResponse();
-    }
+
 }

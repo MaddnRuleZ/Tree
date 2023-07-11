@@ -14,7 +14,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * tests recognizing and parsing of incoming jsonFiles to the CommandHandler
+ * tests unrecognizable Commands
  */
 public class CommandHandlerJUnitTest {
     CommandHandler commandHandler;

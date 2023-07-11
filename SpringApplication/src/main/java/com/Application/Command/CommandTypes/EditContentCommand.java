@@ -12,9 +12,9 @@ public class EditContentCommand implements Command, IEditorResponse, ILocks {
     private UUID content;
 
     @Override
-    public boolean execute() {
+    public String execute() {
         //TODO
-        return false;
+        return generateResponse();
     }
 
     @Override

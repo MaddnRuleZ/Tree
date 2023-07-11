@@ -12,9 +12,9 @@ public class EditCommentCommand implements Command, IEditorResponse, ILocks {
     private UUID comment;
 
     @Override
-    public boolean execute() {
+    public String execute() {
         //TODO
-        return false;
+        return generateResponse();
     }
 
     @Override

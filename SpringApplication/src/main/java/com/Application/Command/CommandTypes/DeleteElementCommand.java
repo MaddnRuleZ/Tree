@@ -12,9 +12,9 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
     private boolean cascading;
 
     @Override
-    public boolean execute() {
+    public String execute() {
         //TODO
-        return false;
+        return null;
     }
 
     @Override

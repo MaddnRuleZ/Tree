@@ -1,9 +1,11 @@
 package SpringApplication;
 
 import com.Application.Application;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
@@ -23,6 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         classes = Application.class)
 @AutoConfigureMockMvc
 public class ControllerTest {
+
+    @Before
+    public void setUp() {
+        SpringApplication.run(Application.class, null);
+    }
 
     @Autowired
     private MockMvc mvc;

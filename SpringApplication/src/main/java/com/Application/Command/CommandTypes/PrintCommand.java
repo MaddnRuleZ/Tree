@@ -15,16 +15,16 @@ public class PrintCommand implements Command, ILocks {
 
 
     @Override
-    public boolean execute() {
+    public String execute() {
         try {
             acquireStructureReadLock();
             printer.export();
         } catch (IOException e) {
             releaseStructureReadLock();
-            return false;
+            return "Error: " + e.getMessage();
         }
         releaseStructureReadLock();
-        return true;
+        return generateResponse();
     }
 
 

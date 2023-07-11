@@ -11,9 +11,9 @@ public class LoadFromGitCommand implements Command, IEditorResponse, ILocks {
    private String password;
 
     @Override
-    public boolean execute() {
+    public String execute() {
         //TODO
-        return false;
+        return generateResponse();
     }
 
     @Override

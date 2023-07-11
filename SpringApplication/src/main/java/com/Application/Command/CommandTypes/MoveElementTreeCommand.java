@@ -1,6 +1,5 @@
 package com.Application.Command.CommandTypes;
 
-import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
@@ -16,9 +15,9 @@ public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITr
 
 
     @Override
-    public boolean execute() {
+    public String execute() {
         //TODO
-        return false;
+        return generateResponse();
     }
 
     @Override

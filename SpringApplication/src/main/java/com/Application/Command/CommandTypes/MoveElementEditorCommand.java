@@ -14,9 +14,9 @@ public class MoveElementEditorCommand implements Command, IMoveElementCommand, I
     private UUID previousElement;
 
     @Override
-    public boolean execute() {
+    public String execute() {
         //TODO
-        return false;
+        return generateResponse();
     }
 
     @Override

@@ -12,9 +12,9 @@ public class EditSummaryCommand implements Command, IEditorResponse, ILocks {
     private UUID summary;
 
     @Override
-    public boolean execute() {
+    public String execute() {
         //TODO
-        return false;
+        return generateResponse();
     }
 
 

@@ -1,14 +1,10 @@
 package com.Application.Command.CommandTypes;
 
-import com.Application.Command.CommandTypes.Interfaces.ILocks;
-
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 public interface Command {
     /**
      * executes the command
      */
-    boolean execute();
+    String execute();
 
 
     /**

@@ -47,13 +47,12 @@ public class CommandHandler {
         if (factory != null) {
             JsonNode attributes = jsonFile.findValue(commandType);
             Command command = factory.createCommand(attributes);
-            if(!command.execute()) {
-                return command.generateFailureResponse();
-            }
-            return command.generateResponse();
+            String response = command.execute();
+            return response;
         } else {
             throw new UnrecognizedCommandException(commandType);
         }
+
     }
 
 
@@ -66,13 +65,13 @@ public class CommandHandler {
     private Map<String, CommandFactory> initializeCommandFactories(User user) {
         Map<String, CommandFactory> commandFactories = new HashMap<>();
 
-        commandFactories.put("PrintCommand", new PrintCommandFactory(user));
+        //commandFactories.put("PrintCommand", new PrintCommandFactory(user));
         commandFactories.put("AddElement", new AddCommandFactory(user));
         commandFactories.put("DeleteElement", new DeleteCommandFactory(user));
-       commandFactories.put("EditSummary", new EditSummaryCommandFactory(user));
+        commandFactories.put("EditSummary", new EditSummaryCommandFactory(user));
         commandFactories.put("EditContent", new EditContentCommandFactory(user));
         commandFactories.put("EditComment", new EditCommentCommandFactory(user));
-         commandFactories.put("LoadFromGit", new LoadFromGitCommandFactory(user));
+        commandFactories.put("LoadFromGit", new LoadFromGitCommandFactory(user));
         commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(user));
         commandFactories.put("MoveElementTree", new MoveElementTreeCommandFactory(user));
         commandFactories.put("MoveElementEditor", new MoveElementEditorCommandFactory(user));

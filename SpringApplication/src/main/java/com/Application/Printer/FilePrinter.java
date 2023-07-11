@@ -1,11 +1,9 @@
 package com.Application.Printer;
 
-import com.Application.Printer.Printer;
 import com.Application.Tree.elements.Root;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 public class FilePrinter extends Printer {
