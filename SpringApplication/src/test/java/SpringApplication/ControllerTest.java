@@ -29,7 +29,7 @@ public class ControllerTest {
 
     @Test
     public void testPostEndpoint() throws Exception {
-        String jsonContent = loadJsonFile("JsonFiles/AddElementJson.json");
+        String jsonContent = loadJsonFile("JsonFiles/CorrectCommands/AddElement.json");
 
         mvc.perform(post("/api/process")
                         .contentType(MediaType.APPLICATION_JSON)

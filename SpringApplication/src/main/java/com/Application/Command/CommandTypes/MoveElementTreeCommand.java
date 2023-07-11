@@ -1,12 +1,13 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
 import com.Application.Tree.elements.Root;
 
 import java.util.UUID;
 
-public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITreeResponse {
+public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITreeResponse, ILocks {
     private Root root;
     private UUID element;
     private UUID newParent;

@@ -25,10 +25,7 @@ public class User {
      */
     private Parser parser;
 
-    /**
-     * ReadWriteLock on the treeStructure, always locks whole tree
-     */
-    private final ReentrantReadWriteLock structureLock = new ReentrantReadWriteLock();
+
 
     public User() {
         this.root = Root.getInstance();
@@ -54,7 +51,4 @@ public class User {
         return parser;
     }
 
-    public ReentrantReadWriteLock getLock() {
-        return structureLock;
-    }
 }

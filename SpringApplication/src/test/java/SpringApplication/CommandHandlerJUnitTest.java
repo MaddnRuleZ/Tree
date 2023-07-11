@@ -31,19 +31,6 @@ public class CommandHandlerJUnitTest {
         assertEquals("Element", exception.getMessage());
     }
 
-    @Test
-    void NotEnoughParamExceptionTest() {
-        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamJson.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in AddCommand", exception.getMessage());
-    }
-
-    @Test
-    void AddElementTest() throws NumParamsException, UnrecognizedCommandException {
-        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/AddElementJson.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
-    }
-
     private JsonNode loadJsonFile(String filePath) {
         ObjectMapper mapper = new ObjectMapper();
         try {

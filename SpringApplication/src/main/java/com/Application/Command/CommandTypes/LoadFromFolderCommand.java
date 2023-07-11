@@ -1,10 +1,11 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
+import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Printer.FilePrinter;
 import com.Application.User;
 
-public class LoadFromFolderCommand implements Command, IEditorResponse {
+public class LoadFromFolderCommand implements Command, IEditorResponse, ILocks {
     private User user;
     private String path;
 

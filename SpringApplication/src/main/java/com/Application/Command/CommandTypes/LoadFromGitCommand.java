@@ -1,9 +1,10 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
+import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.User;
 
-public class LoadFromGitCommand implements Command, IEditorResponse {
+public class LoadFromGitCommand implements Command, IEditorResponse, ILocks {
    private User user;
    private String url;
    private String username;
