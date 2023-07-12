@@ -21,7 +21,7 @@ public class AddCommandFactory implements CommandFactory {
         AddCommand command = mapper.convertValue(attributes, AddCommand.class);
 
         if (command.getContent() == null || command.getParent() == null || command.getPreviousChild() == null ){
-            throw new NumParamsException("Missing Parameter in AddCommand");
+            throw new NumParamsException("AddElement");
         }
 
         command.setRoot(this.root);

@@ -21,7 +21,7 @@ public class EditSummaryCommandFactory implements CommandFactory{
         EditSummaryCommand command = mapper.convertValue(attributes, EditSummaryCommand.class);
 
         if (command.getElement() == null || command.getSummary() == null){
-            throw new NumParamsException("Missing Parameter in EditSummaryCommand");
+            throw new NumParamsException("EditSummary");
         }
 
         command.setRoot(this.root);

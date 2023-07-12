@@ -21,7 +21,7 @@ public class EditCommentCommandFactory implements CommandFactory {
         EditCommentCommand command = mapper.convertValue(attributes, EditCommentCommand.class);
 
         if (command.getElement() == null || command.getComment() == null){
-            throw new NumParamsException("Missing Parameter in EditCommentCommand");
+            throw new NumParamsException("EditComment");
         }
 
         command.setRoot(this.root);

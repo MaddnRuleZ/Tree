@@ -20,7 +20,7 @@ public class MoveElementTreeCommandFactory implements CommandFactory {
         MoveElementTreeCommand command = mapper.convertValue(attributes, MoveElementTreeCommand.class);
 
         if (command.getElement() == null || command.getNewParent() == null || command.getPreviousElement() == null ){
-            throw new NumParamsException("Missing Parameter in MoveElementTreeCommand");
+            throw new NumParamsException("MoveElementTree");
         }
 
         command.setRoot(this.root);

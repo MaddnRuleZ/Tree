@@ -5,7 +5,6 @@ import com.Application.Tree.elements.sectioning.*;
 import com.Application.Tree.elements.environments.Algorithm;
 import com.Application.Tree.elements.environments.Equation;
 import com.Application.Tree.elements.environments.Figure;
-import com.Application.Tree.elements.parents.sectioning.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;

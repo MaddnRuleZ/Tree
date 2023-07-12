@@ -19,7 +19,7 @@ public class LoadFromGitCommandFactory implements CommandFactory {
         LoadFromGitCommand command = mapper.convertValue(attributes, LoadFromGitCommand.class);
 
         if (command.getUrl() == null || command.getUsername() == null || command.getPassword() == null ){
-            throw new NumParamsException("Missing Parameter in LoadFromGitCommand");
+            throw new NumParamsException("LoadFromGit");
         }
 
         command.setUser(this.user);

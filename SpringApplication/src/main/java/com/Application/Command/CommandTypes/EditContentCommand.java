@@ -9,7 +9,7 @@ import java.util.UUID;
 public class EditContentCommand implements Command, IEditorResponse, ILocks {
     private Root root;
     private UUID element;
-    private UUID content;
+    private String content;
 
     @Override
     public String execute() {
@@ -30,7 +30,7 @@ public class EditContentCommand implements Command, IEditorResponse, ILocks {
         return element;
     }
 
-    public UUID getContent() {
+    public String getContent() {
         return content;
     }
 

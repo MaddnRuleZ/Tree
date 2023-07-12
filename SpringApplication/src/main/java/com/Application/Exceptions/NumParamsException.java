@@ -5,7 +5,7 @@ package com.Application.Exceptions;
  */
 public class NumParamsException extends Exception {
 
-    public NumParamsException(String errorMessage) {
-        super(errorMessage);
+    public NumParamsException(String commandName) {
+        super("Missing Parameter in " + commandName);
     }
 }

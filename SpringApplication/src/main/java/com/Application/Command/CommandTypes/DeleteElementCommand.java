@@ -14,7 +14,7 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
     @Override
     public String execute() {
         //TODO
-        return null;
+        return generateResponse();
     }
 
     @Override

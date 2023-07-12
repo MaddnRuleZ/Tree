@@ -63,8 +63,14 @@ public class CorrectCommandTest {
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
     @Test
-    void MoveElementTest() throws NumParamsException, UnrecognizedCommandException {
-        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/MoveElement.json");
+    void MoveElementTreeTest() throws NumParamsException, UnrecognizedCommandException {
+        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/MoveElementTree.json");
+        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+    }
+
+    @Test
+    void MoveElementEditorTest() throws NumParamsException, UnrecognizedCommandException {
+        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/MoveElementEditor.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
 

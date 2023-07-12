@@ -20,7 +20,7 @@ public class MoveElementEditorCommandFactory implements CommandFactory {
         MoveElementEditorCommand command = mapper.convertValue(attributes, MoveElementEditorCommand.class);
 
         if (command.getElement() == null || command.getNewParent() == null || command.getPreviousElement() == null ){
-            throw new NumParamsException("Missing Parameter in MoveElementEditorCommand");
+            throw new NumParamsException("MoveElementEditor");
         }
 
         command.setRoot(this.root);

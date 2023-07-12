@@ -20,8 +20,10 @@ public class DeleteCommandFactory implements CommandFactory {
         ObjectMapper mapper = new ObjectMapper();
         DeleteElementCommand command = mapper.convertValue(attributes, DeleteElementCommand.class);
 
+        // throws only an Exception if the element is null, not if cascading missing in jsonFile
+        // default value of cascading is false
         if (command.getElement() == null){
-            throw new NumParamsException("Missing Parameter in DeleteCommand");
+            throw new NumParamsException("DeleteElement");
         }
 
         command.setRoot(this.root);

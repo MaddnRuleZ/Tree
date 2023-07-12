@@ -9,7 +9,7 @@ import java.util.UUID;
 public class EditSummaryCommand implements Command, IEditorResponse, ILocks {
     private Root root;
     private UUID element;
-    private UUID summary;
+    private String summary;
 
     @Override
     public String execute() {
@@ -35,7 +35,7 @@ public class EditSummaryCommand implements Command, IEditorResponse, ILocks {
         return element;
     }
 
-    public UUID getSummary() {
+    public String getSummary() {
         return summary;
     }
 }

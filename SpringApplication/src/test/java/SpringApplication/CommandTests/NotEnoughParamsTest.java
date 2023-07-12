@@ -70,10 +70,17 @@ public class NotEnoughParamsTest {
         assertEquals("Missing Parameter in LoadFromGit", exception.getMessage());
     }
     @Test
-    void MoveElementTest() {
-        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/MoveElement.json");
+    void MoveElementEditorTest() {
+        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/MoveElementEditor.json");
         Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in MoveElement", exception.getMessage());
+        assertEquals("Missing Parameter in MoveElementEditor", exception.getMessage());
+    }
+
+    @Test
+    void MoveElementTreeTest() {
+        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/MoveElementTree.json");
+        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
+        assertEquals("Missing Parameter in MoveElementTree", exception.getMessage());
     }
 
     private JsonNode loadJsonFile(String filePath) {

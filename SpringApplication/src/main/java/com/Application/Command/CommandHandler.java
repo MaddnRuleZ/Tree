@@ -38,7 +38,7 @@ public class CommandHandler {
     public String processCommand(JsonNode jsonFile) throws UnrecognizedCommandException, NumParamsException {
 
         if (jsonFile.isEmpty()) {
-            throw new NumParamsException("No content");
+            throw new NumParamsException("jsonFile");
         }
 
         Iterator<String> iterator = jsonFile.fieldNames();

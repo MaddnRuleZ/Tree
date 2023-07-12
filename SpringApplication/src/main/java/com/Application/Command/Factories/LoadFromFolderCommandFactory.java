@@ -19,7 +19,7 @@ public class LoadFromFolderCommandFactory implements CommandFactory {
         LoadFromFolderCommand command = mapper.convertValue(attributes, LoadFromFolderCommand.class);
 
         if (command.getPath() == null){
-            throw new NumParamsException("Missing Parameter in LoadFromFolderCommand");
+            throw new NumParamsException("LoadFromFolder");
         }
 
         command.setUser(this.user);
