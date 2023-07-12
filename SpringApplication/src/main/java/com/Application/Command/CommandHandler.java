@@ -6,6 +6,7 @@ import com.Application.Exceptions.NumParamsException;
 import com.Application.Exceptions.UnrecognizedCommandException;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * responsible for handling incoming commands and executing them based on their type
  */
+@Component
 public class CommandHandler {
 
     /**
@@ -21,8 +23,7 @@ public class CommandHandler {
      */
     private final Map<String, CommandFactory> commandFactories;
 
-    public CommandHandler(){
-        User user = new User();
+    public CommandHandler(User user){
         this.commandFactories = initializeCommandFactories(user);
     }
 
