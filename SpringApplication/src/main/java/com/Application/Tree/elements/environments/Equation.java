@@ -1,7 +1,6 @@
-package main.java.com.Application.Tree.elements.parents.environments;
+package com.Application.Tree.elements.environments;
 
-import Tree.elements.Child;
-import Tree.elements.Environment;
+import com.Application.Tree.elements.Environment;
 
 public class Equation extends Environment {
 

@@ -1,13 +1,15 @@
-package main.java.com.Application.Tree.additionalInfo;
+package com.Application.Tree.additionalInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class Comment extends AdditionalInformationContainer {
     private final static String START_CHARACTER = "%";
-    private List<String> comments;
     public Comment() {
-
+        super();
     }
 
     /**
@@ -16,21 +18,20 @@ public class Comment extends AdditionalInformationContainer {
      * @param remainText
      * @return
      */
-    public List<String> extractComments(List<String> remainText) {
+    public List<String> extractInfo(List<String> remainText) {
         ArrayList<String> remainingText = new ArrayList<>();
-        this.comments = new ArrayList<>();
+        this.content = new ArrayList<>();
 
         for (String line: remainText) {
+            // better def than only contains?
             if (line.contains(START_CHARACTER)) {
-                this.comments.add(line);
+                this.content.add(line);
             } else {
                 remainingText.add(line);
             }
         }
+        setNullContent();
         return remainingText;
     }
-
-    public List<String> getComments() {
-        return this.comments;
-    }
 }
+

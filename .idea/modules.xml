@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Tree.iml" filepath="$PROJECT_DIR$/.idea/Tree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpringApplication/SpringApplication.iml" filepath="$PROJECT_DIR$/SpringApplication/SpringApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tree.iml" filepath="$PROJECT_DIR$/Tree.iml" />
     </modules>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package main.java.com.Application.Tree.interfaces;
+package com.Application.Tree.interfaces;
 
 public interface JsonParser {
 

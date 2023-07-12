@@ -1,4 +1,5 @@
-package interpreter;
+package com.Application.Interpreter;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,6 +17,12 @@ public class TextFileReader {
     }
 
 
+    /**
+     * read the File from the given FilePath and return the Text
+     * Line by Line as String Array
+     *
+     * @return textFile as Array
+     */
     public String[] readLinesFromFile() {
         List<String> lines = new ArrayList<>();
 
@@ -31,6 +38,13 @@ public class TextFileReader {
         return lines.toArray(new String[0]);
     }
 
+    /**
+     *
+     * @param inputArray
+     * @param startIndex
+     * @param endIndex
+     * @return
+     */
     public static String[] extractStrings(String[] inputArray, int startIndex, int endIndex) {
         if (startIndex < 0 || endIndex >= inputArray.length || startIndex > endIndex) {
             // Invalid indices, return an empty array or throw an exception

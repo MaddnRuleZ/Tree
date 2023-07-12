@@ -2,9 +2,8 @@ package com.Application;
 
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.Printer;
-import com.Application.Tree.elements.Root;
+import com.Application.Tree.elements.parents.sectioning.Root;
 import org.springframework.stereotype.Component;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * holds the tree structure and classes responsible for translating
@@ -15,7 +14,7 @@ public class User {
     /**
      * starting point of the tree structure
      */
-    private final Root root;
+    private Root root;
     /**
      * tree structure to LaTeX-Code printer
      */
@@ -25,10 +24,8 @@ public class User {
      */
     private Parser parser;
 
-
-
     public User() {
-        this.root = Root.getInstance();
+        //this.root = Root.getInstance(); read Root
     }
 
     public void setPrinter(Printer Printer) {

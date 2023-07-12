@@ -1,26 +1,28 @@
-package main.java.com.Application.Tree.additionalInfo;
+package com.Application.Tree.additionalInfo;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewLine extends AdditionalInformationContainer{
-
-    // catch too?
-    private final static String EMPTYLINE = "";
     private final static String NEW_LN_CHARACTER = "\\newline";
     private final static String NEW_LN_CHARACTER1 = "\\\\";
-    private List<List<String>> textParts = new ArrayList<>();
+    // more nl characters?
 
-    private final List<String> lines;
-
+    protected List<List<String>> content;
 
     public NewLine() {
-        lines = new ArrayList<>();
+        content = new ArrayList<>();
     }
 
-    public void extractTextParts(List<String> remainText) {
+    /**
+     *
+     * @param remainText
+     * @return
+     */
+    public List<String> extractInfo(List<String> remainText) {
         List<List<String>> parts = new ArrayList<>();
-        ArrayList<String> currentPart = new ArrayList<>();
+        List<String> currentPart = new ArrayList<>();
 
         for (String line: remainText) {
             if (line.contains(NEW_LN_CHARACTER) || line.contains(NEW_LN_CHARACTER1)) {
@@ -29,10 +31,20 @@ public class NewLine extends AdditionalInformationContainer{
             }
             currentPart.add(line);
         }
-        textParts = parts;
+        parts.add(currentPart);
+        content = parts;
+        //setNullContent();
+        return null;
     }
 
-    public List<List<String>> getLines() {
-        return textParts;
+    public List<List<String>> getTextParts() {
+        return this.content;
+    }
+
+    @Override
+    protected void setNullContent() {
+        if (content != null && content.size() == 0) {
+            content = null;
+        }
     }
 }

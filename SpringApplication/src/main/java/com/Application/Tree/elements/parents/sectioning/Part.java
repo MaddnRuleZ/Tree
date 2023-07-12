@@ -1,6 +1,7 @@
-package main.java.com.Application.Tree.elements.parents.sectioning;
+package com.Application.Tree.elements.parents.sectioning;
 
-import Tree.elements.Parent;
+import com.Application.Tree.elements.Parent;
+
 
 public class Part extends Parent {
 

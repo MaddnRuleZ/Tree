@@ -1,41 +1,38 @@
 package com.Application.Interpreter;
 
-import Tree.Element;
-import Tree.elements.parents.Paragraph;
-import Tree.elements.parents.Section;
+
+import com.Application.Tree.Element;
+import com.Application.Tree.elements.parents.sectioning.Root;
 
 /**
- *
+ * Class for Parsing a single Latex Document,
+ * input statement in this Doc will trigger recursive ex function
  *
  */
 public class Parser {
-    // this defines the level of each Element
-
     private Scanner scanner;
     private TextFileReader textFileReader;
     private String filePath;
     private String[] text;
 
-
+    /**
+     *
+     * @param filePath
+     */
     public Parser(String filePath) {
+        Element.createLevelMap();
         this.filePath = filePath;
         this.textFileReader = new TextFileReader(filePath);
 
     }
 
-
-    // ret root
-    public Element startParsing() {
+    public Root startParsing() {
         if (!textFileReader.validateFile()) {
             // Err state
             return null;
         }
         this.text = textFileReader.readLinesFromFile();
         this.scanner = new Scanner(text);
-
-        scanner.parseDocument();
-        scanner.debugThatShit();
-        return null;
-        //         return scanner.parseDocument();
+        return scanner.parseDocument();
     }
 }

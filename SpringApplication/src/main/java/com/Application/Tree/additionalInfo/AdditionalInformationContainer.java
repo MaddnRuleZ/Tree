@@ -1,17 +1,32 @@
-package main.java.com.Application.Tree.additionalInfo;
+package com.Application.Tree.additionalInfo;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * for extracting Text stuff
+ * for extracting Text stuff -> interface?
  *
  */
-public class AdditionalInformationContainer {
-
-    private String[] text;
-
+public abstract class AdditionalInformationContainer {
+    protected List<String> content;
     public AdditionalInformationContainer() {
-
+        content = new ArrayList<>();
     }
 
+    public abstract List<String> extractInfo(List<String> remainingText);
+
+    /**
+     * set content null on empty list
+     */
+    protected void setNullContent() {
+        if (content != null && content.size() == 0) {
+            content = null;
+        }
+    }
+
+    public List<String> getContent() {
+        return this.content;
+    }
 
 }

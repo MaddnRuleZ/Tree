@@ -1,22 +1,29 @@
-package main.java.com.Application.Interpreter;
+package com.Application.Interpreter;
 
-import main.java.com.Application.Tree.Element;
-import main.java.com.Application.Tree.elements.Parent;
-import main.java.com.Application.Tree.elements.Root;
-import main.java.com.Application.Tree.elements.parents.environments.Algorithm;
-import main.java.com.Application.Tree.elements.parents.environments.Equation;
-import main.java.com.Application.Tree.elements.parents.environments.Figure;
-import main.java.com.Application.Tree.elements.parents.sectioning.*;
+import com.Application.Tree.Element;
+import com.Application.Tree.elements.Parent;
+import com.Application.Tree.elements.parents.sectioning.Root;
+import com.Application.Tree.elements.environments.Algorithm;
+import com.Application.Tree.elements.environments.Equation;
+import com.Application.Tree.elements.environments.Figure;
+import com.Application.Tree.elements.parents.sectioning.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ */
 public class Scanner {
     private final Map<String, Class<?>> startPartsMap;
     private final String[] text;
-    private final Parent root;
+    private final Root root;
 
+    /**
+     *
+     * @param text
+     */
     public Scanner(String[] text) {
         startPartsMap = createPartsMap();
         root = new Root();
@@ -24,11 +31,37 @@ public class Scanner {
     }
 
     // return root of parsed Doc or Teil Doc, eigentlicher algo teil
-    public Element parseDocument() {
+
+    /**
+     * scan the given Document for Latex Structure Elements and return the root Element for this Part of the Tree
+     *
+     * @return root Element of Tree
+     */
+    public Root parseDocument() {
+        boolean firstElementFound = false;
         Element currElement = null;
+
         for (int i = 0; i < text.length; i++) {
             if (text[i].contains("\\")) {
-                currElement = scanLine(currElement, i);
+                try {
+                    currElement = scanLine(currElement, i);
+
+                    if (currElement != null && !firstElementFound) {
+                        firstElementFound = true;
+                        root.addStartText(TextFileReader.extractStrings(text, 0, i - 1));
+                    }
+                } catch(Exception e) {
+                    // fatal Err in Elem generation
+                    System.out.println("### Error in line " + i + ": " + e.getMessage());
+                    e.printStackTrace();
+                }
+            } else if(text[i].contains("\\end{document}")) {
+                break;
+            }
+
+            if (i == 218) {
+                System.out.println("### debugging Index reached, debugging purpose only");
+
             }
         }
 
@@ -37,11 +70,11 @@ public class Scanner {
             currElement.generateTextFromIndices(text, text.length - 1);
         }
 
-        return null;
+        return root;
     }
 
     /**
-     * Note:
+     * Note: (Outdated doc)
      * Elemente sind in hierachie angeordent, in einer Halbordung, also
      * part, chapter .... subparagraph
      * basierend darauf werden Elemente als Kind oder an den Parent angehangen um die verschiedenen Ebenen (level) zu navigieren
@@ -65,53 +98,83 @@ public class Scanner {
             return currentElement;
 
         } else {
+
             Element element = createNewElement(this.text[index], index);
-
             if (element != null) {
-                // null Level
+
                 if (currentElement == null) {
-                    root.addChild(element);
-                    element.setParent(root);
+                    // root Level
+                    setParentChild(root, element);
 
-                    // lower level
                 } else if (element.getLevel() > currentElement.getLevel()) {
-                    currentElement.generateTextFromIndices(text, index);
-                    setParentChild(currentElement, element);
+                    lowerLevel(currentElement, index, element);
 
-                    // eq lvl
                 } else if (element.getLevel() == currentElement.getLevel()) {
-                    currentElement.generateTextFromIndices(text, index);
-                    Element parent = currentElement.getParentElement();
+                    sameLevel(currentElement, index, element);
 
-                    if (parent == null) {
-                        root.addChild(element);
-
-                    } else {
-                        setParentChild(parent, element);
-                    }
-
-
-                    // higher lvl, search for next best spot
                 } else {
-                    // prev subsection
-                    Element searchElem = currentElement;
-
-                    while (searchElem != null && searchElem.getLevel() > element.getLevel()) {
-                        searchElem.generateTextFromIndices(text, index);
-                        searchElem = searchElem.getParentElement();
-                    }
-
-                    if (searchElem == null) {
-                        root.addChild(element);
-                    } else {
-                        Element parent = searchElem.getParentElement();
-                        setParentChild(parent, element);
-                    }
+                    higherLevel(currentElement, index, element);
                 }
                 return element;
             } else {
                 return currentElement;
             }
+        }
+    }
+
+    /**
+     *
+     * @param currentElement
+     * @param index
+     * @param element
+     */
+    private void lowerLevel(Element currentElement, int index, Element element) {
+        currentElement.generateTextFromIndices(text, index);
+        setParentChild(currentElement, element);
+    }
+
+    /**
+     *
+     * @param currentElement
+     * @param index
+     * @param element
+     */
+    private void sameLevel(Element currentElement, int index, Element element) {
+        currentElement.generateTextFromIndices(text, index);
+        Element parent = currentElement.getParentElement();
+
+        if (parent == null) {
+            root.addChild(element);
+        } else {
+            setParentChild(parent, element);
+        }
+    }
+
+    /**
+     * higher lvl, navigate tree struct up,
+     * search for next best spot
+     *
+     * @param currentElement
+     * @param index
+     * @param element
+     */
+    private void higherLevel(Element currentElement, int index, Element element) {
+        // prev subsection
+        Element searchElem = currentElement;
+
+        // ERR
+        while (searchElem != null && searchElem.getLevel() >= element.getLevel()) {
+            searchElem.generateTextFromIndices(text, index);
+            searchElem = searchElem.getParentElement();
+        }
+
+        if (searchElem == null) {
+            root.addChild(element);
+        } else if (searchElem.getLevel() == element.getLevel()) {
+            Element parent = searchElem.getParentElement();
+            setParentChild(parent, element);
+        } else {
+            setParentChild(searchElem, element);
         }
     }
 
@@ -139,7 +202,6 @@ public class Scanner {
         return partsMap;
     }
 
-
     /**
      * Create an new Element based on the startPart map
      *
@@ -148,7 +210,6 @@ public class Scanner {
      * @return
      */
     private Element createNewElement(String currentLine, int index) {
-        // Iterate over the map entries and check if currentLine contains a start part
         for (Map.Entry<String, Class<?>> entry : this.startPartsMap.entrySet()) {
             String startPart = entry.getKey();
             Class<?> clazz = entry.getValue();
@@ -166,9 +227,21 @@ public class Scanner {
         return null;
     }
 
+    /**
+     * set the double linked Connection between two Elements
+     * set the Parent as Parent for the Child,
+     * set the Child as Child for the Parent,
+     *
+     * @param parent Parent Element
+     * @param child Child Element
+     */
+    private void setParentChild(Element parent, Element child) {
+        child.setParent(parent);
+        parent.addChild(child);
+    }
 
+    // dont delete yet, for edges
     // Create a map to associate start parts with their corresponding classes
-
     /*
     // for labels usw in the following Context . . . .
 
@@ -186,55 +259,10 @@ public class Scanner {
      */
 
 
-        /*
+    /*
      else if (searchElem.getParentElement() == null) {
         setParentChild(searchElem, element);
         //?
     }
      */
-
-
-
-    /**
-     * set the double linked Connection between two Elements
-     * set the Parent as Parent for the Child,
-     * set the Child as Child for the Parent,
-     *
-     * @param parent Parent Element
-     * @param child Child Element
-     */
-    private void setParentChild(Element parent, Element child) {
-        child.setParent(parent);
-        parent.addChild(child);
-    }
-
-    /// Debug only, shitty code ik . . .
-    public void debugThatShit() {
-        for (Element element: root.getChildElements()) {
-            System.out.println(spacing(0) + element.getStartPart());
-            printText(element);
-            System.out.println(element.getLevel());
-        }
-    }
-
-    private void printText(Element element) {
-        String[] list = element.getText();
-        if (list == null) {
-            System.out.println("Error, element" + element.getId());
-            return;
-        }
-        for (String line: list) {
-            System.out.println(line);
-        }
-    }
-
-
-    private String spacing(int multipl) {
-        String str = "";
-        for (int i = 0; i < multipl; i++) {
-            str += "    ";
-        }
-        return str;
-    }
-
 }
