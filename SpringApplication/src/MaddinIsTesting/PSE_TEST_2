@@ -1,0 +1,848 @@
+\begin{document}
+%-------------------Deckblatt und Inhaltsverzeichnis-------------------------------------------
+    \maketitle
+    \thispagestyle{empty} % keine Seitennummerierung
+    \newpage
+
+    \setcounter{tocdepth}{2}
+    \tableofcontents % Inhaltsverzeichnis
+    \thispagestyle{empty} % keine Seitennummerierung
+    \newpage
+%-----------------------------------------------------------------------------------------
+\section{Frontend}
+    \subsection{Klassen}
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Frontend/Klassendiagramme/FullClassDiagram.png}
+            \caption{Klassendiagramm der Frontend-Klassen}
+            \label{CommandHandler}
+        \end{figure}
+    Dead ZONE resolved
+    Die Angular-Anwendung empfängt Daten vom einem Backend in Form eines JSON-Objekts, das eine Baumdatenstruktur darstellt. Dieses JSON-Objekt besteht aus Elementen, die LaTeX-Dokumentelementen entsprechen.
+    Die Anwendung definiert geeignete Klassen in Angular, um die Elemente der Baumstruktur darzustellen. Eine Basisklasse für Elemente umfasst gemeinsame Eigenschaften, während spezifische Klassen für Baumknoten und Blattelemente zuständig sind.
+
+    Der BackendService ist dafür zuständig, eine Anfrage an das Backend zu senden, um dieses JSON Objekt in der Response der Request zu bekommen.
+
+    \subsubsection{Backend-Interaktionsdienste}
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Frontend/Klassendiagramme/backendCommunication.png}
+            \caption{Klassendiagramm der Frontend-Klassen}
+            \label{CommandHandler}
+        \end{figure}
+
+        In der Angular-Anwendung ist ein entscheidender Aspekt die Kommunikation mit dem Backend und die Handhabung der von dort empfangenen Daten. Diese Kommunikation wird durch die `BackendService` Klasse verwaltet, welche alle HTTP-Anfragen an das Backend kapselt.
+        Der `BackendService` beinhaltet mehrere Methoden, die jeweils einer spezifischen Anfrage an das Backend entsprechen. So hat es beispielsweise Methoden zum Neuladen von Daten, zum Pushen von Änderungen zu Git, zum Laden der Baumstruktur und zum Bearbeiten von Inhalten, unter anderem. Wichtig ist, dass diese Klasse die verschiedenen Anforderungen an die Datenrepräsentation in verschiedenen Teilen der Anwendung erfüllt. Die Methode `MoveElementTree` generiert beispielsweise einen anderen Antworttyp als `MoveElementEditor`, aufgrund der spezifischen Anforderungen an die Datenstruktur im Editor und in der Baumansicht. Dieser Service ist vielseitig und wird von mehreren Angular-Komponenten verwendet.
+        Mehrere Komponenten in der Anwendung nutzen den `BackendService`. Die `Part` und `TreeViewComponent` verwenden es beispielsweise für Operationen, die mit der Baumstruktur zusammenhängen. Ähnlich nutzt die `ImportComponent` es, um Dokumente aus verschiedenen Quellen, wie einem lokalen Ordner oder einem Git-Repository, in die Anwendung zu importieren.
+        Allerdings verwendet die `ImportComponent` auch einen zusätzlichen Service, den `JsonDataHandler`. Die Hauptaufgabe dieses Services besteht darin, die Baumstruktur aus JSON-Eingabe zu erstellen. Wenn andere Komponenten Daten vom `BackendService` erhalten, nutzen sie den `JsonDataHandler`, um die Antwort in die gewünschte Datenstruktur zu parsen.
+        \newline
+
+        \class{BackendService}{This class encapsulates all HTTP communication with the backend. It contains methods to load, edit and move elements of the data structure, and to import LaTeX documents from a local folder or a Git repository.}
+        \begin{description}
+            \item \attr{baseUrl: string}{The base URL for sending requests to the backend server, powered by Spring Boot.}
+            \item \met{GitPush()}{Pushes changes to a Git repository. The specifics of what changes are pushed is handled by the backend and depends on the application's state.}
+            \item \met{LoadTree(): Array<Object>}{Loads an array of JSON objects, which is used by the front-end tree view to render the LaTeX document as a hierarchical tree structure.}
+            \item \met{MoveElementTree(e: Element, p: Parent, pc: Element): Array<Object>}{Changes the location of an Element in the tree, and then returns the updated tree data structure.}
+            \item \met{MoveElementEditor(e: Element, p: Parent, pc: Element): Object}{Similar to MoveElementTree, but this method returns the data structure needed by the editor.}
+            \item \met{DeleteElement(e: Element, cascading: bool): Object}{Deletes an element from the tree. If cascading is set to false, then all children are deleted aswell. The method returns the updated tree data structure.}
+            \item \met{EditSummary(e: Element, s: string)}{Updates the 'summary' attribute of an Element in the backend data structure.}
+            \item \met{EditComment(e: Element, s: string)}{Updates the 'comment' attribute of an Element in the backend data structure.}
+            \item \met{EditContent(e: Element, s: string)}{Updates the 'content' attribute of an Element in the backend data structure.}
+            \item \met{LoadFromFolder(destination: string): Object}{Fetches LaTeX files from a specified local folder and returns an appropriate response object.}
+            \item \met{LoadFromGit(url: string, user: string, pass: string): Object}{Fetches LaTeX files from a specified Git repository. User and pass are credentials used to access the repository. Returns an appropriate response object.}
+        \end{description}
+        \class{JsonDataHandler}{This class is responsible for generating the tree-like data structure from JSON input. It converts the data received from the BackendService into the application's internal data structure.}
+        \begin{description}
+            \item \attr{jsonData: Object}{The raw JSON data received from the backend, which needs to be converted into the application's internal data structure.}
+            \item \met{generateTree(jsonData: Object): Root}{Generates the tree-like data structure from the given JSON data. The result is an instance of the Root class, which represents the root of the tree data structure.}
+        \end{description}
+        \newpage
+    \subsubsection{Strukturelle Komponenten des Composite-Musters}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=1\textwidth]{Frontend/Klassendiagramme/compositeTree.png}
+        \caption{Klassendiagramm der Frontend-Klassen}
+        \label{CommandHandler}
+    \end{figure}
+
+    Unsere Datenstruktur, die hauptsächlich darauf ausgelegt ist, LaTeX-Dokumente in handhabbare Elemente zu zerlegen, nimmt eine baumähnliche Organisation an, die durch das Composite Design Pattern geleitet wird. Sie besteht hauptsächlich aus zwei Arten von Elementen - Parents und Children, die alle Unterklassen einer abstrakten Klasse namens Element sind.
+
+
+    Jedes Element hat mehrere Attribute: eine id, content, comment, summary und parent. Die 'id' dient als eindeutiger Identifikator für jedes Element. Das Attribut 'content' enthält den LaTeX-Code; bei Child-Elementen könnte es irgendeinen LaTeX-Code sein, der keine Umgebung ist, während bei Parent-Elementen typischerweise der Titel repräsentiert wird (zum Beispiel der Titel des Abschnitts, der Name der Figur oder der Name der Dateieingabe). 'Comment' und 'summary' enthalten zusätzliche kontextuelle Informationen über das Element. Das Attribut 'parent' zeigt auf das Elternelement des Elements im Baum.
+
+
+    Children sind die Blätter des Baums. Diese Elemente sind einfach und enthalten keine anderen Elemente. Andererseits sind Parent-Elemente die Knoten. Sie enthalten eine Liste von Child-Elementen und bilden somit die Äste im Baum. Allerdings sind auch Parents abstrakt, da sie sich weiter in drei unterschiedliche Unterklassen aufteilen: Sectioning, Input und Environment.
+
+
+    'Sectioning' repräsentiert LaTeX's Sectioning-Befehle wie section, subsection, part, chapter usw. 'Input' stellt LaTeX's Dateieingabe dar. 'Environment' bezeichnet jeden LaTeX-Code, der mit '\textbackslash begin' beginnt und mit '\textbackslash end' endet.
+
+
+    Die Klasse Environment hat selbst spezialisierte Unterklassen, wie Equation, Figure und Algorithm, die spezifische LaTeX-Umgebungen darstellen. Diese sind für das Rendering auf dem Frontend zugeschnitten. Sie sind auch so gestaltet, dass sie erweiterbar sind, damit Benutzer bequem weitere Unterklassen hinzufügen können.
+
+
+    Besonders zu erwähnen ist, dass Environment-Elemente zusätzliche Attribute haben: captions und labels, die bei weiterer Kontextualisierung und Identifikation helfen.
+
+
+    Schließlich steht an der Spitze unserer Struktur ein Singleton-Element namens Root. Obwohl es ähnlich wie ein Parent eine Children-Liste hat, handelt es sich um eine eigenständige Klasse und hat zusätzliche Methoden zur Verwaltung der gesamten Datenstruktur.
+
+
+    Diese Datenstruktur ermöglicht eine detaillierte Aufschlüsselung von LaTeX-Dokumenten und stellt eine strukturierte und handhabbare Darstellung für weitere Verarbeitung und Manipulation auf dem Frontend dar.
+    \newline
+
+
+    \class{Root}{This class represents the root of the tree-like data structure for dissecting LaTeX documents. It is a singleton class, which provides access to the entire data structure through its \code{children}-list. It also provides methods for searching elements by ID and for retrieving elements of the same layer.}
+
+    \begin{description}
+        \item \attr{instance: Root}{A private attribute to hold the single instance of the Root class. Ensures that only one Root instance can exist in the application.}
+        \item \attr{children: List<Element>}{A list holding the top-level elements of the data structure. These elements can further branch into additional elements, thereby constructing the tree.}
+        \item \met{Root()}{The constructor of the Root class. It is private to prevent direct instantiation and to ensure the singleton nature of the Root class.}
+        \item \met{createRoot(): Root}{A static method which creates or returns the single instance of the Root class. If the Root instance doesn't exist, it creates a new one; if it does, it returns the existing instance.}
+        \item \met{searchByID(id: String): Element}{A method that traverses the entire tree to find and return an Element that matches the provided ID. If no matching Element is found, it returns null.}
+        \item \met{getElementsOfLayer(e: Element): List<Element>}{A method that returns all elements on the same tree layer as the provided Element. The layer is determined based on the parent-child relationships in the tree.}
+    \end{description}
+
+
+    \class{Element}{This abstract class represents a generic element in the tree-like structure of the LaTeX document breakdown. Every Element has an id, content, comment, summary, and parent. This class also provides a method for changing the parent of an Element.}
+
+    \begin{description}
+        \item \attr{id: UUID}{A unique identifier for each element. This UUID is used for distinguishing different elements within the tree.}
+        \item \attr{content: string}{Contains the LaTeX code of the element. In child elements, it could be any LaTeX code that's not an environment, while in parent elements, it typically represents the title.}
+        \item \attr{comment: string}{Contains additional comments or annotations for the element. This helps in providing further context to the element.}
+        \item \attr{summary: string}{Provides a concise and quick overview or summary of the element's content.}
+        \item \attr{parent: Element}{Points to the parent of the element in the tree. This attribute helps in maintaining the tree structure and relationships between elements.}
+        \item \met{changeParent(newParent: Parent): bool}{This method attempts to change the parent of an Element to a new Parent. It returns true if the parent change is successful, otherwise, it returns false.}
+    \end{description}
+
+
+    \class{Parent}{This abstract class represents a parent element in the tree-like structure of the LaTeX document breakdown. Parent elements contain a list of child elements, forming branches in the tree. It also provides methods to manipulate these child elements and to retrieve the previous sibling of an element.}
+
+    \begin{description}
+        \item \attr{children: List<Element>}{A list of Element objects that are children of this Parent. This attribute allows the Parent to maintain multiple child elements, thereby enabling the tree-like structure.}
+        \item \met{addChild(child: Element): void}{This method allows adding a new child Element to the Parent. The new child is appended to the \code{children}-list of the Parent.}
+        \item \met{removeChild(child: UUID): void}{This method removes a child Element from the Parent. The child to remove is identified by its UUID.}
+        \item \met{getPrevious(e: Element): Element}{This method retrieves the sibling Element that is immediately before the provided Element in the \code{children}-list of the Parent. If there is no previous sibling, it returns null.}
+    \end{description}
+
+
+    \class{Environment}{This class is a specialized subclass of the Parent class, representing a LaTeX Environment. These environments begin with '\\begin' and end with '\\end'. This class has additional attributes to handle labels, captions, and parts of the environment.}
+
+    \begin{description}
+        \item \attr{label: List<Label>}{A list that contains all the labels associated with this Environment.}
+        \item \attr{caption: List<Caption>}{A list of captions related to this Environment.}
+        \item \attr{startPart: String}{The string that starts the Environment. This usually corresponds to the '\\begin' command in LaTeX followed by the name of the environment.}
+        \item \attr{endPart: String}{The string that ends the Environment. This typically corresponds to the '\\end' command in LaTeX.}
+    \end{description}
+    \newpage
+
+\subsubsection{Verwaltung von Benutzereinstellungen}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Frontend/Klassendiagramme/benutzereinstellungen.png}
+    \caption{Klassendiagramm der Benutzereinstellungen}
+    \label{CommandHandler}
+\end{figure}
+
+In unserer Anwendung haben wir ein komplexes System zur Verwaltung von Benutzereinstellungen, das es den Benutzern ermöglicht, ihre Erfahrung anzupassen. Dieses System besteht hauptsächlich aus der Klasse \textbf{UserSettings}, der Schnittstelle \textbf{Setting} und einer Reihe von konkreten Klassen, die das \textbf{Setting}-Interface implementieren: \textbf{HideComment}, \textbf{HideSummaries}, \textbf{HideLeavesTree} und \textbf{DeleteCascading}.
+
+Die Klasse \textbf{UserSettings} ist ein Singleton, was bedeutet, dass es während der gesamten Lebensdauer der Anwendung nur eine Instanz davon gibt. Diese Klasse dient als zentraler Speicher für verschiedene Benutzereinstellungen. Jede Einstellung wird durch ein Objekt einer Klasse, die das \textbf{Setting}-Interface implementiert, repräsentiert und in der privaten \textbf{settings}-Map von \textbf{UserSettings}, gekennzeichnet durch einen eindeutigen Zeichenketten-Identifikator, gespeichert.
+
+Werfen wir einen genaueren Blick auf die verschiedenen konkreten Klassen, die das \textbf{Setting}-Interface implementieren:
+
+- \textbf{HideComment}: Diese Einstellung steuert, ob Kommentare in der Anwendung sichtbar sind.
+- \textbf{HideSummaries}: Diese Einstellung steuert die Sichtbarkeit von Zusammenfassungen in der Anwendung.
+- \textbf{HideLeavesTree}: Wenn diese Einstellung aktiviert ist, werden alle Blattelemente in der Baumansicht ausgeblendet, sodass Benutzer nur die Elternelemente für eine fokussiertere Ansicht sehen können.
+- \textbf{DeleteCascading}: Wenn aktiviert, führt das Löschen eines Elements mit Kindern auch zum Löschen aller seiner Kindelemente.
+
+Die \textbf{SettingsComponent}, eine Angular-Benutzeroberfläche, erstellt eine Instanz von \textbf{UserSettings}, füllt die Einstellungs-Map mit Instanzen der \textbf{Setting}-Unterklassen und bietet eine Benutzeroberfläche zum Anzeigen und Umschalten dieser Einstellungen. Dies ermöglicht es den Benutzern, das Verhalten der Anwendung nach ihren Wünschen anzupassen. Andere Komponenten in der Anwendung können auch die \textbf{UserSettings}-Instanz abrufen, um auf aktuelle Einstellungswerte zuzugreifen, was ein konsistentes Anwendungsverhalten basierend auf den Präferenzen des Benutzers gewährleistet.
+
+\class{UserSettings}{Singleton class that acts as a centralized storage for various user settings within the application.}
+\begin{description}
+    \item \attr{instance: UserSettings}{The single instance of the \code{UserSettings} class that exists within the application. This attribute supports the Singleton pattern.}
+    \item \attr{settings: {[key: string]: Setting} = \{\}}{A map that stores the user settings. The keys are strings, and the values are objects of classes that implement the \code{Setting} interface.}
+    \item \met{getInstance(): UserSettings}{A static method that returns the single instance of the \code{UserSettings} class. If no instance exists, it creates one and then returns it.}
+    \item \met{addSetting(key: string, setting: Setting): void}{A method that adds a new setting to the settings map. It takes a unique string as the key and a \code{Setting} object as the value.}
+    \item \met{toggleSetting(key: string): void}{A method that toggles the state of a setting. It locates the setting using the provided key and calls the setting's \code{toggleSetting()} method.}
+    \item \met{saveSettings(): void}{A method that saves the current state of all settings. The actual save logic is implementation-dependent.}
+\end{description}
+
+
+\newpage
+\subsection{Komponenten des Frontend} // FIRST ERROR
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.1]{Frontend/Komponentendiagramme/complast.png}
+    \caption{Komponentendiagramm: Editoransicht}
+    \label{fig:enter-label}
+\end{figure}
+Dieses Diagramm zeigt die notwendigen Komponenten und ihre Abhängigkeiten an, die für die Anzeige der Editoransicht verantwortlich sind. Um ein übersichtlicheres Bild zu erschaffen, werden die Komponenten für die Baumansicht im nächsten Diagramm gezeigt.
+\newline
+Komponenten:
+\begin{description}
+    \item \met{AppComponent}{Representing the main application component}
+    \item \met{ImportComponent} {Loads the .tex file from a folder destination or a Git repository. Also Imports the Settings.json file}
+    \item \met{HeaderComponent} {Shows Header-buttons and handles click events}
+    \item \met{SettingsComponent}{Manages view settings, handles click events and saves the settings}
+    \item \met{Part}{An abstract class that holds multiple \code{LayerElementComponents}}
+    \item \met{EditorNavigationComponent}{Displays the parent of the currently viewed element, enabling navigation within the file}
+    \item \met{NavigationPart}{Extends the \code{Part} class. Allows the User to navigate the document}
+    \item \met{EditorPart}{Extends the \code{Part} class. Manages editor functions}
+    \item \met{EditorView}{Manages how the user sees the elements in the editor}
+    \item \met{EditorLayerComponent}{Manages methods between \code{NaviagtionPart} and \code{EditorPart}}
+    \item \met{SummaryComponent}{Responsible for displaying and editing the summary of an element}
+    \item \met{CommentComponent}{Responsible for displaying and editing of comments of an element}
+    \item \met{ContentComponent}{Responsible for editing the LaTeX code of an element}
+\end{description}
+Methoden:
+\begin{description}
+    \item \met{LoadFromFolder(folderDestination). bool}{passes a user-specified path to the backend. Returns true if no errors occurred}
+    \item \met{LoadFromGit(URL, password, username): bool} { Passes the user's Git data to the backend to load a new file from Git}
+    \item \met{LoadSettingFile(): void} {Loads the .json file containing the user's saved view settings and applies the corresponding view}
+    \item \met{OnThemeswitchClick(): void} {Toggles between light and dark when the theme button is clicked}
+    \item \met{OnTreeviewClick(): void}{Toggles between treeview and editorview}
+    \item \met{OnExportClick(): void}{exports the file}
+    \item \met{OnSettingsClick)(): void} {Displays the window with the view/export settings}
+    \item \met{OnOverleafClick(): void} {Opens the LaTeX file in Overleaf}
+    \item \met{MoveElement():void} {Sends the ID and the parent ID of the element that is to be moved to the backend}
+    \item \met{OnNaviagtionelementClick(): void} {Opens the selected element in the editor when clicking on a different element in the navigation bar}
+    \item \met{MoveElementEditor():void}{Moves elements whose order the user wants to change using drag and drop}
+    \item \met{DeleteElement(): void} {Deletes an element. Whether the children should also be deleted is decided by the user}
+    \item \met{OnBacktoparentClick(): void} {Shows the parent element of the currently displayed element}
+    \item \met{OnExtendChild(): void}{Expands the child elements of the currently displayed element}
+\end{description}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.1]{Frontend/Komponentendiagramme/tree5.png}
+    \caption{Komponentendiagramm: Baumansicht}
+    \label{fig:enter-label}
+\end{figure}
+Dieses Diagramm zeigt die notwendigen Komponenten und ihre Abhängigkeiten an, die für die Anzeige der Baumansicht verantwortlich sind. Der Unterschied zur vorherigen Ansicht ist, dass Komponenten, die für die Editoransicht benötigt werden, nicht angezeigt werden.
+Komponenten:
+\begin{description}
+    \item \met{TreeviewComponent}{Displays the LaTeX file in a tree structure}
+\end{description}
+Methoden:
+\begin{description}
+    \item \met{MoveElementTree(): void} {Moves elements and their children in the tree and notifies the backend of the change}
+    \item \met{OnElementHover(): void}{Displays the summary of an element when the user hovers over it}
+\end{description}
+
+
+\subsection{Sequenzdiagramme}
+Im Folgenden wird der Ablauf im Frontend für das Verschieben sowie das Bearbeiten von Elementen mithilfe von Sequenzdiagrammen dargestellt.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Frontend/Sequenzdiagramme/MoveElementEditorView.png}
+    \caption{Sequenzdiagram: Verschieben eines Elements in der Ebenenansicht}
+    \label{fig:enter-label}
+\end{figure}
+
+Durch Drag \& Drop können Elemente in der Ebenenansicht verschoben werden. Dazu wird das verschobene Element e, dessen Parent p und die neue Position über den BackendService an das Backend geschickt und eine JSON-Datei vom Backend zurückgesendet. \\Falls die Verschiebung vom Backend aktzepiert wurde, wird ein neuer Baum über den ImportHandler erstellt, andernfalls wird eine Fehlermeldung ausgegeben. \\ \\
+Das Verschieben von Elementen in der Baumansicht verläuft nahezu analog. Allerdings ist es dort nicht erforderlich, eine neue Baumstruktur vom ImportHandler zu erstellen.
+
+
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{Frontend/Sequenzdiagramme/EditsInEditorViewHandler2.png}
+        \caption{Sequenzdiagram: Bearbeiten von Elementen in der Editoransicht}
+        \label{fig:enter-label}
+    \end{figure}
+
+In der Editoransicht können sowohl Zusammenfassungen, Kommentare als auch der Quellcode eines Elements bearbeitet werden. Dazu wird der Inhalt als String zusammen mit dem bearbeiteten Element an das Backend gesendet. \\ \\
+Der Quellcode eines Elements kann mittels editContent() bearbeitet werden. Wenn die Bearbeitung erfolgreich war, so liefert das Backend eine JSON-Datei (jsonData) zurück, mit der die Ebenenstruktur im Frontend aktualisiert werden kann.
+Hierzu wird mit der erhaltenen JSON-Datei eine neue Baumstruktur erstellt (generateTree) und die Elemente in der Editoransicht neu geladen (loadEditorElements).
+
+\newpage
+
+Error Hier
+\section{Backend}
+    Der Backend-Service ist darauf ausgelegt, HTTP-Requests entgegenzunehmen und JSON-Dateien zu verarbeiten. Er wird mit dem Spring-Framework entwickelt, das eine robuste und skalierbare Grundlage für den Empfang und die Beantwortung von HTTP-Anfragen bietet. Eines der Hauptziele des Backend-Services besteht darin, Änderungen an der Baumstruktur durchzuführen und eine nahtlose Kommunikation zwischen den Frontend- und Backend-Komponenten zu ermöglichen. Das Andere ist das Parsen von LaTeX-Dateien und deren Repräsentation in der Baumstruktur. \newline
+    Aufgabenbereiche sind:
+    \begin{enumerate}
+        \item Parsen von LaTeX-Dateien:
+        \begin{itemize}
+            \item Der Backend-Service umfasst eine dedizierte Komponente zum Parsen von LaTeX-Dateien.
+            \item LaTeX-Dateien können entweder aus einem Git-Repository abgerufen und dorthin übertragen werden oder aus einem bestimmten Ordner stammen.
+            \item Der LaTeX-Parser erkennt spezifische LaTeX-Befehle und wandelt den LaTeX-Inhalt in eine Baumstrukturrepräsentation um.
+        \end{itemize}
+        \item Behandlung von HTTP-Requests:
+        \begin{itemize}
+            \item Der Backend-Service nutzt die Funktionen von Spring, um eingehende HTTP-Requests zu empfangen und zu verarbeiten.
+            \item Er wartet auf Anfragen, die JSON-Dateien enthalten und Änderungen oder Operationen an der Baumstruktur beschreiben.
+        \end{itemize}
+        \item Verarbeitung von JSON:
+        \begin{itemize}
+            \item Die empfangenen JSON-Dateien werden mithilfe des CommandHandlers verarbeitet, der die JSON-Daten analysiert und die erforderlichen Anweisungen zur Manipulation des Baums ausliest.
+            \item Der CommandHandler stellt sicher, dass die empfangene JSON-Datei gültig ist und die erforderlichen Daten für die Baumoperationen enthält.
+        \end{itemize}
+        \item Manipulation der Baumstruktur:
+        \begin{itemize}
+            \item Der Backend-Service führt die angeforderten Änderungen an der Baumstruktur basierend auf den Anweisungen in der JSON-Datei aus.
+            \item Dies kann das Hinzufügen, Ändern oder Entfernen von Knoten in der Baumstruktur umfassen, abhängig von der Art der angeforderten Operation.
+        \end{itemize}
+        \item Generierung des Ergebnisses:
+        \begin{itemize}
+            \item Nach Ausführung der angeforderten Änderungen an der Baumstruktur generiert der Backend-Service den aktualisierten Baum als Antwort.
+            \item Diese Antwort wird in das JSON-Format konvertiert und an das Frontend zurückgesendet.
+        \end{itemize}
+    \end{enumerate}
+
+    Die folgenden Klassen werden wie folgt Packages zugeordnet:
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=1\textwidth]{Backend/Package.png}
+        \caption{Packagediagramm}
+        \label{Packages}
+    \end{figure}
+
+    \newpage
+
+
+    \subsection{Klassen}
+
+        \subsubsection{Main}
+        \class{Main}{starts the programm; holds attributes responsible for the correct execution of the programm}
+        \class{TreeX}{holds the tree structure and classes responsible for translating the structure in different formats}
+
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.4\textwidth]{Backend/Klassendiagramme/Main.png}
+            \caption{Klassendiagramm: Main}
+            \label{Main}
+        \end{figure}
+
+        \newpage
+
+        \subsubsection{Command}
+        Der CommandHandler, der Controller und die Factories arbeiten zusammen, um eingehende Befehle aus JSON-Dateien in einer Anwendung zu verarbeiten.
+
+        Das \textbf{CommandPattern} wird verwendet, um die Anfrage eines Befehls als Objekt zu kapseln. Das Muster ermöglicht eine flexible und erweiterbare Möglichkeit, verschiedene Befehlstypen einheitlich zu behandeln.
+
+        Das \textbf{FactoryPattern} wird verwendet, um Instanzen spezifischer Befehlstypen basierend auf dem in der Json-Datei angegebenen Befehlstyp zu erstellen.  Dieses Muster verbessert die Flexibilität und Wartbarkeit, indem es einen zentralen Ort für die Erstellung von Objekten bietet und das einfache Hinzufügen neuer Befehlstypen in der Zukunft ermöglicht.
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Klassendiagramme/CommandHandler.png}
+            \caption{Klassendiagramm: CommandHandler}
+            \label{CommandHandler}
+        \end{figure}
+
+            \class{Controller}{listens for incoming HTTP Requests and passes the included JsonFile to the CommandHandler for processing}
+            Jedes HTTP-Request wird in einem separaten Thread behandelt, was geeignete Locks auf geteilten Ressourcen (auf der Baumstruktur, dem Printer und Parser) benötigt. \newline
+
+            \class{CommandHandler}{responsible for handling incoming commands and executing them based on their type}
+            Attribute:
+            \begin{description}
+                \item \attr{commandFactories: Map <String, CommandFactory>}{contains a collection of command factories that are used to create specific types of commands}
+            \end{description}
+            Methoden:
+            \begin{description}
+                \item \met{<<create>> CommandHandler(treeX: TreeX)}{creates a CommandHandler}
+                \item \met{processCommand(jsonFile: String): void}{recognizes the command type specified in the Json file, extracts the given attributes, and creates the corresponding command using the appropriate command factory, then executes the command}
+                \newpage
+                \item \met{initializeCommandFactories(treeX: TreeX): Map <String, CommandFactory>}{enlists the possible CommandFactories to the collection}
+            \end{description}
+
+            \class{AbstractCommand}{defines the basic methods that each command must implement}
+            Attribut:
+            \begin{description}
+                \item \attr{root}{root of tree structure}
+            \end{description}
+            Methode:
+            \begin{description}
+                \item \met{execute}{executes the command}
+            \end{description}
+
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Klassendiagramme/CommandTypes.png}
+            \caption{Klassendiagramm: CommandTypes}
+            \label{CommandTypes}
+        \end{figure}
+
+            \class{PrintCommand}{responsible for overwriting the LaTeX file with changes that have been made in the tree structure}
+            \class{LoadFromFolderCommand}{loads a LaTeX file from a folder}
+            \class{LoadFromGitCommand}{loads a LaTeX file from a Git repository}
+            \class{TreeMoveCommand}{moves an element to another place in the tree structure, the HTTP Response is for the tree view}
+            \class{EditorMoveCommand}{moves an element to another place in the tree structure, the HTTP Response is for the editor view}
+            \class{EditContentCommand}{modifies the content of an element}
+            \class{EditCommentCommand}{modifies the comment of an element}
+            \class{EditSummaryCommand}{modifies the summary of an element}
+
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=0.6\textwidth]{Backend/Klassendiagramme/CommandFactories.png}
+            \caption{Klassendiagramm: CommandFactories}
+            \label{CommandFactories}
+        \end{figure}
+
+        Für jeden der oben aufgezählten Commands existiert eine eigene CommandFactory, die die aus der Json-Datei gelesenen Attribute auf syntaktische Korrektheit überprüft, und anschließend eine Instanz des Commands mit diesen Attributen erzeugt.
+
+        \newpage
+
+        \subsubsection{Tree}
+        Das \textbf{Composite Pattern} wird verwendet, um eine einheitliche Schnittstelle für die Arbeit sowohl mit einzelnen Elementen (dargestellt durch Element-Objekte) als auch mit Gruppen von Elementen (dargestellt durch ParentNode-Objekte) zu schaffen. Dieses Muster vereinfacht die Verwaltung und das Durchlaufen der Baumstruktur durch die einheitliche Behandlung von Elementen und Elternknoten.
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Klassendiagramme/TreeStructure.png}
+            \caption{Klassendiagramm: TreeStructure}
+            \label{TreeStructure}
+        \end{figure}
+        \newpage
+        \class{Root}{starting point of a tree structure, doesn't perform any specific actions apart from holding the reference to the next level}
+            Attribute:
+            \begin{description}
+                \item \attr{instance: Root}{contains the only existing instance of root}
+                \item \attr{children: List<Element>}{list of the first level of the tree that has content}
+            \end{description}
+            Methoden:
+            \begin{description}
+                \item  \met{createRoot(): Root}{responsible for creating the only instance of the class; according to Singleton Pattern}
+                \item \met{searchForID(id: UUID): Element}{is used to search for a specific identifier (id) within the tree structure,  traverses through the nodes of the tree, starting from the root, and checks if any node has a matching id}
+            \end{description}
+        \class{Element}{represents a single node in the tree structure}
+            Attribute:
+            \begin{description}
+                \item \attr{id: UUID }{unique identifier assigned to each element in the tree structure, generated using the UUID (Universally Unique Identifier) standard}
+                \item \attr{parent: Element }{references the parent node of the element}
+                \item \attr{content: String }{stores a string that represents the content of an element; can be changed by user}
+                \item \attr{chooseManualSummary: bool }{boolean flag that determines whether a manual summary should be chosen for the element}
+                \item \attr{manualSummary: Summary }{represents the manual summary associated with the element; can be changed by user}
+                \item \attr{comments: List<Comment>}{collection that holds multiple instances of the Comment class, representing comments; can be changed by user}
+                \item \attr{newLine: List<NewLine>}{collection of newLine LaTeX-commands belonging to this element}
+                \item \attr{options: String}{represents additional options or settings of a LaTeX-structure}
+            \end{description}
+            \newpage
+            Methode:
+            \begin{description}
+                \item \met{searchForID(id: UUID): Element}{enables searching for an element in the tree structure based on its unique ID}
+            \end{description}
+        \class{Child}{represents a child node}
+        \class{Parent}{represents a node that can have child nodes}
+            Attribute:
+            \begin{description}
+                \item \attr{children: List<Element>}{collection that holds the child nodes, maintains the order in which the childs where added}
+            \end{description}
+            Methoden:
+            \begin{description}
+                \item \met{addChildAfter(newChild: Element, previousChild: Element): bool}{adds a new child node after a specified existing child node into the children Collection}
+                \item \met{getPrevious(element: Element): Element}{searches for the given element within the children collection and returns the node that appears before it}
+                \item \met{removeChild(e: Element): bool}{removes the specified child node from the children collection}
+            \end{description}
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Klassendiagramme/ElementTypes.png}
+            \caption{Klassendiagramm: ElementTypes}
+            \label{ElementTypes}
+        \end{figure}
+
+            Die von Parent und Child erbenden Klassen repräsentieren schlussendlich die LaTeX-Befehle, die von TreeX erkannt werden.
+
+            Sie enthalten die Methoden \code{getStartPart} und gegebenenfalls \code{getEndPart}, um die LaTeX-Befehle der Elemente abzurufen. Diese Methoden dienen dazu, den Zugriff auf den LaTeX-Code zu erleichtern, unabhängig davon, ob sie in Attributen des Elements selbst gespeichert sind oder ob sie aus dem spezifischen Typ des Elements abgeleitet werden, der im Attribut \code{type} angegeben ist. Auf diese Weise wird die genaue Herkunft der Teile verborgen und die Flexibilität bei der Verarbeitung des Elementinhalts gewährleistet.
+
+            Für die Elemente Algorithm und NewLine wird der Typ des Elements im Attribut  \code{type} gespeichert. Daher können die Methoden \code{getStartPart} und \code{getEndPart} einfach auf diese Attribute zugreifen, um die entsprechenden Teile abzurufen.
+
+            Bei den Abschnitts-Elementen ist der Typ abhängig von der aktuellen Struktur. Daher muss der Typ des Abschnitts dynamisch ausgewertet werden. Dies bedeutet, dass die Methoden \code{getStartPart} und \code{getEndPart} in diesen Fällen den Typ des Abschnitts ermitteln und basierend darauf die entsprechenden Teile abrufen müssen. Dies ermöglicht eine flexible Handhabung von Abschnitts-Elementen, da ihr spezifischer Typ zur Laufzeit ermittelt wird.
+
+            Durch die Verwendung dieser Getter-Methoden wird die genaue Quelle, von der die Teile eines Elements stammen, abstrahiert. Dies erleichtert die Wartung und Erweiterung des Codes, da Änderungen an der internen Struktur oder den Attributen eines Elements nicht zu Änderungen an den aufrufenden Stellen führen. Stattdessen können die Getter-Methoden die Teile abrufen, unabhängig davon, ob sie aus den Attributen des Elements oder aus dem spezifischen Typ des Elements abgeleitet werden müssen.
+
+        \class{Environment}{represents a LeTeX-Command, that defines an environment}
+                 Attribute:
+                    \begin{description}
+                        \item \attr{caption: List<Caption>}{collection that holds the captions, defined in this environment}
+                        \item \attr{label: List<Label>}{collection that holds the labels, defined in this environment}
+                    \end{description}
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Klassendiagramme/Interfaces.png}
+            \caption{Klassendiagramm: Interfaces}
+            \label{Interfaces}
+        \end{figure}
+
+        \class{AdditionalInformationContainer}{container for Additional Information}
+            Inheriting classes have to implement the Parseable-Interface and the Exportable-Interface. \\ \newline
+        \class{Summary}{manual summary written by the user; can be changed by the user}
+        \class{Comment}{comments written by the user; can be changed by the user}
+        \class{NewLine}{newLine belonging to an element}
+        \interface{Comparable}{implemented by each elementtype to provide a natural ordering for elements, allowing them to be sorted or compared}
+        \interface{Parseable}{implemented by each elementtype, caption, label and AdditionalInformations to allow the conversion of LaTeX commands into elements}
+        \interface{Exportable}{implemented by each elementtype, caption, label and AdditionalInformations to allow the conversion of elements from the tree structure back into LaTeX commands}
+        \interface{JsonParser}{implemented by each elementtype to allow the conversion of elements from the tree structure into a json file}
+
+        \newpage
+
+        \subsubsection{Interpreter}
+            Im Allgemeinen ist der Interpreter dafür zuständig, das LaTeX Textdokument in Objekte aufzuteilen, die später vom Programm verwendet werden können. Diese Objekte werden in einer Composite-Struktur angelegt.
+
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=1\textwidth]{Backend/Klassendiagramme/parser.png}
+                \caption{Klassendiagramm: Parser}
+            \end{figure}
+
+            \class{parser}{Responsible for Managing the Conversion from an File
+            to Usable Objects}
+
+                 Attribute:
+                    \begin{description}
+                        \item \attr{reader: TextFileReader} {reference to the TextfileReader}
+                        \item \attr{scanner: Scanner} {reference to the Scanner}
+                    \end{description}
+
+                    Methode:
+                    \begin{description}
+                        \item \met{startParsing(curr: Element, index:int): : Element}{The function startParsing contains the main flow of the parser and first calls the TextFileReader, which receives the entire text. Then, the Scanner examines the inputted text and creates objects based on the text hierarchy.}
+                    \end{description}
+
+            \class{Scanner}{responsible for extracting the structural elements from the Textdocument}
+
+                Attribute:
+                \begin{description}
+                    \item \attr{recognisedElements: List<Element> } {list of recognized Elements}
+                    \item \attr{currentElement: Element} {current last created element}
+                \end{description}
+
+                Methoden:
+                \begin{description}
+                    \item \met{scanTextForElements(curr: Element, index:int): : Element}{The method scanTextForElements scans all lines of the text for a match with . If a character indicating a new structural element is found, scanLine is called.}
+                    \item \met{scanLine(curr: Element, index:int): Element} {The Function checks the current Line of the Text for any match with the Structural Elements}
+                \end{description}
+
+            \class{TextFileReader}{responsible for converting Documents}
+                    Methoden:
+                    \begin{description}
+                        \item \attr{readLinesFromFile(path:String): String[]} {The function receives a path to a document, validates its existence, and then reads the document, returning the text of the file as a string array.}
+                        \item \attr{extractStringArr(startIndx :int, endIndx :int): String[]} {The function extracts a part from a string array and returns that part.}
+                    \end{description}
+
+            \newpage
+            \subsubsection{Export}
+
+                Die Klasse TreeX hält eine Referenz auf den Printer. Der Benutzer kann einen der beiden Use-Cases auswählen und die entsprechende Klasse verwenden. Wenn der Benutzer den "FilePrinter" verwendet, kann er eine Datei auf seinem Desktop ausgeben lassen. Wenn der Benutzer jedoch die "GitConnection" verwendet, hat er die Möglichkeit, die Datei zu seinem Overleaf Git-Branch hinzuzufügen.
+
+                \begin{figure}[h!]
+                    \centering
+                    \includegraphics[width=1\textwidth]{Backend/Klassendiagramme/printer2.png}
+                    \caption{Klassendiagramm: printer}
+                \end{figure}
+
+                \class{FilePrinter}{Compiles the file alltogether and saves the new File}
+
+                    Attribute:
+                    \begin{description}
+                        \item \attr{filePath:String} {the path to the File}
+                    \end{description}
+
+                    Methode:
+                    \begin{description}
+                        \item \met{exportToFile(root: Root, filePath: String): bool}
+                        {The FilePrinter class is responsible for outputting the source code file, after performing some operations.}
+                    \end{description}
+
+                \class{GitConnection}{responsible keeping the coherent Gitrepository}
+
+                    Attribute:
+                    \begin{description}
+                        \item \attr{username: String} {the path to the File}
+                        \item \attr{password: String} {the path to the File}
+                        \item \attr{projectID: String} {the path to the File}
+                        \item \attr{gitRepoURL: String} {the path to the File}
+                        \item \attr{fileRootDirectory: String} {the path to the File}
+                    \end{description}
+
+                    Methode:
+                    \begin{description}
+                        \item \met{authenticate(root: Root, filePath: String): bool} {authentify the users log in credtentials, as well as the existence of the overleaf repo}
+                        \item \met{pushFile(root: Root, filePath: String): bool} {Push the edited File to the Overleaf repository, return the status of this acction}
+                        \item \met{pullFile(root: Root, filePath: String): bool} {Pull current File to the Overleaf repository, return the status of this acction}
+                    \end{description}
+        \newpage
+        \subsection{Sequenzdiagramme}
+        Die Sequenzdiagramme wurden unter bestimmten Annahmen erzeugt. Diese Annahmen werden durch geeignete Abfragen überprüft, sind jedoch meist im Diagramm der Übersichtlichkeit willen nicht dargestellt.
+
+        \subsubsection{Erhalten von Commands über JsonFiles}
+        Der dargestellte Command und die CommandFactory stehen exemplarisch für die unterschiedlichen Klassen, die von AbstractCommand erben oder das AbstractFactory- Interface implementieren.
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Sequenzdiagramme/CommandHandler.png}
+            \caption{Sequenzdiagramm: CommandHandler}
+            \label{Sequenzdiagramm: CommandHandler}
+        \end{figure}
+
+        \newpage
+
+        \subsubsection{Ausführen von PrintCommand}
+        Das Diagramm stellt die Ausführung eines PrintCommands dar, unter der Annahme, dass zuvor das LaTeX-Dokument über einen Dateipfad geladen wurde.
+        Es wird eine temporäre Datei erstellt, die speziell für die Aufbewahrung des überarbeiteten Inhalts vorgesehen ist.
+
+        Nach Abschluss des Schreibvorgangs werden die Dateien umbenannt. Bei dieser Umbenennung wird der temporären Datei ein neuer Name zugewiesen, wodurch die ursprüngliche Datei durch den aktualisierten Inhalt ersetzt wird.
+
+        Dieser Ansatz bietet einen wichtigen Schutzmechanismus für den Fall eines Systemabsturzes oder einer Unterbrechung während des Dateiänderungsprozesses. In solchen Szenarien sorgt die temporäre Datei, die den überarbeiteten LaTeX-Text enthält, dafür, dass die ursprüngliche Datei intakt und unverändert bleibt. Es besteht somit keine Gefahr, eine teilweise geschriebene oder beschädigte Datei zu erhalten, da der Umbenennungsschritt erst nach erfolgreichem Abschluss des Änderungsprozesses erfolgt.
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Sequenzdiagramme/PrintCommand.png}
+            \caption{Sequenzdiagramm: PrintCommand}
+            \label{Sequenzdiagramm: PrintCommand}
+        \end{figure}
+
+        \newpage
+
+        \subsubsection{Ausführen von MoveCommand}
+        Der Ablauf ist unter der Annahme gestaltet, dass
+            \begin{itemize}
+                \item das child ein Sectioningbefehl ist.
+                \item die Verschiebung erlaubt ist, d.h.
+                    \begin{itemize}
+                        \item child, newParent und previous existieren.
+                        \item sie verschiebt Kindselemente des Child nicht in eine nicht existierende Ebene (Sectioningbefehle bis Ebene 7).
+                    \end{itemize}
+                \item die Verschiebung die Ebene des child ändert.
+            \end{itemize}
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Sequenzdiagramme/MoveCommand.png}
+            \caption{Sequenzdiagramm: MoveCommand}
+            \label{Sequenzdiagramm: MoveCommand}
+        \end{figure}
+
+        \newpage
+
+        \subsubsection{Ausführen von EditContentCommand}
+        Der Ablauf ist exemplarisch mit dem EditContentCommand dargestellt, EditSummaryCommand und EditCommentCommand funktionieren analog.
+         \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.9\textwidth]{Backend/Sequenzdiagramme/EditCommand.png}
+            \caption{Sequenzdiagramm: EditCommand}
+            \label{Command}
+        \end{figure}
+
+        \newpage
+
+        \subsubsection{Ausführen von DeleteCommand}
+        Der Ablauf ist unter der Annahme dargestellt, dass die übergebene ID an ein Element im Baum vergeben ist.
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{Backend/Sequenzdiagramme/CeleteCommand.png}
+            \caption{Sequenzdiagramm: DeleteCommand}
+            \label{Sequenzdiagramm: DeleteCommand}
+        \end{figure}
+
+        \newpage
+
+        \subsubsection{Ausführen des Parsers}
+            Im Folgenden ist der Ablauf des Parsers dargestellt.
+            Nach aufruf der Parse Methode im Parser ruft dieser den TextFileReader auf welcher den Text aus der File holt und zurück gibt. Worauf hin der Parser den Text an den Scanner Übergibt.
+            Welcher im Folgenden dann den Text Zeile für Zeile durchgeht, die Struktur Elemente heraussucht und als Baum Zusammensetzt.
+            Nach ausführung wird die Root des Baumes zurückgegeben an den Parser.
+
+        \begin{figure}[h!]
+                \centering
+                \includegraphics[width=1\textwidth]{Backend/Sequenzdiagramme/Parser_seq.png}
+                \caption{Klassendiagramm: Parser}
+            \end{figure}
+
+\newpage
+\section{Interne Kommunikation}
+Requests die vom Frontend an das Backend gesendet werden:
+\subsection{Get Requests}
+\begin{itemize}
+    \item LoadFullData
+    \newline
+Anfrage:
+Die Anfrage \"LoadFullData\" wird gesendet, um alle Daten der Baumstruktur abzurufen.
+
+
+Erwartete Antwort:
+Als Antwort wird ein JSON-Objekt erwartet, welches die gesamte Baumstruktur repräsentiert. Dadurch kann die Frontend-Anwendung das Composite-Muster wiederherstellen und die aktualisierte Ansicht darstellen.
+    \item LoadTreeData
+    \newline
+Anfrage: Die Anfrage "LoadTreeData" wird gesendet, um die Baumdaten vom Backend abzurufen.
+
+
+Erwartete Antwort:
+Als Antwort wird ein Array von JSON-Objekten erwartet. Dieses Array repräsentiert die aktualisierte Baumstruktur und ist so strukturiert, dass das Angular-Modul "Angular Organizational Chart" den Baum direkt anzeigen kann. Die Daten in den JSON-Objekten enthalten Informationen über die Elemente, ihre UUIDs, den Inhalt und andere relevante Eigenschaften, die für die Darstellung des Baums erforderlich sind.
+
+    \item GitPush
+\end{itemize}
+
+\subsection{Post Requests}
+    \begin{minted}{json}
+    {
+    "MoveElementTree": {
+        "element": "UUID",
+        "newparent": "UUID",
+        "previouselement": "UUID"
+    }
+    }
+    \end{minted}
+    Anfrage: Verschieben eines Elements in Baumansicht.
+
+
+    Beschreibung: Diese Anfrage wird gesendet, wenn ein Element im Baum verschoben werden soll. Das zu verschiebende Element wird durch seine eindeutige Kennung (UUID) identifiziert. Der neue Elternknoten, zu dem das Element verschoben werden soll, wird ebenfalls durch seine UUID angegeben. Zusätzlich wird die UUID des vorherigen Elements angegeben, um die Reihenfolge der Elemente innerhalb des Elternknotens anzupassen.
+
+
+    Erwartete Antwort: Als Antwort wird ein Array von JSON-Objekten erwartet. Dieses Array repräsentiert die aktualisierte Baumstruktur und ist so strukturiert, dass das Angular-Modul "Angular Organizational Chart" den Baum direkt anzeigen kann. Die Daten in den JSON-Objekten enthalten Informationen über die Elemente, ihre UUIDs, den Inhalt und andere relevante Eigenschaften, die für die Darstellung des Baums erforderlich sind.
+
+    \begin{minted}{json}
+    {
+    "MoveElementEditor": {
+        "element": "UUID",
+        "newparent": "UUID",
+        "previouselement": "UUID"
+    }
+    }
+    \end{minted}
+    Anfrage: Die Anfrage "MoveElementEditor" wird gesendet, um ein Element innerhalb des Editors zu verschieben.
+
+
+    Beschreibung:
+    Die Anfrage enthält die folgenden Parameter:
+    \begin{itemize}
+        \item Element: Die eindeutige Kennung (UUID) des Elements, das verschoben werden soll.
+        \item NewParent: Die eindeutige Kennung (UUID) des neuen übergeordneten Elements, zu dem das Element verschoben werden soll.
+        \item PreviousElement: Die eindeutige Kennung (UUID) des vorherigen Elements, das sich auf der gleichen Hierarchieebene wie das zu verschiebende Element befindet.
+
+    \end{itemize}
+
+
+    Erwartete Antwort:
+    Als Antwort wird ein JSON-Objekt erwartet, das die gesamte Baumstruktur repräsentiert. Dies ermöglicht es der Frontend-Anwendung, das Composite-Muster wieder aufzubauen und die aktualisierte Ansicht darzustellen.
+
+    \begin{minted}{json}
+    {
+    "EditSummary": {
+        "element": "UUID",
+        "summary": "text"
+    }
+    }
+    \end{minted}
+    Anfrage: Bearbeiten der Zusammenfassung
+
+
+    Beschreibung: Diese Anfrage wird gesendet, wenn der Benutzer die Zusammenfassung eines Elements bearbeiten möchte. Die Anfrage enthält die UUID des Elements und den neuen Zusammenfassungstext.
+
+
+    Erwartete Antwort: Es wird keine spezielle Antwort erwartet.
+
+    \begin{minted}{json}
+    {
+    "EditComment": {
+        "element": "UUID",
+        "comment": "text"
+    }
+    }
+    \end{minted}
+    Anfrage:
+    Eine Anfrage wird gesendet, um einen Kommentar eines Elements zu bearbeiten.
+
+
+    Beschreibung:
+    Die Anfrage wird gesendet, wenn der Benutzer einen Kommentar für ein bestimmtes Element ändern möchte. Das Element wird durch seine eindeutige UUID identifiziert. Der neue Kommentar wird als Text übermittelt.
+
+
+    Erwartete Antwort: Es wird keine spezielle Antwort erwartet.
+
+    \begin{minted}{json}
+    {
+    "EditContent": {
+        "element": "UUID",
+        "content": "text"
+    }
+    }
+    \end{minted}
+    Anfrage:
+    Die Anfrage "EditContent" wird gesendet, um den Inhalt eines Elements zu bearbeiten.
+
+
+    Beschreibung:
+    Die Anfrage enthält die Informationen über das zu bearbeitende Element, identifiziert durch seine UUID, sowie den neuen Textinhalt.
+
+
+    Erwartete Antwort:
+    Es wird keine spezifische Antwort erwartet.
+
+    \begin{minted}{json}
+    {
+    "LoadFromFolder": {
+        "path": "folderDestination"
+    }
+    }
+    \end{minted}
+    Anfrage:
+    Die Anfrage "LoadFromFolder" wird gesendet, um eine LaTeX-Dokumentstruktur aus einem Ordner abzurufen.
+
+
+    Beschreibung:
+    Die Anfrage enthält den Pfad des Zielordners, von dem das LaTeX-Dokument geladen werden soll. Der Pfad wird als Zeichenkette im JSON-Format übertragen.
+
+
+    Erwartete Antwort:
+    Als Antwort wird ein JSON-Objekt erwartet, das die gesamte Baumstruktur repräsentiert. Dadurch kann die Frontend-Anwendung das aktualisierte Ansichtsmodell rekonstruieren und anzeigen.
+
+    \begin{minted}{json}
+    {
+    "LoadFromGit": {
+        "url": "url",
+        "username": "username",
+        "password": "password"
+    }
+    }
+    \end{minted}
+    Anfrage:
+    Die Anfrage "LoadFromGit" wird gesendet, um ein LaTeX-Dokument von einem Git-Repository zu laden.
+
+
+    Beschreibung:
+    Die Anfrage enthält die folgenden Informationen:
+
+    \begin{itemize}
+        \item Url: Die URL des Git-Repositories, von dem das LaTeX-Dokument geladen werden soll.
+        \item Username: Der Benutzername für die Authentifizierung beim Git-Repository (falls erforderlich).
+        \item Password: Das Passwort für die Authentifizierung beim Git-Repository (falls erforderlich).
+    \end{itemize}
+
+    Erwartete Antwort:
+    Als Antwort wird ein JSON-Objekt erwartet, das die gesamte Baumstruktur repräsentiert. Dadurch kann die Frontend-Anwendung das aktualisierte Ansichtsmodell rekonstruieren und anzeigen.
+
+    \begin{minted}{json}
+    {
+    "DeleteElement": {
+        "element": "UUID",
+        "cascading": bool
+    }
+    }
+    \end{minted}
+    Anfrage:
+    Die Anfrage "DeleteElement" wird gesendet, um ein Element aus der Struktur zu löschen.
+
+
+    Beschreibung:
+    Die Anfrage enthält die UUID des zu löschenden Elements und einen booleschen Wert "cascading", der angibt, ob das Löschen kaskadierend erfolgen soll.
+
+
+    Erwartete Antwort:
+    Als Antwort wird ein JSON-Objekt erwartet, das die gesamte Baumstruktur repräsentiert. Dadurch kann die Frontend-Anwendung das aktualisierte Ansichtsmodell rekonstruieren und anzeigen.
+
+        \begin{minted}{json}
+        {
+        "AddElement": {
+            "content": "content",
+            "parent": "UUID",
+            "previousChild": "UUID"
+        }
+        }
+        \end{minted}
+
+    \end{document}

@@ -1,0 +1,31 @@
+starting Text Blind Spot_1
+
+
+\start{document}
+starting Text Blind Spot_2
+
+\section{Frontend}
+    exa_Text_1
+
+    \subsection{Klassen}
+        exa_Text_3
+
+        \subsubsection{Backend-Interaktionsdienste}
+        exa_Text_5
+
+        \subsubsection{Strukturelle Komponenten des Composite-Musters}
+        exa_Text_6
+
+        \subsubsection{Verwaltung von Benutzereinstellungen}
+        exa_Text_7
+
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=1\textwidth]{Frontend/Klassendiagramme/benutzereinstellungen.png}
+                \caption{Klassendiagramm der Benutzereinstellungen}
+                \label{CommandHandler}
+            \end{figure}
+            exa_Text_8
+
+    \subsection{Komponenten des Frontend} // FIRST ERROR
+        exa_Text_9
