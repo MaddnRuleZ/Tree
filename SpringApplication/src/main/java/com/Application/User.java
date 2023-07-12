@@ -2,7 +2,7 @@ package com.Application;
 
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.Printer;
-import com.Application.Tree.elements.parents.sectioning.Root;
+import com.Application.Tree.elements.sectioning.Root;
 import org.springframework.stereotype.Component;
 
 /**

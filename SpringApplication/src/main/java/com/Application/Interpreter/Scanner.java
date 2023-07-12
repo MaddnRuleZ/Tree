@@ -1,8 +1,7 @@
 package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
-import com.Application.Tree.elements.Parent;
-import com.Application.Tree.elements.parents.sectioning.Root;
+import com.Application.Tree.elements.sectioning.*;
 import com.Application.Tree.elements.environments.Algorithm;
 import com.Application.Tree.elements.environments.Equation;
 import com.Application.Tree.elements.environments.Figure;

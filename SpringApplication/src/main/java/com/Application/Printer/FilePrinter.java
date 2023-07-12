@@ -1,6 +1,6 @@
 package com.Application.Printer;
 
-import com.Application.Tree.elements.parents.sectioning.Root;
+import com.Application.Tree.elements.sectioning.Root;
 
 import java.io.File;
 import java.io.IOException;

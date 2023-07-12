@@ -1,4 +1,4 @@
-package com.Application.Tree.elements.parents.sectioning;
+package com.Application.Tree.elements.sectioning;
 
 
 import com.Application.Tree.elements.Parent;

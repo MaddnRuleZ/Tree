@@ -7,12 +7,10 @@ import com.Application.Tree.additionalInfo.Summary;
 import com.Application.Tree.elements.environments.Algorithm;
 import com.Application.Tree.elements.environments.Equation;
 import com.Application.Tree.elements.environments.Figure;
-import com.Application.Tree.elements.parents.sectioning.*;
+import com.Application.Tree.elements.sectioning.*;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
-
 import java.util.*;
-
 
 public abstract class Element implements JsonParser, Exportable {
     private static Map<Element, Integer> LEVEL_MAP;

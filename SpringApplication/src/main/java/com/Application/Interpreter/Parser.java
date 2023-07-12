@@ -2,7 +2,7 @@ package com.Application.Interpreter;
 
 
 import com.Application.Tree.Element;
-import com.Application.Tree.elements.parents.sectioning.Root;
+import com.Application.Tree.elements.sectioning.Root;
 
 /**
  * Class for Parsing a single Latex Document,
