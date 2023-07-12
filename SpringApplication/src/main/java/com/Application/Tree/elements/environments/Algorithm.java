@@ -1,7 +1,5 @@
 package com.Application.Tree.elements.environments;
 
-import com.Application.Tree.elements.Environment;
-
 public class Algorithm extends Environment {
 
     public static final String startPart = "\\begin{algorithm}";

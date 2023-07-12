@@ -16,6 +16,7 @@ public class Parent extends Element {
         childElements = new ArrayList<>();
     }
 
+
     @Override
     public boolean validateIndicTextGeneration() {
         return this.text == null;

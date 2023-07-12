@@ -15,6 +15,7 @@ public class Parser {
     private String filePath;
     private String[] text;
 
+
     /**
      *
      * @param filePath

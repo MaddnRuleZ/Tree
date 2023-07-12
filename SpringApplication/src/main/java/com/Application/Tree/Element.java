@@ -4,6 +4,8 @@ import com.Application.Interpreter.TextFileReader;
 import com.Application.Tree.additionalInfo.Comment;
 import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.additionalInfo.Summary;
+import com.Application.Tree.elements.EnvElements.Caption;
+import com.Application.Tree.elements.EnvElements.Label;
 import com.Application.Tree.elements.environments.Algorithm;
 import com.Application.Tree.elements.environments.Equation;
 import com.Application.Tree.elements.environments.Figure;
@@ -22,8 +24,8 @@ public abstract class Element implements JsonParser, Exportable {
     protected final Comment comment;
     protected final NewLine newLine;
     private boolean chooseManualSummary;
-    private String options;
-    private final int startIndex;
+    protected String options;
+    protected final int startIndex;
     private final String startPart;
     private final String endPart;
 
@@ -55,18 +57,39 @@ public abstract class Element implements JsonParser, Exportable {
         LEVEL_MAP.put(new Equation(-1), 9);
         LEVEL_MAP.put(new Algorithm(-1), 9);
         LEVEL_MAP.put(new Figure(-1), 9);
+
+        LEVEL_MAP.put(new Label(), 11);
+        LEVEL_MAP.put(new Caption(), 11);
     }
 
     /**
      * ture if Element has no Text or can be overwritten (Dead Zone EdgeCase)
-     *
+     * todo still working?
      * @return
      */
     public abstract boolean validateIndicTextGeneration();
 
+    // override this one on changes below in tree=
+
+    // generate fron indecies adv
+    public void finishCurrentElement(String[] text, int endIndex) {
+
+    }
+
+    /*
+    public abstract void scanElementForLabel();
+    public abstract void scanElementForCaption();
+    // scan for exa the
+    //public abstract void scanElementForSubElements();
+     */
+
+
     /**
      * Read the contents of the structure Element
      * mini Parser For Comments, Summaries and NewLines, okay by now resorted to c,s,p. Max: nC, 1S nP
+     *
+     * text uselsess after this transformation, text is only in the newline characters
+     *
      * @param text
      * @param endIndex
      */
@@ -79,6 +102,8 @@ public abstract class Element implements JsonParser, Exportable {
 
             remainingText = summary.extractInfo(remainingText);
             remainingText = comment.extractInfo(remainingText);
+
+            // extract labels and captions
             newLine.extractInfo(remainingText);
         }
     }
@@ -94,7 +119,7 @@ public abstract class Element implements JsonParser, Exportable {
         }
     }
 
-    private String extractOptionsString(String rawOptions) {
+    protected String extractOptionsString(String rawOptions) {
         // do Regex to extract the Options String Parts
         return rawOptions;
     }
