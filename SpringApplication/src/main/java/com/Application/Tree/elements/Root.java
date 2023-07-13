@@ -1,9 +1,6 @@
 package com.Application.Tree.elements;
 
-
 import com.Application.Tree.Element;
-import com.Application.Tree.elements.Parent;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +13,6 @@ public class Root extends Parent {
         super("", null, 0,10000);
     }
 
-    //
     @Override
     public boolean validateIndicTextGeneration() {
         return false;
