@@ -45,6 +45,16 @@ starting Text Blind Spot_2
         \subsubsection{Strukturelle Komponenten des Composite-Musters}
         exa_Text_6
 
+        Dead Zone Test_4
+            \label
+                Dead Zone Test_5
+
+                End Dead Zone Test_5
+                \newline
+
+                Dead Zone Test_6
+
+                End Zone Test_6
         \subsubsection{Verwaltung von Benutzereinstellungen}
         exa_Text_7
 

@@ -2,7 +2,7 @@ package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.Root;
-import com.Application.Tree.elements.SectioningType;
+import com.Application.Tree.elements.ElementConfig;
 
 /**
  *
@@ -72,7 +72,7 @@ public class Scanner {
             return currentElement;
 
         } else {
-            Element element = SectioningType.initType(this.text[index], index);
+            Element element = ElementConfig.initType(this.text[index], index);
 
             if (element != null) {
                 if (currentElement == null) {

@@ -14,29 +14,6 @@ public class Environment extends Parent {
 
     }
 
-    /**
-     * Read the contents of the structure Element
-     * mini Parser For Comments, Summaries and NewLines, okay by now resorted to c,s,p. Max: nC, 1S nP
-     *
-     * text uselsess after this transformation, text is only in the newline characters
-     *
-     * @param text
-     * @param endIndex
-     */
-    public void scanElementTextForSubElements(String[] text, int endIndex) {
-        if (endIndex != 0 && this.text == null) {
-            String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex +1, endIndex -1);
-            List<String> remainingText = Arrays.stream(elementFullText).toList();
-            this.options = extractOptionsString(text[this.startIndex]);
-            this.text = elementFullText;
-
-            remainingText = summary.extractInfo(remainingText);
-            remainingText = comment.extractInfo(remainingText);
-
-            textBlock.extractInfo(remainingText);
-        }
-    }
-
     @Override
     public Element searchForID(UUID id, int level) {
         if (this.getId().equals(id)) {

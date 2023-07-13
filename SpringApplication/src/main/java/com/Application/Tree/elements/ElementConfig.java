@@ -2,22 +2,19 @@ package com.Application.Tree.elements;
 
 import com.Application.Tree.Element;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public enum SectioningType {
+public enum ElementConfig {
 
     PART("\\part", null, 1) {
         @Override
         Element getElement(int index) {
-            return new Sectioning(getStartPart(), null, index, getLevel());
+            return new Sectioning(getStartPart(), index, getLevel());
         }
     },
 
     CHAPTER("\\chapter", null, 2) {
         @Override
         Element getElement(int index) {
-            return new Sectioning(getStartPart(), null, index, getLevel());
+            return new Sectioning(getStartPart(), index, getLevel());
         }
     },
 
@@ -25,38 +22,37 @@ public enum SectioningType {
     SECTION("\\section", null, 3) {
         @Override
         Element getElement(int index) {
-            return new Sectioning(getStartPart(), null, index, getLevel());
+            return new Sectioning(getStartPart(), index, getLevel());
         }
     },
 
     SUBSECTION("\\subsection", null, 4) {
         @Override
         Element getElement(int index) {
-            return new Sectioning(getStartPart(), null, index, getLevel());
+            return new Sectioning(getStartPart(), index, getLevel());
         }
     },
 
     SUBSUBSECTION("\\subsubsection", null, 5) {
         @Override
         Element getElement(int index) {
-            return new Sectioning(getStartPart(), null, index, getLevel());
+            return new Sectioning(getStartPart(), index, getLevel());
         }
     },
 
     PARAGRAPH("\\paragraph", null, 6) {
         @Override
         Element getElement(int index) {
-            return new Sectioning(getStartPart(), null, index, getLevel());
+            return new Sectioning(getStartPart(), index, getLevel());
         }
     },
 
     SUBPARAGRAPH("\\subparagraph", null, 7) {
         @Override
         Element getElement(int index) {
-            return new Sectioning(getStartPart(), null, index, getLevel());
+            return new Sectioning(getStartPart(), index, getLevel());
         }
     },
-
 
     ALGORITHM("\\begin{algorithm}", "\\end{algorithm}", 9) {
         @Override
@@ -97,7 +93,7 @@ public enum SectioningType {
     private final String endPart;
     private final int level;
 
-    SectioningType(String startPart, String endPart, int level) {
+    ElementConfig(String startPart, String endPart, int level) {
         this.level = level;
         this.startPart = startPart;
         this.endPart = endPart;
@@ -106,7 +102,7 @@ public enum SectioningType {
     abstract Element getElement(int index);
 
     public static Element initType(String startPartLine, int index) {
-        for (final SectioningType sectioning: SectioningType.values()) {
+        for (final ElementConfig sectioning: ElementConfig.values()) {
             if (startPartLine.contains(sectioning.startPart)) {
                 return sectioning.getElement(index);
             }
@@ -124,14 +120,6 @@ public enum SectioningType {
 
     public int getLevel() {
         return this.level;
-    }
-
-    public static List<String> getList() {
-        List<String> list = new ArrayList<>();
-        for (SectioningType type : SectioningType.values()) {
-            list.add(type.startPart);
-        }
-        return list;
     }
 
 }
