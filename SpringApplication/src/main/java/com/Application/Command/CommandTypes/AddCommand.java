@@ -9,7 +9,6 @@ import java.util.UUID;
 
 public class AddCommand implements Command, IEditorResponse, ILocks {
 
-
     private Root root;
     private String content;
     private UUID parent;

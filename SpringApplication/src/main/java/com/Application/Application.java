@@ -14,7 +14,10 @@ import org.springframework.context.annotation.ComponentScan;
 public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-
+		/* TODO tests bitte unter test/java/com/SpringApplication schreiben als JUNit Testklassen nicht in das Programm
+		 und benutze vielleicht etwas aussagekräftigere Namen für die Tests damit wir die dann auch in der Qualitätssicherung einfach mitabgeben können
+		 und nicht erst nochmal umbenennen müssen
+		 */
 		boolean maddinInTheHouse = true;
 
 		if (maddinInTheHouse) {
@@ -30,6 +33,9 @@ public class Application {
 
 
 		}
+
+
+
 
 
 	}

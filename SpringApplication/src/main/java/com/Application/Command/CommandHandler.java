@@ -3,6 +3,7 @@ package com.Application.Command;
 import com.Application.Command.CommandTypes.Command;
 import com.Application.Command.Factories.*;
 import com.Application.Exceptions.NumParamsException;
+import com.Application.Exceptions.ProcessingException;
 import com.Application.Exceptions.UnrecognizedCommandException;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -35,7 +36,7 @@ public class CommandHandler {
      * @return jsonString of tree structure, if it was possible to execute command
      */
 
-    public JsonNode processCommand(JsonNode jsonFile) throws UnrecognizedCommandException, NumParamsException {
+    public JsonNode processCommand(JsonNode jsonFile) throws ProcessingException {
 
         if (jsonFile.isEmpty()) {
             throw new NumParamsException("jsonFile");
@@ -53,7 +54,6 @@ public class CommandHandler {
         } else {
             throw new UnrecognizedCommandException(commandType);
         }
-
     }
 
 

@@ -4,6 +4,7 @@ import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.sectioning.Root;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -18,30 +19,34 @@ public class EditCommentCommand implements Command, IEditorResponse, ILocks {
     //Comment muss noch geparst werden: in setComment???
     @Override
     public JsonNode execute() {
+        JsonNode response = null;
         try {
             acquireStructureWriteLock();
             Element elementFound = root.searchForID(this.element);
             if(elementFound == null) {
                 releaseStructureWriteLock();
-                return generateResponse();
+            } else {
+                elementFound.setComment(comment);
+                releaseStructureWriteLock();
+                response = generateResponse();
+
             }
-            elementFound.setComment(comment);
         } catch (Exception e) {
             releaseStructureWriteLock();
-            return generateResponse();
         }
-        releaseStructureReadLock();
-        return generateResponse();
+
+        return response;
     }
 
     @Override
     public JsonNode generateResponse() {
         JsonNode response;
+
         try {
             acquireStructureReadLock();
             response = IEditorResponse.super.generateResponse();
             releaseStructureReadLock();
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
             releaseStructureReadLock();
             response = generateFailureResponse(e.getMessage());
         }
@@ -55,7 +60,6 @@ public class EditCommentCommand implements Command, IEditorResponse, ILocks {
     public UUID getElement() {
         return element;
     }
-
     public String getComment() {
         return comment;
     }
