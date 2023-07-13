@@ -4,7 +4,7 @@ package SpringApplication;
 // and it has to use the annotation @SpringBootTest
 // the test class has to be annotated with @RunWith and @AutoConfigureMockMvc
 // the test class has to have a private MockMvc field, autowired
-// the test class has to have a setUp method, annotated with @Before, that runs the SpringApplication
+// the test class has to have a setUp method, annotated with @Before, that runs the SpringApplication with the method run of the SpringApplication class and with null as arguments (null is the default value for the arguments of the method run)
 // the test class has to have a test method that performs a post request to the endpoint /api/process
 // the test method has to use the method perform of the MockMvc field, and it has to use the method post of the MockMvcRequestBuilders class
 // the test method has to use the method contentType of the MockHttpServletRequestBuilder class, and it has to use the method APPLICATION_JSON of the MediaType class
@@ -43,16 +43,11 @@ public class ControllerTestTry {
     @Autowired
     private MockMvc mvc;
 
-    @Before
-    public void setUp() {
-        SpringApplication.run(Application.class, null);
-    }
-
     @Test
     public void testPostEndpoint() throws Exception {
         String jsonContent = loadJsonFile("JsonFiles/CorrectCommands/AddElement.json");
 
-        mvc.perform(post("/api/process")
+        mvc.perform(post("/api")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(jsonContent))
                 .andExpect(status().isOk());

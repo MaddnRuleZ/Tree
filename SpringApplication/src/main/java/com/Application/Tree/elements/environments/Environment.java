@@ -49,7 +49,8 @@ public abstract class Environment extends Parent {
         labelList = new ArrayList<>();
         for (String line: remainingText) {
             if (line.contains(Label.startPart)) {
-                labelList.add(new Label(line));
+                //TODO ERROR
+                //labelList.add(new Label(line));
             } else {
                 restText.add(line);
             }
@@ -63,7 +64,8 @@ public abstract class Environment extends Parent {
         captionList = new ArrayList<>();
         for (String line: remainingText) {
             if (line.contains(Caption.startPart)) {
-                captionList.add(new Caption(line));
+                //TODO ERROR
+                //captionList.add(new Caption(line));
             } else {
                 restText.add(line);
             }

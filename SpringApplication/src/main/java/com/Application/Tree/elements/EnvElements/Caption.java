@@ -16,7 +16,9 @@ public class Caption extends Child {
     }
 
     public String getCaption() {
-        return this.caption;
+        //TODO
+        //return this.caption;
+        return null;
     }
 
 }

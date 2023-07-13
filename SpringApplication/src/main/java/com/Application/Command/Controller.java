@@ -2,7 +2,9 @@ package com.Application.Command;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +29,10 @@ public class Controller {
      * @param json the request from the client
      * @return the response to the client
      */
-    @PostMapping("/process")
+    @PostMapping("/api")
     public ResponseEntity<JsonNode> processRequest(@RequestBody JsonNode json) {
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return new ResponseEntity<>(json, HttpStatus.OK);
         /*
         try {
             JsonNode response = commandHandler.processCommand(json);
