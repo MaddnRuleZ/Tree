@@ -4,6 +4,7 @@ import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Tree.elements.sectioning.Root;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
@@ -14,14 +15,23 @@ public class MoveElementEditorCommand implements Command, IMoveElementCommand, I
     private UUID previousElement;
 
     @Override
-    public String execute() {
+    public JsonNode execute() {
         //TODO
         return generateResponse();
     }
 
     @Override
-    public String generateResponse() {
-        return IEditorResponse.super.generateResponse();
+    public JsonNode generateResponse() {
+        JsonNode response;
+        try {
+            acquireStructureReadLock();
+            response = IEditorResponse.super.generateResponse();
+            releaseStructureReadLock();
+        } catch (Exception e) {
+            releaseStructureReadLock();
+            response = generateFailureResponse(e.getMessage());
+        }
+        return response;
     }
 
     @Override

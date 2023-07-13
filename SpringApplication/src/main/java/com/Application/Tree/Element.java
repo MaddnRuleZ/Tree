@@ -111,7 +111,7 @@ public abstract class Element implements JsonParser, Exportable {
     /**
      * searches for the element with the given id
      * @param id to search for
-     * @param level, num of passed sections from root to currentElement, only relevant if found id belongs to sectioning
+     * @param level, num of passed sections from root to currentElement, only relevant if found id is (parent of) sectioning
      * @return found Element or null
      */
     public abstract Element searchForID(UUID id, int level);
@@ -173,5 +173,9 @@ public abstract class Element implements JsonParser, Exportable {
 
     public void setChooseManualSummary(boolean chooseManualSummary) {
         this.chooseManualSummary = chooseManualSummary;
+    }
+
+    public void setComment(String comment) {
+        //TODO
     }
 }

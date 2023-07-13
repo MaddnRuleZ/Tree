@@ -2,7 +2,9 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
+import com.Application.Tree.Element;
 import com.Application.Tree.elements.sectioning.Root;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
@@ -11,15 +13,39 @@ public class EditCommentCommand implements Command, IEditorResponse, ILocks {
     private UUID element;
     private String comment;
 
+
+    //TODO Fehlerbehandlung: im Moment wird auch bei Nichtausführbarkeit der Baum zurückgegeben
+    //Comment muss noch geparst werden: in setComment???
     @Override
-    public String execute() {
-        //TODO
+    public JsonNode execute() {
+        try {
+            acquireStructureWriteLock();
+            Element elementFound = root.searchForID(this.element);
+            if(elementFound == null) {
+                releaseStructureWriteLock();
+                return generateResponse();
+            }
+            elementFound.setComment(comment);
+        } catch (Exception e) {
+            releaseStructureWriteLock();
+            return generateResponse();
+        }
+        releaseStructureReadLock();
         return generateResponse();
     }
 
     @Override
-    public String generateResponse() {
-        return IEditorResponse.super.generateResponse();
+    public JsonNode generateResponse() {
+        JsonNode response;
+        try {
+            acquireStructureReadLock();
+            response = IEditorResponse.super.generateResponse();
+            releaseStructureReadLock();
+        } catch (Exception e) {
+            releaseStructureReadLock();
+            response = generateFailureResponse(e.getMessage());
+        }
+        return response;
     }
 
     public Root getRoot() {

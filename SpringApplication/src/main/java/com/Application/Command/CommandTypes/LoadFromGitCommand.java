@@ -3,6 +3,7 @@ package com.Application.Command.CommandTypes;
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.User;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class LoadFromGitCommand implements Command, IEditorResponse, ILocks {
    private User user;
@@ -11,14 +12,23 @@ public class LoadFromGitCommand implements Command, IEditorResponse, ILocks {
    private String password;
 
     @Override
-    public String execute() {
+    public JsonNode execute() {
         //TODO
         return generateResponse();
     }
 
     @Override
-    public String generateResponse() {
-        return IEditorResponse.super.generateResponse();
+    public JsonNode generateResponse() {
+        JsonNode response;
+        try {
+            acquireStructureReadLock();
+            response = IEditorResponse.super.generateResponse();
+            releaseStructureReadLock();
+        } catch (Exception e) {
+            releaseStructureReadLock();
+            response = generateFailureResponse(e.getMessage());
+        }
+        return response;
     }
 
     public User getUser() {
