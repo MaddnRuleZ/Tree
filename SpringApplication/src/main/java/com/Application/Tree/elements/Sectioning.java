@@ -1,6 +1,5 @@
-package com.Application.Tree;
+package com.Application.Tree.elements;
 
-import com.Application.Tree.elements.Parent;
 
 public class Sectioning extends Parent {
     public Sectioning(String startPart, String endPart, int startIndex, int level) {

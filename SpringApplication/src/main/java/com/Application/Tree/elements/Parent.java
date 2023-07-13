@@ -66,8 +66,8 @@ public class Parent extends Element {
                 arrayList.addAll(this.summary.getContent());
             }
 
-            if (newLine.getTextParts() != null) {
-                for (List<String> list: newLine.getTextParts()) {
+            if (textBlock.getTextParts() != null) {
+                for (List<String> list: textBlock.getTextParts()) {
                     if (list != null) {
                         arrayList.addAll(list);
                     }

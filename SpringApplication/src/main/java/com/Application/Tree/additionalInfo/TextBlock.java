@@ -4,14 +4,13 @@ package com.Application.Tree.additionalInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewLine extends AdditionalInformationContainer{
+public class TextBlock extends AdditionalInformationContainer {
     private final static String NEW_LN_CHARACTER = "\\newline";
     private final static String NEW_LN_CHARACTER1 = "\\\\";
-    // more nl characters?
 
     protected List<List<String>> content;
 
-    public NewLine() {
+    public TextBlock() {
         content = new ArrayList<>();
     }
 
@@ -33,7 +32,7 @@ public class NewLine extends AdditionalInformationContainer{
         }
         parts.add(currentPart);
         content = parts;
-        //setNullContent();
+        setNullContent();
         return null;
     }
 

@@ -15,6 +15,8 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 
+
+
 		boolean maddinInTheHouse = true;
 		if (maddinInTheHouse) {
 			// start test Suite, kannst darunter dein Test code machen, set false für einfaches ausschalten

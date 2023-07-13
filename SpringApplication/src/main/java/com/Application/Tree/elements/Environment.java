@@ -23,9 +23,9 @@ public class Environment extends Parent {
      * @param text
      * @param endIndex
      */
-    public void generateTextFromIndices(String[] text, int endIndex) {
+    public void scanElementTextForSubElements(String[] text, int endIndex) {
         if (endIndex != 0 && this.text == null) {
-            String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex +1, endIndex -1); // +1; -1 for removal of overlapping
+            String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex +1, endIndex -1);
             List<String> remainingText = Arrays.stream(elementFullText).toList();
             this.options = extractOptionsString(text[this.startIndex]);
             this.text = elementFullText;
@@ -33,7 +33,7 @@ public class Environment extends Parent {
             remainingText = summary.extractInfo(remainingText);
             remainingText = comment.extractInfo(remainingText);
 
-            newLine.extractInfo(remainingText);
+            textBlock.extractInfo(remainingText);
         }
     }
 

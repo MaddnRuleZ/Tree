@@ -1,7 +1,6 @@
 package com.Application.Tree.elements;
 
 import com.Application.Tree.Element;
-import com.Application.Tree.Sectioning;
 
 import java.util.ArrayList;
 import java.util.List;

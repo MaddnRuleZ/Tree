@@ -2,7 +2,7 @@ package com.Application.Tree;
 
 import com.Application.Interpreter.TextFileReader;
 import com.Application.Tree.additionalInfo.Comment;
-import com.Application.Tree.additionalInfo.NewLine;
+import com.Application.Tree.additionalInfo.TextBlock;
 import com.Application.Tree.additionalInfo.Summary;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
@@ -15,7 +15,7 @@ public abstract class Element implements JsonParser, Exportable {
     protected String[] text;
     protected final Summary summary;
     protected final Comment comment;
-    protected final NewLine newLine;
+    protected final TextBlock textBlock;
     private boolean chooseManualSummary;
     protected String options;
     protected final int startIndex;
@@ -28,18 +28,15 @@ public abstract class Element implements JsonParser, Exportable {
         this.endPart = endPart;
         this.startIndex = startIndex;
         this.level = level;
-
         this.text = null;
 
         comment = new Comment();
         summary = new Summary();
-        newLine = new NewLine();
+        textBlock = new TextBlock();
     }
-
 
     /**
      * ture if Element has no Text or can be overwritten (Dead Zone EdgeCase)
-     * todo still working?
      *
      * @return
      */
@@ -54,18 +51,16 @@ public abstract class Element implements JsonParser, Exportable {
      * @param text
      * @param endIndex
      */
-    public void generateTextFromIndices(String[] text, int endIndex) {
+    public void scanElementTextForSubElements(String[] text, int endIndex) {
         if (endIndex != 0 && validateIndicTextGeneration()) {
-            String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex +1, endIndex -1); // +1; -1 for removal of overlapping
+            String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex + 1, endIndex - 1);
             List<String> remainingText = Arrays.stream(elementFullText).toList();
             this.options = extractOptionsString(text[this.startIndex]);
             this.text = elementFullText;
 
             remainingText = summary.extractInfo(remainingText);
             remainingText = comment.extractInfo(remainingText);
-
-            // extract labels and captions
-            newLine.extractInfo(remainingText);
+            textBlock.extractInfo(remainingText);
         }
     }
 
@@ -78,7 +73,6 @@ public abstract class Element implements JsonParser, Exportable {
     public abstract Element searchForID(UUID id, int level);
 
     protected String extractOptionsString(String rawOptions) {
-        // do Regex to extract the Options String Parts
         return rawOptions;
     }
 
@@ -88,19 +82,15 @@ public abstract class Element implements JsonParser, Exportable {
     public Element getParentElement() {
         return parentElement;
     }
-
     public String getStartPart() {
         return startPart;
     }
-
     public String getEndPart() {
         return endPart;
     }
-
     public String toJson() {
         return null;
     }
-
     public String[] getText() {
         return this.text;
     }
@@ -110,22 +100,17 @@ public abstract class Element implements JsonParser, Exportable {
     public int getLevel() {
         return level;
     }
-
     public String getOptions() {
         return this.options;
     }
-
     public abstract boolean addChild(Element child);
-
     public boolean isChooseManualSummary() {
         return chooseManualSummary;
     }
-
     public void setChooseManualSummary(boolean chooseManualSummary) {
         this.chooseManualSummary = chooseManualSummary;
     }
-
     public void setComment(String comment) {
-        //TODO
+        this.comment.setContent(comment);
     }
 }

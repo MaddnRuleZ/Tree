@@ -30,4 +30,7 @@ public abstract class AdditionalInformationContainer {
         return this.content;
     }
 
+    public void setContent(String comment) {
+        this.content = content;
+    }
 }

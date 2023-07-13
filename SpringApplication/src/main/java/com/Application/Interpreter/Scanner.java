@@ -50,7 +50,7 @@ public class Scanner {
 
         // fill last one
         if (currElement != null) {
-            currElement.generateTextFromIndices(text, text.length - 1);
+            currElement.scanElementTextForSubElements(text, text.length - 1);
         }
 
         return root;
@@ -68,7 +68,7 @@ public class Scanner {
 
         // end Part of current
         if (currentElement != null && currentElement.getEndPart() != null && text[index].contains(currentElement.getEndPart())) {
-            currentElement.generateTextFromIndices(text, index);
+            currentElement.scanElementTextForSubElements(text, index);
             return currentElement;
 
         } else {
@@ -101,7 +101,7 @@ public class Scanner {
      * @param element
      */
     private void lowerLevel(Element currentElement, int index, Element element) {
-        currentElement.generateTextFromIndices(text, index);
+        currentElement.scanElementTextForSubElements(text, index);
         setParentChild(currentElement, element);
     }
 
@@ -112,7 +112,7 @@ public class Scanner {
      * @param element
      */
     private void sameLevel(Element currentElement, int index, Element element) {
-        currentElement.generateTextFromIndices(text, index);
+        currentElement.scanElementTextForSubElements(text, index);
         Element parent = currentElement.getParentElement();
 
         if (parent == null) {
@@ -134,9 +134,8 @@ public class Scanner {
         // prev subsection
         Element searchElem = currentElement;
 
-        // ERR
         while (searchElem != null && searchElem.getLevel() >= element.getLevel()) {
-            searchElem.generateTextFromIndices(text, index);
+            searchElem.scanElementTextForSubElements(text, index);
             searchElem = searchElem.getParentElement();
         }
 
