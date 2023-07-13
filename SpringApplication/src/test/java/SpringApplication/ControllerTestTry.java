@@ -13,6 +13,8 @@ package SpringApplication;
 
 
 import com.Application.Application;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -46,7 +49,7 @@ public class ControllerTestTry {
 
     @Test
     public void testPostEndpoint() throws Exception {
-        String jsonContent = loadJsonFile("JsonFiles/CorrectCommands/AddElement.json");
+        String jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/AddElement.json");
 
         mvc.perform(post("/api")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -55,20 +58,31 @@ public class ControllerTestTry {
     }
 
     @Test
-    public void testGetEndpoint() throws Exception {
+    public void testLoadFullDataGetEndpoint() throws Exception {
         mvc.perform(get("/LoadFullData")).andExpect(status().isOk());
     }
+
+    @Test
+    public void testLoadTreeDAtaGetEndpoint() throws Exception {
+        mvc.perform(get("/LoadTreeData")).andExpect(status().isOk());
+    }
+
+
 
 
     /**
      * Helper method to load JSON file content as a String
      * @param filePath the path of the JSON file
      */
-    private String loadJsonFile(String filePath) throws IOException {
-        InputStream inputStream = new ClassPathResource(filePath).getInputStream();
-        return inputStream.toString();
+    private String loadJsonFile(String filePath) {
+        ObjectMapper mapper = new ObjectMapper();
+        File file = new File(filePath);
+        try {
+            return mapper.readTree(file).toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
-
-
-
 }
+
