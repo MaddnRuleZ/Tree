@@ -1,8 +1,6 @@
 package com.Application.Interpreter;
 
-
-import com.Application.Tree.Element;
-import com.Application.Tree.elements.sectioning.Root;
+import com.Application.Tree.elements.Root;
 
 /**
  * Class for Parsing a single Latex Document,
@@ -21,7 +19,6 @@ public class Parser {
      * @param filePath
      */
     public Parser(String filePath) {
-        Element.createLevelMap();
         this.filePath = filePath;
         this.textFileReader = new TextFileReader(filePath);
 

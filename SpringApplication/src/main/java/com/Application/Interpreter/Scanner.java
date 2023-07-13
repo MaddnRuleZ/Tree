@@ -1,20 +1,13 @@
 package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
-import com.Application.Tree.elements.sectioning.*;
-import com.Application.Tree.elements.environments.Algorithm;
-import com.Application.Tree.elements.environments.Equation;
-import com.Application.Tree.elements.environments.Figure;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
+import com.Application.Tree.elements.Root;
+import com.Application.Tree.elements.SectioningType;
 
 /**
  *
  */
 public class Scanner {
-    private final Map<String, Class<?>> startPartsMap;
     private final String[] text;
     private final Root root;
 
@@ -23,12 +16,9 @@ public class Scanner {
      * @param text
      */
     public Scanner(String[] text) {
-        startPartsMap = createPartsMap();
         root = new Root();
         this.text = text;
     }
-
-    // return root of parsed Doc or Teil Doc, eigentlicher algo teil
 
     /**
      * scan the given Document for Latex Structure Elements and return the root Element for this Part of the Tree
@@ -43,7 +33,6 @@ public class Scanner {
             if (text[i].contains("\\")) {
                 try {
                     currElement = scanLine(currElement, i);
-
                     if (currElement != null && !firstElementFound) {
                         firstElementFound = true;
                         root.addStartText(TextFileReader.extractStrings(text, 0, i - 1));
@@ -53,13 +42,9 @@ public class Scanner {
                     System.out.println("### Error in line " + i + ": " + e.getMessage());
                     e.printStackTrace();
                 }
+
             } else if(text[i].contains("\\end{document}")) {
                 break;
-            }
-
-            if (i == 218) {
-                System.out.println("### debugging Index reached, debugging purpose only");
-
             }
         }
 
@@ -72,17 +57,8 @@ public class Scanner {
     }
 
     /**
-     * Note: (Outdated doc)
-     * Elemente sind in hierachie angeordent, in einer Halbordung, also
-     * part, chapter .... subparagraph
-     * basierend darauf werden Elemente als Kind oder an den Parent angehangen um die verschiedenen Ebenen (level) zu navigieren
+     * Scan the current line and create an new Element or Close one
      *
-     * Documentation:
-     * check if new end or starting point,
-     * new : create new Element, compare level of current Element and new created element
-     *       based on this add element to a parent or add element as child
-     *       (some edge cases)
-     *       when current level is null level
      *
      * @param currentElement last Element that was created
      * @param index current index of the text
@@ -96,12 +72,10 @@ public class Scanner {
             return currentElement;
 
         } else {
+            Element element = SectioningType.initType(this.text[index], index);
 
-            Element element = createNewElement(this.text[index], index);
             if (element != null) {
-
                 if (currentElement == null) {
-                    // root Level
                     setParentChild(root, element);
 
                 } else if (element.getLevel() > currentElement.getLevel()) {
@@ -178,54 +152,6 @@ public class Scanner {
 
 
     /**
-     * init PartMap for easier decition on what to generate
-     *
-     * @return
-     */
-    private Map<String, Class<?>>  createPartsMap() {
-        Map<String, Class<?>> partsMap = new HashMap<>();
-        partsMap = new HashMap<>();
-        partsMap.put(Part.startPart, Part.class);
-        partsMap.put(Chapter.startPart, Chapter.class);
-        partsMap.put(Section.startPart, Section.class);
-        partsMap.put(SubSection.startPart, SubSection.class);
-        partsMap.put(SubSubSection.startPart, SubSubSection.class);
-        partsMap.put(Paragraph.startPart, Paragraph.class);
-        partsMap.put(SubParagraph.startPart, SubParagraph.class);
-
-        partsMap.put(Figure.startPart, Figure.class);
-        partsMap.put(Equation.startPart, Equation.class);
-        partsMap.put(Algorithm.startPart, Algorithm.class);
-
-        return partsMap;
-    }
-
-    /**
-     * Create an new Element based on the startPart map
-     *
-     * @param currentLine
-     * @param index
-     * @return
-     */
-    private Element createNewElement(String currentLine, int index) {
-        for (Map.Entry<String, Class<?>> entry : this.startPartsMap.entrySet()) {
-            String startPart = entry.getKey();
-            Class<?> clazz = entry.getValue();
-
-            if (currentLine.contains(startPart)) {
-                try {
-                    return (Element) clazz.getConstructor(int.class).newInstance(index);
-                } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                         InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * set the double linked Connection between two Elements
      * set the Parent as Parent for the Child,
      * set the Child as Child for the Parent,
@@ -237,30 +163,4 @@ public class Scanner {
         child.setParent(parent);
         parent.addChild(child);
     }
-
-    // dont delete yet, for edges
-    // Create a map to associate start parts with their corresponding classes
-    /*
-    // for labels usw in the following Context . . . .
-
-      // end Part of Parent -> Label usw...
-        } else if (currentElement != null && currentElement.getParentElement() != null
-                && currentElement.getParentElement().getEndPart() != null
-                && text[index].contains(currentElement.getParentElement().getEndPart())) {
-
-            currentElement.getParentElement().generateTextFromIndices(text, index);
-            currentElement.generateTextFromIndices(text, index);
-            return currentElement.getParentElement();
-
-            // new start Point
-        }
-     */
-
-
-    /*
-     else if (searchElem.getParentElement() == null) {
-        setParentChild(searchElem, element);
-        //?
-    }
-     */
 }

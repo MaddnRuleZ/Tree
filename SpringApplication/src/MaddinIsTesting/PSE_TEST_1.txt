@@ -1,15 +1,44 @@
 starting Text Blind Spot_1
 
-
 \start{document}
 starting Text Blind Spot_2
 
 \section{Frontend}
-    exa_Text_1
+    %comment1
+    %comment2
 
+    %\begin{summary}
+    exa1
+    endExa1
+    %\end{summary}
+
+    Text1 / Das hier ist nur Exa text um ifndafnk adokfnmak ma mkadsfa +kdnfa+f
+    \newline
+
+    Text2 / Das hier ist nur Exa text um ifndafnk adokfnmak ma mkadsfa +kdnfa+f
+    \newline
+
+    Text3 / Das hier ist nur Exa text um ifndafnk adokfnmak ma mkadsfa +kdnfa+f
+    \newline
+
+    Dead Zone Test _4
     \subsection{Klassen}
-        exa_Text_3
+        comments summary usw ... here auto move?
 
+        Dead Zone Test_4
+        \label
+            Dead Zone Test_5
+
+            End Dead Zone Test_5
+            \newline
+
+            Dead Zone Test_6
+
+            End Zone Test_6
+        \caption
+            Dead Zone Test_7
+
+            End Dead Zone Test_7
         \subsubsection{Backend-Interaktionsdienste}
         exa_Text_5
 
@@ -24,8 +53,9 @@ starting Text Blind Spot_2
                 \includegraphics[width=1\textwidth]{Frontend/Klassendiagramme/benutzereinstellungen.png}
                 \caption{Klassendiagramm der Benutzereinstellungen}
                 \label{CommandHandler}
+                    more Text DeadZone?
             \end{figure}
             exa_Text_8
 
-    \subsection{Komponenten des Frontend} // FIRST ERROR
+    \subsection{Komponenten des Frontend}
         exa_Text_9

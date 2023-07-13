@@ -3,7 +3,7 @@ package com.Application.Command.CommandTypes;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
-import com.Application.Tree.elements.sectioning.Root;
+import com.Application.Tree.elements.Root;
 
 import java.util.UUID;
 

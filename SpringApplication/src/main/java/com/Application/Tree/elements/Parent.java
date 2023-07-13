@@ -11,8 +11,8 @@ import java.util.UUID;
 public class Parent extends Element {
     private final List<Element> childElements;
 
-    public Parent(String startPart, String endPart, int startIndex) {
-        super(startPart, endPart, startIndex);
+    public Parent(String startPart, String endPart, int startIndex, int level) {
+        super(startPart, endPart, startIndex, level);
         childElements = new ArrayList<>();
     }
 
@@ -53,24 +53,8 @@ public class Parent extends Element {
     @Override
     public String[] toText() {
         List<String>  arrayList = new ArrayList<>();
-
-        String[] curr = this.getText();
-        if (curr != null) {
-            arrayList.addAll(Arrays.asList(curr));
-        }
-
-        for (Element element: childElements) {
-            arrayList.addAll(Arrays.asList(element.toText()));
-        }
-        return arrayList.toArray(new String[0]);
-    }
-
-    @Override
-    public String[] toTextAdvanced() {
-        List<String>  arrayList = new ArrayList<>();
         String[] curr = this.getText();
 
-        // build from Comments, summary and TextParts
         if (curr != null) {
             arrayList.add(this.getOptions());
 
@@ -92,7 +76,7 @@ public class Parent extends Element {
         }
 
         for (Element element: childElements) {
-            arrayList.addAll(Arrays.asList(element.toTextAdvanced()));
+            arrayList.addAll(Arrays.asList(element.toText()));
         }
         return arrayList.toArray(new String[0]);
     }

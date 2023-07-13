@@ -1,4 +1,4 @@
-package com.Application.Tree.elements.sectioning;
+package com.Application.Tree.elements;
 
 
 import com.Application.Tree.elements.Parent;
@@ -11,7 +11,7 @@ public class Root extends Parent {
 
     public String[] startText;
     public Root() {
-        super(startPart, endPart, 0);
+        super(startPart, endPart, 0,0);
     }
 
     public void addStartText(String[] startText) {

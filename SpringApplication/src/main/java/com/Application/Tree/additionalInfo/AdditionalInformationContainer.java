@@ -9,6 +9,7 @@ import java.util.List;
  *
  */
 public abstract class AdditionalInformationContainer {
+
     protected List<String> content;
     public AdditionalInformationContainer() {
         content = new ArrayList<>();
