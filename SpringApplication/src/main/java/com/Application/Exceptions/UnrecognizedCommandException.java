@@ -3,7 +3,7 @@ package com.Application.Exceptions;
 /**
  * thrown if the command type of the json file is not recognized
  */
-public class UnrecognizedCommandException extends Exception {
+public class UnrecognizedCommandException extends ProcessingException {
 
     /**
      * thrown if the command type of the json file is not recognized

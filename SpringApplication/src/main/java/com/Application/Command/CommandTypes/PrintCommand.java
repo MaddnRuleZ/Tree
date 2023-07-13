@@ -3,6 +3,7 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Printer.Printer;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
@@ -14,21 +15,22 @@ public class PrintCommand implements Command, ILocks {
     private Printer printer;
 
 
+    //TODO Fehlerbehandlung
     @Override
-    public String execute() {
+    public JsonNode execute() {
         try {
             acquireStructureReadLock();
             printer.export();
         } catch (IOException e) {
             releaseStructureReadLock();
-            return "Error: " + e.getMessage();
+            return null;
         }
         releaseStructureReadLock();
         return generateResponse();
     }
 
 
-    public String generateResponse() {
+    public JsonNode generateResponse() {
         //TODO
         return null;
     }

@@ -2,6 +2,7 @@ package SpringApplication.CommandTests;
 
 import com.Application.Command.CommandHandler;
 import com.Application.Exceptions.NumParamsException;
+import com.Application.Exceptions.ProcessingException;
 import com.Application.Exceptions.UnrecognizedCommandException;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -26,50 +27,50 @@ public class CorrectCommandTest {
     }
 
     @Test
-    void AddElementTest() throws NumParamsException, UnrecognizedCommandException {
+    void AddElementTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/AddElement.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
     @Test
-    void DeleteElementTest() throws NumParamsException, UnrecognizedCommandException {
+    void DeleteElementTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/DeleteElement.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
 
     @Test
-    void EditCommentTest() throws NumParamsException, UnrecognizedCommandException {
+    void EditCommentTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditComment.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
 
     @Test
-    void EditContentTest() throws NumParamsException, UnrecognizedCommandException {
+    void EditContentTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditContent.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
     @Test
-    void EditSummaryTest() throws NumParamsException, UnrecognizedCommandException {
+    void EditSummaryTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditSummary.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
     @Test
-    void LoadFromFolderTest() throws NumParamsException, UnrecognizedCommandException {
+    void LoadFromFolderTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/LoadFromFolder.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
     @Test
-    void LoadFromGitTest() throws NumParamsException, UnrecognizedCommandException {
+    void LoadFromGitTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/LoadFromGit.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
     @Test
-    void MoveElementTreeTest() throws NumParamsException, UnrecognizedCommandException {
+    void MoveElementTreeTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/MoveElementTree.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }
 
     @Test
-    void MoveElementEditorTest() throws NumParamsException, UnrecognizedCommandException {
+    void MoveElementEditorTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/MoveElementEditor.json");
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
     }

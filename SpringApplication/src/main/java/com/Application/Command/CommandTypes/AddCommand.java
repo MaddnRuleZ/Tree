@@ -2,12 +2,12 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
-import com.Application.Tree.elements.Root;
+import com.Application.Tree.elements.sectioning.Root;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
 public class AddCommand implements Command, IEditorResponse, ILocks {
-
 
     private Root root;
     private String content;
@@ -16,21 +16,21 @@ public class AddCommand implements Command, IEditorResponse, ILocks {
 
 
     @Override
-    public String execute() {
+    public JsonNode execute() {
         //TODO
         return generateResponse();
     }
 
     @Override
-    public String generateResponse() {
-        String response;
+    public JsonNode generateResponse() {
+        JsonNode response;
         try {
             acquireStructureReadLock();
             response = IEditorResponse.super.generateResponse();
             releaseStructureReadLock();
         } catch (Exception e) {
             releaseStructureReadLock();
-            response = "Error: " + e.getMessage();
+            response = generateFailureResponse(e.getMessage());
         }
         return response;
     }

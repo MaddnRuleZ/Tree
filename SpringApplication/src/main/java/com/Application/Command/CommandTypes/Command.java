@@ -1,20 +1,23 @@
 package com.Application.Command.CommandTypes;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public interface Command {
     /**
      * executes the command
      */
-    String execute();
+    JsonNode execute();
 
 
     /**
      * generates the Json response String, if execution failed
      * @return failureResponse
      */
-    default String generateFailureResponse() {
+    default JsonNode generateFailureResponse(String errorMessage) {
+
         //TODO
         return null;
     }
 
-    String generateResponse();
+    JsonNode generateResponse();
 }

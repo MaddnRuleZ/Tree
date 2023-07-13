@@ -2,6 +2,9 @@ package com.Application.Command;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
+import com.Application.Exceptions.NumParamsException;
+import com.Application.Exceptions.ProcessingException;
+import com.Application.Exceptions.UnrecognizedCommandException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Component
 public class Controller {
-    private CommandHandler commandHandler;
+    private final CommandHandler commandHandler;
 
     @Autowired
     public Controller(CommandHandler commandHandler) {
@@ -28,16 +31,13 @@ public class Controller {
      */
     @PostMapping("/api")
     public ResponseEntity<JsonNode> processRequest(@RequestBody JsonNode json) {
-        return new ResponseEntity<>(json, HttpStatus.OK);
-        /*
         try {
             JsonNode response = commandHandler.processCommand(json);
             return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (UnrecognizedCommandException | NumParamsException | IllegalArgumentException e) {
-            JsonNode errorResponse = "Error: " + e.getMessage();
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        } catch (ProcessingException e) {
+            return new ResponseEntity<>(e.generateFailureResponse(), HttpStatus.BAD_REQUEST);
         }
-        */
+
 
     }
 
@@ -53,6 +53,7 @@ public class Controller {
             JsonNode response = IEditorResponse.super.generateResponse();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
+            ObjectMapper mapper = new ObjectMapper();
             JsonNode errorResponse = "Error: " + e.getMessage();
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
