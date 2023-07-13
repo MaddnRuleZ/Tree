@@ -70,4 +70,5 @@ starting Text Blind Spot_2
             exa_Text_8
 
     \subsection{Komponenten des Frontend}
-        exa_Text_9
+
+         correct Ending Cut?

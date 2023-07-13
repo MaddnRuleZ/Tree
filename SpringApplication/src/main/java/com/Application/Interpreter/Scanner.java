@@ -50,7 +50,7 @@ public class Scanner {
         }
 
         if (currElement != null) {
-            currElement.scanElementTextForSubElements(text, text.length - 1);
+            currElement.scanElementTextForSubElements(text, text.length);
         }
 
         return root;
