@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class Environment extends Parent {
+
     protected List<Label> labelList;
     protected List<Caption> captionList;
 
@@ -44,7 +45,7 @@ public abstract class Environment extends Parent {
         }
     }
 
-
+    /*
     // exec, when finnishing an environment?
     private List<String> scanElementForLabel(List<String> remainingText) {
         List<String> restText = new ArrayList<>();
@@ -90,5 +91,7 @@ public abstract class Environment extends Parent {
         return null;
     }
 
+
+     */
 
 }
