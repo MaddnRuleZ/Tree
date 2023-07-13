@@ -8,11 +8,10 @@ import com.Application.Tree.elements.Root;
  *
  */
 public class Parser {
+    private final TextFileReader textFileReader;
+    private final String filePath;
     private Scanner scanner;
-    private TextFileReader textFileReader;
-    private String filePath;
     private String[] text;
-
 
     /**
      *
@@ -26,7 +25,6 @@ public class Parser {
 
     public Root startParsing() {
         if (!textFileReader.validateFile()) {
-            // Err state
             return null;
         }
         this.text = textFileReader.readLinesFromFile();

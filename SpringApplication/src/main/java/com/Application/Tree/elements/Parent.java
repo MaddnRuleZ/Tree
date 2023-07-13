@@ -9,13 +9,12 @@ import java.util.UUID;
 
 
 public class Parent extends Element {
-    private final List<Element> childElements;
+    protected final List<Element> childElements;
 
     public Parent(String startPart, String endPart, int startIndex, int level) {
         super(startPart, endPart, startIndex, level);
         childElements = new ArrayList<>();
     }
-
 
     @Override
     public boolean validateIndicTextGeneration() {

@@ -1,4 +1,4 @@
-starting Text Blind Spot_1
+starting Text Blind Spot_1 DOC 1
 
 \start{document}
 starting Text Blind Spot_2
@@ -40,7 +40,9 @@ starting Text Blind Spot_2
 
             End Dead Zone Test_7
         \subsubsection{Backend-Interaktionsdienste}
-        exa_Text_5
+            exa Test 99
+
+\input{SpringApplication/src/MaddinIsTesting/InputTest.txt}
 
         \subsubsection{Strukturelle Komponenten des Composite-Musters}
         exa_Text_6

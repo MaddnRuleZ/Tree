@@ -1,6 +1,7 @@
 package com.Application.Interpreter;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +14,27 @@ public class TextFileReader {
     }
 
     public boolean validateFile() {
+        File file = new File(filePath);
+
+        // Check if file exists
+        if (!file.exists()) {
+            System.out.println("File does not exist: " + filePath);
+            return false;
+        }
+
+        // Check if file is a directory
+        if (file.isDirectory()) {
+            System.out.println("File is a directory: " + filePath);
+            return false;
+        }
+
+        // Check if file is readable
+        if (!file.canRead()) {
+            System.out.println("File is not readable: " + filePath);
+            return false;
+        }
+
+        // File exists, is not a directory, and is readable
         return true;
     }
 

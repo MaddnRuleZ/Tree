@@ -1,5 +1,6 @@
 package com.Application.Interpreter;
 
+import com.Application.Exceptions.ElementNotFoundException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.Root;
 import com.Application.Tree.elements.ElementConfig;
@@ -38,7 +39,7 @@ public class Scanner {
                         root.addStartText(TextFileReader.extractStrings(text, 0, i - 1));
                     }
                 } catch(Exception e) {
-                    // fatal Err in Elem generation
+                    //throw new ElementNotFoundException("Fatal Error while creating Element, in line" + i);
                     System.out.println("### Error in line " + i + ": " + e.getMessage());
                     e.printStackTrace();
                 }
@@ -48,7 +49,6 @@ public class Scanner {
             }
         }
 
-        // fill last one
         if (currElement != null) {
             currElement.scanElementTextForSubElements(text, text.length - 1);
         }

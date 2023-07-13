@@ -1,0 +1,18 @@
+Blindspot Test, start of Doc
+
+\section
+    exaText
+    \newline
+
+    exaTst2
+\section
+    exaText
+    \newline
+
+    exaTst2
+    \subsection
+        exaText
+        \newline
+        exaTst2
+
+Blindspot Test, end of Doc

@@ -75,7 +75,6 @@ public abstract class Element implements JsonParser, Exportable {
     protected String extractOptionsString(String rawOptions) {
         return rawOptions;
     }
-
     public void setParent(Element parentElement) {
         this.parentElement = parentElement;
     }

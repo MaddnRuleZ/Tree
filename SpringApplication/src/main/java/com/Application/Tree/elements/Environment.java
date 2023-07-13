@@ -11,7 +11,6 @@ public class Environment extends Parent {
 
     public Environment(String startPart, String endPart, int startIndex, int level) {
         super(startPart, endPart, startIndex, level);
-
     }
 
     @Override
