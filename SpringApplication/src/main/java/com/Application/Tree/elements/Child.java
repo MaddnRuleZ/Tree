@@ -2,6 +2,8 @@ package com.Application.Tree.elements;
 
 import com.Application.Tree.Element;
 
+import java.util.UUID;
+
 /**
  *
  */
@@ -43,6 +45,15 @@ public class Child extends Element {
     public String[] toTextAdvanced() {
         if (text != null) {
             return text;
+        }
+        return null;
+    }
+
+
+    @Override
+    public Child searchForID(UUID id, int level) {
+        if (this.getId().equals(id)) {
+            return this;
         }
         return null;
     }

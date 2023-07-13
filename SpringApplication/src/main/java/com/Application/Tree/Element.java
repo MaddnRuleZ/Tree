@@ -108,6 +108,14 @@ public abstract class Element implements JsonParser, Exportable {
         }
     }
 
+    /**
+     * searches for the element with the given id
+     * @param id to search for
+     * @param level, num of passed sections from root to currentElement, only relevant if found id belongs to sectioning
+     * @return found Element or null
+     */
+    public abstract Element searchForID(UUID id, int level);
+
     private void setLevel(String startPart) {
         for (Map.Entry<Element ,Integer> entry: LEVEL_MAP.entrySet()) {
             Element entryElement = entry.getKey();

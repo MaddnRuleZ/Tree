@@ -1,6 +1,7 @@
 package com.Application.Tree.elements.environments;
 
 import com.Application.Interpreter.TextFileReader;
+import com.Application.Tree.Element;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.EnvElements.Caption;
 import com.Application.Tree.elements.EnvElements.Label;
@@ -8,6 +9,7 @@ import com.Application.Tree.elements.EnvElements.Label;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class Environment extends Parent {
     protected List<Label> labelList;
@@ -72,5 +74,21 @@ public abstract class Environment extends Parent {
         }
         return restText;
     }
+
+    @Override
+    public Element searchForID(UUID id, int level) {
+        if (this.getId().equals(id)) {
+            return this;
+        } else {
+            for (Element child: this.getChildElements()) {
+                Element foundElement = child.searchForID(id, level);
+                if (foundElement != null) {
+                    return foundElement;
+                }
+            }
+        }
+        return null;
+    }
+
 
 }

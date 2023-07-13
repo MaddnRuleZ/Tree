@@ -5,7 +5,7 @@ import com.Application.Tree.Element;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.UUID;
 
 
 public class Parent extends Element {
@@ -20,6 +20,13 @@ public class Parent extends Element {
     @Override
     public boolean validateIndicTextGeneration() {
         return this.text == null;
+    }
+
+    @Override
+    public Element searchForID(UUID id, int level) {
+        // TODO in Environment -> level ändert sich nicht
+        // TODO in Sectioning -> level ändert sich
+        return null;
     }
 
     public boolean addChild(Element element) {

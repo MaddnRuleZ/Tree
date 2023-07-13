@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,6 +52,11 @@ public class ControllerTestTry {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(jsonContent))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetEndpoint() throws Exception {
+        mvc.perform(get("/LoadFullData")).andExpect(status().isOk());
     }
 
 
