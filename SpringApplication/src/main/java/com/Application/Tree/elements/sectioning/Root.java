@@ -1,7 +1,10 @@
 package com.Application.Tree.elements.sectioning;
 
 
+import com.Application.Tree.Element;
 import com.Application.Tree.elements.Parent;
+
+import java.util.UUID;
 
 public class Root extends Parent {
 
@@ -21,5 +24,12 @@ public class Root extends Parent {
     public String[] getStartText() {
         return this.startText;
     }
+
+    public Element searchForID(UUID id) {
+        //TODO
+        return null;
+    }
+
+
 
 }

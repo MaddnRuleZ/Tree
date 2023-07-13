@@ -35,7 +35,7 @@ public class CommandHandler {
      * @return jsonString of tree structure, if it was possible to execute command
      */
 
-    public String processCommand(JsonNode jsonFile) throws UnrecognizedCommandException, NumParamsException {
+    public JsonNode processCommand(JsonNode jsonFile) throws UnrecognizedCommandException, NumParamsException {
 
         if (jsonFile.isEmpty()) {
             throw new NumParamsException("jsonFile");
@@ -48,7 +48,7 @@ public class CommandHandler {
         if (factory != null) {
             JsonNode attributes = jsonFile.findValue(commandType);
             Command command = factory.createCommand(attributes);
-            String response = command.execute();
+            JsonNode response = command.execute();
             return response;
         } else {
             throw new UnrecognizedCommandException(commandType);

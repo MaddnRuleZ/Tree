@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Component
 public class Controller {
-    private CommandHandler commandHandler;
+    private final CommandHandler commandHandler;
 
     @Autowired
     public Controller(CommandHandler commandHandler) {
@@ -57,6 +57,7 @@ public class Controller {
             JsonNode response = IEditorResponse.super.generateResponse();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
+            ObjectMapper mapper = new ObjectMapper();
             JsonNode errorResponse = "Error: " + e.getMessage();
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }

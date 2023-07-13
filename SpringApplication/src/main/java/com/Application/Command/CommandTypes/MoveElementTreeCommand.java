@@ -1,9 +1,11 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
 import com.Application.Tree.elements.sectioning.Root;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
@@ -15,14 +17,23 @@ public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITr
 
 
     @Override
-    public String execute() {
+    public JsonNode execute() {
         //TODO
         return generateResponse();
     }
 
     @Override
-    public String generateResponse() {
-        return ITreeResponse.super.generateResponse();
+    public JsonNode generateResponse() {
+        JsonNode response;
+        try {
+            acquireStructureReadLock();
+            response = ITreeResponse.super.generateResponse();
+            releaseStructureReadLock();
+        } catch (Exception e) {
+            releaseStructureReadLock();
+            response = generateFailureResponse(e.getMessage());
+        }
+        return response;
     }
 
     @Override
