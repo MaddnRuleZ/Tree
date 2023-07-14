@@ -1,7 +1,6 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
-import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.Root;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
-public class EditCommentCommand implements Command, IEditorResponse, ILocks {
+public class EditCommentCommand extends Command implements IEditorResponse {
     private Root root;
     private UUID element;
     private String comment;
@@ -18,43 +17,42 @@ public class EditCommentCommand implements Command, IEditorResponse, ILocks {
     //TODO Fehlerbehandlung: im Moment wird auch bei Nichtausführbarkeit der Baum zurückgegeben
     //Comment muss noch geparst werden: in setComment???
     @Override
-    public JsonNode execute(boolean success) {
-        String message = null;
+    public JsonNode execute() {
         try {
             acquireStructureWriteLock();
             Element elementFound = root.searchForID(this.element, 0);
             if(elementFound == null) {
                 releaseStructureWriteLock();
-                success = false;
+                this.setSuccess(false);
             } else {
                 elementFound.setComment(comment);
-                success = true;
+                this.setSuccess(true);
             }
         } catch (Exception e) {
-            success = false;
-            message = e.getMessage();
+            this.setSuccess(false);
+            this.setFailureMessage(e.getMessage());
         } finally {
             releaseStructureWriteLock();
         }
 
-        return generateResponse(success, null);
+        return generateResponse();
     }
 
     @Override
-    public JsonNode generateResponse(boolean success, String message) {
+    public JsonNode generateResponse() {
         JsonNode response;
-        if (success) {
+        if (this.isSuccess()) {
             try {
                 acquireStructureReadLock();
                 response = IEditorResponse.super.generateResponse();
             } catch (JsonProcessingException e) {
                 response = generateFailureResponse(e.getMessage());
-                success = false;
+                this.setSuccess(false);
             } finally {
                 releaseStructureReadLock();
             }
         } else {
-            response = generateFailureResponse(message);
+            response = generateFailureResponse(this.getFailureMessage());
         }
         return response;
     }

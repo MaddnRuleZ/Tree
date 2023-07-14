@@ -1,7 +1,6 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
-import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
@@ -11,52 +10,51 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.UUID;
 
-public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
+public class DeleteElementCommand extends Command implements IEditorResponse {
     private Root root;
     private UUID element;
     private boolean cascading;
 
     @Override
-    public JsonNode execute(boolean success) {
-        String message = null;
+    public JsonNode execute() {
         try {
             acquireStructureWriteLock();
             Element elementFound = root.searchForID(this.element, 0);
             if(elementFound == null) {
                 releaseStructureWriteLock();
-                success = false;
+                this.setSuccess(false);
             } else {
-                success = delete(elementFound);
+                delete(elementFound);
             }
         } catch (Exception e) {
-            success = false;
-            message = e.getMessage();
+            this.setSuccess(false);
+            this.setFailureMessage(e.getMessage());
         } finally {
             releaseStructureWriteLock();
         }
-        return generateResponse(success, message);
+        return generateResponse();
     }
 
     @Override
-    public JsonNode generateResponse(boolean success, String message) {
+    public JsonNode generateResponse() {
         JsonNode response;
-        if (success) {
+        if (this.isSuccess()) {
             try {
                 acquireStructureReadLock();
                 response = IEditorResponse.super.generateResponse();
             } catch (JsonProcessingException e) {
                 response = generateFailureResponse(e.getMessage());
-                success = false;
+                this.setSuccess(false);
             } finally {
                 releaseStructureReadLock();
             }
         } else {
-            response = generateFailureResponse(message);
+            response = generateFailureResponse(this.getFailureMessage());
         }
         return response;
     }
 
-    public boolean delete(Element element) {
+    public void delete(Element element) {
         Parent parent = element.getParentElement();
         if(!this.cascading) {
             int index = parent.getChildElements().indexOf(element);
@@ -69,7 +67,6 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
             }
         }
         parent.removeChild(element);
-        return true;
     }
 
     public UUID getElement() {

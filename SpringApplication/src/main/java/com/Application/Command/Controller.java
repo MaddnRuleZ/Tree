@@ -34,8 +34,8 @@ public class Controller {
         try {
             boolean success = false;
             HttpStatus status;
-            JsonNode response = commandHandler.processCommand(json, success);
-            if (success) {
+            JsonNode response = commandHandler.processCommand(json);
+            if (commandHandler.isSuccess()) {
                 status = HttpStatus.OK;
             } else {
                 status = HttpStatus.BAD_REQUEST;
@@ -61,7 +61,7 @@ public class Controller {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode errorResponse = "Error: " + e.getMessage();
+            JsonNode errorResponse = "Error: " + e.getFailureMessage();
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
         */
@@ -80,7 +80,7 @@ public class Controller {
             JsonNode response = ITreeResponse.super.generateResponse();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            JsonNode errorResponse = "Error: " + e.getMessage();
+            JsonNode errorResponse = "Error: " + e.getFailureMessage();
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
         */

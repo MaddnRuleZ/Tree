@@ -1,26 +1,46 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public interface Command {
+public abstract class Command implements ILocks {
+    private boolean success = false;
+    private String failureMessage = null;
+
     /**
      * executes the command
      */
-    JsonNode execute(boolean success);
+    public abstract JsonNode execute();
 
 
     /**
      * generates the Json response String, if execution failed
      * @return failureResponse
      */
-    default JsonNode generateFailureResponse(String message) {
+    JsonNode generateFailureResponse(String message) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode rootNode = objectMapper.createObjectNode();
         rootNode.put("error", message);
         return rootNode;
     }
 
-    JsonNode generateResponse(boolean success, String message);
+    public abstract JsonNode generateResponse();
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getFailureMessage() {
+        return failureMessage;
+    }
+
+    public void setFailureMessage(String failureMessage) {
+        this.failureMessage = failureMessage;
+    }
 }

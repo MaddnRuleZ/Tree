@@ -7,6 +7,8 @@ import com.Application.Exceptions.ProcessingException;
 import com.Application.Exceptions.UnrecognizedCommandException;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -23,6 +25,7 @@ public class CommandHandler {
      * contains a collection of command factories that are used to create specific types of commands
      */
     private final Map<String, CommandFactory> commandFactories;
+    private boolean success;
 
     public CommandHandler(User user){
         this.commandFactories = initializeCommandFactories(user);
@@ -36,7 +39,8 @@ public class CommandHandler {
      * @return jsonString of tree structure, if it was possible to execute command
      */
 
-    public JsonNode processCommand(JsonNode jsonFile, boolean success) throws ProcessingException {
+    public JsonNode processCommand(JsonNode jsonFile) throws ProcessingException {
+        JsonNode response;
         if (jsonFile.isEmpty()) {
             throw new NumParamsException("jsonFile");
         }
@@ -48,7 +52,8 @@ public class CommandHandler {
         if (factory != null) {
             JsonNode attributes = jsonFile.findValue(commandType);
             Command command = factory.createCommand(attributes);
-            JsonNode response = command.execute(success);
+            response = command.execute();
+            this.success = command.isSuccess();
             return response;
         } else {
             throw new UnrecognizedCommandException(commandType);
@@ -81,4 +86,7 @@ public class CommandHandler {
 
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
 }

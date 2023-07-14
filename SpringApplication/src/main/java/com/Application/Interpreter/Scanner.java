@@ -159,7 +159,7 @@ public class Scanner {
      * @param child Child Element
      */
     private void setParentChild(Element parent, Element child) {
-        child.setParent(parent);
+        //TODO auskommentiert child.setParent(parent);
         parent.addChild(child);
     }
 }

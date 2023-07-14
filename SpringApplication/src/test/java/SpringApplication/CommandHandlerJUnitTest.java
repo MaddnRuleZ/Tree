@@ -19,17 +19,19 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CommandHandlerJUnitTest {
     CommandHandler commandHandler;
+    JsonNode response;
 
     @BeforeEach
     void setUp() {
         commandHandler = new CommandHandler(new User());
+        response = null;
     }
 
     @Test
     void UnrecognizedCommandExceptionTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/UnknownCommandJson.json");
         boolean success = false;
-        Throwable exception = assertThrows(UnrecognizedCommandException.class, () -> commandHandler.processCommand(jsonContent, success));
+        Throwable exception = assertThrows(UnrecognizedCommandException.class, () -> commandHandler.processCommand(jsonContent));
         assertEquals("Element", exception.getMessage());
     }
 

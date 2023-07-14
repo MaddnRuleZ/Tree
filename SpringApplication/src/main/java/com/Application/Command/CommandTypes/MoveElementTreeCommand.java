@@ -1,6 +1,5 @@
 package com.Application.Command.CommandTypes;
 
-import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
 import com.Application.Tree.elements.Root;
@@ -9,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
-public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITreeResponse, ILocks {
+public class MoveElementTreeCommand extends Command implements IMoveElementCommand, ITreeResponse {
     private Root root;
     private UUID element;
     private UUID newParent;
@@ -17,26 +16,26 @@ public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITr
 
 
     @Override
-    public JsonNode execute(boolean success) {
+    public JsonNode execute() {
         //TODO
-        return generateResponse(false, null);
+        return generateResponse();
     }
 
     @Override
-    public JsonNode generateResponse(boolean success, String message) {
+    public JsonNode generateResponse() {
         JsonNode response;
-        if (success) {
+        if (this.isSuccess()) {
             try {
                 acquireStructureReadLock();
                 response = ITreeResponse.super.generateResponse();
             } catch (JsonProcessingException e) {
                 response = generateFailureResponse(e.getMessage());
-                success = false;
+                this.setSuccess(false);
             } finally {
                 releaseStructureReadLock();
             }
         } else {
-            response = generateFailureResponse(message);
+            response = generateFailureResponse(this.getFailureMessage());
         }
         return response;
     }
