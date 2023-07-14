@@ -15,7 +15,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * tests the commands with a correct formatted jsonFile
+ * tests the creation of commands with a correct formatted jsonFile
  */
 public class CorrectCommandTest {
     CommandHandler commandHandler;
@@ -25,7 +25,6 @@ public class CorrectCommandTest {
         User user = new User();
         user.setRoot(new TestRoot());
         commandHandler = new CommandHandler(user);
-
     }
 
     @Test
@@ -46,7 +45,6 @@ public class CorrectCommandTest {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditComment.json");
         boolean success = false;
         assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
-        assertTrue(success, "Success should be true");
     }
 
     @Test
@@ -54,14 +52,12 @@ public class CorrectCommandTest {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditContent.json");
         boolean success = false;
         assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
-        assertTrue(success, "Success should be true");
     }
     @Test
     void EditSummaryTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditSummary.json");
         boolean success = false;
         assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
-        assertTrue(success, "Success should be true");
     }
     @Test
     void LoadFromFolderTest() throws ProcessingException {

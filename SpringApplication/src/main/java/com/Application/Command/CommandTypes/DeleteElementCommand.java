@@ -26,19 +26,7 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
                 releaseStructureWriteLock();
                 success = false;
             } else {
-                Parent parent = elementFound.getParentElement();
-                if(!cascading) {
-                    int index = parent.getChildElements().indexOf(elementFound);
-                    // cascading only false if element is of type parent
-                    List<Element> children = ((Parent) elementFound).getChildElements();
-                    for(Element child : children) {
-                        child.setParent(parent);
-                        parent.addChildOnIndex(index, child);
-                        index++;
-                    }
-                }
-                parent.removeChild(elementFound);
-                success = true;
+                success = delete(elementFound);
             }
         } catch (Exception e) {
             success = false;
@@ -46,7 +34,7 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
         } finally {
             releaseStructureWriteLock();
         }
-        return generateResponse(false, null);
+        return generateResponse(success, message);
     }
 
     @Override
@@ -68,6 +56,22 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
         return response;
     }
 
+    public boolean delete(Element element) {
+        Parent parent = element.getParentElement();
+        if(!this.cascading) {
+            int index = parent.getChildElements().indexOf(element);
+            // cascading only false if element is of type parent
+            List<Element> children = ((Parent) element).getChildElements();
+            for(Element child : children) {
+                child.setParent(parent);
+                parent.addChildOnIndex(index, child);
+                index++;
+            }
+        }
+        parent.removeChild(element);
+        return true;
+    }
+
     public UUID getElement() {
         return element;
     }
@@ -79,4 +83,7 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
     public void setRoot(Root root) {
         this.root = root;
     }
+
+
+
 }
