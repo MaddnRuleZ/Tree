@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+
 public class Root extends Parent {
     public String[] startText;
 
@@ -59,7 +60,8 @@ public class Root extends Parent {
         return this.startText;
     }
 
-    public Element searchForID(UUID id) {
+    @Override
+    public Element searchForID(UUID id, int level) {
         //TODO
         return null;
     }

@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-
-public class Parent extends Element {
+// Sollte abstract sein
+public abstract class Parent extends Element {
     protected final List<Element> childElements;
 
     public Parent(String startPart, String endPart, int startIndex, int level) {
@@ -21,16 +21,15 @@ public class Parent extends Element {
         return this.text == null;
     }
 
-    @Override
-    public Element searchForID(UUID id, int level) {
-        // TODO in Environment -> level ändert sich nicht
-        // TODO in Sectioning -> level ändert sich
-        return null;
-    }
+
 
     public boolean addChild(Element element) {
         this.childElements.add(element);
         return true;
+    }
+
+    public void addChildOnIndex(int index, Element newChild) {
+        this.childElements.add(index, newChild);
     }
 
     public boolean addChildAfter(Element newChild, Element previousChild) {
@@ -79,4 +78,6 @@ public class Parent extends Element {
         }
         return arrayList.toArray(new String[0]);
     }
+
+
 }

@@ -48,4 +48,7 @@ public class User {
         return parser;
     }
 
+    public void setRoot(Root root) {
+        this.root = root;
+    }
 }

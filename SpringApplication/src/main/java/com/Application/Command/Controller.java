@@ -32,8 +32,15 @@ public class Controller {
     @PostMapping("/api")
     public ResponseEntity<JsonNode> processRequest(@RequestBody JsonNode json) {
         try {
-            JsonNode response = commandHandler.processCommand(json);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            boolean success = false;
+            HttpStatus status;
+            JsonNode response = commandHandler.processCommand(json, success);
+            if (success) {
+                status = HttpStatus.OK;
+            } else {
+                status = HttpStatus.BAD_REQUEST;
+            }
+            return new ResponseEntity<>(response, status);
         } catch (ProcessingException e) {
             return new ResponseEntity<>(e.generateFailureResponse(), HttpStatus.BAD_REQUEST);
         }

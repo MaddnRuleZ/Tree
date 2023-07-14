@@ -28,7 +28,8 @@ public class CommandHandlerJUnitTest {
     @Test
     void UnrecognizedCommandExceptionTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/UnknownCommandJson.json");
-        Throwable exception = assertThrows(UnrecognizedCommandException.class, () -> commandHandler.processCommand(jsonContent));
+        boolean success = false;
+        Throwable exception = assertThrows(UnrecognizedCommandException.class, () -> commandHandler.processCommand(jsonContent, success));
         assertEquals("Element", exception.getMessage());
     }
 

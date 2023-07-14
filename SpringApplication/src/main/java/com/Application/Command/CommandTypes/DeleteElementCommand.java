@@ -2,9 +2,13 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
+import com.Application.Tree.Element;
+import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.List;
 import java.util.UUID;
 
 public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
@@ -13,21 +17,53 @@ public class DeleteElementCommand implements Command, IEditorResponse, ILocks {
     private boolean cascading;
 
     @Override
-    public JsonNode execute() {
-        //TODO
-        return generateResponse();
+    public JsonNode execute(boolean success) {
+        String message = null;
+        try {
+            acquireStructureWriteLock();
+            Element elementFound = root.searchForID(this.element, 0);
+            if(elementFound == null) {
+                releaseStructureWriteLock();
+                success = false;
+            } else {
+                Parent parent = elementFound.getParentElement();
+                if(!cascading) {
+                    int index = parent.getChildElements().indexOf(elementFound);
+                    // cascading only false if element is of type parent
+                    List<Element> children = ((Parent) elementFound).getChildElements();
+                    for(Element child : children) {
+                        child.setParent(parent);
+                        parent.addChildOnIndex(index, child);
+                        index++;
+                    }
+                }
+                parent.removeChild(elementFound);
+                success = true;
+            }
+        } catch (Exception e) {
+            success = false;
+            message = e.getMessage();
+        } finally {
+            releaseStructureWriteLock();
+        }
+        return generateResponse(false, null);
     }
 
     @Override
-    public JsonNode generateResponse() {
+    public JsonNode generateResponse(boolean success, String message) {
         JsonNode response;
-        try {
-            acquireStructureReadLock();
-            response = IEditorResponse.super.generateResponse();
-            releaseStructureReadLock();
-        } catch (Exception e) {
-            releaseStructureReadLock();
-            response = generateFailureResponse(e.getMessage());
+        if (success) {
+            try {
+                acquireStructureReadLock();
+                response = IEditorResponse.super.generateResponse();
+            } catch (JsonProcessingException e) {
+                response = generateFailureResponse(e.getMessage());
+                success = false;
+            } finally {
+                releaseStructureReadLock();
+            }
+        } else {
+            response = generateFailureResponse(message);
         }
         return response;
     }

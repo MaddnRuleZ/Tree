@@ -4,6 +4,7 @@ import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
 import com.Application.Tree.elements.Root;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -16,21 +17,26 @@ public class MoveElementTreeCommand implements Command, IMoveElementCommand, ITr
 
 
     @Override
-    public JsonNode execute() {
+    public JsonNode execute(boolean success) {
         //TODO
-        return generateResponse();
+        return generateResponse(false, null);
     }
 
     @Override
-    public JsonNode generateResponse() {
+    public JsonNode generateResponse(boolean success, String message) {
         JsonNode response;
-        try {
-            acquireStructureReadLock();
-            response = ITreeResponse.super.generateResponse();
-            releaseStructureReadLock();
-        } catch (Exception e) {
-            releaseStructureReadLock();
-            response = generateFailureResponse(e.getMessage());
+        if (success) {
+            try {
+                acquireStructureReadLock();
+                response = ITreeResponse.super.generateResponse();
+            } catch (JsonProcessingException e) {
+                response = generateFailureResponse(e.getMessage());
+                success = false;
+            } finally {
+                releaseStructureReadLock();
+            }
+        } else {
+            response = generateFailureResponse(message);
         }
         return response;
     }

@@ -4,6 +4,7 @@ import com.Application.Interpreter.TextFileReader;
 import com.Application.Tree.additionalInfo.Comment;
 import com.Application.Tree.additionalInfo.TextBlock;
 import com.Application.Tree.additionalInfo.Summary;
+import com.Application.Tree.elements.Parent;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
 import java.util.*;
@@ -11,7 +12,7 @@ import java.util.*;
 public abstract class Element implements JsonParser, Exportable {
     private final UUID id;
     private final int level;
-    private Element parentElement;
+    private Parent parentElement;
     protected String[] text;
     protected final Summary summary;
     protected final Comment comment;
@@ -75,10 +76,10 @@ public abstract class Element implements JsonParser, Exportable {
     protected String extractOptionsString(String rawOptions) {
         return rawOptions;
     }
-    public void setParent(Element parentElement) {
+    public void setParent(Parent parentElement) {
         this.parentElement = parentElement;
     }
-    public Element getParentElement() {
+    public Parent getParentElement() {
         return parentElement;
     }
     public String getStartPart() {
@@ -110,6 +111,14 @@ public abstract class Element implements JsonParser, Exportable {
         this.chooseManualSummary = chooseManualSummary;
     }
     public void setComment(String comment) {
-        this.comment.setContent(comment);
+        //TODO
+    }
+
+    public void setContent(String content) {
+        //TODO
+    }
+
+    public void setSummary(String summary) {
+        //TODO
     }
 }

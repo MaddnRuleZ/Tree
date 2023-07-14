@@ -1,9 +1,8 @@
 package SpringApplication.CommandTests;
 
+import SpringApplication.TestStubs.TestRoot;
 import com.Application.Command.CommandHandler;
-import com.Application.Exceptions.NumParamsException;
 import com.Application.Exceptions.ProcessingException;
-import com.Application.Exceptions.UnrecognizedCommandException;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,56 +22,71 @@ public class CorrectCommandTest {
 
     @BeforeEach
     void setUp() {
-        commandHandler = new CommandHandler(new User());
+        User user = new User();
+        user.setRoot(new TestRoot());
+        commandHandler = new CommandHandler(user);
+
     }
 
     @Test
     void AddElementTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/AddElement.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
     }
     @Test
     void DeleteElementTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/DeleteElement.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
     }
 
     @Test
     void EditCommentTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditComment.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
+        assertTrue(success, "Success should be true");
     }
 
     @Test
     void EditContentTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditContent.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
+        assertTrue(success, "Success should be true");
     }
     @Test
     void EditSummaryTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/EditSummary.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
+        assertTrue(success, "Success should be true");
     }
     @Test
     void LoadFromFolderTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/LoadFromFolder.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
     }
     @Test
     void LoadFromGitTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/LoadFromGit.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
     }
     @Test
     void MoveElementTreeTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/MoveElementTree.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
     }
 
     @Test
     void MoveElementEditorTest() throws ProcessingException {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/MoveElementEditor.json");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        boolean success = false;
+        assertNotNull(commandHandler.processCommand(jsonContent, success), "Response should not be null");
     }
 
     private JsonNode loadJsonFile(String filePath) {

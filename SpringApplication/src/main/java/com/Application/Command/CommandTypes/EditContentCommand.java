@@ -2,7 +2,9 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
+import com.Application.Tree.Element;
 import com.Application.Tree.elements.Root;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -13,21 +15,43 @@ public class EditContentCommand implements Command, IEditorResponse, ILocks {
     private String content;
 
     @Override
-    public JsonNode execute() {
-        //TODO
-        return generateResponse();
+    public JsonNode execute(boolean success) {
+        String message = null;
+        try {
+            acquireStructureWriteLock();
+            Element elementFound = root.searchForID(this.element, 0);
+            if(elementFound == null) {
+                releaseStructureWriteLock();
+                success = false;
+            } else {
+                elementFound.setContent(content);
+                success = true;
+            }
+        } catch (Exception e) {
+            success = false;
+            message = e.getMessage();
+        } finally {
+            releaseStructureWriteLock();
+        }
+
+        return generateResponse(success, null);
     }
 
     @Override
-    public JsonNode generateResponse() {
+    public JsonNode generateResponse(boolean success, String message) {
         JsonNode response;
-        try {
-            acquireStructureReadLock();
-            response = IEditorResponse.super.generateResponse();
-            releaseStructureReadLock();
-        } catch (Exception e) {
-            releaseStructureReadLock();
-            response = generateFailureResponse(e.getMessage());
+        if (success) {
+            try {
+                acquireStructureReadLock();
+                response = IEditorResponse.super.generateResponse();
+            } catch (JsonProcessingException e) {
+                response = generateFailureResponse(e.getMessage());
+                success = false;
+            } finally {
+                releaseStructureReadLock();
+            }
+        } else {
+            response = generateFailureResponse(message);
         }
         return response;
     }

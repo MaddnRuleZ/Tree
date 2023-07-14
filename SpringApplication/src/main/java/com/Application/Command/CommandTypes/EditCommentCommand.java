@@ -18,37 +18,43 @@ public class EditCommentCommand implements Command, IEditorResponse, ILocks {
     //TODO Fehlerbehandlung: im Moment wird auch bei Nichtausführbarkeit der Baum zurückgegeben
     //Comment muss noch geparst werden: in setComment???
     @Override
-    public JsonNode execute() {
-        JsonNode response = null;
+    public JsonNode execute(boolean success) {
+        String message = null;
         try {
             acquireStructureWriteLock();
-            Element elementFound = root.searchForID(this.element);
+            Element elementFound = root.searchForID(this.element, 0);
             if(elementFound == null) {
                 releaseStructureWriteLock();
+                success = false;
             } else {
                 elementFound.setComment(comment);
-                releaseStructureWriteLock();
-                response = generateResponse();
-
+                success = true;
             }
         } catch (Exception e) {
+            success = false;
+            message = e.getMessage();
+        } finally {
             releaseStructureWriteLock();
         }
 
-        return response;
+        return generateResponse(success, null);
     }
 
     @Override
-    public JsonNode generateResponse() {
+    public JsonNode generateResponse(boolean success, String message) {
         JsonNode response;
-
-        try {
-            acquireStructureReadLock();
-            response = IEditorResponse.super.generateResponse();
-            releaseStructureReadLock();
-        } catch (JsonProcessingException e) {
-            releaseStructureReadLock();
-            response = generateFailureResponse(e.getMessage());
+        if (success) {
+            try {
+                acquireStructureReadLock();
+                response = IEditorResponse.super.generateResponse();
+            } catch (JsonProcessingException e) {
+                response = generateFailureResponse(e.getMessage());
+                success = false;
+            } finally {
+                releaseStructureReadLock();
+            }
+        } else {
+            response = generateFailureResponse(message);
         }
         return response;
     }
