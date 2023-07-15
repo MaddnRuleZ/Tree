@@ -1,6 +1,7 @@
 package com.Application;
 
 import com.Application.Interpreter.Parser;
+import com.Application.Printer.Clock;
 import com.Application.Printer.Printer;
 import com.Application.Tree.elements.Root;
 import org.springframework.stereotype.Component;
@@ -23,13 +24,22 @@ public class User {
      * LaTeX-Code to tree structure parser
      */
     private Parser parser;
+    private Clock clock;
 
     public User() {
         //this.root = Root.getInstance(); read Root
     }
 
-    public void setPrinter(Printer Printer) {
+    public void setPrinter(Printer Printer) throws IllegalStateException{
+        if(this.printer != null) {
+            throw new IllegalStateException("Printer already set");
+        }
         this.printer = Printer;
+        if (printer != null) {
+            this.clock = new Clock(printer);
+            clock.setClockThread(new Thread(clock));
+            clock.getClockThread().start();
+        }
     }
 
     public void setParser(Parser parser) {
@@ -46,6 +56,10 @@ public class User {
 
     public Parser getParser() {
         return parser;
+    }
+
+    public Clock getClock() {
+        return clock;
     }
 
     public void setRoot(Root root) {

@@ -1,43 +1,38 @@
 package com.Application.Printer;
 
+import java.io.IOException;
+
 /**
  * provides the functionality to initialize pushes to storage all time seconds
  */
-public class Clock {
+public class Clock implements Runnable {
 
-        /**
-        * time in seconds
-        */
-        private int time;
+    private Thread clockThread;
+    private final int sleepTime = 1000;
+    private Printer printer;
 
-        /**
-        * starts the clock
-        */
-        public void start() {
-            // TODO
+    public Clock(Printer printer) {
+        this.printer = printer;
+    }
+
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Thread.sleep(sleepTime);
+                //TODO printer.export();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+    }
 
-        /**
-        * stops the clock
-        */
-        public void stop() {
-            // TODO
-        }
+    public void setClockThread(Thread clockThread) {
+        this.clockThread = clockThread;
+    }
 
-        /**
-        * sets the time
-        * @param time time in seconds
-        */
-        public void setTime(int time) {
-            this.time = time;
-        }
-
-        /**
-         * initializes push to storage
-         */
-        public void pushToStorage() {
-            // TODO
-        }
-
-
+    public Thread getClockThread() {
+        return clockThread;
+    }
 }
