@@ -7,6 +7,7 @@ import com.Application.Tree.elements.Root;
  * Class for Parsing a single Latex Document,
  * input statement in this Doc will trigger recursive ex function
  *
+ *
  */
 public class Parser {
     private final TextFileReader textFileReader;
@@ -30,7 +31,7 @@ public class Parser {
      *
      * @return finished Root, containing the Tree as Children
      */
-    public Root startParsing() {
+    public Root startParsingMainDoc() {
         if (!textFileReader.validateFile()) {
             return null;
         }
@@ -52,6 +53,7 @@ public class Parser {
 
         this.text = textFileReader.readLinesFromFile();
         this.scanner = new Scanner(text);
-        return scanner.parseDocument();
+        //return scanner.parseDocument();
+        return null;
     }
 }

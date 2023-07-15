@@ -1,69 +1,72 @@
 package com.Application.Tree.elements;
 
 import com.Application.Tree.Element;
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.Application.Tree.interfaces.Exportable;
+import com.Application.Tree.interfaces.JsonParser;
+
 import java.util.List;
 import java.util.UUID;
 
 /**
  *
+ *
  */
-public class Root extends Parent {
-    public String[] startText;
-    public Root() {
-        super("", null, 0,10000);
+public class Root implements JsonParser, Exportable {
+    private static Root instance;
+
+    private List<Element> childElements;
+
+    private int minLevel;
+
+    private Root() {
+        // Private constructor to prevent instantiation from outside the class
     }
 
-    @Override
-    public boolean validateIndicTextGeneration() {
-        return false;
-    }
-
-    public void addStartText(String[] startText) {
-        this.startText = startText;
-    }
-
-    @Override
-    public String[] toText() {
-        List<String> arrayList = new ArrayList<>();
-        String[] curr = this.getText();
-        arrayList.addAll(Arrays.stream(this.startText).toList());
-
-        if (curr != null) {
-            arrayList.add(this.getOptions());
-
-            if (this.comment.getContent() != null) {
-                arrayList.addAll(this.comment.getContent());
-            }
-
-            if (this.summary.getContent() != null) {
-                arrayList.addAll(this.summary.getContent());
-            }
-
-            if (textBlock.getTextParts() != null) {
-                for (List<String> list: textBlock.getTextParts()) {
-                    if (list != null) {
-                        arrayList.addAll(list);
-                    }
+    /**
+     * Singleton get Instance of current Root
+     *
+     * @return instance of Root Object
+     */
+    public static Root getInstance() {
+        if (instance == null) {
+            synchronized (Root.class) {
+                if (instance == null) {
+                    instance = new Root();
                 }
             }
         }
-
-        for (Element element: childElements) {
-            arrayList.addAll(Arrays.asList(element.toText()));
-        }
-        return arrayList.toArray(new String[0]);
+        return instance;
     }
 
-    public String[] getStartText() {
-        return this.startText;
+    public void addChild(Element element) {
+        this.childElements.add(element);
     }
 
-    @Override
+
+    public void getChildElements() {
+        //TODO
+    }
+
+    public Root createRoot() {
+        //TODO
+        return null;
+    }
+
+
     public Element searchForID(UUID id) {
         //TODO
         return null;
     }
+
+    @Override
+    public String[] toText() {
+        return new String[0];
+    }
+
+    @Override
+    public String toJson() {
+        return null;
+    }
+
 
 }

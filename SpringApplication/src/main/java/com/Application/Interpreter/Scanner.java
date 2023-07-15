@@ -16,7 +16,7 @@ public class Scanner {
      * @param text
      */
     public Scanner(String[] text) {
-        root = new Root();
+        root = Root.getInstance();
         this.text = text;
     }
 
@@ -35,7 +35,7 @@ public class Scanner {
                     currElement = scanLine(currElement, i);
                     if (currElement != null && !firstElementFound) {
                         firstElementFound = true;
-                        root.addStartText(TextFileReader.extractStrings(text, 0, i - 1));
+                        //root.addStartText(TextFileReader.extractStrings(text, 0, i - 1));
                     }
                 } catch(Exception e) {
                     //throw new ElementNotFoundException("Fatal Error while creating Element, in line" + i);
@@ -59,92 +59,95 @@ public class Scanner {
      * Scan the current line and create an new Element or Close one
      *
      *
-     * @param currentElement last Element that was created
+     * @param lastElement last Element that was created
      * @param index current index of the text
      * @return the New Created Text Element with parent and child hierachie
      */
-    private Element scanLine(final Element currentElement, final int index) {
+    private Element scanLine(final Element lastElement, final int index) {
 
         // end Part of current
-        if (currentElement != null && currentElement.getEndPart() != null && text[index].contains(currentElement.getEndPart())) {
-            currentElement.scanElementTextForSubElements(text, index);
-            return currentElement;
+        if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
+            lastElement.scanElementTextForSubElements(text, index);
+            return lastElement;
 
         } else {
-            Element element = ElementConfig.createElement(this.text[index], index);
+            Element newElement = ElementConfig.createElement(this.text[index], index);
 
-            if (element != null) {
-                if (currentElement == null) {
-                    setParentChild(root, element);
+            if (newElement != null) {
+                if (lastElement == null) {
+                    root.addChild(newElement);
+                    // -> root + 1 Elemente haben kein Parent, unnavigierbar?
+                    // element.setParent(root);
 
-                } else if (element.getLevel() > currentElement.getLevel()) {
-                    lowerLevel(currentElement, index, element);
+                } else if (newElement.getLevel() > lastElement.getLevel()) {
+                    lowerLevel(lastElement, index, newElement);
 
-                } else if (element.getLevel() == currentElement.getLevel()) {
-                    sameLevel(currentElement, index, element);
+                } else if (newElement.getLevel() == lastElement.getLevel()) {
+                    sameLevel(lastElement, index, newElement);
 
                 } else {
-                    higherLevel(currentElement, index, element);
+                    higherLevel(lastElement, index, newElement);
                 }
-                return element;
+                return newElement;
             } else {
-                return currentElement;
+                return lastElement;
             }
         }
     }
 
     /**
+     * add the new Element as Child of the lastElement
+     * start the Generation of the Elements in between
      *
-     * @param currentElement
-     * @param index
-     * @param element
+     * @param lastElement lastElement created
+     * @param index index in the current Text
+     * @param newElement currentElement created
      */
-    private void lowerLevel(Element currentElement, int index, Element element) {
-        currentElement.scanElementTextForSubElements(text, index);
-        setParentChild(currentElement, element);
+    private void lowerLevel(Element lastElement, int index, Element newElement) {
+        lastElement.scanElementTextForSubElements(text, index);
+        setParentChild(lastElement, newElement);
     }
 
     /**
+     * add the newElement to the same Parent as the lastElement
      *
-     * @param currentElement
-     * @param index
-     * @param element
+     * @param lastElement lastElement created
+     * @param index index in the current Text
+     * @param newElement currentElement created
      */
-    private void sameLevel(Element currentElement, int index, Element element) {
-        currentElement.scanElementTextForSubElements(text, index);
-        Element parent = currentElement.getParentElement();
+    private void sameLevel(Element lastElement, int index, Element newElement) {
+        lastElement.scanElementTextForSubElements(text, index);
+        Element parent = lastElement.getParentElement();
 
         if (parent == null) {
-            root.addChild(element);
+            root.addChild(newElement);
         } else {
-            setParentChild(parent, element);
+            setParentChild(parent, newElement);
         }
     }
 
     /**
-     * higher lvl, navigate tree struct up,
-     * search for next best spot
+     * higher lvl, navigate tree struct up, search matching Parent to add Element to
      *
-     * @param currentElement
-     * @param index
-     * @param element
+     * @param lastElement lastElement created
+     * @param index index in the current Text
+     * @param newElement currentElement created
      */
-    private void higherLevel(Element currentElement, int index, Element element) {
-        // prev subsection
-        Element searchElem = currentElement;
+    private void higherLevel(Element lastElement, int index, Element newElement) {
+        Element searchElem = lastElement;
 
-        while (searchElem != null && searchElem.getLevel() >= element.getLevel()) {
+        while (searchElem != null && searchElem.getLevel() >= newElement.getLevel()) {
             searchElem.scanElementTextForSubElements(text, index);
             searchElem = searchElem.getParentElement();
         }
 
         if (searchElem == null) {
-            root.addChild(element);
-        } else if (searchElem.getLevel() == element.getLevel()) {
+            root.addChild(newElement);
+        } else if (searchElem.getLevel() == newElement.getLevel()) {
             Element parent = searchElem.getParentElement();
-            setParentChild(parent, element);
+            setParentChild(parent, newElement);
         } else {
-            setParentChild(searchElem, element);
+            setParentChild(searchElem, newElement);
         }
     }
 

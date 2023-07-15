@@ -7,8 +7,6 @@ import com.Application.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.io.File;
-
 public class LoadFromFolderCommand extends Command implements IEditorResponse {
     private User user;
     private String path;
@@ -16,7 +14,7 @@ public class LoadFromFolderCommand extends Command implements IEditorResponse {
     @Override
     public JsonNode execute() {
         Parser parser = new Parser(this.path);
-        Root root = parser.startParsing();
+        Root root = parser.startParsingMainDoc();
 
 
         return generateResponse();
