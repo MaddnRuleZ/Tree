@@ -71,7 +71,7 @@ public class Scanner {
             return currentElement;
 
         } else {
-            Element element = ElementConfig.initType(this.text[index], index);
+            Element element = ElementConfig.createElement(this.text[index], index);
 
             if (element != null) {
                 if (currentElement == null) {

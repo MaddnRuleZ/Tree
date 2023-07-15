@@ -5,24 +5,40 @@ import com.Application.Tree.Element;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
-// Sollte abstract sein
+/**
+ *
+ */
 public abstract class Parent extends Element {
     protected final List<Element> childElements;
 
+    /**
+     *
+     * @param startPart
+     * @param endPart
+     * @param startIndex
+     * @param level
+     */
     public Parent(String startPart, String endPart, int startIndex, int level) {
         super(startPart, endPart, startIndex, level);
         childElements = new ArrayList<>();
     }
 
+    /**
+     * Check if the Text, assigned to the current Element can be overwritten
+     *
+     * @return if the text can be overwritten
+     */
     @Override
     public boolean validateIndicTextGeneration() {
         return this.text == null;
     }
 
-
-
+    /**
+     *
+     * @param element
+     * @return
+     */
     public boolean addChild(Element element) {
         this.childElements.add(element);
         return true;
@@ -48,6 +64,13 @@ public abstract class Parent extends Element {
         return this.childElements;
     }
 
+
+    /**
+     * recursiv generation of the Latex code
+     * generate the LaTeX code from the current Element as well as all Children, add it together and return it
+     *
+     * @return LateX code of the current Element
+     */
     @Override
     public String[] toText() {
         List<String>  arrayList = new ArrayList<>();
@@ -78,6 +101,4 @@ public abstract class Parent extends Element {
         }
         return arrayList.toArray(new String[0]);
     }
-
-
 }

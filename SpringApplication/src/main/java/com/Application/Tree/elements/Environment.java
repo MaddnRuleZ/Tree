@@ -9,6 +9,14 @@ import java.util.UUID;
 
 public class Environment extends Parent {
 
+    /**
+     * Create a new Environment
+     *
+     * @param startPart
+     * @param endPart
+     * @param startIndex
+     * @param level
+     */
     public Environment(String startPart, String endPart, int startIndex, int level) {
         super(startPart, endPart, startIndex, level);
     }

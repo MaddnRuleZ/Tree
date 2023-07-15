@@ -9,6 +9,10 @@ import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
 import java.util.*;
 
+/**
+ *
+ *
+ */
 public abstract class Element implements JsonParser, Exportable {
     private final UUID id;
     private final int level;
@@ -67,6 +71,7 @@ public abstract class Element implements JsonParser, Exportable {
 
     /**
      * searches for the element with the given id
+     *
      * @param id to search for
      * @return found Element or null
      */
@@ -77,10 +82,12 @@ public abstract class Element implements JsonParser, Exportable {
     }
 
     public void setParent(Element parentElement) {
+        // todo also instace cast?
         this.parentElement = parentElement;
     }
+
     public Parent getParentElement() {
-        // TODO instacne of
+        // todo also instace cast?
         return (Parent) parentElement;
     }
     public String getStartPart() {

@@ -6,6 +6,14 @@ import com.Application.Tree.Element;
 import java.util.UUID;
 
 public class Sectioning extends Parent {
+
+    /**
+     * Create a new Sectioning Type
+     *
+     * @param startPart
+     * @param startIndex
+     * @param level
+     */
     public Sectioning(String startPart, int startIndex, int level) {
         super(startPart, null, startIndex, level);
     }

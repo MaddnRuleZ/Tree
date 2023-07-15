@@ -1,12 +1,15 @@
 package com.Application.Tree.elements;
 
 import com.Application.Interpreter.Parser;
-import com.Application.Interpreter.Scanner;
 import com.Application.Tree.Element;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class Containing the Configuration of the Structural Elements that wil be detected by the Scan- Algorithm
+ *
+ */
 public enum ElementConfig {
 
     PART("\\part", null, 1) {
@@ -116,6 +119,14 @@ public enum ElementConfig {
     private final String endPart;
     private final int level;
 
+    /**
+     * Generate a New Element Configuration, for adding a new Detected Structure Element
+     * Elements are sorted in a semi-order, based on their Level
+     *
+     * @param startPart startPart of the new Element
+     * @param endPart endPart of the new Element, can be null
+     * @param level nesting Level of the Element
+     */
     ElementConfig(String startPart, String endPart, int level) {
         this.level = level;
         this.startPart = startPart;
@@ -124,7 +135,14 @@ public enum ElementConfig {
 
     abstract Element getElement(int index, String currentLine);
 
-    public static Element initType(String startPartLine, int index) {
+    /**
+     * Create a new Element based on the line the Scanner read in the TextFile
+     *
+     * @param startPartLine textLine containing one of the startParts
+     * @param index current Index in the Text
+     * @return new Created Element
+     */
+    public static Element createElement(String startPartLine, int index) {
         for (final ElementConfig sectioning: ElementConfig.values()) {
             if (startPartLine.contains(sectioning.startPart)) {
                 return sectioning.getElement(index, startPartLine);

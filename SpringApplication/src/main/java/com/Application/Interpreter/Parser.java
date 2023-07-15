@@ -1,5 +1,6 @@
 package com.Application.Interpreter;
 
+import com.Application.Tree.Element;
 import com.Application.Tree.elements.Root;
 
 /**
@@ -15,6 +16,7 @@ public class Parser {
 
     /**
      *
+     *
      * @param filePath
      */
     public Parser(String filePath) {
@@ -23,6 +25,11 @@ public class Parser {
 
     }
 
+    /**
+     * Start Parsing the Document, get the Text from the File and
+     *
+     * @return finished Root, containing the Tree as Children
+     */
     public Root startParsing() {
         if (!textFileReader.validateFile()) {
             return null;
@@ -32,4 +39,18 @@ public class Parser {
         this.scanner = new Scanner(text);
         return scanner.parseDocument();
     }
+
+    public Element startParsingRecursion() {
+        if (!textFileReader.validateFile()) {
+            return null;
+        }
+
+        this.text = textFileReader.readLinesFromFile();
+        this.scanner = new Scanner(text);
+        return scanner.parseDocument();
+    }
+
+
+
+
 }

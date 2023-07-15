@@ -5,7 +5,8 @@ import com.Application.Tree.Element;
 import java.util.UUID;
 
 /**
- * offline?
+ *
+ *
  */
 public class Child extends Element {
 
