@@ -13,6 +13,8 @@ public class TextFileReader {
         this.filePath = filePath;
     }
 
+
+    //TODO is tex-File??
     public boolean validateFile() {
         File file = new File(filePath);
 
@@ -30,6 +32,12 @@ public class TextFileReader {
 
         // Check if file is readable
         if (!file.canRead()) {
+            System.out.println("File is not readable: " + filePath);
+            return false;
+        }
+
+        String type = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+        if(type.equals("tex")){
             System.out.println("File is not readable: " + filePath);
             return false;
         }

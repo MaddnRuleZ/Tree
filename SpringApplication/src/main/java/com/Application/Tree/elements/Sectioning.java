@@ -12,12 +12,12 @@ public class Sectioning extends Parent {
 
 
     @Override
-    public Element searchForID(UUID id, int level) {
+    public Element searchForID(UUID id) {
         if (this.getId().equals(id)) {
             return this;
         } else {
             for (Element child: this.getChildElements()) {
-                Element foundElement = child.searchForID(id, level + 1);
+                Element foundElement = child.searchForID(id);
                 if (foundElement != null) {
                     return foundElement;
                 }

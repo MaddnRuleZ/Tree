@@ -17,12 +17,13 @@ public class EditSummaryCommand extends Command implements IEditorResponse {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element elementFound = root.searchForID(this.element, 0);
+            Element elementFound = root.searchForID(this.element);
             if(elementFound == null) {
                 releaseStructureWriteLock();
                 this.setSuccess(false);
             } else {
                 elementFound.setSummary(this.summary);
+                elementFound.setChooseManualSummary(true);
                 this.setSuccess(true);
             }
         } catch (Exception e) {

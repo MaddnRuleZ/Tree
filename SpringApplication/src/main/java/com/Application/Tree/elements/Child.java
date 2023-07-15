@@ -42,7 +42,7 @@ public class Child extends Element {
     }
 
     @Override
-    public Child searchForID(UUID id, int level) {
+    public Child searchForID(UUID id) {
         if (this.getId().equals(id)) {
             return this;
         }

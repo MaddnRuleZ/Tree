@@ -14,12 +14,12 @@ public class Environment extends Parent {
     }
 
     @Override
-    public Element searchForID(UUID id, int level) {
+    public Element searchForID(UUID id) {
         if (this.getId().equals(id)) {
             return this;
         } else {
             for (Element child: this.getChildElements()) {
-                Element foundElement = child.searchForID(id, level);
+                Element foundElement = child.searchForID(id);
                 if (foundElement != null) {
                     return foundElement;
                 }

@@ -1,9 +1,13 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
+import com.Application.Interpreter.Parser;
+import com.Application.Tree.elements.Root;
 import com.Application.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import java.io.File;
 
 public class LoadFromFolderCommand extends Command implements IEditorResponse {
     private User user;
@@ -11,7 +15,10 @@ public class LoadFromFolderCommand extends Command implements IEditorResponse {
 
     @Override
     public JsonNode execute() {
-        //TODO
+        Parser parser = new Parser(this.path);
+        Root root = parser.startParsing();
+
+
         return generateResponse();
     }
 
@@ -46,4 +53,6 @@ public class LoadFromFolderCommand extends Command implements IEditorResponse {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }

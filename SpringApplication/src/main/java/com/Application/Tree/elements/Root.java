@@ -61,7 +61,7 @@ public class Root extends Parent {
     }
 
     @Override
-    public Element searchForID(UUID id, int level) {
+    public Element searchForID(UUID id) {
         //TODO
         return null;
     }

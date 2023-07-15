@@ -9,14 +9,4 @@ public class ProcessingException extends Exception{
         super(message);
     }
 
-    /**
-     * generates the Json response String, if execution failed
-     */
-    public JsonNode generateFailureResponse()   {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode response = mapper.createObjectNode();
-        response.put("error", this.getMessage());
-        return response;
-    }
-
 }
