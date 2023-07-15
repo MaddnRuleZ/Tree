@@ -5,8 +5,6 @@ starting Text Blind Spot_2
 
 \section{Frontend}
     %comment1
-    %comment2
-
     %\begin{summary}
     exa1
     endExa1
@@ -15,11 +13,16 @@ starting Text Blind Spot_2
     Text1 / Das hier ist nur Exa text um ifndafnk adokfnmak ma mkadsfa +kdnfa+f
     \newline
 
+
     Text2 / Das hier ist nur Exa text um ifndafnk adokfnmak ma mkadsfa +kdnfa+f
     \newline
+         %comment2
+
 
     Text3 / Das hier ist nur Exa text um ifndafnk adokfnmak ma mkadsfa +kdnfa+f
     \newline
+
+
 
     Dead Zone Test _4
     \subsection{Klassen}

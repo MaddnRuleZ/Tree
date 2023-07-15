@@ -20,7 +20,6 @@ public class FilePrinter extends Printer {
         File tempFile = createTempFile();
         Files.writeString(tempFile.toPath(), text);
         Files.move(tempFile.toPath(), currentFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-
         return true;
     }
 
@@ -38,6 +37,4 @@ public class FilePrinter extends Printer {
         // TODO
         return null;
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.Application.Interpreter;
 
-import com.Application.Exceptions.ElementNotFoundException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.Root;
 import com.Application.Tree.elements.ElementConfig;
@@ -159,7 +158,7 @@ public class Scanner {
      * @param child Child Element
      */
     private void setParentChild(Element parent, Element child) {
-        //TODO auskommentiert child.setParent(parent);
+        child.setParent(parent);
         parent.addChild(child);
     }
 }

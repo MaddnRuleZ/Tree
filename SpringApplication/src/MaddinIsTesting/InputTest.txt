@@ -1,3 +1,5 @@
+dfgs
+ygfd
 Blindspot Test, start of Doc
 
 \section
@@ -16,3 +18,6 @@ Blindspot Test, start of Doc
         exaTst2
 
 Blindspot Test, end of Doc
+//
+
+dfa

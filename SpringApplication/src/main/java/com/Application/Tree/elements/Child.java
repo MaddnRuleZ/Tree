@@ -29,7 +29,6 @@ public class Child extends Element {
      */
     @Override
     public boolean addChild(Element child) {
-        System.out.println("Error Tried to add Child to Child, see Class, u guessed it: Child");
         return false;
     }
 

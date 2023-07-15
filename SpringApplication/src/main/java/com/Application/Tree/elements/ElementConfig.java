@@ -82,7 +82,7 @@ public enum ElementConfig {
     LABEL("\\label", null, 10) {
         @Override
         Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(), null, index, getLevel());
+            return new Environment(getStartPart(),null , index, getLevel());
         }
     },
 
@@ -107,8 +107,8 @@ public enum ElementConfig {
                 return null;
             }
 
-            Parser scanner = new Parser(path);
-            return scanner.startParsing();
+            Parser parser = new Parser(path);
+            return parser.startParsing();
         }
     };
 
@@ -144,5 +144,4 @@ public enum ElementConfig {
     public int getLevel() {
         return this.level;
     }
-
 }

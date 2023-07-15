@@ -1,9 +1,9 @@
 package com.Application.Tree;
 
 import com.Application.Interpreter.TextFileReader;
-import com.Application.Tree.additionalInfo.Comment;
-import com.Application.Tree.additionalInfo.TextBlock;
-import com.Application.Tree.additionalInfo.Summary;
+import com.Application.Interpreter.additionalInfo.Comment;
+import com.Application.Interpreter.additionalInfo.TextBlock;
+import com.Application.Interpreter.additionalInfo.Summary;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
@@ -12,7 +12,7 @@ import java.util.*;
 public abstract class Element implements JsonParser, Exportable {
     private final UUID id;
     private final int level;
-    private Parent parentElement;
+    private Element parentElement;
     protected String[] text;
     protected final Summary summary;
     protected final Comment comment;
@@ -75,11 +75,13 @@ public abstract class Element implements JsonParser, Exportable {
     protected String extractOptionsString(String rawOptions) {
         return rawOptions;
     }
-    public void setParent(Parent parentElement) {
+
+    public void setParent(Element parentElement) {
         this.parentElement = parentElement;
     }
     public Parent getParentElement() {
-        return parentElement;
+        // TODO instacne of
+        return (Parent) parentElement;
     }
     public String getStartPart() {
         return startPart;
@@ -102,6 +104,7 @@ public abstract class Element implements JsonParser, Exportable {
     public String getOptions() {
         return this.options;
     }
+
     public abstract boolean addChild(Element child);
     public boolean isChooseManualSummary() {
         return chooseManualSummary;

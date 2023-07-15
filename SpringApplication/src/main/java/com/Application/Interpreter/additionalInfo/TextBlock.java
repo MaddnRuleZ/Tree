@@ -1,4 +1,4 @@
-package com.Application.Tree.additionalInfo;
+package com.Application.Interpreter.additionalInfo;
 
 
 import java.util.ArrayList;

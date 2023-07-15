@@ -27,6 +27,7 @@ public class Parser {
         if (!textFileReader.validateFile()) {
             return null;
         }
+
         this.text = textFileReader.readLinesFromFile();
         this.scanner = new Scanner(text);
         return scanner.parseDocument();

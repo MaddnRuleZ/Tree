@@ -6,10 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-
 public class Root extends Parent {
     public String[] startText;
-
     public Root() {
         super("", null, 0,10000);
     }
@@ -54,7 +52,6 @@ public class Root extends Parent {
         }
         return arrayList.toArray(new String[0]);
     }
-
 
     public String[] getStartText() {
         return this.startText;

@@ -801,10 +801,10 @@ Als Antwort wird ein Array von JSON-Objekten erwartet. Dieses Array repräsentie
     }
     \end{minted}
     Anfrage:
-    Die Anfrage "LoadFromGit" wird gesendet, um ein LaTeX-Dokument von einem Git-Repository zu laden.
 
-
+    Die Anfrage "LoadFromGit" wird gesendet, um ein LaTeX-Dokument von einem Git-Repository zu laden
     Beschreibung:
+    \newline
     Die Anfrage enthält die folgenden Informationen:
 
     \begin{itemize}
@@ -812,6 +812,7 @@ Als Antwort wird ein Array von JSON-Objekten erwartet. Dieses Array repräsentie
         \item Username: Der Benutzername für die Authentifizierung beim Git-Repository (falls erforderlich).
         \item Password: Das Passwort für die Authentifizierung beim Git-Repository (falls erforderlich).
     \end{itemize}
+
 
     Erwartete Antwort:
     Als Antwort wird ein JSON-Objekt erwartet, das die gesamte Baumstruktur repräsentiert. Dadurch kann die Frontend-Anwendung das aktualisierte Ansichtsmodell rekonstruieren und anzeigen.
