@@ -40,6 +40,11 @@ public class Parser {
         return scanner.parseDocument();
     }
 
+    /**
+     * in case of "input" command, start a new Parser parsing the Document
+     *
+     * @return Element of instance "Input"
+     */
     public Element startParsingRecursion() {
         if (!textFileReader.validateFile()) {
             return null;
@@ -49,8 +54,4 @@ public class Parser {
         this.scanner = new Scanner(text);
         return scanner.parseDocument();
     }
-
-
-
-
 }

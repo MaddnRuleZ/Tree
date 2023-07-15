@@ -96,6 +96,7 @@ public enum ElementConfig {
         }
     },
 
+
     INPUT("\\input", null, 11) {
         @Override
         Element getElement(int index, String currentLine) {
@@ -111,7 +112,7 @@ public enum ElementConfig {
             }
 
             Parser parser = new Parser(path);
-            return parser.startParsing();
+            return parser.startParsingRecursion();
         }
     };
 
@@ -133,6 +134,13 @@ public enum ElementConfig {
         this.endPart = endPart;
     }
 
+    /**
+     * Enter the current Line and get the Element that is initiated in this Line
+     *
+     * @param index index of the current Line
+     * @param currentLine current Text Line from Text, containing the Elements start Part
+     * @return new Generated Element already initiated
+     */
     abstract Element getElement(int index, String currentLine);
 
     /**
