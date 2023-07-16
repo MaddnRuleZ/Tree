@@ -29,6 +29,10 @@ public class Scanner {
      * todo wird noch geändert
      * scan the given Document for Latex Structure Elements and return the root Element for this Part of the Tree
      *
+     * Err List:
+     * first contains can be t/ false
+     *
+     *
      * @return root Element of Tree
      */
     public Roots parseDocument() {
