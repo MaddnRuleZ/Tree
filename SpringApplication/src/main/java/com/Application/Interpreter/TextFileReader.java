@@ -69,26 +69,23 @@ public class TextFileReader {
     }
 
     /**
-     * Extract an part of the Text
-     * TODO O(n^2) insg
+     * Extracts a portion of an array of strings.
      *
-     * @param inputArray
-     * @param startIndex
-     * @param endIndex
-     * @return
+     * @param inputArray   the input array of strings
+     * @param startIndex   the starting index (inclusive)
+     * @param endIndex     the ending index (inclusive)
+     * @return             a list of strings containing the extracted portion
      */
-    public static String[] extractStrings(String[] inputArray, int startIndex, int endIndex) {
+    public static List<String> extractStrings(String[] inputArray, int startIndex, int endIndex) {
         if (startIndex < 0 || endIndex >= inputArray.length || startIndex > endIndex) {
-            // Invalid indices, return an empty array or throw an exception
-            return new String[0];
+            // Invalid indices, return an empty list or throw an exception
+            return new ArrayList<>();
         }
 
-        int resultSize = endIndex - startIndex + 1;
-        String[] resultArray = new String[resultSize];
-        for (int i = startIndex, j = 0; i <= endIndex; i++, j++) {
-            resultArray[j] = inputArray[i];
+        List<String> resultList = new ArrayList<>(endIndex - startIndex + 1);
+        for (int i = startIndex; i <= endIndex; i++) {
+            resultList.add(inputArray[i]);
         }
-
-        return resultArray;
+        return resultList;
     }
 }

@@ -44,7 +44,7 @@ public class Scanner {
                     firstElementFound = true;
                 }
 
-                if (currElement != null && currElement.getStartPart() != null && currElement instanceof BlockElement) {
+                if (currElement != null && !currElement.isTextBlock() && currElement instanceof BlockElement) {
                     newBlockAvailable = false;
                 } else {
                     newBlockAvailable = true;
@@ -89,7 +89,7 @@ public class Scanner {
 
         } else {
             // End TextBlock
-            if (lastElement != null && lastElement.getStartPart() == null) {
+            if (lastElement != null && lastElement.isTextBlock()) {
                 lastElement = lastElement.assignTextToTextBlock(text, index);
             }
             Element newElement = ElementConfig.createElement(this.text[index], index);
@@ -154,7 +154,6 @@ public class Scanner {
      */
     private void higherLevel(Element lastElement, Element newElement) {
         Element searchElem = lastElement;
-
         while (searchElem != null && searchElem.getLevel() >= newElement.getLevel()) {
             searchElem = searchElem.getParentElement();
         }

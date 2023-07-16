@@ -39,38 +39,6 @@ public class Input extends Parent implements Roots {
         return path;
     }
 
-
-    @Override
-    public String[] toText() {
-        List<String> arrayList = new ArrayList<>();
-        String[] curr = this.getText();
-
-        if (curr != null) {
-            arrayList.add(this.getOptions());
-
-            if (this.comment.getContent() != null) {
-                arrayList.addAll(this.comment.getContent());
-            }
-
-            if (this.summary.getContent() != null) {
-                arrayList.addAll(this.summary.getContent());
-            }
-
-            if (textBlock.getTextParts() != null) {
-                for (List<String> list: textBlock.getTextParts()) {
-                    if (list != null) {
-                        arrayList.addAll(list);
-                    }
-                }
-            }
-        }
-
-        for (Element element: childElements) {
-            arrayList.addAll(Arrays.asList(element.toText()));
-        }
-        return arrayList.toArray(new String[0]);
-    }
-
     @Override
     public Element searchForID(UUID id) {
         return null;

@@ -65,18 +65,18 @@ public class Root implements JsonParser, Exportable, Roots {
         return null;
     }
 
-    //todo:
-    @Override
-    public String[] toText() {
-        List<String> arrayList = new ArrayList<>();
-        for (Element element: childElements) {
-            arrayList.addAll(Arrays.asList(element.toText()));
-        }
-        return arrayList.toArray(new String[0]);
-    }
 
     @Override
     public String toJson() {
         return null;
+    }
+
+    @Override
+    public List<String> toText() {
+        List<String> text = new ArrayList<>();
+        for (Element element: childElements) {
+            text.addAll(element.toText());
+        }
+        return text;
     }
 }

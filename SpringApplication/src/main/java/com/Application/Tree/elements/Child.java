@@ -23,10 +23,8 @@ public class Child extends Element {
     }
 
     @Override
-    public String[] toText() {
-        List<String> arrayList = new ArrayList<>();
-        arrayList.add(this.options);
-        return arrayList.toArray(new String[0]);
+    public List<String> toText() {
+        return this.text;
     }
 
     @Override

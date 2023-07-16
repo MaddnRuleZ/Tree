@@ -25,7 +25,6 @@ public abstract class Parent extends Element {
         childElements = new ArrayList<>();
     }
 
-
     /**
      *
      * @param element
@@ -48,42 +47,20 @@ public abstract class Parent extends Element {
         return this.childElements;
     }
 
-
     /**
      * recursiv generation of the Latex code
      * generate the LaTeX code from the current Element as well as all Children, add it together and return it
      *
      * @return LateX code of the current Element
      */
-    @Override
-    public String[] toText() {
-        List<String>  arrayList = new ArrayList<>();
-        String[] curr = this.getText();
+    public List<String> toText() {
+        List<String> outText = new ArrayList<>();
+        outText.add(options);
 
-        // unclean
-        if (curr != null) {
-            arrayList.add(this.getOptions());
-
-            if (this.comment.getContent() != null) {
-                arrayList.addAll(this.comment.getContent());
-            }
-
-            if (this.summary.getContent() != null) {
-                arrayList.addAll(this.summary.getContent());
-            }
-
-            if (textBlock.getTextParts() != null) {
-                for (List<String> list: textBlock.getTextParts()) {
-                    if (list != null) {
-                        arrayList.addAll(list);
-                    }
-                }
-            }
+        for (Element child: this.childElements) {
+            outText.addAll(child.toText());
         }
-
-        for (Element element: childElements) {
-            arrayList.addAll(Arrays.asList(element.toText()));
-        }
-        return arrayList.toArray(new String[0]);
+        return outText;
     }
+
 }

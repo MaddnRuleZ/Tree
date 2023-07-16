@@ -17,7 +17,7 @@ public abstract class Element implements JsonParser, Exportable {
     private final UUID id;
     private final int level;
     private Element parentElement;
-    protected String[] text;
+    protected List<String> text;
     protected final Summary summary;
     protected final Comment comment;
     protected final TextBlock textBlock;
@@ -33,6 +33,7 @@ public abstract class Element implements JsonParser, Exportable {
         this.endPart = endPart;
         this.startIndex = startIndex;
         this.level = level;
+        this.text = new ArrayList<>();
 
         comment = new Comment();
         summary = new Summary();
@@ -42,13 +43,12 @@ public abstract class Element implements JsonParser, Exportable {
     public void setOptions(String optionsString) {
         this.options = optionsString;
     }
-    public abstract String[] toText();
 
-    // move to Child/ BlockElement
+    public abstract List<String> toText();
+
     public Element assignTextToTextBlock(String[] text, int endIndex) {
-        //? wird nur auf Blocks gecalled?
-        String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
-        this.text = elementFullText;
+        // todo assertion
+        this.text = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
         return parentElement;
     }
 
@@ -60,9 +60,6 @@ public abstract class Element implements JsonParser, Exportable {
      */
     public abstract Element searchForID(UUID id);
 
-    protected String extractOptionsString(String rawOptions) {
-        return rawOptions;
-    }
     public void setParent(Element parentElement) {
         this.parentElement = parentElement;
     }
@@ -75,7 +72,7 @@ public abstract class Element implements JsonParser, Exportable {
     public String toJson() {
         return null;
     }
-    public String[] getText() {
+    public List<String> getText() {
         return this.text;
     }
     public UUID getId() {
@@ -93,6 +90,10 @@ public abstract class Element implements JsonParser, Exportable {
     public void setChooseManualSummary(boolean chooseManualSummary) {
         this.chooseManualSummary = chooseManualSummary;
     }
+    public boolean isTextBlock() {
+        return this.startPart == null;
+    }
+
     public void setComment(String comment) {
         //TODO
     }
@@ -103,9 +104,5 @@ public abstract class Element implements JsonParser, Exportable {
 
     public void setSummary(String summary) {
         //TODO
-    }
-
-    public String getStartPart() {
-        return this.startPart;
     }
 }

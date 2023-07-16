@@ -12,6 +12,8 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.util.List;
+
 @SpringBootApplication
 @SpringBootConfiguration
 @ComponentScan(basePackages = {"com.Application"})
@@ -30,7 +32,7 @@ public class Application {
 			Parser parser = new Parser("SpringApplication/src/MaddinIsTesting/PSE_TEST_1.txt");
 			Roots root = parser.startParsing();
 
-			String[] finishedTextReCompiled = root.toText();
+			List<String> finishedTextReCompiled = root.toText();
 			for (String str: finishedTextReCompiled) {
 				System.out.println(str);
 			}
