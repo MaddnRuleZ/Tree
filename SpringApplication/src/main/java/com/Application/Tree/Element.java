@@ -4,7 +4,6 @@ import com.Application.Interpreter.TextFileReader;
 import com.Application.Interpreter.additionalInfo.Comment;
 import com.Application.Interpreter.additionalInfo.TextBlock;
 import com.Application.Interpreter.additionalInfo.Summary;
-import com.Application.Tree.elements.BlockElement;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
@@ -50,7 +49,9 @@ public abstract class Element implements JsonParser, Exportable {
 
     public abstract String[] toText();
 
-    public Element scanElementTextForSubElements(String[] text, int endIndex) {
+    public Element assignTextToBlock(String[] text, int endIndex) {
+        //? wird nur auf Blocks gecalled?
+
         //this.options = extractOptionsString(text[this.startIndex]);
         String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
         this.text = elementFullText;
@@ -136,5 +137,9 @@ public abstract class Element implements JsonParser, Exportable {
 
     public void setSummary(String summary) {
         //TODO
+    }
+
+    public String getStartPart() {
+        return this.startPart;
     }
 }

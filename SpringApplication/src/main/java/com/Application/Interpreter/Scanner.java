@@ -42,8 +42,15 @@ public class Scanner {
                     currElement = scanLine(currElement, i);
                     if (currElement != null && !firstElementFound) {
                         firstElementFound = true;
+                    }
+
+                    if (currElement != null && currElement.getStartPart() != null && currElement instanceof BlockElement) {
+                        newBlockAvailable = false;
+                    } else {
                         newBlockAvailable = true;
                     }
+
+
                 } catch(Exception e) {
                     // throw new ElementNotFoundException("Fatal Error while creating Element, in line" + i);
                     System.out.println("### Error in line " + i + ": " + e.getMessage());
@@ -68,7 +75,7 @@ public class Scanner {
 
         // todo Ending still fucked
         if (currElement != null) {
-            currElement.scanElementTextForSubElements(text, text.length);
+            currElement.assignTextToBlock(text, text.length);
         }
         return root;
     }
@@ -82,14 +89,11 @@ public class Scanner {
      */
     private Element scanLine(Element lastElement, final int index) {
         if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
-            // lastElement.scanElementTextForSubElements(text, index);
-            // ret null -> so Enviroments better
-            return lastElement;
+            return lastElement.getParentElement();
 
         } else {
-            //Element parentOfLast =
             if (lastElement != null) {
-                lastElement = lastElement.scanElementTextForSubElements(text, index);
+                lastElement = lastElement.assignTextToBlock(text, index);
             }
 
             Element newElement = ElementConfig.createElement(this.text[index], index);
