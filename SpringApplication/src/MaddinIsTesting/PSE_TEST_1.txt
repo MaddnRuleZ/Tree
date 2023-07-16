@@ -4,20 +4,22 @@
         end of exa Blockelem
 \end{haw haw}
 
-\start{summary}
-        start of exa Blockelem
 
-        end of exa Blockelem
-\finsish{summary}
+\part{test_2}
+    Text Block1
+
+    Text Block1
+    \chapter{haw haw}
+        Text Block2
+
+        Text Block2
+
+
 
 \section{test_1}
-        Start ZONE 1
 
-
-        END ZONE 1
     \begin{haw haw2}
         start of exa Blockelem
-
 
         end of exa Blockelem
     \end{haw haw2}

@@ -4,6 +4,7 @@ import com.Application.Interpreter.TextFileReader;
 import com.Application.Interpreter.additionalInfo.Comment;
 import com.Application.Interpreter.additionalInfo.TextBlock;
 import com.Application.Interpreter.additionalInfo.Summary;
+import com.Application.Tree.elements.BlockElement;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
@@ -49,7 +50,18 @@ public abstract class Element implements JsonParser, Exportable {
 
     public abstract String[] toText();
 
-    /**
+
+    public void scanElementTextForSubElements(String[] text, int endIndex) {
+        BlockElement block = new BlockElement(null, null, 0);
+
+        this.options = extractOptionsString(text[this.startIndex]);
+        String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex + 1, endIndex - 1);
+        this.text = elementFullText;
+
+    }
+
+    /*
+     *
      * Read the contents of the structure Element
      * mini Parser For Comments, Summaries and NewLines, okay by now resorted to c,s,p. Max: nC, 1S nP
      *
@@ -57,8 +69,10 @@ public abstract class Element implements JsonParser, Exportable {
      *
      * @param text
      * @param endIndex
-     */
+
     public void scanElementTextForSubElements(String[] text, int endIndex) {
+
+
         if (endIndex != 0 && validateIndicTextGeneration()) {
             String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex + 1, endIndex - 1);
             List<String> remainingText = Arrays.stream(elementFullText).toList();
@@ -70,6 +84,8 @@ public abstract class Element implements JsonParser, Exportable {
             textBlock.extractInfo(remainingText);
         }
     }
+
+    */
 
     /**
      * searches for the element with the given id

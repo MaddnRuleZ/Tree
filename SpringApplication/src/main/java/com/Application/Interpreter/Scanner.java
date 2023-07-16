@@ -44,16 +44,18 @@ public class Scanner {
                     currElement = scanLine(currElement, i);
                     if (currElement != null && !firstElementFound) {
                         firstElementFound = true;
-                        //root.addStartText(TextFileReader.extractStrings(text, 0, i - 1));
+                        // root.addStartText(TextFileReader.extractStrings(text, 0, i - 1));
                     }
                 } catch(Exception e) {
-                    //throw new ElementNotFoundException("Fatal Error while creating Element, in line" + i);
+                    // throw new ElementNotFoundException("Fatal Error while creating Element, in line" + i);
                     System.out.println("### Error in line " + i + ": " + e.getMessage());
                     e.printStackTrace();
                 }
 
-            } else if(text[i].contains("\\end{document}")) {
-                break;
+            } else {
+                // Element is BlockElement?
+                // = new BLockElement, enter Index
+
             }
         }
 
@@ -71,13 +73,13 @@ public class Scanner {
      * @return the New Created Text Element with parent and child hierachie
      */
     private Element scanLine(final Element lastElement, final int index) {
-        // end Part of current
         if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
             lastElement.scanElementTextForSubElements(text, index);
             // ret null -> so Enviroments better
             return lastElement;
 
         } else {
+            // generate text of last?
             Element newElement = ElementConfig.createElement(this.text[index], index);
 
             if (newElement != null) {

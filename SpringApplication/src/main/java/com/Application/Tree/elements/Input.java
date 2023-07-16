@@ -15,8 +15,6 @@ public class Input extends Parent implements Roots {
     private static final String startPart = "\\input";
     private static final int LEVEL = 0;
 
-    private final String filePath = "";
-
     /**
      *
      */
@@ -57,7 +55,6 @@ public class Input extends Parent implements Roots {
     public String[] toText() {
         List<String> arrayList = new ArrayList<>();
         String[] curr = this.getText();
-        //arrayList.addAll(Arrays.stream(this.startText).toList());
 
         if (curr != null) {
             arrayList.add(this.getOptions());

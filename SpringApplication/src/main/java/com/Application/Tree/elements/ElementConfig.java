@@ -122,8 +122,6 @@ public enum ElementConfig {
            }
         }
     };
-    private static final int BLOCKELEMENT_LEVEL = 12;
-
     private final String startPart;
     private final String endPart;
     private final int level;
@@ -166,7 +164,7 @@ public enum ElementConfig {
         }
 
         if (startPartLine.contains("\\begin")) {
-            return new BlockElement("\\begin", "\\end", index, BLOCKELEMENT_LEVEL);
+            return new BlockElement("\\begin", "\\end", index);
         }
         return null;
     }
