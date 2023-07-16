@@ -49,7 +49,6 @@ public abstract class Element implements JsonParser, Exportable {
 
     public abstract String[] toText();
 
-
     /**
      * Read the contents of the structure Element
      * mini Parser For Comments, Summaries and NewLines, okay by now resorted to c,s,p. Max: nC, 1S nP
@@ -83,15 +82,9 @@ public abstract class Element implements JsonParser, Exportable {
     protected String extractOptionsString(String rawOptions) {
         return rawOptions;
     }
-
     public void setParent(Element parentElement) {
         this.parentElement = parentElement;
     }
-
-    /**
-     *
-     * @return
-     */
     public Parent getParentElement() {
         return (Parent) parentElement;
     }

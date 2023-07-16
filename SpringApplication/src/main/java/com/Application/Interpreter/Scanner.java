@@ -17,7 +17,6 @@ public class Scanner {
 
     /**
      *
-     *
      * @param text
      */
     public Scanner(String[] text) {
