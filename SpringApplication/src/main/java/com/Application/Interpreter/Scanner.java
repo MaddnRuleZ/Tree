@@ -165,6 +165,7 @@ public class Scanner {
         } else {
             setParentChild(searchElem, newElement);
         }
+
     }
 
     /**
