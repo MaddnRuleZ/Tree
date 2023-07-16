@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Input extends Parent implements Roots {
-
     private static final String startPart = "\\input";
     private static final int LEVEL = 0;
 
@@ -40,16 +39,6 @@ public class Input extends Parent implements Roots {
         return path;
     }
 
-    public String[] startText;
-
-    @Override
-    public boolean validateIndicTextGeneration() {
-        return false;
-    }
-
-    public void addStartText(String[] startText) {
-        this.startText = startText;
-    }
 
     @Override
     public String[] toText() {
@@ -81,11 +70,6 @@ public class Input extends Parent implements Roots {
         }
         return arrayList.toArray(new String[0]);
     }
-
-    public String[] getStartText() {
-        return this.startText;
-    }
-
 
     @Override
     public Element searchForID(UUID id) {

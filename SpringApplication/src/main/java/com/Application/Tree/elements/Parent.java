@@ -14,6 +14,7 @@ public abstract class Parent extends Element {
 
     /**
      *
+     *
      * @param startPart
      * @param endPart
      * @param startIndex
@@ -24,17 +25,9 @@ public abstract class Parent extends Element {
         childElements = new ArrayList<>();
     }
 
-    /**
-     * Check if the Text, assigned to the current Element can be overwritten
-     *
-     * @return if the text can be overwritten
-     */
-    @Override
-    public boolean validateIndicTextGeneration() {
-        return this.text == null;
-    }
 
     /**
+     *
      *
      * @param element
      * @return

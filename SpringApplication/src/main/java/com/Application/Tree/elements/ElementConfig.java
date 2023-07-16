@@ -3,10 +3,6 @@ package com.Application.Tree.elements;
 import com.Application.Interpreter.Parser;
 import com.Application.Tree.Element;
 import com.Application.Tree.interfaces.Roots;
-import org.springframework.cglib.core.Block;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class Containing the Configuration of the Structural Elements that wil be detected by the Scan- Algorithm
@@ -64,7 +60,6 @@ public enum ElementConfig {
     },
 
 
-
     ALGORITHM("\\begin{algorithm}", "\\end{algorithm}", 9) {
         @Override
         Element getElement(int index, String currentLine) {
@@ -85,7 +80,6 @@ public enum ElementConfig {
             return new Environment(getStartPart(), getEndPart(), index, getLevel());
         }
     },
-
 
 
     LABEL("\\label", null, 10) {

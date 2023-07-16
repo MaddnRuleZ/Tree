@@ -7,6 +7,5 @@ public class BlockElement extends Child {
 
     public BlockElement(String startPart, String endPart, int startIndex) {
         super(startPart, endPart, startIndex, BLOCK_ELEMENT_LEVEL);
-
     }
 }

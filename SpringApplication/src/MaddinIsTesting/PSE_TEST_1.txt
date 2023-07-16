@@ -1,21 +1,32 @@
 \part{test_2}
     Text Block1
 
+
     Text Block1
     \begin{haw haw}
         start of exa Blockelem
+
 
         end of exa Blockelem
     \end{haw haw}
     Text Block1
 
+
     Text Block1
     \chapter{haw haw}
         Text Block2
 
+
         Text Block2
         \section{haw haw_3}
+\part{fuck}
+    \chapter{newChapter}
+        Text Block1
 
 
+        Text Block1
+    \chapter{newChapter2}
+        Text Block2
 
 
+        Text Block2

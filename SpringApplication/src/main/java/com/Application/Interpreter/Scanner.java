@@ -26,7 +26,7 @@ public class Scanner {
     }
 
     /**
-     * todo, Ebene N Root; N+1 ret Element?, instance of "input"?
+     * todo wird noch gepolished
      * scan the given Document for Latex Structure Elements and return the root Element for this Part of the Tree
      *
      * @return root Element of Tree
@@ -38,23 +38,16 @@ public class Scanner {
 
         for (int i = 0; i < text.length; i++) {
             if (text[i].contains("\\")) {
-                try {
-                    currElement = scanLine(currElement, i);
-                    if (currElement != null && !firstElementFound) {
-                        firstElementFound = true;
-                    }
+                currElement = scanLine(currElement, i);
+                if (currElement != null && !firstElementFound) {
+                    firstElementFound = true;
+                }
 
-                    if (currElement != null && currElement.getStartPart() != null && currElement instanceof BlockElement) {
-                        newBlockAvailable = false;
-                    } else {
-                        newBlockAvailable = true;
-                    }
-
-
-                } catch(Exception e) {
-                    // throw new ElementNotFoundException("Fatal Error while creating Element, in line" + i);
-                    System.out.println("### Error in line " + i + ": " + e.getMessage());
-                    e.printStackTrace();
+                if (currElement != null && currElement.getStartPart() != null && currElement instanceof BlockElement) {
+                    // filter env
+                    newBlockAvailable = false;
+                } else {
+                    newBlockAvailable = true;
                 }
 
             } else {
@@ -89,16 +82,17 @@ public class Scanner {
      */
     private Element scanLine(Element lastElement, final int index) {
         if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
+            lastElement.assignTextToBlock(text, index);
             return lastElement.getParentElement();
 
         } else {
-            if (lastElement != null) {
+            if (lastElement != null && lastElement.getStartPart() == null) {
                 lastElement = lastElement.assignTextToBlock(text, index);
             }
-
             Element newElement = ElementConfig.createElement(this.text[index], index);
-
             if (newElement != null) {
+                newElement.setOptions(this.text[index]);
+
                 if (lastElement == null) {
                     root.addChild(newElement);
                     // -> root + 1 Elemente haben kein Parent, unnavigierbar? alternativ check Instance
@@ -129,7 +123,6 @@ public class Scanner {
      * @param newElement currentElement created
      */
     private void lowerLevel(Element lastElement, int index, Element newElement) {
-        // lastElement.scanElementTextForSubElements(text, index);
         setParentChild(lastElement, newElement);
     }
 
@@ -141,7 +134,6 @@ public class Scanner {
      * @param newElement currentElement created
      */
     private void sameLevel(Element lastElement, int index, Element newElement) {
-        // lastElement.scanElementTextForSubElements(text, index);
         Element parent = lastElement.getParentElement();
 
         if (parent == null) {
@@ -162,7 +154,6 @@ public class Scanner {
         Element searchElem = lastElement;
 
         while (searchElem != null && searchElem.getLevel() >= newElement.getLevel()) {
-            //searchElem.scanElementTextForSubElements(text, index);
             searchElem = searchElem.getParentElement();
         }
 
@@ -175,7 +166,6 @@ public class Scanner {
             setParentChild(searchElem, newElement);
         }
     }
-
 
     /**
      * set the double linked Connection between two Elements

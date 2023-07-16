@@ -33,58 +33,25 @@ public abstract class Element implements JsonParser, Exportable {
         this.endPart = endPart;
         this.startIndex = startIndex;
         this.level = level;
-        this.text = null;
 
         comment = new Comment();
         summary = new Summary();
         textBlock = new TextBlock();
     }
 
-    /**
-     * ture if Element has no Text or can be overwritten (Dead Zone EdgeCase)
-     *
-     * @return
-     */
-    public abstract boolean validateIndicTextGeneration();
-
+    public void setOptions(String optionsString) {
+        this.options = optionsString;
+    }
     public abstract String[] toText();
 
+    // move to Child/ BlockElement
     public Element assignTextToBlock(String[] text, int endIndex) {
         //? wird nur auf Blocks gecalled?
-
-        //this.options = extractOptionsString(text[this.startIndex]);
         String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
         this.text = elementFullText;
-
         return parentElement;
     }
 
-    /*
-     *
-     * Read the contents of the structure Element
-     * mini Parser For Comments, Summaries and NewLines, okay by now resorted to c,s,p. Max: nC, 1S nP
-     *
-     * text uselsess after this transformation, text is only in the newline characters
-     *
-     * @param text
-     * @param endIndex
-
-    public void scanElementTextForSubElements(String[] text, int endIndex) {
-
-
-        if (endIndex != 0 && validateIndicTextGeneration()) {
-            String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex + 1, endIndex - 1);
-            List<String> remainingText = Arrays.stream(elementFullText).toList();
-            this.options = extractOptionsString(text[this.startIndex]);
-            this.text = elementFullText;
-
-            remainingText = summary.extractInfo(remainingText);
-            remainingText = comment.extractInfo(remainingText);
-            textBlock.extractInfo(remainingText);
-        }
-    }
-
-    */
 
     /**
      * searches for the element with the given id

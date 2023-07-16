@@ -1,14 +1,3 @@
-\begin{document}
-%-------------------Deckblatt und Inhaltsverzeichnis-------------------------------------------
-    \maketitle
-    \thispagestyle{empty} % keine Seitennummerierung
-    \newpage
-
-    \setcounter{tocdepth}{2}
-    \tableofcontents % Inhaltsverzeichnis
-    \thispagestyle{empty} % keine Seitennummerierung
-    \newpage
-%-----------------------------------------------------------------------------------------
 \section{Frontend}
     \subsection{Klassen}
         \begin{figure}[h!]
