@@ -5,7 +5,7 @@ import com.Application.Tree.elements.*;
 import com.Application.Tree.interfaces.Roots;
 
 /**
- *
+ * Scanner Class for Disaselbeling a Document into its Latex Structur Elements
  *
  */
 public class Scanner {
@@ -13,8 +13,9 @@ public class Scanner {
     private final Roots root;
 
     /**
+     * Create a new Instance of the Scanner for Scanning a Text on Elements
      *
-     * @param text
+     * @param text Text the Scanner shall Scan
      */
     public Scanner(String[] text) {
         if (Root.isInit()) {
