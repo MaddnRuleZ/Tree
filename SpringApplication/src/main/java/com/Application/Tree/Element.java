@@ -5,6 +5,7 @@ import com.Application.Interpreter.additionalInfo.Comment;
 import com.Application.Interpreter.additionalInfo.TextBlock;
 import com.Application.Interpreter.additionalInfo.Summary;
 import com.Application.Tree.elements.Parent;
+import com.Application.Tree.elements.Root;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
 import java.util.*;
@@ -38,6 +39,7 @@ public abstract class Element implements JsonParser, Exportable {
         comment = new Comment();
         summary = new Summary();
         textBlock = new TextBlock();
+        Root.updateLevelCap(level);
     }
 
     public void setOptions(String optionsString) {
@@ -49,6 +51,10 @@ public abstract class Element implements JsonParser, Exportable {
     public Element assignTextToTextBlock(String[] text, int endIndex) {
         // todo assertion
         this.text = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
+        // extract the summ, comment, nl
+        List<String> restText = comment.extractInfo(this.text);
+
+
         return parentElement;
     }
 

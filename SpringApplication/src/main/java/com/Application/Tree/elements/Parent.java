@@ -25,11 +25,6 @@ public abstract class Parent extends Element {
         childElements = new ArrayList<>();
     }
 
-    /**
-     *
-     * @param element
-     * @return
-     */
     public void addChild(Element element) {
         this.childElements.add(element);
     }

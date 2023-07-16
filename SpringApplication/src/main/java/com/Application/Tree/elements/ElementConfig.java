@@ -116,6 +116,7 @@ public enum ElementConfig {
            }
         }
     };
+
     private final String startPart;
     private final String endPart;
     private final int level;

@@ -6,7 +6,7 @@ import com.Application.Tree.interfaces.JsonParser;
 import com.Application.Tree.interfaces.Roots;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ public class Root implements JsonParser, Exportable, Roots {
     private final List<Element> childElements;
     private static Root instance;
 
-    private int minLevel;
+    private static int MIN_LEVEL = 0;
 
     private Root() {
         // Private constructor to prevent instantiation from outside the class
@@ -42,17 +42,29 @@ public class Root implements JsonParser, Exportable, Roots {
         return instance;
     }
 
+    /**
+     * Update the Minimum Level Cap from the Complete file
+     *
+     * @param newLevelCap level of new Created Element
+     */
+    public static void updateLevelCap(int newLevelCap) {
+        if (newLevelCap < MIN_LEVEL) {
+            MIN_LEVEL = newLevelCap;
+        }
+    }
+
+    /**
+     * Check if the Root is already initialized
+     *
+     * @return true if Root is init, else false
+     */
     public static boolean isInit() {
         return instance == null;
     }
 
+
     public void addChild(Element element) {
         this.childElements.add(element);
-    }
-
-
-    public void getChildElements() {
-        //TODO
     }
 
     public Root createRoot() {
