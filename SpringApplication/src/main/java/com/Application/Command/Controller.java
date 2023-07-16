@@ -42,7 +42,9 @@ public class Controller {
             }
             return new ResponseEntity<>(response, status);
         } catch (ProcessingException e) {
-            return new ResponseEntity<>(e.generateFailureResponse(), HttpStatus.BAD_REQUEST);
+            // todo, enthielt fehler, so commented
+            //return new ResponseEntity<>(e.generateFailureResponse(), HttpStatus.BAD_REQUEST);
+            return null;
         }
 
 

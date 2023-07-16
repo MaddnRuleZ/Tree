@@ -23,7 +23,6 @@ public class Comment extends AdditionalInformationContainer {
         this.content = new ArrayList<>();
 
         for (String line: remainText) {
-            // better def than only contains?
             if (line.contains(START_CHARACTER)) {
                 this.content.add(line);
             } else {

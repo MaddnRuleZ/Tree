@@ -3,23 +3,27 @@ package com.Application.Tree.elements;
 import com.Application.Tree.Element;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
+import com.Application.Tree.interfaces.Roots;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+
 /**
- *
+ * This is the Singleton Function of the Root of the Whole LaTeX code.
  *
  */
-public class Root implements JsonParser, Exportable {
+public class Root implements JsonParser, Exportable, Roots {
+    private final List<Element> childElements;
     private static Root instance;
-
-    private List<Element> childElements;
 
     private int minLevel;
 
     private Root() {
         // Private constructor to prevent instantiation from outside the class
+        childElements = new ArrayList<>();
     }
 
     /**
@@ -38,6 +42,10 @@ public class Root implements JsonParser, Exportable {
         return instance;
     }
 
+    public static boolean isInit() {
+        return instance == null;
+    }
+
     public void addChild(Element element) {
         this.childElements.add(element);
     }
@@ -52,21 +60,23 @@ public class Root implements JsonParser, Exportable {
         return null;
     }
 
-
     public Element searchForID(UUID id) {
         //TODO
         return null;
     }
 
+    //todo:
     @Override
     public String[] toText() {
-        return new String[0];
+        List<String> arrayList = new ArrayList<>();
+        for (Element element: childElements) {
+            arrayList.addAll(Arrays.asList(element.toText()));
+        }
+        return arrayList.toArray(new String[0]);
     }
 
     @Override
     public String toJson() {
         return null;
     }
-
-
 }

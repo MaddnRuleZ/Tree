@@ -18,7 +18,6 @@ public class Sectioning extends Parent {
         super(startPart, null, startIndex, level);
     }
 
-
     @Override
     public Element searchForID(UUID id) {
         if (this.getId().equals(id)) {

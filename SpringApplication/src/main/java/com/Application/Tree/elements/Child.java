@@ -2,10 +2,11 @@ package com.Application.Tree.elements;
 
 import com.Application.Tree.Element;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
- *
  *
  */
 public class Child extends Element {
@@ -25,20 +26,11 @@ public class Child extends Element {
         return true;
     }
 
-    /**
-     * @param child element to add
-     */
-    @Override
-    public boolean addChild(Element child) {
-        return false;
-    }
-
     @Override
     public String[] toText() {
-        if (text != null) {
-            return text;
-        }
-        return null;
+        List<String> arrayList = new ArrayList<>();
+        arrayList.add(this.options);
+        return arrayList.toArray(new String[0]);
     }
 
     @Override

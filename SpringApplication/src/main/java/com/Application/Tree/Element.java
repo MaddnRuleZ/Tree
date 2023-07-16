@@ -47,6 +47,9 @@ public abstract class Element implements JsonParser, Exportable {
      */
     public abstract boolean validateIndicTextGeneration();
 
+    public abstract String[] toText();
+
+
     /**
      * Read the contents of the structure Element
      * mini Parser For Comments, Summaries and NewLines, okay by now resorted to c,s,p. Max: nC, 1S nP
@@ -82,12 +85,14 @@ public abstract class Element implements JsonParser, Exportable {
     }
 
     public void setParent(Element parentElement) {
-        // todo also instace cast?
         this.parentElement = parentElement;
     }
 
+    /**
+     *
+     * @return
+     */
     public Parent getParentElement() {
-        // todo also instace cast?
         return (Parent) parentElement;
     }
     public String getStartPart() {
@@ -111,8 +116,6 @@ public abstract class Element implements JsonParser, Exportable {
     public String getOptions() {
         return this.options;
     }
-
-    public abstract boolean addChild(Element child);
     public boolean isChooseManualSummary() {
         return chooseManualSummary;
     }

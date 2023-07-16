@@ -39,9 +39,8 @@ public abstract class Parent extends Element {
      * @param element
      * @return
      */
-    public boolean addChild(Element element) {
+    public void addChild(Element element) {
         this.childElements.add(element);
-        return true;
     }
 
     public void addChildOnIndex(int index, Element newChild) {
@@ -76,6 +75,7 @@ public abstract class Parent extends Element {
         List<String>  arrayList = new ArrayList<>();
         String[] curr = this.getText();
 
+        // unclean
         if (curr != null) {
             arrayList.add(this.getOptions());
 

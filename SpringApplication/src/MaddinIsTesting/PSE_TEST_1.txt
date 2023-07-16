@@ -1,14 +1,76 @@
-starting Text Blind Spot_1 DOC 1
 
-\start{document}
-starting Text Blind Spot_2
+\begin{haw haw}
+        start of exa Blockelem
+
+
+        end of exa Blockelem
+\end{haw haw}
+
+\start{summary}
+        start of exa Blockelem
+
+
+        end of exa Blockelem
+\finsish{summary}
+
+
+
+
+
+\section{test_1}
+        Start ZONE 1
+
+        END ZONE 1
+    \begin{haw haw2}
+        start of exa Blockelem
+
+
+
+        end of exa Blockelem
+    \end{haw haw2}
+        Dead ZONE _99
+
+        END Dead ZONE _99
+
+    \label
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{Frontend}
     %comment1
-    %\begin{summary}
-    exa1
-    endExa1
-    %\end{summary}
+    %\start{summary}
+        exa Summary 2 nl
+
+        end Summary
+    %\finnish{summary}
 
     Text1 / Das hier ist nur Exa text um ifndafnk adokfnmak ma mkadsfa +kdnfa+f
     \newline
@@ -21,7 +83,6 @@ starting Text Blind Spot_2
 
     Text3 / Das hier ist nur Exa text um ifndafnk adokfnmak ma mkadsfa +kdnfa+f
     \newline
-
 
 
     Dead Zone Test _4

@@ -2,6 +2,8 @@ package com.Application.Tree.elements;
 
 import com.Application.Interpreter.Parser;
 import com.Application.Tree.Element;
+import com.Application.Tree.interfaces.Roots;
+import org.springframework.cglib.core.Block;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +63,8 @@ public enum ElementConfig {
         }
     },
 
+
+
     ALGORITHM("\\begin{algorithm}", "\\end{algorithm}", 9) {
         @Override
         Element getElement(int index, String currentLine) {
@@ -82,39 +86,43 @@ public enum ElementConfig {
         }
     },
 
+
+
     LABEL("\\label", null, 10) {
         @Override
         Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(),null , index, getLevel());
+            return new Child(getStartPart(),null , index, getLevel());
         }
     },
 
     CAPTION("\\caption", null, 10) {
         @Override
         Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(), null, index, getLevel());
+            // set level
+            return new Child(getStartPart(), null, index, getLevel());
         }
     },
-
 
     INPUT("\\input", null, 11) {
         @Override
         Element getElement(int index, String currentLine) {
-            String path;
-            String regexPattern = "\\\\input\\{([^}]*)\\}";
-            Pattern pattern = Pattern.compile(regexPattern);
-            Matcher matcher = pattern.matcher(currentLine);
-            if (matcher.find()) {
-                path = matcher.group(1);
-            } else {
-                System.out.println("Error, couldn't parse the path");
+            String path = Input.extractPathRegex(currentLine);
+            if (path == null) {
                 return null;
             }
 
             Parser parser = new Parser(path);
-            return parser.startParsingRecursion();
+            Roots root = parser.startParsing();
+
+           if (root instanceof Input) {
+               return (Element) root;
+           } else {
+               System.out.println("Illegal Program State on Creation Of Element");
+               return null;
+           }
         }
     };
+    private static final int BLOCKELEMENT_LEVEL = 12;
 
     private final String startPart;
     private final String endPart;
@@ -155,6 +163,10 @@ public enum ElementConfig {
             if (startPartLine.contains(sectioning.startPart)) {
                 return sectioning.getElement(index, startPartLine);
             }
+        }
+
+        if (startPartLine.contains("\\begin")) {
+            return new BlockElement("\\begin", "\\end", index, BLOCKELEMENT_LEVEL);
         }
         return null;
     }

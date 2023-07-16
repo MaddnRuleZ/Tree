@@ -1,12 +1,11 @@
 package com.Application.Interpreter;
 
-import com.Application.Tree.Element;
-import com.Application.Tree.elements.Root;
+import com.Application.Tree.interfaces.Roots;
 
 /**
  * Class for Parsing a single Latex Document,
- * input statement in this Doc will trigger recursive ex function
  *
+ *  input statement in this Doc will trigger recursive ex function
  *
  */
 public class Parser {
@@ -31,7 +30,7 @@ public class Parser {
      *
      * @return finished Root, containing the Tree as Children
      */
-    public Root startParsingMainDoc() {
+    public Roots startParsing() {
         if (!textFileReader.validateFile()) {
             return null;
         }
@@ -39,21 +38,5 @@ public class Parser {
         this.text = textFileReader.readLinesFromFile();
         this.scanner = new Scanner(text);
         return scanner.parseDocument();
-    }
-
-    /**
-     * in case of "input" command, start a new Parser parsing the Document
-     *
-     * @return Element of instance "Input"
-     */
-    public Element startParsingRecursion() {
-        if (!textFileReader.validateFile()) {
-            return null;
-        }
-
-        this.text = textFileReader.readLinesFromFile();
-        this.scanner = new Scanner(text);
-        //return scanner.parseDocument();
-        return null;
     }
 }

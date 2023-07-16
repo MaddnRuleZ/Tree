@@ -1,10 +1,6 @@
 package com.Application.Tree.elements;
 
-import com.Application.Interpreter.TextFileReader;
 import com.Application.Tree.Element;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public class Environment extends Parent {

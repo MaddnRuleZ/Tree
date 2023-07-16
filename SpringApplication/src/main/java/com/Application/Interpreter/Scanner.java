@@ -1,31 +1,41 @@
 package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
+import com.Application.Tree.elements.Input;
+import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
 import com.Application.Tree.elements.ElementConfig;
+import com.Application.Tree.interfaces.Roots;
 
 /**
+ *
  *
  */
 public class Scanner {
     private final String[] text;
-    private final Root root;
+    private final Roots root;
 
     /**
+     *
      *
      * @param text
      */
     public Scanner(String[] text) {
-        root = Root.getInstance();
+        if (Root.isInit()) {
+            root = Root.getInstance();
+        } else {
+            root = new Input();
+        }
         this.text = text;
     }
 
     /**
+     * todo, Ebene N Root; N+1 ret Element?, instance of "input"?
      * scan the given Document for Latex Structure Elements and return the root Element for this Part of the Tree
      *
      * @return root Element of Tree
      */
-    public Root parseDocument() {
+    public Roots parseDocument() {
         boolean firstElementFound = false;
         Element currElement = null;
 
@@ -51,23 +61,21 @@ public class Scanner {
         if (currElement != null) {
             currElement.scanElementTextForSubElements(text, text.length);
         }
-
         return root;
     }
 
     /**
      * Scan the current line and create an new Element or Close one
      *
-     *
      * @param lastElement last Element that was created
      * @param index current index of the text
      * @return the New Created Text Element with parent and child hierachie
      */
     private Element scanLine(final Element lastElement, final int index) {
-
         // end Part of current
         if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
             lastElement.scanElementTextForSubElements(text, index);
+            // ret null -> so Enviroments better
             return lastElement;
 
         } else {
@@ -76,7 +84,7 @@ public class Scanner {
             if (newElement != null) {
                 if (lastElement == null) {
                     root.addChild(newElement);
-                    // -> root + 1 Elemente haben kein Parent, unnavigierbar?
+                    // -> root + 1 Elemente haben kein Parent, unnavigierbar? alternativ check Instance
                     // element.setParent(root);
 
                 } else if (newElement.getLevel() > lastElement.getLevel()) {
@@ -162,6 +170,10 @@ public class Scanner {
      */
     private void setParentChild(Element parent, Element child) {
         child.setParent(parent);
-        parent.addChild(child);
+        if (parent instanceof Parent parentInst) {
+            parentInst.addChild(child);
+        } else {
+            System.out.println("### FATAL ERROR, SEE SCANNER CLASS");
+        }
     }
 }

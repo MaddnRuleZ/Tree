@@ -2,7 +2,7 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Interpreter.Parser;
-import com.Application.Tree.elements.Root;
+import com.Application.Tree.interfaces.Roots;
 import com.Application.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -14,8 +14,7 @@ public class LoadFromFolderCommand extends Command implements IEditorResponse {
     @Override
     public JsonNode execute() {
         Parser parser = new Parser(this.path);
-        Root root = parser.startParsingMainDoc();
-
+        Roots root = parser.startParsing();
 
         return generateResponse();
     }
