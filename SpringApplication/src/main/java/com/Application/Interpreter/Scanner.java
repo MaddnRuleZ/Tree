@@ -26,7 +26,7 @@ public class Scanner {
     }
 
     /**
-     * todo wird noch gepolished
+     * todo wird noch geändert
      * scan the given Document for Latex Structure Elements and return the root Element for this Part of the Tree
      *
      * @return root Element of Tree
@@ -165,7 +165,6 @@ public class Scanner {
         } else {
             setParentChild(searchElem, newElement);
         }
-
     }
 
     /**
