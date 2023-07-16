@@ -95,9 +95,6 @@ public abstract class Element implements JsonParser, Exportable {
     public Parent getParentElement() {
         return (Parent) parentElement;
     }
-    public String getStartPart() {
-        return startPart;
-    }
     public String getEndPart() {
         return endPart;
     }

@@ -1,7 +1,5 @@
-
 \begin{haw haw}
         start of exa Blockelem
-
 
         end of exa Blockelem
 \end{haw haw}
@@ -9,13 +7,8 @@
 \start{summary}
         start of exa Blockelem
 
-
         end of exa Blockelem
 \finsish{summary}
-
-
-
-
 
 \section{test_1}
         Start ZONE 1
@@ -24,44 +17,12 @@
     \begin{haw haw2}
         start of exa Blockelem
 
-
-
         end of exa Blockelem
     \end{haw haw2}
         Dead ZONE _99
 
         END Dead ZONE _99
-
     \label
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 \section{Frontend}
