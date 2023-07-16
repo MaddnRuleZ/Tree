@@ -78,7 +78,7 @@ public class Scanner {
     }
 
     /**
-     * Scan the current line and create an new Element or Close one
+     * End the
      *
      * @param lastElement last Element that was created
      * @param index current index of the text
