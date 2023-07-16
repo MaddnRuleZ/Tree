@@ -45,13 +45,12 @@ public abstract class Element implements JsonParser, Exportable {
     public abstract String[] toText();
 
     // move to Child/ BlockElement
-    public Element assignTextToBlock(String[] text, int endIndex) {
+    public Element assignTextToTextBlock(String[] text, int endIndex) {
         //? wird nur auf Blocks gecalled?
         String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
         this.text = elementFullText;
         return parentElement;
     }
-
 
     /**
      * searches for the element with the given id

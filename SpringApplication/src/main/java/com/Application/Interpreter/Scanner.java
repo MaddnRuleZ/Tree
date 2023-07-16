@@ -45,7 +45,6 @@ public class Scanner {
                 }
 
                 if (currElement != null && currElement.getStartPart() != null && currElement instanceof BlockElement) {
-                    // filter env
                     newBlockAvailable = false;
                 } else {
                     newBlockAvailable = true;
@@ -67,9 +66,10 @@ public class Scanner {
             }
         }
 
-        // todo Ending still fucked
+        // todo Ending still fucked, check for instance
         if (currElement != null) {
-            currElement.assignTextToBlock(text, text.length);
+            // End Last Open
+            currElement.assignTextToTextBlock(text, text.length);
         }
         return root;
     }
@@ -83,12 +83,14 @@ public class Scanner {
      */
     private Element scanLine(Element lastElement, final int index) {
         if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
-            lastElement.assignTextToBlock(text, index);
+            // End Environment
+            lastElement.assignTextToTextBlock(text, index);
             return lastElement.getParentElement();
 
         } else {
+            // End TextBlock
             if (lastElement != null && lastElement.getStartPart() == null) {
-                lastElement = lastElement.assignTextToBlock(text, index);
+                lastElement = lastElement.assignTextToTextBlock(text, index);
             }
             Element newElement = ElementConfig.createElement(this.text[index], index);
             if (newElement != null) {
@@ -96,17 +98,19 @@ public class Scanner {
 
                 if (lastElement == null) {
                     root.addChild(newElement);
-                    // -> root + 1 Elemente haben kein Parent, unnavigierbar? alternativ check Instance
-                    // element.setParent(root);
+                    if (newElement instanceof Input) {
+                        Input inputRoot = (Input) root;
+                        newElement.setParent(inputRoot);
+                    }
 
                 } else if (newElement.getLevel() > lastElement.getLevel()) {
-                    lowerLevel(lastElement, index, newElement);
+                    lowerLevel(lastElement, newElement);
 
                 } else if (newElement.getLevel() == lastElement.getLevel()) {
-                    sameLevel(lastElement, index, newElement);
+                    sameLevel(lastElement, newElement);
 
                 } else {
-                    higherLevel(lastElement, index, newElement);
+                    higherLevel(lastElement, newElement);
                 }
                 return newElement;
             } else {
@@ -120,10 +124,9 @@ public class Scanner {
      * start the Generation of the Elements in between
      *
      * @param lastElement lastElement created
-     * @param index index in the current Text
      * @param newElement currentElement created
      */
-    private void lowerLevel(Element lastElement, int index, Element newElement) {
+    private void lowerLevel(Element lastElement, Element newElement) {
         setParentChild(lastElement, newElement);
     }
 
@@ -131,10 +134,9 @@ public class Scanner {
      * add the newElement to the same Parent as the lastElement
      *
      * @param lastElement lastElement created
-     * @param index index in the current Text
      * @param newElement currentElement created
      */
-    private void sameLevel(Element lastElement, int index, Element newElement) {
+    private void sameLevel(Element lastElement, Element newElement) {
         Element parent = lastElement.getParentElement();
 
         if (parent == null) {
@@ -148,10 +150,9 @@ public class Scanner {
      * higher lvl, navigate tree struct up, search matching Parent to add Element to
      *
      * @param lastElement lastElement created
-     * @param index index in the current Text
      * @param newElement currentElement created
      */
-    private void higherLevel(Element lastElement, int index, Element newElement) {
+    private void higherLevel(Element lastElement, Element newElement) {
         Element searchElem = lastElement;
 
         while (searchElem != null && searchElem.getLevel() >= newElement.getLevel()) {

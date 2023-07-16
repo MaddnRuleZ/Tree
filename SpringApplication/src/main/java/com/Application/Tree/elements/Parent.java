@@ -28,7 +28,6 @@ public abstract class Parent extends Element {
 
     /**
      *
-     *
      * @param element
      * @return
      */
@@ -40,15 +39,8 @@ public abstract class Parent extends Element {
         this.childElements.add(index, newChild);
     }
 
-    public boolean addChildAfter(Element newChild, Element previousChild) {
-        return false;
-    }
-
-    public Element getPreviousElement(Element element) {
-        return null;
-    }
-
     public boolean removeChild(Element element) {
+        // todo
         return false;
     }
 
