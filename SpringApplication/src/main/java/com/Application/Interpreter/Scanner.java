@@ -5,8 +5,7 @@ import com.Application.Tree.elements.*;
 import com.Application.Tree.interfaces.Roots;
 
 /**
- * Scanner Class for Disaselbeling a Document into its Latex Structur Elements
- *
+ * Scanner Class for Disassemble a Document into its Latex Structur Elements
  */
 public class Scanner {
     private final String[] text;
@@ -66,7 +65,7 @@ public class Scanner {
             }
         }
 
-        // todo Ending still fucked, check for instance
+        // todo Ending still check for instance
         if (currElement != null) {
             // End Last Open
             currElement.assignTextToTextBlock(text, text.length);
