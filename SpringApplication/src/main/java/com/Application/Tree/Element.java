@@ -12,7 +12,6 @@ import java.util.*;
 
 /**
  *
- *
  */
 public abstract class Element implements JsonParser, Exportable {
     private final UUID id;
@@ -45,9 +44,7 @@ public abstract class Element implements JsonParser, Exportable {
     public void setOptions(String optionsString) {
         this.options = optionsString;
     }
-
     public abstract List<String> toText();
-
     public Element assignTextToTextBlock(String[] text, int endIndex) {
         // todo assertion
         this.text = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
