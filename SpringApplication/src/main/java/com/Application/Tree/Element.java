@@ -50,14 +50,12 @@ public abstract class Element implements JsonParser, Exportable {
 
     public abstract String[] toText();
 
-
-    public void scanElementTextForSubElements(String[] text, int endIndex) {
-        BlockElement block = new BlockElement(null, null, 0);
-
-        this.options = extractOptionsString(text[this.startIndex]);
-        String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex + 1, endIndex - 1);
+    public Element scanElementTextForSubElements(String[] text, int endIndex) {
+        //this.options = extractOptionsString(text[this.startIndex]);
+        String[] elementFullText = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
         this.text = elementFullText;
 
+        return parentElement;
     }
 
     /*

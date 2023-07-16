@@ -69,6 +69,8 @@ public class TextFileReader {
     }
 
     /**
+     * Extract an part of the Text
+     * TODO O(n^2) insg
      *
      * @param inputArray
      * @param startIndex

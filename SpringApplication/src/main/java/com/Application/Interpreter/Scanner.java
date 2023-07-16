@@ -1,10 +1,7 @@
 package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
-import com.Application.Tree.elements.Input;
-import com.Application.Tree.elements.Parent;
-import com.Application.Tree.elements.Root;
-import com.Application.Tree.elements.ElementConfig;
+import com.Application.Tree.elements.*;
 import com.Application.Tree.interfaces.Roots;
 
 /**
@@ -36,6 +33,7 @@ public class Scanner {
      */
     public Roots parseDocument() {
         boolean firstElementFound = false;
+        boolean newBlockAvailable = false;
         Element currElement = null;
 
         for (int i = 0; i < text.length; i++) {
@@ -44,7 +42,7 @@ public class Scanner {
                     currElement = scanLine(currElement, i);
                     if (currElement != null && !firstElementFound) {
                         firstElementFound = true;
-                        // root.addStartText(TextFileReader.extractStrings(text, 0, i - 1));
+                        newBlockAvailable = true;
                     }
                 } catch(Exception e) {
                     // throw new ElementNotFoundException("Fatal Error while creating Element, in line" + i);
@@ -53,12 +51,22 @@ public class Scanner {
                 }
 
             } else {
-                // Element is BlockElement?
-                // = new BLockElement, enter Index
+                // start new TextBLock
+                if (newBlockAvailable) {
+                    BlockElement textBlockElement = new BlockElement(null, null, i);
+                    textBlockElement.setParent(currElement);
 
+                    if (currElement != null) {
+                        Parent currentElement = (Parent) currElement;
+                        currentElement.addChild(textBlockElement);
+                        currElement = textBlockElement;
+                    }
+                    newBlockAvailable = false;
+                }
             }
         }
 
+        // todo Ending still fucked
         if (currElement != null) {
             currElement.scanElementTextForSubElements(text, text.length);
         }
@@ -72,14 +80,18 @@ public class Scanner {
      * @param index current index of the text
      * @return the New Created Text Element with parent and child hierachie
      */
-    private Element scanLine(final Element lastElement, final int index) {
+    private Element scanLine(Element lastElement, final int index) {
         if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
-            lastElement.scanElementTextForSubElements(text, index);
+            // lastElement.scanElementTextForSubElements(text, index);
             // ret null -> so Enviroments better
             return lastElement;
 
         } else {
-            // generate text of last?
+            //Element parentOfLast =
+            if (lastElement != null) {
+                lastElement = lastElement.scanElementTextForSubElements(text, index);
+            }
+
             Element newElement = ElementConfig.createElement(this.text[index], index);
 
             if (newElement != null) {
@@ -113,7 +125,7 @@ public class Scanner {
      * @param newElement currentElement created
      */
     private void lowerLevel(Element lastElement, int index, Element newElement) {
-        lastElement.scanElementTextForSubElements(text, index);
+        // lastElement.scanElementTextForSubElements(text, index);
         setParentChild(lastElement, newElement);
     }
 
@@ -125,7 +137,7 @@ public class Scanner {
      * @param newElement currentElement created
      */
     private void sameLevel(Element lastElement, int index, Element newElement) {
-        lastElement.scanElementTextForSubElements(text, index);
+        // lastElement.scanElementTextForSubElements(text, index);
         Element parent = lastElement.getParentElement();
 
         if (parent == null) {
@@ -146,7 +158,7 @@ public class Scanner {
         Element searchElem = lastElement;
 
         while (searchElem != null && searchElem.getLevel() >= newElement.getLevel()) {
-            searchElem.scanElementTextForSubElements(text, index);
+            //searchElem.scanElementTextForSubElements(text, index);
             searchElem = searchElem.getParentElement();
         }
 
