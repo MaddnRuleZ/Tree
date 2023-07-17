@@ -32,6 +32,12 @@ public abstract class Parent extends Element {
         this.childElements.add(index, newChild);
     }
 
+    public void addChildAfter(Element previousElement, Element newChild) throws IndexOutOfBoundsException, NullPointerException {
+        int index = this.childElements.indexOf(previousElement);
+        if(newChild == null) throw new NullPointerException("newChild is null");
+        this.childElements.add(index + 1, newChild);
+    }
+
     public boolean removeChild(Element element) {
         return this.childElements.remove(element);
     }
@@ -57,11 +63,11 @@ public abstract class Parent extends Element {
     }
 
     @Override
-    public int levelOfDeepestSectioningChild(boolean start) {
+    public int levelOfDeepestSectioningChild() {
         int deepestChildLevel = 0;
 
         for (Element child : this.childElements) {
-            int childLevel = child.levelOfDeepestSectioningChild(false);
+            int childLevel = child.levelOfDeepestSectioningChild();
             deepestChildLevel = Math.max(deepestChildLevel, childLevel);
         }
 

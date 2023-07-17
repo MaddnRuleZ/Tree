@@ -2,6 +2,9 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
+import com.Application.Tree.Element;
+import com.Application.Tree.elements.Child;
+import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,7 +34,25 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
 
     @Override
     public JsonNode execute() {
-        //TODO
+        try {
+            acquireStructureWriteLock();
+            Parent newParent = (Parent) root.searchForID(this.newParent);
+            Element element = root.searchForID(this.element);
+            Element previousElement = newParent.searchForID(this.previousElement);
+
+            if (newParent == null || element == null || previousElement == null) {
+                this.setSuccess(false);
+                this.setFailureMessage("Element, new parent or previous element not found");
+            } else {
+                moveElement(element, newParent, previousElement);
+                this.setSuccess(true);
+            }
+        } catch (Exception e) {
+            this.setSuccess(false);
+            this.setFailureMessage(e.getMessage());
+        } finally {
+            releaseStructureWriteLock();
+        }
         return generateResponse();
     }
 

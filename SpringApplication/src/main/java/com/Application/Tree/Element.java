@@ -120,9 +120,8 @@ public abstract class Element implements JsonParser, Exportable {
 
     /**
      * traverses the tree starting from calling Element
-     *
-     * @param start indicates if the calling Element is the start Element
-     * @return level of the deepest sectioning child, level=0: start Element
+     * Passed Sections add 1 to the level
+     * @return level of the deepest sectioning child
      */
-    public abstract int levelOfDeepestSectioningChild(boolean start);
+    public abstract int levelOfDeepestSectioningChild();
 }

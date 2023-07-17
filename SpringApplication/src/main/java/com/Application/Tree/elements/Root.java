@@ -108,7 +108,7 @@ public class Root implements JsonParser, Exportable, Roots {
      * @return level of the calling Element
      */
     public int calculateLevelFromElement() {
-        return 0;
+        return -1;
     }
 
 }

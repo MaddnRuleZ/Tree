@@ -34,17 +34,13 @@ public class Sectioning extends Parent {
     }
 
     @Override
-    public int levelOfDeepestSectioningChild(boolean start) {
+    public int levelOfDeepestSectioningChild() {
         int deepestChildLevel = 0;
-
         for (Element child : this.childElements) {
-            int childLevel = child.levelOfDeepestSectioningChild(false);
+            int childLevel = child.levelOfDeepestSectioningChild();
             deepestChildLevel = Math.max(deepestChildLevel, childLevel);
         }
-        if(!start) {
-            deepestChildLevel++;
 
-        }
-        return deepestChildLevel;
+        return deepestChildLevel + 1;
     }
 }

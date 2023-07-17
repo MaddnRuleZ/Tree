@@ -56,8 +56,8 @@ public class CommandHelperMethodsTest {
         Parent sec1 = tree.sectioningList.get(0);
         Parent sec2 = tree.sectioningList.get(1);
         Parent sec3 = tree.sectioningList.get(2);
-        assertEquals(2, sec1.levelOfDeepestSectioningChild(true), "Deepest Child of sec1 should be on level 2");
-        assertEquals(1, sec2.levelOfDeepestSectioningChild(true), "Deepest Child of sec2 should be on level 1");
-        assertEquals(0, sec3.levelOfDeepestSectioningChild(true), "Deepest Child of sec3 should be on level 0");
+        assertEquals(3, sec1.levelOfDeepestSectioningChild(), "Deepest Child of sec1 should be on level 3");
+        assertEquals(2, sec2.levelOfDeepestSectioningChild(), "Deepest Child of sec2 should be on level 2");
+        assertEquals(1, sec3.levelOfDeepestSectioningChild(), "Deepest Child of sec3 should be on level 1");
     }
 }

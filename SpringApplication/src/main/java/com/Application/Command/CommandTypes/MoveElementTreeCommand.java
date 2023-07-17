@@ -29,7 +29,7 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
 
     @Override
     public JsonNode execute() {
-        //TODO
+        //TODO einfach aus MoveEditor kopieren
         return generateResponse();
     }
 

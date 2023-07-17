@@ -35,7 +35,7 @@ public class Child extends Element {
     }
 
     @Override
-    public int levelOfDeepestSectioningChild(boolean start) {
+    public int levelOfDeepestSectioningChild() {
         return 0;
     }
 }
