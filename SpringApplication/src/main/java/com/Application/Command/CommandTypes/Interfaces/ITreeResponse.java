@@ -14,7 +14,7 @@ public interface ITreeResponse {
      * @return response for the tree
      * @throws JsonProcessingException
      */
-    default JsonNode generateResponse() throws JsonProcessingException {
+    static JsonNode generateResponse() throws JsonProcessingException {
         //TODO
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode rootNode = objectMapper.createObjectNode();

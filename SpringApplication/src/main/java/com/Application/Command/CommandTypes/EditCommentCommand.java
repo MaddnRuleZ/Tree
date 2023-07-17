@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * Command to edit the comment of an element
  */
-public class EditCommentCommand extends Command implements IEditorResponse {
+public class EditCommentCommand extends Command {
     /**
      * The root of the tree
      */
@@ -47,27 +47,9 @@ public class EditCommentCommand extends Command implements IEditorResponse {
             releaseStructureWriteLock();
         }
 
-        return generateResponse();
+        return generateResponse(true);
     }
 
-    @Override
-    public JsonNode generateResponse() {
-        JsonNode response;
-        if (this.isSuccess()) {
-            try {
-                acquireStructureReadLock();
-                response = IEditorResponse.super.generateResponse();
-            } catch (JsonProcessingException e) {
-                response = generateFailureResponse(e.getMessage());
-                this.setSuccess(false);
-            } finally {
-                releaseStructureReadLock();
-            }
-        } else {
-            response = generateFailureResponse(this.getFailureMessage());
-        }
-        return response;
-    }
 
     public Root getRoot() {
         return root;

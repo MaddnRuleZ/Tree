@@ -16,7 +16,7 @@ public interface IEditorResponse {
      * @return response for the editor
      * @throws JsonProcessingException
      */
-    default JsonNode generateResponse() throws JsonProcessingException {
+    static JsonNode generateResponse() throws JsonProcessingException {
         //TODO generate response
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode rootNode = objectMapper.createObjectNode();

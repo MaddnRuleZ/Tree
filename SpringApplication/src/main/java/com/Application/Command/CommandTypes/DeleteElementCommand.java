@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  * Command to delete an element from the tree
  */
-public class DeleteElementCommand extends Command implements IEditorResponse {
+public class DeleteElementCommand extends Command {
     /**
      * The root of the tree
      */
@@ -44,27 +44,10 @@ public class DeleteElementCommand extends Command implements IEditorResponse {
         } finally {
             releaseStructureWriteLock();
         }
-        return generateResponse();
+        return generateResponse(true);
     }
 
-    @Override
-    public JsonNode generateResponse() {
-        JsonNode response;
-        if (this.isSuccess()) {
-            try {
-                acquireStructureReadLock();
-                response = IEditorResponse.super.generateResponse();
-            } catch (JsonProcessingException e) {
-                response = generateFailureResponse(e.getMessage());
-                this.setSuccess(false);
-            } finally {
-                releaseStructureReadLock();
-            }
-        } else {
-            response = generateFailureResponse(this.getFailureMessage());
-        }
-        return response;
-    }
+
 
     /**
      * Deletes an element from the tree

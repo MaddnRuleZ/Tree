@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 /**
  * Command to load a tree from a folder
  */
-public class LoadFromFolderCommand extends Command implements IEditorResponse {
+public class LoadFromFolderCommand extends Command {
     /**
      *  user that holds information of LaTeX-Project
      */
@@ -42,27 +42,9 @@ public class LoadFromFolderCommand extends Command implements IEditorResponse {
         } finally {
             releaseStructureWriteLock();
         }
-        return generateResponse();
+        return generateResponse(true);
     }
 
-    @Override
-    public JsonNode generateResponse() {
-        JsonNode response;
-        if (this.isSuccess()) {
-            try {
-                acquireStructureReadLock();
-                response = IEditorResponse.super.generateResponse();
-            } catch (JsonProcessingException e) {
-                response = generateFailureResponse(e.getMessage());
-                this.setSuccess(false);
-            } finally {
-                releaseStructureReadLock();
-            }
-        } else {
-            response = generateFailureResponse(this.getFailureMessage());
-        }
-        return response;
-    }
 
     public User getUser() {
         return user;

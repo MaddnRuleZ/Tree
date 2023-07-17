@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * Command to edit the summary of an element
  */
-public class EditSummaryCommand extends Command implements IEditorResponse {
+public class EditSummaryCommand extends Command {
     /**
      * The root of the tree
      */
@@ -45,27 +45,9 @@ public class EditSummaryCommand extends Command implements IEditorResponse {
             releaseStructureWriteLock();
         }
 
-        return generateResponse();
+        return generateResponse(true);
     }
 
-    @Override
-    public JsonNode generateResponse() {
-        JsonNode response;
-        if (this.isSuccess()) {
-            try {
-                acquireStructureReadLock();
-                response = IEditorResponse.super.generateResponse();
-            } catch (JsonProcessingException e) {
-                response = generateFailureResponse(e.getMessage());
-                this.setSuccess(false);
-            } finally {
-                releaseStructureReadLock();
-            }
-        } else {
-            response = generateFailureResponse(this.getFailureMessage());
-        }
-        return response;
-    }
 
     public void setRoot(Root root) {
         this.root = root;

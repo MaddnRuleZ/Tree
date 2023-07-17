@@ -23,14 +23,6 @@ public class PrintCommand extends Command {
         return null;
     }
 
-
-    @Override
-    public JsonNode generateResponse() {
-
-        return null;
-    }
-
-
     public Printer getPrinter() {
         return printer;
     }

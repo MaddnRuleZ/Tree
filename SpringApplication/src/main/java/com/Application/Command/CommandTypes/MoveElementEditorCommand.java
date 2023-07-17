@@ -3,7 +3,6 @@ package com.Application.Command.CommandTypes;
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Tree.Element;
-import com.Application.Tree.elements.Child;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,7 +13,7 @@ import java.util.UUID;
 /**
  * Command to move an element
  */
-public class MoveElementEditorCommand extends Command implements IMoveElementCommand, IEditorResponse {
+public class MoveElementEditorCommand extends Command implements IMoveElementCommand {
     /**
      * user that holds information of LaTeX-Project
      */
@@ -53,28 +52,8 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
         } finally {
             releaseStructureWriteLock();
         }
-        return generateResponse();
+        return generateResponse(true);
     }
-
-    @Override
-    public JsonNode generateResponse() {
-        JsonNode response;
-        if (this.isSuccess()) {
-            try {
-                acquireStructureReadLock();
-                response = IEditorResponse.super.generateResponse();
-            } catch (JsonProcessingException e) {
-                response = generateFailureResponse(e.getMessage());
-                this.setSuccess(false);
-            } finally {
-                releaseStructureReadLock();
-            }
-        } else {
-            response = generateFailureResponse(this.getFailureMessage());
-        }
-        return response;
-    }
-
 
 
     public Root getRoot() {

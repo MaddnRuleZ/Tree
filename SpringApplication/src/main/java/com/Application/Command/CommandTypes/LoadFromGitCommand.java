@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 /**
  * Command to load a tree from a git repository
  */
-public class LoadFromGitCommand extends Command implements IEditorResponse {
+public class LoadFromGitCommand extends Command {
     /**
      *  user that holds information of LaTeX-Project
      */
@@ -29,27 +29,9 @@ public class LoadFromGitCommand extends Command implements IEditorResponse {
     @Override
     public JsonNode execute() {
         //TODO
-        return generateResponse();
+        return generateResponse(true);
     }
 
-    @Override
-    public JsonNode generateResponse() {
-        JsonNode response;
-        if (this.isSuccess()) {
-            try {
-                acquireStructureReadLock();
-                response = IEditorResponse.super.generateResponse();
-            } catch (JsonProcessingException e) {
-                response = generateFailureResponse(e.getMessage());
-                this.setSuccess(false);
-            } finally {
-                releaseStructureReadLock();
-            }
-        } else {
-            response = generateFailureResponse(this.getFailureMessage());
-        }
-        return response;
-    }
 
     public User getUser() {
         return user;

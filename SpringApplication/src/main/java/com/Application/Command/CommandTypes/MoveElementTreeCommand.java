@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
-public class MoveElementTreeCommand extends Command implements IMoveElementCommand, ITreeResponse {
+public class MoveElementTreeCommand extends Command implements IMoveElementCommand {
     /**
      * user that holds information of LaTeX-Project
      */
@@ -30,26 +30,7 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
     @Override
     public JsonNode execute() {
         //TODO einfach aus MoveEditor kopieren
-        return generateResponse();
-    }
-
-    @Override
-    public JsonNode generateResponse() {
-        JsonNode response;
-        if (this.isSuccess()) {
-            try {
-                acquireStructureReadLock();
-                response = ITreeResponse.super.generateResponse();
-            } catch (JsonProcessingException e) {
-                response = generateFailureResponse(e.getMessage());
-                this.setSuccess(false);
-            } finally {
-                releaseStructureReadLock();
-            }
-        } else {
-            response = generateFailureResponse(this.getFailureMessage());
-        }
-        return response;
+        return generateResponse(false);
     }
 
 
