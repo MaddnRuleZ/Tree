@@ -6,11 +6,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public abstract class Command implements ILocks {
+    /**
+     * indicates success of processing the command
+     */
     private boolean success = false;
+    /**
+     * failure message, if success is false
+     */
     private String failureMessage = null;
 
     /**
      * executes the command
+     * @return JsonNode of response
      */
     public abstract JsonNode execute();
 
@@ -26,6 +33,12 @@ public abstract class Command implements ILocks {
         return rootNode;
     }
 
+
+    /**
+     * generates Response for Frontend
+     * If failure, generateFailureResponse is called
+     * @return JsonNode of response
+     */
     public abstract JsonNode generateResponse();
 
     public boolean isSuccess() {

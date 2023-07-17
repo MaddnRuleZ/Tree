@@ -2,6 +2,9 @@ package com.Application.Command.CommandTypes.Interfaces;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * Interface that holds the lock for the treeStructure
+ */
 public interface ILocks {
     /**
      * ReadWriteLock on the treeStructure, always locks whole tree

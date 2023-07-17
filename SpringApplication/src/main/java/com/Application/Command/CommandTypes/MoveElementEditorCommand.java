@@ -8,10 +8,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
+/**
+ * Command to move an element
+ */
 public class MoveElementEditorCommand extends Command implements IMoveElementCommand, IEditorResponse {
+    /**
+     * user that holds information of LaTeX-Project
+     */
     private Root root;
+    /**
+     * element to move
+     */
     private UUID element;
+    /**
+     * new parent of the element
+     */
     private UUID newParent;
+    /**
+     * the child after which the element should be added
+     */
     private UUID previousElement;
 
     @Override
@@ -39,10 +54,7 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
         return response;
     }
 
-    @Override
-    public boolean moveElement() {
-        return IMoveElementCommand.super.moveElement();
-    }
+
 
     public Root getRoot() {
         return root;

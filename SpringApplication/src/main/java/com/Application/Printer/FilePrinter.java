@@ -5,6 +5,7 @@ import com.Application.Tree.elements.Root;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 public class FilePrinter extends Printer {
     private final File currentFile;
@@ -16,9 +17,9 @@ public class FilePrinter extends Printer {
     }
 
     public boolean export() throws IOException {
-        String text = toLaTeX(this.root);
+        List<String> text = this.root.toText();
         File tempFile = createTempFile();
-        Files.writeString(tempFile.toPath(), text);
+        // Files.writeString(tempFile.toPath(), text); TODO konvetierung von Listen zu String
         Files.move(tempFile.toPath(), currentFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         return true;
     }

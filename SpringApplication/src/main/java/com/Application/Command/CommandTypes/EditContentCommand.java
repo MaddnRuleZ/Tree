@@ -8,9 +8,21 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
+/**
+ * Command to edit the content of an element
+ */
 public class EditContentCommand extends Command implements IEditorResponse {
+    /**
+     * The root of the tree
+     */
     private Root root;
+    /**
+     * The element to be edited
+     */
     private UUID element;
+    /**
+     * The new content of the element
+     */
     private String content;
 
     @Override

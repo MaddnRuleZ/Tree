@@ -7,6 +7,9 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Factory to create an LoadFromFolderCommand
+ */
 public class LoadFromFolderCommandFactory implements CommandFactory {
     private final User user;
 

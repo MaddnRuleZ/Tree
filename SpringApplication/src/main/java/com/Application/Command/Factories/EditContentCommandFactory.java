@@ -8,6 +8,9 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Factory to create an EditContentCommand
+ */
 public class EditContentCommandFactory implements CommandFactory {
     private final Root root;
 

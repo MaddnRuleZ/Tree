@@ -9,9 +9,21 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.UUID;
 
 public class MoveElementTreeCommand extends Command implements IMoveElementCommand, ITreeResponse {
+    /**
+     * user that holds information of LaTeX-Project
+     */
     private Root root;
+    /**
+     * element to move
+     */
     private UUID element;
+    /**
+     * new parent of the element
+     */
     private UUID newParent;
+    /**
+     * the child after which the element should be added
+     */
     private UUID previousElement;
 
 
@@ -40,10 +52,6 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
         return response;
     }
 
-    @Override
-    public boolean moveElement() {
-        return IMoveElementCommand.super.moveElement();
-    }
 
     public Root getRoot() {
         return root;

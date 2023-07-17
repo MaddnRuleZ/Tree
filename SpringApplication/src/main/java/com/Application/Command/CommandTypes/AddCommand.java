@@ -9,11 +9,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
+/**
+ * Command to add an element to the tree
+ */
 public class AddCommand extends Command implements IEditorResponse {
-
+    /**
+     * The root of the tree
+     */
     private Root root;
+    /**
+     * The content of the element to be added
+     */
     private String content;
+    /**
+     * The parent of the element to be added
+     */
     private UUID parent;
+    /**
+     * the child after which the element should be added
+     */
     private UUID previousChild;
 
 

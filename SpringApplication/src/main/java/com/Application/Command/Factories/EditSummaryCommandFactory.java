@@ -8,6 +8,9 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Factory to create an EditSummaryCommand
+ */
 public class EditSummaryCommandFactory implements CommandFactory{
     private final Root root;
 

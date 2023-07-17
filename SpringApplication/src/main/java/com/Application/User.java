@@ -24,11 +24,10 @@ public class User {
      * LaTeX-Code to tree structure parser
      */
     private Parser parser;
+    /**
+     * clock to update the tree structure by uploading the LaTeX-Code
+     */
     private Clock clock;
-
-    public User() {
-        //this.root = Root.getInstance(); read Root
-    }
 
     public void setPrinter(Printer Printer) throws IllegalStateException{
         if(this.printer != null) {

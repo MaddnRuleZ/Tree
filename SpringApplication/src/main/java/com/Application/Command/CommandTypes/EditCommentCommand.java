@@ -8,13 +8,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
+/**
+ * Command to edit the comment of an element
+ */
 public class EditCommentCommand extends Command implements IEditorResponse {
+    /**
+     * The root of the tree
+     */
     private Root root;
+    /**
+     * The element to be edited
+     */
     private UUID element;
+    /**
+     * The new comment of the element
+     */
     private String comment;
 
 
-    //TODO Fehlerbehandlung: im Moment wird auch bei Nichtausführbarkeit der Baum zurückgegeben
+
     //Comment muss noch geparst werden: in setComment???
     @Override
     public JsonNode execute() {

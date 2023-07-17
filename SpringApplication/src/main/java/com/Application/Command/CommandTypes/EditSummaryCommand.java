@@ -8,9 +8,21 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
+/**
+ * Command to edit the summary of an element
+ */
 public class EditSummaryCommand extends Command implements IEditorResponse {
+    /**
+     * The root of the tree
+     */
     private Root root;
+    /**
+     * The element to be edited
+     */
     private UUID element;
+    /**
+     * The new summary of the element
+     */
     private String summary;
 
     @Override

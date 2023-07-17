@@ -8,6 +8,9 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Factory to create an MoveElementTreeCommand
+ */
 public class MoveElementTreeCommandFactory implements CommandFactory {
     private final Root root;
 

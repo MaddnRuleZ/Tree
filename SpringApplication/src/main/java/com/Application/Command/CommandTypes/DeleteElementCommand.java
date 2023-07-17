@@ -10,9 +10,21 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Command to delete an element from the tree
+ */
 public class DeleteElementCommand extends Command implements IEditorResponse {
+    /**
+     * The root of the tree
+     */
     private Root root;
+    /**
+     * The element to be deleted
+     */
     private UUID element;
+    /**
+     * Whether to delete the children of the element as well
+     */
     private boolean cascading;
 
     @Override
@@ -54,6 +66,10 @@ public class DeleteElementCommand extends Command implements IEditorResponse {
         return response;
     }
 
+    /**
+     * Deletes an element from the tree
+     * @param element the element to be deleted
+     */
     public void delete(Element element) {
         Parent parent = element.getParentElement();
         if(!this.cascading) {
@@ -81,6 +97,14 @@ public class DeleteElementCommand extends Command implements IEditorResponse {
         this.root = root;
     }
 
+    //--------TODO: nur für Testzwecke --------------
 
+    public void setElement(UUID element) {
+        this.element = element;
+    }
 
+    public void setCascading(boolean cascading) {
+        this.cascading = cascading;
+    }
+    //--------TODO: nur für Testzwecke --------------
 }

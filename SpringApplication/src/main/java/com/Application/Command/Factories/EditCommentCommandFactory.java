@@ -8,7 +8,13 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ *  Factory to create an EditCommentCommand
+ */
 public class EditCommentCommandFactory implements CommandFactory {
+    /**
+     * root of the LaTeX-Project
+     */
     private final Root root;
 
     public EditCommentCommandFactory(User user) {

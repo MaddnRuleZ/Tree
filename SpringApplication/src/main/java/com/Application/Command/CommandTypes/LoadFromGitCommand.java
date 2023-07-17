@@ -5,10 +5,25 @@ import com.Application.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
+/**
+ * Command to load a tree from a git repository
+ */
 public class LoadFromGitCommand extends Command implements IEditorResponse {
+    /**
+     *  user that holds information of LaTeX-Project
+     */
    private User user;
+   /**
+    * url to the git repository
+    */
    private String url;
+   /**
+    * username for the git repository
+    */
    private String username;
+   /**
+    * password for the git repository
+    */
    private String password;
 
     @Override

@@ -8,8 +8,15 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Factory to create an AddCommand
+ */
 public class AddCommandFactory implements CommandFactory {
+    /**
+     * root of the LaTeX-Project
+     */
     private final Root root;
+
 
     public AddCommandFactory(User user) {
         this.root = user.getRoot();

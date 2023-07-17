@@ -8,6 +8,9 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Factory to create a DeleteCommand
+ */
 public class DeleteCommandFactory implements CommandFactory {
     private final Root root;
 
