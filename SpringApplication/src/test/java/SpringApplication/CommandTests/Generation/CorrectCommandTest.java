@@ -1,6 +1,5 @@
-package SpringApplication.CommandTests;
+package SpringApplication.CommandTests.Generation;
 
-import SpringApplication.TestStubs.TestRoot;
 import com.Application.Command.CommandHandler;
 import com.Application.Exceptions.ProcessingException;
 import com.Application.User;
@@ -23,7 +22,6 @@ public class CorrectCommandTest {
     @BeforeEach
     void setUp() {
         User user = new User();
-        user.setRoot(new TestRoot());
         commandHandler = new CommandHandler(user);
     }
 

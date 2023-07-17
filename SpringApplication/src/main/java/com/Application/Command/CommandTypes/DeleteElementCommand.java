@@ -82,7 +82,12 @@ public class DeleteElementCommand extends Command implements IEditorResponse {
                 index++;
             }
         }
-        parent.removeChild(element);
+        if(parent.removeChild(element)) {
+            this.setSuccess(true);
+        } else {
+            this.setFailureMessage("Element could not be deleted");
+            this.setSuccess(false);
+        }
     }
 
     public UUID getElement() {

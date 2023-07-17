@@ -2,7 +2,6 @@ package com.Application.Tree.elements;
 
 import com.Application.Tree.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,5 +32,10 @@ public class Child extends Element {
             return this;
         }
         return null;
+    }
+
+    @Override
+    public int levelOfDeepestSectioningChild(boolean start) {
+        return 0;
     }
 }

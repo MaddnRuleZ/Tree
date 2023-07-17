@@ -3,7 +3,6 @@ package com.Application.Tree.elements;
 import com.Application.Tree.Element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,8 +33,7 @@ public abstract class Parent extends Element {
     }
 
     public boolean removeChild(Element element) {
-        // todo
-        return false;
+        return this.childElements.remove(element);
     }
 
     public List<Element> getChildElements() {
@@ -57,5 +55,18 @@ public abstract class Parent extends Element {
         }
         return outText;
     }
+
+    @Override
+    public int levelOfDeepestSectioningChild(boolean start) {
+        int deepestChildLevel = 0;
+
+        for (Element child : this.childElements) {
+            int childLevel = child.levelOfDeepestSectioningChild(false);
+            deepestChildLevel = Math.max(deepestChildLevel, childLevel);
+        }
+
+        return deepestChildLevel;
+    }
+
 
 }

@@ -55,13 +55,7 @@ public abstract class Element implements JsonParser, Exportable {
         return parentElement;
     }
 
-    /**
-     * searches for the element with the given id
-     *
-     * @param id to search for
-     * @return found Element or null
-     */
-    public abstract Element searchForID(UUID id);
+
 
     public void setParent(Element parentElement) {
         this.parentElement = parentElement;
@@ -108,4 +102,27 @@ public abstract class Element implements JsonParser, Exportable {
     public void setSummary(String summary) {
         //TODO
     }
+
+    /**
+     * calculates the level of the calling Element from bottom to top
+     * @return level of the calling Element
+     */
+    public int calculateLevelFromElement() {
+        return this.getParentElement().calculateLevelFromElement() + 1;
+    }
+
+    /**
+     * searches for the element with the given id
+     * @param id to search for
+     * @return found Element or null
+     */
+    public abstract Element searchForID(UUID id);
+
+    /**
+     * traverses the tree starting from calling Element
+     *
+     * @param start indicates if the calling Element is the start Element
+     * @return level of the deepest sectioning child, level=0: start Element
+     */
+    public abstract int levelOfDeepestSectioningChild(boolean start);
 }

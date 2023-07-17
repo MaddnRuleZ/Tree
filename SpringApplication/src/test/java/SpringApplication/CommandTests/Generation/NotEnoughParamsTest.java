@@ -1,4 +1,4 @@
-package SpringApplication.CommandTests;
+package SpringApplication.CommandTests.Generation;
 
 import com.Application.Command.CommandHandler;
 import com.Application.Exceptions.NumParamsException;

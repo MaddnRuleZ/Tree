@@ -32,4 +32,19 @@ public class Sectioning extends Parent {
         }
         return null;
     }
+
+    @Override
+    public int levelOfDeepestSectioningChild(boolean start) {
+        int deepestChildLevel = 0;
+
+        for (Element child : this.childElements) {
+            int childLevel = child.levelOfDeepestSectioningChild(false);
+            deepestChildLevel = Math.max(deepestChildLevel, childLevel);
+        }
+        if(!start) {
+            deepestChildLevel++;
+
+        }
+        return deepestChildLevel;
+    }
 }

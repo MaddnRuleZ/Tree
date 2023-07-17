@@ -8,6 +8,7 @@ import com.Application.Tree.interfaces.Roots;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -72,11 +73,21 @@ public class Root implements JsonParser, Exportable, Roots {
         return null;
     }
 
+    /**
+     * searches for the element with the given id
+     *
+     * @param id to search for
+     * @return found Element or null
+     */
     public Element searchForID(UUID id) {
-        //TODO
+        for (Element element: childElements) {
+            Element foundElement = element.searchForID(id);
+            if (foundElement != null) {
+                return foundElement;
+            }
+        }
         return null;
     }
-
 
     @Override
     public String toJson() {
@@ -91,4 +102,13 @@ public class Root implements JsonParser, Exportable, Roots {
         }
         return text;
     }
+
+    /**
+     * calculates the level of the calling Element from bottom to top
+     * @return level of the calling Element
+     */
+    public int calculateLevelFromElement() {
+        return 0;
+    }
+
 }
