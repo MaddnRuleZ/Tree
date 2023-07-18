@@ -129,4 +129,8 @@ public abstract class Element implements JsonParser, Exportable {
      * @return level of the deepest sectioning child
      */
     public abstract int levelOfDeepestSectioningChild();
+
+    public void addText(String line) {
+        this.text.add(line);
+    }
 }

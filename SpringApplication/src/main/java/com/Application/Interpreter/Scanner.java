@@ -38,43 +38,32 @@ public class Scanner {
      * @return root Element of Tree
      */
     public Roots parseDocument() {
-        boolean firstElementFound = false;
-        boolean newBlockAvailable = false;
         Element currElement = null;
 
+        // todo more distinct? Regex, split into elem creation, textbox handeling
         for (int i = 0; i < text.length; i++) {
-            if (text[i].contains("\\")) { // todo more distinct? Regex, split into elem creation, textbox handeling
-                currElement = scanLine(currElement, i);
-                if (currElement != null && !firstElementFound) {
-                    firstElementFound = true;
-                }
-
-                if (currElement != null && !currElement.isTextBlock() && currElement instanceof BlockElement) {
-                    newBlockAvailable = false;
-                } else {
-                    newBlockAvailable = true;
-                }
+            Element newElement = scanLine(currElement, i);
+            if (newElement != null) {
+                currElement = newElement;
             } else {
-
-
-
-
-
-                // TextBLock, todo make add line to list for O(n)
-                if (newBlockAvailable) {
+                if (currElement instanceof Sectioning && currElement.getText().size() == 0) {
                     BlockElement textBlockElement = new BlockElement(null, null, i);
-                    textBlockElement.setParent(currElement);
+                    setParentChild(currElement, textBlockElement);
+                    currElement = textBlockElement;
 
+                } else if (NewLine.checkLineForNewLineCharacters(text[i]) && currElement instanceof BlockElement){
+                    BlockElement textBlockElement = new BlockElement(null, null, i);
+                    Parent parent = currElement.getParentElement();
+                    setParentChild(parent, textBlockElement);
+                    currElement = textBlockElement;
+
+                } else {
                     if (currElement != null) {
-                        Parent currentElement = (Parent) currElement;
-                        currentElement.addChild(textBlockElement);
-                        currElement = textBlockElement;
+                        currElement.addText(text[i]);
                     }
-                    newBlockAvailable = false;
                 }
             }
         }
-
         // todo Ending on Textblock still check for instance
         if (currElement != null) {
             // End Last Open
@@ -95,13 +84,13 @@ public class Scanner {
             // End Environment
             lastElement.assignTextToTextBlock(text, index);
             return lastElement.getParentElement();
-
         } else {
-            // End TextBlock
+            // End TextBlock move lower or delete
             if (lastElement != null && lastElement.isTextBlock()) {
                 lastElement = lastElement.assignTextToTextBlock(text, index);
             }
             Element newElement = ElementConfig.createElement(this.text[index], index);
+
             if (newElement != null) {
                 newElement.setOptions(this.text[index]);
 
@@ -123,23 +112,13 @@ public class Scanner {
                 }
                 return newElement;
             } else {
-                // start new TextBlock
-                if (NewLine.checkLineForNewLineCharacters(text[index])) {
-                    BlockElement textBlockElement = new BlockElement(null, null, index);
-                    if (lastElement != null) {
-                        textBlockElement.setParent(lastElement);
-                        Parent parent = (Parent) lastElement;
-                        parent.addChild(textBlockElement);
-                    }
-
-                    return textBlockElement;
-                }
-                return lastElement;
+                return null;
             }
         }
     }
 
     /**
+     * todo remove
      * add the new Element as Child of the lastElement
      * start the Generation of the Elements in between
      *

@@ -1,7 +1,9 @@
 \part{test_2}
     X
     X
+    X
     \newline
+    X
     X
     X
     \newline Edge Case
@@ -17,17 +19,12 @@
         X
         X
         X
-        X
-        X
-        X
         \section{haw haw_3}
-            X
             X
             X
             X
 \part{fuck}
     \chapter{newChapter}
-        X
         X
         X
         X
