@@ -17,6 +17,7 @@ public abstract class Element implements JsonParser, Exportable {
     private final UUID id;
     private final int level;
     private Element parentElement;
+
     protected List<String> text;
     protected final Summary summary;
     protected final Comment comment;
@@ -45,17 +46,15 @@ public abstract class Element implements JsonParser, Exportable {
         this.options = optionsString;
     }
     public abstract List<String> toText();
+
     public Element assignTextToTextBlock(String[] text, int endIndex) {
         // todo assertion
         this.text = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
         // extract the summ, comment, nl
         List<String> restText = comment.extractInfo(this.text);
 
-
         return parentElement;
     }
-
-
 
     public void setParent(Element parentElement) {
         this.parentElement = parentElement;

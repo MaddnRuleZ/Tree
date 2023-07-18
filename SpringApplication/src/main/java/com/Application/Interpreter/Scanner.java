@@ -69,7 +69,7 @@ public class Scanner {
             }
         }
 
-        // todo Ending still check for instance
+        // todo Ending on Textblock still check for instance
         if (currElement != null) {
             // End Last Open
             currElement.assignTextToTextBlock(text, text.length);
