@@ -73,6 +73,4 @@ public abstract class Parent extends Element {
 
         return deepestChildLevel;
     }
-
-
 }

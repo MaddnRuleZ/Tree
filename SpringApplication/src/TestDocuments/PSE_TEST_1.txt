@@ -1,8 +1,15 @@
 \part{test_2}
     Text Block1
 
+    Text Block1
+        %coment
+        %comment
+
+    \newline
+    Text Block1
 
     Text Block1
+    \newline
     \begin{haw haw}
         start of exa Blockelem
 

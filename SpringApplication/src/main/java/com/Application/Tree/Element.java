@@ -1,9 +1,9 @@
 package com.Application.Tree;
 
 import com.Application.Interpreter.TextFileReader;
-import com.Application.Interpreter.additionalInfo.Comment;
-import com.Application.Interpreter.additionalInfo.TextBlock;
-import com.Application.Interpreter.additionalInfo.Summary;
+import com.Application.Tree.additionalInfo.Comment;
+import com.Application.Tree.additionalInfo.newLine;
+import com.Application.Tree.additionalInfo.Summary;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
 import com.Application.Tree.interfaces.Exportable;
@@ -11,6 +11,7 @@ import com.Application.Tree.interfaces.JsonParser;
 import java.util.*;
 
 /**
+ *
  *
  */
 public abstract class Element implements JsonParser, Exportable {
@@ -21,8 +22,9 @@ public abstract class Element implements JsonParser, Exportable {
     protected List<String> text;
     protected final Summary summary;
     protected final Comment comment;
-    protected final TextBlock textBlock;
+    protected final newLine textBlock;
     private boolean chooseManualSummary;
+    protected String content;
     protected String options;
     protected final int startIndex;
     private final String startPart;
@@ -38,13 +40,15 @@ public abstract class Element implements JsonParser, Exportable {
 
         comment = new Comment();
         summary = new Summary();
-        textBlock = new TextBlock();
+        textBlock = new newLine();
         Root.updateLevelCap(level);
     }
 
     public void setOptions(String optionsString) {
+        // todo do RegeX
         this.options = optionsString;
     }
+
     public abstract List<String> toText();
 
     public Element assignTextToTextBlock(String[] text, int endIndex) {
@@ -95,6 +99,8 @@ public abstract class Element implements JsonParser, Exportable {
     }
 
     public void setContent(String content) {
+        // todo do RegeX
+
         //TODO
     }
 

@@ -92,7 +92,6 @@ public enum ElementConfig {
     CAPTION("\\caption", null, 10) {
         @Override
         Element getElement(int index, String currentLine) {
-            // set level
             return new Child(getStartPart(), null, index, getLevel());
         }
     },
@@ -102,6 +101,7 @@ public enum ElementConfig {
         Element getElement(int index, String currentLine) {
             String path = Input.extractPathRegex(currentLine);
             if (path == null) {
+                // todo Err msg
                 return null;
             }
 
