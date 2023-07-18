@@ -7,7 +7,8 @@ import com.Application.Tree.interfaces.Roots;
 
 /**
  * Scanner Class for Disassemble a Document into its Latex Structur Elements
- * Saved????
+ *
+ *
  */
 public class Scanner {
     private final String[] text;
