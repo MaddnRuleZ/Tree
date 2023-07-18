@@ -25,8 +25,6 @@ public class LoadFromFolderCommandFactory implements CommandFactory {
         } catch (IllegalArgumentException e) {
             throw new NumParamsException("LoadFromFolder");
         }
-
-
         if (command.getPath() == null){
             throw new NumParamsException("LoadFromFolder");
         }

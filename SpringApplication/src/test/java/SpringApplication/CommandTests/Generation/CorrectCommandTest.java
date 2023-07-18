@@ -1,5 +1,6 @@
 package SpringApplication.CommandTests.Generation;
 
+import SpringApplication.TestStubs.MockCommandHandler;
 import SpringApplication.TestStubs.TestTree;
 import com.Application.Command.CommandHandler;
 import com.Application.Exceptions.ProcessingException;
@@ -18,15 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * tests the creation of commands with a correct formatted jsonFile
  */
-@Ignore("Test class is old and needs to be updated")
 public class CorrectCommandTest {
-    CommandHandler commandHandler;
+    MockCommandHandler commandHandler;
 
     @BeforeEach
     void setUp() {
         User user = new User();
         user.setRoot(new TestTree().root);
-        commandHandler = new CommandHandler(user);
+        commandHandler = new MockCommandHandler(user);
     }
 
     @Test

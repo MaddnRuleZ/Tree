@@ -78,5 +78,15 @@ public class AddCommand extends Command {
         this.root = root;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
 
+    public void setParent(UUID parent) {
+        this.parent = parent;
+    }
+
+    public void setPreviousChild(UUID previousChild) {
+        this.previousChild = previousChild;
+    }
 }

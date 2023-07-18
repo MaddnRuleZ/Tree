@@ -89,4 +89,8 @@ public class CommandHandler {
     public boolean isSuccess() {
         return success;
     }
+
+    public Map<String, CommandFactory> getCommandFactories() {
+        return commandFactories;
+    }
 }
