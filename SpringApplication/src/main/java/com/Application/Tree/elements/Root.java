@@ -8,7 +8,6 @@ import com.Application.Tree.interfaces.Roots;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 
@@ -19,6 +18,8 @@ import java.util.UUID;
 public class Root implements JsonParser, Exportable, Roots {
     private final List<Element> childElements;
     private static Root instance;
+
+    private List<String> startHeaderText;
 
     private static int MIN_LEVEL = 0;
 

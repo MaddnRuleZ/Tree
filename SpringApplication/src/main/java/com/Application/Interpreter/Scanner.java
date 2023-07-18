@@ -40,7 +40,6 @@ public class Scanner {
     public Roots parseDocument() {
         Element currElement = null;
 
-        // todo more distinct? Regex, split into elem creation, textbox handeling
         for (int i = 0; i < text.length; i++) {
             Element newElement = scanLine(currElement, i);
             if (newElement != null) {
@@ -65,11 +64,8 @@ public class Scanner {
                 }
             }
         }
-        // todo Ending on Textblock still check for instance
-        if (currElement != null) {
-            // End Last Open
-            currElement.assignTextToTextBlock(text, text.length - 1);
-        }
+
+
         return root;
     }
 
