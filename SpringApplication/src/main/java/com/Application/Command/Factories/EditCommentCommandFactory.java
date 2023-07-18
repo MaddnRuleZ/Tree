@@ -24,7 +24,12 @@ public class EditCommentCommandFactory implements CommandFactory {
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
-        EditCommentCommand command = mapper.convertValue(attributes, EditCommentCommand.class);
+        EditCommentCommand command;
+        try {
+            command = mapper.convertValue(attributes, EditCommentCommand.class);
+        } catch (IllegalArgumentException e) {
+            throw new NumParamsException("EditComment");
+        }
 
         if (command.getElement() == null || command.getComment() == null){
             throw new NumParamsException("EditComment");

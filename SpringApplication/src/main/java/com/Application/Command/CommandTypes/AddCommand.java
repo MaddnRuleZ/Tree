@@ -38,10 +38,7 @@ public class AddCommand extends Command {
             Parent parentElement = (Parent) root.searchForID(this.parent);
             Element previousChild = root.searchForID(this.previousChild);
             if(parentElement == null) {
-                this.setFailureMessage("Parent not found");
-                this.setSuccess(false);
-            } else if(previousChild == null) {
-                this.setFailureMessage("Previous child not found");
+                this.setFailureMessage("Parent or previous child not found");
                 this.setSuccess(false);
             } else {
                 //TODO parse incoming content

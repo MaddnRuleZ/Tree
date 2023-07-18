@@ -19,7 +19,12 @@ public class LoadFromGitCommandFactory implements CommandFactory {
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
-        LoadFromGitCommand command = mapper.convertValue(attributes, LoadFromGitCommand.class);
+        LoadFromGitCommand command;
+        try {
+           command  = mapper.convertValue(attributes, LoadFromGitCommand.class);
+        } catch (IllegalArgumentException e) {
+            throw new NumParamsException("LoadFromGit");
+        }
 
         if (command.getUrl() == null || command.getUsername() == null || command.getPassword() == null ){
             throw new NumParamsException("LoadFromGit");

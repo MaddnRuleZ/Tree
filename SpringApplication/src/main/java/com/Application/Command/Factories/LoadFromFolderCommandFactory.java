@@ -17,9 +17,15 @@ public class LoadFromFolderCommandFactory implements CommandFactory {
         this.user = user;
     }
     @Override
-    public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
+    public Command createCommand(JsonNode attributes) throws NumParamsException {
         ObjectMapper mapper = new ObjectMapper();
-        LoadFromFolderCommand command = mapper.convertValue(attributes, LoadFromFolderCommand.class);
+        LoadFromFolderCommand command;
+        try {
+           command  = mapper.convertValue(attributes, LoadFromFolderCommand.class);
+        } catch (IllegalArgumentException e) {
+            throw new NumParamsException("LoadFromFolder");
+        }
+
 
         if (command.getPath() == null){
             throw new NumParamsException("LoadFromFolder");

@@ -21,7 +21,14 @@ public class DeleteCommandFactory implements CommandFactory {
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
-        DeleteElementCommand command = mapper.convertValue(attributes, DeleteElementCommand.class);
+        DeleteElementCommand command;
+        try {
+            command = mapper.convertValue(attributes, DeleteElementCommand.class);
+        } catch (IllegalArgumentException e){
+            throw new NumParamsException("DeleteElement");
+        }
+
+
 
         // throws only an Exception if the element is null, not if cascading missing in jsonFile
         // default value of cascading is false

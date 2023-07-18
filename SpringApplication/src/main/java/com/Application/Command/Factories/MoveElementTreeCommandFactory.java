@@ -20,7 +20,12 @@ public class MoveElementTreeCommandFactory implements CommandFactory {
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
-        MoveElementTreeCommand command = mapper.convertValue(attributes, MoveElementTreeCommand.class);
+        MoveElementTreeCommand command;
+        try {
+            command = mapper.convertValue(attributes, MoveElementTreeCommand.class);
+        } catch (IllegalArgumentException e) {
+            throw new NumParamsException("MoveElementTree");
+        }
 
         if (command.getElement() == null || command.getNewParent() == null || command.getPreviousElement() == null ){
             throw new NumParamsException("MoveElementTree");

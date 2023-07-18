@@ -21,7 +21,12 @@ public class EditSummaryCommandFactory implements CommandFactory{
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
-        EditSummaryCommand command = mapper.convertValue(attributes, EditSummaryCommand.class);
+        EditSummaryCommand command;
+        try {
+            command = mapper.convertValue(attributes, EditSummaryCommand.class);
+        } catch (IllegalArgumentException e) {
+            throw new NumParamsException("EditSummary");
+        }
 
         if (command.getElement() == null || command.getSummary() == null){
             throw new NumParamsException("EditSummary");

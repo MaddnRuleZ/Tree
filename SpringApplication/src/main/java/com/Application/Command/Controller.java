@@ -2,6 +2,7 @@ package com.Application.Command;
 
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
+import com.Application.Exceptions.FailureResponse;
 import com.Application.Exceptions.NumParamsException;
 import com.Application.Exceptions.ProcessingException;
 import com.Application.Exceptions.UnrecognizedCommandException;
@@ -42,12 +43,8 @@ public class Controller {
             }
             return new ResponseEntity<>(response, status);
         } catch (ProcessingException e) {
-            // todo, enthielt fehler, so commented
-            //return new ResponseEntity<>(e.generateFailureResponse(), HttpStatus.BAD_REQUEST);
-            return null;
+            return new ResponseEntity<>(FailureResponse.generateFailureResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
-
-
     }
 
     /**

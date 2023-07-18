@@ -3,6 +3,7 @@ package com.Application.Command.CommandTypes;
 import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
+import com.Application.Exceptions.FailureResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,18 +27,6 @@ public abstract class Command implements ILocks {
 
 
     /**
-     * generates the Json response String, if execution failed
-     * @return failureResponse
-     */
-    JsonNode generateFailureResponse(String message) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode rootNode = objectMapper.createObjectNode();
-        rootNode.put("error", message);
-        return rootNode;
-    }
-
-
-    /**
      * generates response for frontend
      * If failure, generateFailureResponse is called
      * @return JsonNode of response
@@ -54,13 +43,13 @@ public abstract class Command implements ILocks {
                 }
 
             } catch (JsonProcessingException e) {
-                response = generateFailureResponse(e.getMessage());
+                response = FailureResponse.generateFailureResponse(e.getMessage());
                 this.setSuccess(false);
             } finally {
                 releaseStructureReadLock();
             }
         } else {
-            response = generateFailureResponse(this.getFailureMessage());
+            response = FailureResponse.generateFailureResponse(this.getFailureMessage());
         }
         return response;
     }

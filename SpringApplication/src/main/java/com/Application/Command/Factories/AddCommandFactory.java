@@ -25,7 +25,12 @@ public class AddCommandFactory implements CommandFactory {
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
-        AddCommand command = mapper.convertValue(attributes, AddCommand.class);
+        AddCommand command;
+        try {
+           command = mapper.convertValue(attributes, AddCommand.class);
+        } catch (IllegalArgumentException e) {
+            throw new NumParamsException("AddElement");
+        }
 
         if (command.getContent() == null || command.getParent() == null || command.getPreviousChild() == null ){
             throw new NumParamsException("AddElement");
