@@ -2,7 +2,7 @@ package com.Application.Tree;
 
 import com.Application.Interpreter.TextFileReader;
 import com.Application.Tree.additionalInfo.Comment;
-import com.Application.Tree.additionalInfo.newLine;
+import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.additionalInfo.Summary;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
@@ -22,7 +22,7 @@ public abstract class Element implements JsonParser, Exportable {
     protected List<String> text;
     protected final Summary summary;
     protected final Comment comment;
-    protected final newLine textBlock;
+    protected final NewLine textBlock;
     private boolean chooseManualSummary;
     protected String content;
     protected String options;
@@ -40,7 +40,7 @@ public abstract class Element implements JsonParser, Exportable {
 
         comment = new Comment();
         summary = new Summary();
-        textBlock = new newLine();
+        textBlock = new NewLine();
         Root.updateLevelCap(level);
     }
 

@@ -16,13 +16,11 @@ public class Parser {
 
     /**
      *
-     *
      * @param filePath
      */
     public Parser(String filePath) {
         this.filePath = filePath;
         this.textFileReader = new TextFileReader(filePath);
-
     }
 
     /**

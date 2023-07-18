@@ -1,39 +1,37 @@
 \part{test_2}
-    Text Block1
-
-    Text Block1
-        %coment
-        %comment
-
+    X
+    X
     \newline
-    Text Block1
-
-    Text Block1
-    \newline
+    X
+    X
+    \newline Edge Case
     \begin{haw haw}
-        start of exa Blockelem
-
-
-        end of exa Blockelem
+        X
+        X
+        X
     \end{haw haw}
-    Text Block1
-
-
-    Text Block1
+    X
+    X
+    X
     \chapter{haw haw}
-        Text Block2
-
-
-        Text Block2
+        X
+        X
+        X
+        X
+        X
+        X
         \section{haw haw_3}
+            X
+            X
+            X
+            X
 \part{fuck}
     \chapter{newChapter}
-        Text Block1
-
-
-        Text Block1
+        X
+        X
+        X
+        X
     \chapter{newChapter2}
-        Text Block2
-
-
-        Text Block2
+            X
+            X
+            X

@@ -13,9 +13,8 @@ public class TextFileReader {
         this.filePath = filePath;
     }
 
-
-    //TODO is tex-File??
     public boolean validateFile() {
+        //TODO is tex-File??
         File file = new File(filePath);
 
         // Check if file exists

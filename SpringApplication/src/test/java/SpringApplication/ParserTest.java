@@ -12,7 +12,7 @@ public class ParserTest {
     @Test
     public void testParser() {
 
-        Parser parser = new Parser("SpringApplication/src/MaddinIsTesting/PSE_TEST_2.txt");
+        Parser parser = new Parser("SpringApplication/src/MaddinIsTesting/PSE_TEST_1.txt");
         Roots root = parser.startParsing();
 
         List<String> finishedTextReCompiled = root.toText();

@@ -1,6 +1,7 @@
 package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
+import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.elements.*;
 import com.Application.Tree.interfaces.Roots;
 
@@ -42,7 +43,7 @@ public class Scanner {
         Element currElement = null;
 
         for (int i = 0; i < text.length; i++) {
-            if (text[i].contains("\\")) {
+            if (text[i].contains("\\")) { // todo more distinct? Regex, split into elem creation, textbox handeling
                 currElement = scanLine(currElement, i);
                 if (currElement != null && !firstElementFound) {
                     firstElementFound = true;
@@ -53,9 +54,13 @@ public class Scanner {
                 } else {
                     newBlockAvailable = true;
                 }
-
             } else {
-                // start new TextBLock
+
+
+
+
+
+                // TextBLock, todo make add line to list for O(n)
                 if (newBlockAvailable) {
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     textBlockElement.setParent(currElement);
@@ -118,6 +123,17 @@ public class Scanner {
                 }
                 return newElement;
             } else {
+                // start new TextBlock
+                if (NewLine.checkLineForNewLineCharacters(text[index])) {
+                    BlockElement textBlockElement = new BlockElement(null, null, index);
+                    if (lastElement != null) {
+                        textBlockElement.setParent(lastElement);
+                        Parent parent = (Parent) lastElement;
+                        parent.addChild(textBlockElement);
+                    }
+
+                    return textBlockElement;
+                }
                 return lastElement;
             }
         }
