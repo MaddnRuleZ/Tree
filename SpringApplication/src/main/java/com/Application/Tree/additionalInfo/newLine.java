@@ -1,13 +1,14 @@
 package com.Application.Tree.additionalInfo;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class newLine extends AdditionalInformationContainer {
     private final static String NEW_LN_CHARACTER = "\\newline";
     private final static String NEW_LN_CHARACTER1 = "\\\\";
-
     private final static String NEW_LN_CHARACTER2 = "\\par";
 
     protected List<String> content;
