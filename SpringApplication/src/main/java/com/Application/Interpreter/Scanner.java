@@ -51,7 +51,7 @@ public class Scanner {
                     setParentChild(currElement, textBlockElement);
                     currElement = textBlockElement;
 
-                } else if (currElement instanceof Child && NewLine.checkLineForNewLineCharacters(text[i])){
+                } else if ((currElement instanceof Child && NewLine.checkLineForNewLineCharacters(text[i]) || !(currElement instanceof BlockElement))) { // in block, newLine appears // || isChild as Label or Caption and new Elem
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
@@ -75,34 +75,32 @@ public class Scanner {
      * @return the New Created Text Element with parent and child hierachie
      */
     private Element scanLine(Element lastElement, final int index) {
-        if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
+        String currentLine = text[index];
+        if (lastElement != null && lastElement.getEndPart() != null && currentLine.contains(lastElement.getEndPart())) {
             // End Environment
             lastElement.assignTextToTextBlock(text, index);
-            return lastElement; //.getParentElement()
+            return lastElement;
 
         } else {
             // End TextBlock move lower or delete
             if (lastElement != null && lastElement.isTextBlock()) {
                 lastElement = lastElement.assignTextToTextBlock(text, index - 1);
             }
-            Element newElement = ElementConfig.createElement(this.text[index], index);
+            Element newElement = ElementConfig.createElement(currentLine, index);
 
             if (newElement != null) {
-                newElement.setOptions(this.text[index]);
-
+                newElement.setOptions(currentLine);
+                newElement.setContent(currentLine);
                 if (lastElement == null) {
                     root.addChild(newElement);
                     if (newElement instanceof Input) {
                         Input inputRoot = (Input) root;
                         newElement.setParent(inputRoot);
                     }
-
                 } else if (newElement.getLevel() > lastElement.getLevel()) {
                     lowerLevel(lastElement, newElement);
-
                 } else if (newElement.getLevel() == lastElement.getLevel()) {
                     sameLevel(lastElement, newElement);
-
                 } else {
                     higherLevel(lastElement, newElement);
                 }

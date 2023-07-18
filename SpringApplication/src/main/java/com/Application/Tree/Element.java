@@ -44,10 +44,6 @@ public abstract class Element implements JsonParser, Exportable {
         Root.updateLevelCap(level);
     }
 
-    public void setOptions(String optionsString) {
-        // todo do RegeX
-        this.options = optionsString;
-    }
 
     public abstract List<String> toText();
 
@@ -91,13 +87,17 @@ public abstract class Element implements JsonParser, Exportable {
         return this.startPart == null;
     }
 
+    public void setOptions(String optionsString) {
+        // todo do RegEx, overwrite on lover Levels
+        this.options = optionsString;
+    }
+
     public void setComment(String comment) {
         //TODO
     }
 
     public void setContent(String content) {
-        // todo do RegeX
-
+        // todo do RegEx
         //TODO
     }
 
@@ -129,9 +129,5 @@ public abstract class Element implements JsonParser, Exportable {
 
     public void addText(String line) {
         this.text.add(line);
-    }
-
-    public String getStartPart() {
-        return this.startPart;
     }
 }
