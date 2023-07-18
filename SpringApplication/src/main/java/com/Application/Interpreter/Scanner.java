@@ -46,12 +46,13 @@ public class Scanner {
             if (newElement != null) {
                 currElement = newElement;
             } else {
-                if (currElement instanceof Sectioning && currElement.getText().size() == 0) {
+
+                if (currElement instanceof Parent && currElement.getText().size() == 0) { // Sect, Env
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     setParentChild(currElement, textBlockElement);
                     currElement = textBlockElement;
 
-                } else if (NewLine.checkLineForNewLineCharacters(text[i]) && currElement instanceof BlockElement){
+                } else if (NewLine.checkLineForNewLineCharacters(text[i]) && currElement instanceof Child){
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
@@ -67,7 +68,7 @@ public class Scanner {
         // todo Ending on Textblock still check for instance
         if (currElement != null) {
             // End Last Open
-            currElement.assignTextToTextBlock(text, text.length);
+            currElement.assignTextToTextBlock(text, text.length - 1);
         }
         return root;
     }
@@ -83,11 +84,12 @@ public class Scanner {
         if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
             // End Environment
             lastElement.assignTextToTextBlock(text, index);
-            return lastElement.getParentElement();
+            return lastElement; //.getParentElement()
+
         } else {
             // End TextBlock move lower or delete
             if (lastElement != null && lastElement.isTextBlock()) {
-                lastElement = lastElement.assignTextToTextBlock(text, index);
+                lastElement = lastElement.assignTextToTextBlock(text, index - 1);
             }
             Element newElement = ElementConfig.createElement(this.text[index], index);
 

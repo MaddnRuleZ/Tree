@@ -1,34 +1,70 @@
 \part{test_2}
-    X
+    X1
     X
     X
     \newline
+    X2
     X
     X
-    X
-    \newline Edge Case
     \begin{haw haw}
-        X
+        X3
         X
         X
     \end{haw haw}
+    X4
     X
+    X
+    \begin{algorithm}
+        X5
+        X
+        X
+    \end{algorithm}
+    X6
     X
     X
     \chapter{haw haw}
-        X
+        X7
         X
         X
         \section{haw haw_3}
+            X8
             X
             X
-            X
+            \subsection{haw haw}
+                X9
+                X
+                X
+                \subsubsection{haw haw}
+                    X10
+                    X
+                    X
+                    \paragraph{haw haw}
+                        X11
+                        X
+                        X
+                        \subparagraph{haw haw}
+                            X12
+                            X
+                            X
+                            \label
+                            X12_1
+                            X
+                            X
+                            \caption
+                            X12_2
+                            X
+                            X
 \part{fuck}
     \chapter{newChapter}
+        X13
         X
         X
+        \label
+        X13_1
         X
+        X
+        \caption
     \chapter{newChapter2}
-            X
+            X14
             X
             X

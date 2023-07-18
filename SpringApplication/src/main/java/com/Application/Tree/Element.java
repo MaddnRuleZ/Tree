@@ -52,11 +52,8 @@ public abstract class Element implements JsonParser, Exportable {
     public abstract List<String> toText();
 
     public Element assignTextToTextBlock(String[] text, int endIndex) {
-        // todo assertion
-        this.text = TextFileReader.extractStrings(text, this.startIndex, endIndex - 1);
-        // extract the summ, comment, nl
-        List<String> restText = comment.extractInfo(this.text);
-
+        // todo
+        this.text = TextFileReader.extractStrings(text, this.startIndex, endIndex);
         return parentElement;
     }
 
@@ -132,5 +129,9 @@ public abstract class Element implements JsonParser, Exportable {
 
     public void addText(String line) {
         this.text.add(line);
+    }
+
+    public String getStartPart() {
+        return this.startPart;
     }
 }
