@@ -46,12 +46,12 @@ public class Scanner {
                 currElement = newElement;
             } else {
 
-                if (currElement instanceof Parent && currElement.getText().size() == 0) { // Sect, Env
+                if (currElement instanceof Parent && currElement.getText().size() == 0) {
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     setParentChild(currElement, textBlockElement);
                     currElement = textBlockElement;
 
-                } else if (NewLine.checkLineForNewLineCharacters(text[i]) && currElement instanceof Child){
+                } else if (currElement instanceof Child && NewLine.checkLineForNewLineCharacters(text[i])){
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
@@ -64,8 +64,6 @@ public class Scanner {
                 }
             }
         }
-
-
         return root;
     }
 
