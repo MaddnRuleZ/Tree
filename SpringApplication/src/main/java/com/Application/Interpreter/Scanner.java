@@ -96,17 +96,7 @@ public class Scanner {
 
             lastElement.assignTextToTextBlock(text, index - 1);
             return lastElement.getParentElement();
-
         } else {
-
-            /*
-            // End TextBlock
-            if (lastElement != null && lastElement.isTextBlock()) {
-                lastElement = lastElement.assignTextToTextBlock(text, index - 1);
-                System.out.println("Calle the func");
-            }
-             */
-
             Element newElement = ElementConfig.createElement(currentLine, index);
 
             if (newElement != null) {

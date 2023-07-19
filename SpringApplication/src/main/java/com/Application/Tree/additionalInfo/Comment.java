@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class Comment extends AdditionalInformationContainer {
     private final static String START_CHARACTER = "%";
+    private String comment;
+
     public Comment() {
         super();
     }
@@ -15,22 +17,16 @@ public class Comment extends AdditionalInformationContainer {
     /**
      * returns the remaining Text
      *
-     * @param remainText
+     * @param currentLine
      * @return
      */
-    public List<String> extractInfo(List<String> remainText) {
-        ArrayList<String> remainingText = new ArrayList<>();
-        this.content = new ArrayList<>();
+    public boolean extractInfo(String currentLine) {
+        if (currentLine.contains(START_CHARACTER)) {
 
-        for (String line: remainText) {
-            if (line.contains(START_CHARACTER)) {
-                this.content.add(line);
-            } else {
-                remainingText.add(line);
-            }
         }
-        setNullContent();
-        return remainingText;
+
+
+
     }
 }
 

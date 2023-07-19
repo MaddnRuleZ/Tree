@@ -5,12 +5,16 @@ import java.util.List;
 
 /**
  *
+ *
  */
 public class Summary extends AdditionalInformationContainer {
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
 
+    private List<String> summary;
+
     /**
+     *
      *
      */
     public Summary() {
@@ -47,7 +51,6 @@ public class Summary extends AdditionalInformationContainer {
                 restText.add(line);
             }
         }
-        setNullContent();
         return restText;
     }
 }

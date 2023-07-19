@@ -24,7 +24,7 @@ public abstract class Element implements JsonParser, Exportable {
     protected List<String> text;
     protected final Summary summary;
     protected final Comment comment;
-    protected final NewLine textBlock;
+    protected final NewLine newLine;
     private boolean chooseManualSummary;
     protected String content;
     protected String options;
@@ -42,7 +42,7 @@ public abstract class Element implements JsonParser, Exportable {
 
         comment = new Comment();
         summary = new Summary();
-        textBlock = new NewLine();
+        newLine = new NewLine();
         Root.updateLevelCap(level);
     }
 
@@ -50,7 +50,7 @@ public abstract class Element implements JsonParser, Exportable {
     public abstract List<String> toText();
 
     public Element assignTextToTextBlock(String[] text, int endIndex) {
-        // todo
+        // TODO
         this.text = TextFileReader.extractStrings(text, this.startIndex, endIndex);
         return parentElement;
     }
@@ -139,6 +139,10 @@ public abstract class Element implements JsonParser, Exportable {
     public abstract int levelOfDeepestSectioningChild();
 
     public void addText(String line) {
-        this.text.add(line);
+        if (comment.extractInfo(line) || newLine.extractInfo(line)) {
+
+        } else {
+            this.text.add(line);
+        }
     }
 }

@@ -7,9 +7,14 @@ import java.util.List;
  *
  */
 public class NewLine extends AdditionalInformationContainer {
-    private final static String NEW_LN_CHARACTER = "\\newline";
-    private final static String NEW_LN_CHARACTER1 = "\\\\";
-    private final static String NEW_LN_CHARACTER2 = "\\par";
+    private final static String[] NEW_LN_CHARACTERS = {
+            "\\newline",
+            "\\\\",
+            "\\par"
+    };
+
+    private String newLine;
+
 
     protected List<String> content;
 
@@ -18,14 +23,26 @@ public class NewLine extends AdditionalInformationContainer {
     }
 
     public static boolean checkLineForNewLineCharacters(String currentLine) {
-        return currentLine.contains(NEW_LN_CHARACTER) || currentLine.contains(NEW_LN_CHARACTER1) || currentLine.contains(NEW_LN_CHARACTER2);
+        for (String nlChar: NEW_LN_CHARACTERS) {
+            if (currentLine.contains(nlChar)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    /**
+    public boolean extractInfo(String currentLine) {
+        if (checkLineForNewLineCharacters(currentLine)) {
+            this.newLine = currentLine;
+            return true;
+        }
+        return false;
+    }
+
+    /*
      *
      * @param remainText
      * @return
-     */
     public List<String> extractInfo(List<String> remainText) {
         // todo, just only save the nl
         List<List<String>> parts = new ArrayList<>();
@@ -43,8 +60,7 @@ public class NewLine extends AdditionalInformationContainer {
         setNullContent();
         return null;
     }
-
-
+     */
 
 
     @Override
