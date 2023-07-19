@@ -13,7 +13,6 @@ public class Child extends Element {
 
     /**
      *
-     *
      * @param startPart
      * @param endPart
      * @param startIndex
@@ -25,7 +24,6 @@ public class Child extends Element {
     @Override
     public List<String> toText() {
         List<String> text = new ArrayList<>();
-        text.add(this.options);
         text.addAll(this.text);
         return text;
     }

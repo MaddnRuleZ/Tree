@@ -159,7 +159,7 @@ public enum ElementConfig {
         }
 
         if (startPartLine.contains("\\begin")) {
-            return new BlockElement("\\begin", "\\end", index);
+            return new Environment("\\begin", "\\end", index, 9);
         }
         return null;
     }

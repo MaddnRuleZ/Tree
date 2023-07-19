@@ -1,8 +1,8 @@
-\part{test_2}
+\part{options_text}[content_test]
     X1
     X
     X
-    \begin{haw haw}
+    \begin{haw haw}[content_test]
         X3
         X
         X
@@ -12,6 +12,7 @@
     X
     \begin{algorithm}
         X5
+        X
         X
         X
     \end{algorithm}
@@ -71,6 +72,24 @@
                     \label
                     X
             \end{algorithm}
-            X16 // ERR HERE
+            X16
             X
             X
+            \begin{figure}
+                \centering
+                \includegraphics[insertName]{insertName}
+                \caption
+                \label{labelName}
+            \end{figure}
+            X17
+            X
+            X
+            \begin{figure}[htp]
+                \centering
+                X
+                X
+                \includegraphics[insertName]{insertName}
+                \caption
+                \label{labelName}
+            \end{figure}
+

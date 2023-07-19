@@ -9,6 +9,8 @@ import com.Application.Tree.elements.Root;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -88,16 +90,29 @@ public abstract class Element implements JsonParser, Exportable {
     }
 
     public void setOptions(String optionsString) {
-        // todo do RegEx, overwrite on lover Levels
-        this.options = optionsString;
+        Pattern pattern = Pattern.compile("\\{([^}]*)\\}");
+        Matcher matcher = pattern.matcher(optionsString);
+
+        if (matcher.find()) {
+            this.options = matcher.group(1);
+        } else {
+            this.options = null;
+        }
+    }
+
+
+    public void setContent(String content) {
+        Pattern pattern = Pattern.compile("\\[([^]]*)\\]");
+        Matcher matcher = pattern.matcher(content);
+
+        if (matcher.find()) {
+            this.content = matcher.group(1);
+        } else {
+            this.content = null;
+        }
     }
 
     public void setComment(String comment) {
-        //TODO
-    }
-
-    public void setContent(String content) {
-        // todo do RegEx
         //TODO
     }
 
