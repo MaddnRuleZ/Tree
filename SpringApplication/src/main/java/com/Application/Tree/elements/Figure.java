@@ -16,11 +16,10 @@ public class Figure extends Environment {
      *
      * @param startPart
      * @param endPart
-     * @param startIndex
      * @param level
      */
-    public Figure(String startPart, String endPart, int startIndex, int level) {
-        super(startPart, endPart, startIndex, level);
+    public Figure(String startPart, String endPart, int level) {
+        super(startPart, endPart, level);
         captions = new ArrayList<>();
     }
 

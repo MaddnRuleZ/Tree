@@ -12,99 +12,99 @@ import com.Application.Tree.interfaces.Roots;
 public enum ElementConfig {
     PART("\\part", null, 1) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Sectioning(getStartPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Sectioning(getStartPart(), getLevel());
         }
     },
 
     CHAPTER("\\chapter", null, 2) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Sectioning(getStartPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Sectioning(getStartPart(), getLevel());
         }
     },
 
     SECTION("\\section", null, 3) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Sectioning(getStartPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Sectioning(getStartPart(), getLevel());
         }
     },
 
     SUBSECTION("\\subsection", null, 4) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Sectioning(getStartPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Sectioning(getStartPart(), getLevel());
         }
     },
 
     SUBSUBSECTION("\\subsubsection", null, 5) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Sectioning(getStartPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Sectioning(getStartPart(), getLevel());
         }
     },
 
     PARAGRAPH("\\paragraph", null, 6) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Sectioning(getStartPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Sectioning(getStartPart(), getLevel());
         }
     },
 
     SUBPARAGRAPH("\\subparagraph", null, 7) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Sectioning(getStartPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Sectioning(getStartPart(), getLevel());
         }
     },
 
 
     ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", 9) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+        Element getElement( String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
     LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", 9) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
     VERBATIM("\\begin{verbatim}", "\\end{verbatim}", 9) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
     FIGURE("\\begin{figure}", "\\end{figure}", 9) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Figure(getStartPart(), getEndPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Figure(getStartPart(), getEndPart(), getLevel());
         }
     },
 
     EQUATION("\\begin{equation}", "\\end{equation}", 9) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+        Element getElement(String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
     LABEL("\\label", null, 10) {
         @Override
-        Element getElement(int index, String currentLine) {
-            return new Child(getStartPart(),null , index, getLevel());
+        Element getElement(String currentLine) {
+            return new Child(getStartPart(),null , getLevel());
         }
     },
 
     INPUT("\\input", null, 0) {
         @Override
-        Element getElement(int index, String currentLine) {
+        Element getElement(String currentLine) {
             String path = Input.extractPathRegex(currentLine);
             if (path == null) {
                 System.out.println("No Valid Path given");
@@ -145,28 +145,26 @@ public enum ElementConfig {
     /**
      * Enter the current Line and get the Element that is initiated in this Line
      *
-     * @param index index of the current Line
      * @param currentLine current Text Line from Text, containing the Elements start Part
      * @return new Generated Element already initiated
      */
-    abstract Element getElement(int index, String currentLine);
+    abstract Element getElement(String currentLine);
 
     /**
      * Create a new Element based on the line the Scanner read in the TextFile
      *
      * @param startPartLine textLine containing one of the startParts
-     * @param index current Index in the Text
      * @return new Created Element
      */
-    public static Element createElement(String startPartLine, int index) {
+    public static Element createElement(String startPartLine) {
         for (final ElementConfig sectioning: ElementConfig.values()) {
             if (startPartLine.contains(sectioning.startPart)) {
-                return sectioning.getElement(index, startPartLine);
+                return sectioning.getElement(startPartLine);
             }
         }
 
         if (startPartLine.contains("\\begin")) {
-            return new Environment("\\begin", "\\end", index, 9);
+            return new Environment("\\begin", "\\end", 9);
         }
         return null;
     }

@@ -13,7 +13,7 @@ public class Input extends Parent implements Roots {
      *
      */
     public Input() {
-        super(startPart, null, 0, Root.MIN_LEVEL);
+        super(startPart, null, Root.MIN_LEVEL);
     }
 
     /**

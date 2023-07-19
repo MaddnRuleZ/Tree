@@ -47,20 +47,20 @@ public class Scanner {
             } else {
 
                 if (currElement instanceof Parent && ((Parent) currElement).getChildElements().size() == 0) {
-                    BlockElement textBlockElement = new BlockElement(null, null, i);
+                    BlockElement textBlockElement = new BlockElement(null, null);
                     setParentChild(currElement, textBlockElement);
                     currElement = textBlockElement;
                     currElement.addText(text[i]);
 
                 } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
                     currElement.addText(text[i]);
-                    BlockElement textBlockElement = new BlockElement(null, null, i + 1);
+                    BlockElement textBlockElement = new BlockElement(null, null);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
                     currElement = textBlockElement;
 
                 } else if (currElement instanceof Environment) {
-                    BlockElement textBlockElement = new BlockElement(null, null, i);
+                    BlockElement textBlockElement = new BlockElement(null, null);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
                     currElement = textBlockElement;
@@ -68,7 +68,7 @@ public class Scanner {
 
                 } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) {
                     // label
-                    BlockElement textBlockElement = new BlockElement(null, null, i);
+                    BlockElement textBlockElement = new BlockElement(null, null);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
                     currElement = textBlockElement;
@@ -96,7 +96,7 @@ public class Scanner {
 
             return lastElement.getParentElement();
         } else {
-            Element newElement = ElementConfig.createElement(currentLine, index);
+            Element newElement = ElementConfig.createElement(currentLine);
 
             if (newElement != null) {
                 newElement.setOptions(currentLine);

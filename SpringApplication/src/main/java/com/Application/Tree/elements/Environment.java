@@ -13,8 +13,8 @@ public class Environment extends Parent {
      * @param startIndex
      * @param level
      */
-    public Environment(String startPart, String endPart, int startIndex, int level) {
-        super(startPart, endPart, startIndex, level);
+    public Environment(String startPart, String endPart, int level) {
+        super(startPart, endPart, level);
     }
 
     @Override

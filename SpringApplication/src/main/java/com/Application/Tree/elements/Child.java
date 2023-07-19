@@ -16,10 +16,9 @@ public class Child extends Element {
      *
      * @param startPart
      * @param endPart
-     * @param startIndex
      */
-    public Child(String startPart, String endPart, int startIndex, int level) {
-        super(startPart, endPart, startIndex, level);
+    public Child(String startPart, String endPart, int level) {
+        super(startPart, endPart, level);
     }
 
     @Override

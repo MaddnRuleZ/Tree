@@ -33,26 +33,26 @@ public class TestTree {
         this.root = Root.getInstance();
 
         //create sectioning
-        Sectioning sectioning1 = new Sectioning("sectioning1", 0, 0);
+        Sectioning sectioning1 = new Sectioning("sectioning1", 0);
 
-        Sectioning sectioning2 = new Sectioning("sectioning2", 0, 1);
-        Sectioning sectioning3 = new Sectioning("sectioning3", 0, 1);
-        Sectioning sectioning4 = new Sectioning("sectioning4", 0, 1);
+        Sectioning sectioning2 = new Sectioning("sectioning2",1);
+        Sectioning sectioning3 = new Sectioning("sectioning3",1);
+        Sectioning sectioning4 = new Sectioning("sectioning4",1);
 
-        Sectioning sectioning5 = new Sectioning("sectioning5", 0, 2);
-        Sectioning sectioning6 = new Sectioning("sectioning6", 0, 2);
+        Sectioning sectioning5 = new Sectioning("sectioning5",2);
+        Sectioning sectioning6 = new Sectioning("sectioning6",2);
 
-        Environment environment1 = new Environment("environment1", "environment1", 0, 2);
-        Environment environment2 = new Environment("environment2", "environment2", 0, 2);
+        Environment environment1 = new Environment("environment1", "environment1",2);
+        Environment environment2 = new Environment("environment2", "environment2",2);
 
         //create children
-        Child child1 = new Child("child1", "child1", 0, 1);
+        Child child1 = new Child("child1", "child1",1);
 
-        Child child2 = new Child("child2", "child2", 0, 2);
-        Child child3 = new Child("child3", "child3", 0, 2);
-        Child child4 = new Child("child4", "child4", 0, 2);
+        Child child2 = new Child("child2", "child2",2);
+        Child child3 = new Child("child3", "child3",2);
+        Child child4 = new Child("child4", "child4",2);
 
-        Child child5 = new Child("child5", "child5", 0, 2);
+        Child child5 = new Child("child5", "child5",2);
 
         //set children
         sectioning1.addChild(sectioning2);

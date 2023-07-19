@@ -32,7 +32,7 @@ public abstract class Element implements JsonParser, Exportable {
     private final String startPart;
     private final String endPart;
 
-    public Element(String startPart, String endPart, int startIndex, int level) {
+    public Element(String startPart, String endPart, int level) {
         this.id = UUID.randomUUID();
         this.startPart = startPart;
         this.endPart = endPart;

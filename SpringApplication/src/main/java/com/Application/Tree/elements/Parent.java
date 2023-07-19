@@ -17,11 +17,10 @@ public abstract class Parent extends Element {
      *
      * @param startPart
      * @param endPart
-     * @param startIndex
      * @param level
      */
-    public Parent(String startPart, String endPart, int startIndex, int level) {
-        super(startPart, endPart, startIndex, level);
+    public Parent(String startPart, String endPart, int level) {
+        super(startPart, endPart, level);
         childElements = new ArrayList<>();
     }
 

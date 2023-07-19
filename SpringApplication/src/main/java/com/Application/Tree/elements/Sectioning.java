@@ -17,11 +17,10 @@ public class Sectioning extends Parent {
      * Create a new Sectioning Type
      *
      * @param startPart
-     * @param startIndex
      * @param level
      */
-    public Sectioning(String startPart, int startIndex, int level) {
-        super(startPart, null, startIndex, level);
+    public Sectioning(String startPart, int level) {
+        super(startPart, null, level);
     }
 
 

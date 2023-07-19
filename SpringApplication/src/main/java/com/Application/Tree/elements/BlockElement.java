@@ -10,10 +10,9 @@ public class BlockElement extends Child {
      *
      * @param startPart
      * @param endPart
-     * @param startIndex
      */
-    public BlockElement(String startPart, String endPart, int startIndex) {
-        super(startPart, endPart, startIndex, BLOCK_ELEMENT_LEVEL);
+    public BlockElement(String startPart, String endPart) {
+        super(startPart, endPart, BLOCK_ELEMENT_LEVEL);
     }
 
 
