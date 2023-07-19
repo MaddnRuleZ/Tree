@@ -23,11 +23,11 @@ public class LoadFromGitCommandFactory implements CommandFactory {
         try {
            command  = mapper.convertValue(attributes, LoadFromGitCommand.class);
         } catch (IllegalArgumentException e) {
-            throw new NumParamsException("LoadFromGit");
+            throw new NumParamsException("LoadFromGit - mapping failed");
         }
 
         if (command.getUrl() == null || command.getUsername() == null || command.getPassword() == null ){
-            throw new NumParamsException("LoadFromGit");
+            throw new NumParamsException("LoadFromGit - parameter not set");
         }
 
         command.setUser(this.user);

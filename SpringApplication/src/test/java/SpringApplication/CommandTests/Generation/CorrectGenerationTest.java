@@ -82,7 +82,7 @@ public class CorrectGenerationTest {
     @Test
     void MoveElementEditorTest() throws ProcessingException {
         CommandFactory factory = new MoveElementEditorCommandFactory(new User());
-        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/MoveElementEditor.json");
+        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectAttributes/MoveElementEditor.json");
         assertNotNull(factory.createCommand(jsonContent), "Response should not be null");
     }
 
