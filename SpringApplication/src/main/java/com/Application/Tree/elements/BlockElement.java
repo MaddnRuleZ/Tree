@@ -52,10 +52,9 @@ public class BlockElement extends Child {
 
         } else {
             text.add(line);
-            return this.parentElement; // changed
+            return this;
         }
     }
-
 
     @Override
     public List<String> toText() {

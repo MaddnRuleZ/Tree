@@ -23,12 +23,6 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		Parser parser = new Parser("SpringApplication/src/TestDocuments/PSE_TEST_1.txt");
-		Roots root = parser.startParsing();
 
-		List<String> finishedTextReCompiled = root.toText();
-		for (String str: finishedTextReCompiled) {
-			System.out.println(str);
-		}
 	}
 }
