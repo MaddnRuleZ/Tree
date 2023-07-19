@@ -7,6 +7,7 @@ import com.Application.Tree.interfaces.Roots;
 /**
  * Class Containing the Configuration of the Structural Elements that wil be detected by the Scan- Algorithm
  *
+ *
  */
 public enum ElementConfig {
 
@@ -60,7 +61,21 @@ public enum ElementConfig {
     },
 
 
-    ALGORITHM("\\begin{algorithm}", "\\end{algorithm}", 9) {
+    ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", 9) {
+        @Override
+        Element getElement(int index, String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+        }
+    },
+
+    LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", 9) {
+        @Override
+        Element getElement(int index, String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+        }
+    },
+
+    VERBATIM("\\begin{verbatim}", "\\end{verbatim}", 9) {
         @Override
         Element getElement(int index, String currentLine) {
             return new Environment(getStartPart(), getEndPart(), index, getLevel());
@@ -70,7 +85,7 @@ public enum ElementConfig {
     FIGURE("\\begin{figure}", "\\end{figure}", 9) {
         @Override
         Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+            return new Figure(getStartPart(), getEndPart(), index, getLevel());
         }
     },
 
@@ -81,18 +96,10 @@ public enum ElementConfig {
         }
     },
 
-
     LABEL("\\label", null, 10) {
         @Override
         Element getElement(int index, String currentLine) {
             return new Child(getStartPart(),null , index, getLevel());
-        }
-    },
-
-    CAPTION("\\caption", null, 10) {
-        @Override
-        Element getElement(int index, String currentLine) {
-            return new Child(getStartPart(), null, index, getLevel());
         }
     },
 
@@ -159,7 +166,7 @@ public enum ElementConfig {
         }
 
         if (startPartLine.contains("\\begin")) {
-            return new BlockElement("\\begin", "\\end", index);
+            return new Environment("\\begin", "\\end", index, 9);
         }
         return null;
     }

@@ -1,11 +1,15 @@
 package com.Application;
 
+import com.Application.Interpreter.Parser;
 import com.Application.Printer.Clock;
+import com.Application.Tree.interfaces.Roots;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+
+import java.util.List;
 
 @SpringBootApplication
 @SpringBootConfiguration
@@ -19,6 +23,12 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
+		Parser parser = new Parser("SpringApplication/src/TestDocuments/PSE_TEST_1.txt");
+		Roots root = parser.startParsing();
 
+		List<String> finishedTextReCompiled = root.toText();
+		for (String str: finishedTextReCompiled) {
+			System.out.println(str);
+		}
 	}
 }

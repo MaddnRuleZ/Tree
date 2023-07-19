@@ -5,32 +5,23 @@ import java.util.List;
 
 /**
  *
+ *
  */
 public class Comment extends AdditionalInformationContainer {
     private final static String START_CHARACTER = "%";
+    private final List<String> comment;
+
     public Comment() {
-        super();
+        comment = new ArrayList<>();
     }
 
-    /**
-     * returns the remaining Text
-     *
-     * @param remainText
-     * @return
-     */
-    public List<String> extractInfo(List<String> remainText) {
-        ArrayList<String> remainingText = new ArrayList<>();
-        this.content = new ArrayList<>();
-
-        for (String line: remainText) {
-            if (line.contains(START_CHARACTER)) {
-                this.content.add(line);
-            } else {
-                remainingText.add(line);
-            }
+    @Override
+    public boolean extractContent(String currentLine) {
+        if (currentLine.contains(START_CHARACTER)) {
+            comment.add(currentLine);
+            return true;
         }
-        setNullContent();
-        return remainingText;
+        return false;
     }
 }
 

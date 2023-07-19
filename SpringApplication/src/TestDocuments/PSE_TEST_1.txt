@@ -1,39 +1,123 @@
-\part{test_2}
-    Text Block1
-
-    Text Block1
-        %coment
-        %comment
-
-    \newline
-    Text Block1
-
-    Text Block1
-    \newline
-    \begin{haw haw}
-        start of exa Blockelem
-
-
-        end of exa Blockelem
+\part{options_text}[content_test]
+    X1
+    % comment1
+    % comment2
+    X
+    X
+    %\start{summary}
+    X2_22
+    X
+    X
+    %\finish{summary}
+    X
+    X
+    \par
+    X1_1
+    X
+    \begin{figure}
+        X1_2
+        X
+        X
+        \newline
+        X1_3
+        X
+        X
+        \caption
+        \includegraphics[insertName]{insertName}
+        \label{labelName}
+    \end{figure}
+    \begin{haw haw}[content_test]
+        X3
+        X
+        X
+        \newline
+        X3_3
+        X
+        X
     \end{haw haw}
-    Text Block1
-
-
-    Text Block1
+    X4
+    X
+    X
+    \begin{algorithm}
+        X5
+        X
+        X
+    \end{algorithm}
+    X6
+    X
+    X
     \chapter{haw haw}
-        Text Block2
-
-
-        Text Block2
+        X7
+        X
+        X
         \section{haw haw_3}
+            X8
+            X
+            X
+            \subsection{haw haw}
+                X9
+                X
+                X
+                \subsubsection{haw haw}
+                    X10
+                    X
+                    X
+                    \paragraph{haw haw}
+                        X11
+                        X
+                        X
+                        \subparagraph{haw haw}
+                            X12
+                            X
+                            X
+                            \label
+                            X12_1
+                            X
+                            X
+                            \par
+                            X12_2
+                            X
+                            X
 \part{fuck}
     \chapter{newChapter}
-        Text Block1
-
-
-        Text Block1
+        X13
+        X
+        X
+        \label
+        X13_1
+        X
+        X
+        \newline
+        X13_2
+        X
+        X
     \chapter{newChapter2}
-        Text Block2
-
-
-        Text Block2
+                X14
+                X
+                X
+            \begin{algorithm}
+                    X15
+                    X
+                    \label
+                    X
+            \end{algorithm}
+                X16
+                X
+                X
+            \begin{figure}
+                \centering
+                \includegraphics[insertName]{insertName}
+                \caption
+                \label{labelName}
+            \end{figure}
+                X17
+                X
+                X
+            \begin{figure}[htp]
+                \centering
+                X
+                X
+                \includegraphics[insertName]{insertName}
+                \caption
+                \label{labelName}
+            \end{figure}

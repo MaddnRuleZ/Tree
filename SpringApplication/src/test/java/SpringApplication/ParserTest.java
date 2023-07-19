@@ -7,12 +7,13 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 public class ParserTest {
-
-
     @Test
     public void testParser() {
 
-        Parser parser = new Parser("SpringApplication/src/MaddinIsTesting/PSE_TEST_2.txt");
+        /*
+         * test the Parser and check if the file in sys.out is like the input_file below >>>
+         */
+        Parser parser = new Parser("SpringApplication/src/TestDocuments/PSE_TEST_1.txt");
         Roots root = parser.startParsing();
 
         List<String> finishedTextReCompiled = root.toText();

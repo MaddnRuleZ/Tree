@@ -5,49 +5,46 @@ import java.util.List;
 
 /**
  *
+ *
  */
 public class Summary extends AdditionalInformationContainer {
+
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
+    private boolean active;
+    private final List<String> summary;
 
     /**
      *
      */
     public Summary() {
-        super();
+        summary = new ArrayList<>();
+        active = false;
     }
 
     /**
-     * remove one summary form the text, save summary in this Class,
-     * return the rest of the Text
      *
-     * @param text
-     * @return text w!/ the summaries
+     *
+     * @param currentLine
+     * @return
      */
-    public List<String> extractInfo(List<String> text) {
-        List<String> restText = new ArrayList<>();
-        boolean insideSummary = false;
+    @Override
+    public boolean extractContent(String currentLine) {
+        if (active && currentLine.contains(END_SUMMARY)) {
+            summary.add(currentLine);
+            active = false;
+            return true;
 
-        for (String line : text) {
-            if (line.contains(START_SUMMARY)) {
-                insideSummary = true;
-                content = new ArrayList<>();
-                content.add(line);
+        } else if (!active && currentLine.contains(START_SUMMARY)) {
+            active = true;
+            summary.add(currentLine);
+            return true;
 
-            } else if (line.contains(END_SUMMARY)) {
-                if (!insideSummary) {
-                    return null; // Err, endsummary b4 startSummary
-                }
-
-                insideSummary = false;
-                content.add(line);
-            } else if (insideSummary) {
-                content.add(line);
-            } else {
-                restText.add(line);
-            }
+        } else if (active) {
+            summary.add(currentLine);
+            return true;
         }
-        setNullContent();
-        return restText;
+
+        return false;
     }
 }

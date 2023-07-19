@@ -2,16 +2,17 @@ package com.Application.Tree.elements;
 
 import com.Application.Tree.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 /**
  *
+ *
  */
 public class Child extends Element {
 
     /**
-     *
      *
      * @param startPart
      * @param endPart
@@ -23,7 +24,9 @@ public class Child extends Element {
 
     @Override
     public List<String> toText() {
-        return this.text;
+        List<String> text = new ArrayList<>();
+        text.addAll(this.text);
+        return text;
     }
 
     @Override

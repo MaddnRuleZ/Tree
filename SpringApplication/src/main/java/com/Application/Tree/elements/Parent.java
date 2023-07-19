@@ -14,6 +14,7 @@ public abstract class Parent extends Element {
     /**
      *
      *
+     *
      * @param startPart
      * @param endPart
      * @param startIndex
@@ -54,8 +55,6 @@ public abstract class Parent extends Element {
      */
     public List<String> toText() {
         List<String> outText = new ArrayList<>();
-        outText.add(options);
-
         for (Element child: this.childElements) {
             outText.addAll(child.toText());
         }

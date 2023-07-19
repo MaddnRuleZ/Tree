@@ -8,17 +8,17 @@ import com.Application.Tree.interfaces.Roots;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 
 /**
  * This is the Singleton Function of the Root of the Whole LaTeX code.
- *
  */
 public class Root implements JsonParser, Exportable, Roots {
     private final List<Element> childElements;
     private static Root instance;
+
+    private List<String> startHeaderText;
 
     private static int MIN_LEVEL = 0;
 
@@ -97,6 +97,7 @@ public class Root implements JsonParser, Exportable, Roots {
     @Override
     public List<String> toText() {
         List<String> text = new ArrayList<>();
+        // todo @S add the startHeader here
         for (Element element: childElements) {
             text.addAll(element.toText());
         }

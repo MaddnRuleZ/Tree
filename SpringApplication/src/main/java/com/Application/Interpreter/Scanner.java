@@ -1,6 +1,7 @@
 package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
+import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.elements.*;
 import com.Application.Tree.interfaces.Roots;
 
@@ -33,47 +34,48 @@ public class Scanner {
      * Err List:
      * first contains can be t/ false
      *
-     *
      * @return root Element of Tree
      */
     public Roots parseDocument() {
-        boolean firstElementFound = false;
-        boolean newBlockAvailable = false;
         Element currElement = null;
 
         for (int i = 0; i < text.length; i++) {
-            if (text[i].contains("\\")) {
-                currElement = scanLine(currElement, i);
-                if (currElement != null && !firstElementFound) {
-                    firstElementFound = true;
-                }
-
-                if (currElement != null && !currElement.isTextBlock() && currElement instanceof BlockElement) {
-                    newBlockAvailable = false;
-                } else {
-                    newBlockAvailable = true;
-                }
-
+            Element newElement = scanLine(currElement, i);
+            if (newElement != null) {
+                currElement = newElement;
             } else {
-                // start new TextBLock
-                if (newBlockAvailable) {
+                if (currElement instanceof Parent && ((Parent) currElement).getChildElements().size() == 0) {
                     BlockElement textBlockElement = new BlockElement(null, null, i);
-                    textBlockElement.setParent(currElement);
+                    setParentChild(currElement, textBlockElement);
+                    currElement = textBlockElement;
+                    currElement.addText(text[i]);
 
-                    if (currElement != null) {
-                        Parent currentElement = (Parent) currElement;
-                        currentElement.addChild(textBlockElement);
-                        currElement = textBlockElement;
-                    }
-                    newBlockAvailable = false;
+                } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
+                    currElement.addText(text[i]);
+                    BlockElement textBlockElement = new BlockElement(null, null, i + 1);
+                    Parent parent = currElement.getParentElement();
+                    setParentChild(parent, textBlockElement);
+                    currElement = textBlockElement;
+
+                } else if (currElement instanceof Environment) {
+                    BlockElement textBlockElement = new BlockElement(null, null, i);
+                    Parent parent = currElement.getParentElement();
+                    setParentChild(parent, textBlockElement);
+                    currElement = textBlockElement;
+                    currElement.addText(text[i]);
+
+                } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) {
+                    // label
+                    BlockElement textBlockElement = new BlockElement(null, null, i);
+                    Parent parent = currElement.getParentElement();
+                    setParentChild(parent, textBlockElement);
+                    currElement = textBlockElement;
+                    currElement.addText(text[i]);
+
+                }  else {
+                    currElement.addText(text[i]);
                 }
             }
-        }
-
-        // todo Ending on Textblock still check for instance
-        if (currElement != null) {
-            // End Last Open
-            currElement.assignTextToTextBlock(text, text.length);
         }
         return root;
     }
@@ -86,52 +88,37 @@ public class Scanner {
      * @return the New Created Text Element with parent and child hierachie
      */
     private Element scanLine(Element lastElement, final int index) {
-        if (lastElement != null && lastElement.getEndPart() != null && text[index].contains(lastElement.getEndPart())) {
-            // End Environment
-            lastElement.assignTextToTextBlock(text, index);
+        String currentLine = text[index];
+
+        // End Environment
+        if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
+                && currentLine.contains(lastElement.getParentElement().getEndPart())) {
+
             return lastElement.getParentElement();
-
         } else {
-            // End TextBlock
-            if (lastElement != null && lastElement.isTextBlock()) {
-                lastElement = lastElement.assignTextToTextBlock(text, index);
-            }
-            Element newElement = ElementConfig.createElement(this.text[index], index);
-            if (newElement != null) {
-                newElement.setOptions(this.text[index]);
+            Element newElement = ElementConfig.createElement(currentLine, index);
 
+            if (newElement != null) {
+                newElement.setOptions(currentLine);
+                newElement.setContent(currentLine);
                 if (lastElement == null) {
                     root.addChild(newElement);
                     if (newElement instanceof Input) {
                         Input inputRoot = (Input) root;
                         newElement.setParent(inputRoot);
                     }
-
                 } else if (newElement.getLevel() > lastElement.getLevel()) {
-                    lowerLevel(lastElement, newElement);
-
+                    setParentChild(lastElement, newElement);
                 } else if (newElement.getLevel() == lastElement.getLevel()) {
                     sameLevel(lastElement, newElement);
-
                 } else {
                     higherLevel(lastElement, newElement);
                 }
                 return newElement;
             } else {
-                return lastElement;
+                return null;
             }
         }
-    }
-
-    /**
-     * add the new Element as Child of the lastElement
-     * start the Generation of the Elements in between
-     *
-     * @param lastElement lastElement created
-     * @param newElement currentElement created
-     */
-    private void lowerLevel(Element lastElement, Element newElement) {
-        setParentChild(lastElement, newElement);
     }
 
     /**
