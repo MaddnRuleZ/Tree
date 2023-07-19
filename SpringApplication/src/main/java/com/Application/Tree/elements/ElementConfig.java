@@ -60,12 +60,28 @@ public enum ElementConfig {
     },
 
 
-    ALGORITHM("\\begin{algorithm}", "\\end{algorithm}", 9) {
+    ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", 9) {
         @Override
         Element getElement(int index, String currentLine) {
             return new Environment(getStartPart(), getEndPart(), index, getLevel());
         }
     },
+
+    LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", 9) {
+        @Override
+        Element getElement(int index, String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+        }
+    },
+
+    VERBATIM("\\begin{verbatim}", "\\end{verbatim}", 9) {
+        @Override
+        Element getElement(int index, String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+        }
+    },
+
+
 
     FIGURE("\\begin{figure}", "\\end{figure}", 9) {
         @Override

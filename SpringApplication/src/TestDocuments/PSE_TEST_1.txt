@@ -22,7 +22,6 @@
         X5
         X
         X
-        X
     \end{algorithm}
     X6
     X
