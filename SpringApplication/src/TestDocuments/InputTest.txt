@@ -1,23 +1,13 @@
-dfgs
-ygfd
-Blindspot Test, start of Doc
-
 \section
-    exaText
-    \newline
-
-    exaTst2
-\section
-    exaText
-    \newline
-
-    exaTst2
+    X420_1
+    X
+    X
     \subsection
-        exaText
-        \newline
-        exaTst2
-
-Blindspot Test, end of Doc
-//
-
-dfa
+        X420_2
+        X
+        X
+        \begin{figure}
+            X
+            X
+            X
+        \end{figure}

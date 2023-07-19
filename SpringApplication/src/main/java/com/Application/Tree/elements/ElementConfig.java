@@ -10,7 +10,6 @@ import com.Application.Tree.interfaces.Roots;
  *
  */
 public enum ElementConfig {
-
     PART("\\part", null, 1) {
         @Override
         Element getElement(int index, String currentLine) {
@@ -103,12 +102,12 @@ public enum ElementConfig {
         }
     },
 
-    INPUT("\\input", null, 11) {
+    INPUT("\\input", null, 0) {
         @Override
         Element getElement(int index, String currentLine) {
             String path = Input.extractPathRegex(currentLine);
             if (path == null) {
-                // todo Err msg
+                System.out.println("No Valid Path given");
                 return null;
             }
 
@@ -118,12 +117,14 @@ public enum ElementConfig {
            if (root instanceof Input) {
                return (Element) root;
            } else {
-               System.out.println("Illegal Program State on Creation Of Element");
+               System.out.println("Illegal Program State on Creation of Element");
                return null;
            }
         }
     };
 
+
+    public final static int MAX_LEVEL = 100;
     private final String startPart;
     private final String endPart;
     private final int level;

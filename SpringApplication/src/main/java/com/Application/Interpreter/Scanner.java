@@ -81,7 +81,6 @@ public class Scanner {
     }
 
     /**
-     * End the
      *
      * @param lastElement last Element that was created
      * @param index current index of the text
@@ -89,7 +88,6 @@ public class Scanner {
      */
     private Element scanLine(Element lastElement, final int index) {
         String currentLine = text[index];
-
         // End Environment
         if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart())) {

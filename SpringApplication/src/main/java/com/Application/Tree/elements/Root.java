@@ -20,7 +20,7 @@ public class Root implements JsonParser, Exportable, Roots {
 
     private List<String> startHeaderText;
 
-    private static int MIN_LEVEL = 0;
+    public static int MIN_LEVEL = ElementConfig.MAX_LEVEL;
 
     private Root() {
         // Private constructor to prevent instantiation from outside the class

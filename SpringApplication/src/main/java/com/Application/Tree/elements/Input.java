@@ -8,13 +8,12 @@ import java.util.regex.Pattern;
 
 public class Input extends Parent implements Roots {
     private static final String startPart = "\\input";
-    private static final int LEVEL = 0;
 
     /**
      *
      */
     public Input() {
-        super(startPart, null, 0, LEVEL);
+        super(startPart, null, 0, Root.MIN_LEVEL);
     }
 
     /**
