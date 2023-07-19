@@ -9,11 +9,13 @@
     \begin{figure}
         X1_2
         X
+        X
         \newline
+        X1_3
         X
         X
-        \includegraphics[insertName]{insertName}
         \caption
+        \includegraphics[insertName]{insertName}
         \label{labelName}
     \end{figure}
     \begin{haw haw}[content_test]
@@ -64,7 +66,6 @@
                             X12_1
                             X
                             X
-                            \caption
                             X12_2
                             X
                             X
@@ -111,4 +112,3 @@
                 \caption
                 \label{labelName}
             \end{figure}
-

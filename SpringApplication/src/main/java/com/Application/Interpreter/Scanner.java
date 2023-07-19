@@ -48,6 +48,14 @@ public class Scanner {
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     setParentChild(currElement, textBlockElement);
                     currElement = textBlockElement;
+                    currElement.addText(text[i]);
+
+                } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
+                    currElement.addText(text[i]);
+                    BlockElement textBlockElement = new BlockElement(null, null, i + 1);
+                    Parent parent = currElement.getParentElement();
+                    setParentChild(parent, textBlockElement);
+                    currElement = textBlockElement;
 
                 } else if (currElement instanceof Environment) {
                     BlockElement textBlockElement = new BlockElement(null, null, i);
@@ -64,14 +72,7 @@ public class Scanner {
                     currElement = textBlockElement;
                     currElement.addText(text[i]);
 
-                } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
-                    currElement.addText(text[i]);
-                    BlockElement textBlockElement = new BlockElement(null, null, i + 1);
-                    Parent parent = currElement.getParentElement();
-                    setParentChild(parent, textBlockElement);
-                    currElement = textBlockElement;
-
-                } else {
+                }  else {
                     currElement.addText(text[i]);
                 }
             }
@@ -97,10 +98,15 @@ public class Scanner {
             return lastElement.getParentElement();
 
         } else {
+
+            /*
             // End TextBlock
             if (lastElement != null && lastElement.isTextBlock()) {
                 lastElement = lastElement.assignTextToTextBlock(text, index - 1);
+                System.out.println("Calle the func");
             }
+             */
+
             Element newElement = ElementConfig.createElement(currentLine, index);
 
             if (newElement != null) {

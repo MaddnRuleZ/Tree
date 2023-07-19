@@ -85,9 +85,6 @@ public abstract class Element implements JsonParser, Exportable {
     public void setChooseManualSummary(boolean chooseManualSummary) {
         this.chooseManualSummary = chooseManualSummary;
     }
-    public boolean isTextBlock() {
-        return this.startPart == null;
-    }
 
     public void setOptions(String optionsString) {
         Pattern pattern = Pattern.compile("\\{([^}]*)\\}");

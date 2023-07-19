@@ -16,8 +16,10 @@ public class BlockElement extends Child {
 
             if (line.contains("\\caption")) {
                 figure.addCaption(line);
-            } else if(line.contains("\\includegraphics")) {
+            } else if (line.contains("\\includegraphics")) {
                 figure.setGraphics(line);
+            } else {
+                super.addText(line);
             }
         } else {
             super.addText(line);
