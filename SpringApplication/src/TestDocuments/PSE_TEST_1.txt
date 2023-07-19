@@ -2,8 +2,16 @@
     X1
     X
     X
+    \newline
+    X1_1
+    X
+    X
     \begin{haw haw}[content_test]
         X3
+        X
+        X
+        \newline
+        X3_3
         X
         X
     \end{haw haw}

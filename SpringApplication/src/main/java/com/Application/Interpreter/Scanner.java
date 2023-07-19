@@ -57,13 +57,20 @@ public class Scanner {
                     currElement.addText(text[i]);
 
 
-                } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) { //&& NewLine.checkLineForNewLineCharacters(text[i])
+                } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) { //
                     // label, caption
                     BlockElement textBlockElement = new BlockElement(null, null, i + 1);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
                     currElement = textBlockElement;
                     currElement.addText(text[i]);
+                } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
+                    currElement.addText(text[i]);
+                    BlockElement textBlockElement = new BlockElement(null, null, i + 1);
+                    Parent parent = currElement.getParentElement();
+                    setParentChild(parent, textBlockElement);
+                    currElement = textBlockElement;
+
                 } else {
                     currElement.addText(text[i]);
                 }
@@ -83,7 +90,9 @@ public class Scanner {
         String currentLine = text[index];
 
         // End Environment
-        if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null && currentLine.contains(lastElement.getParentElement().getEndPart())) {
+        if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
+                && currentLine.contains(lastElement.getParentElement().getEndPart())) {
+
             lastElement.assignTextToTextBlock(text, index - 1);
             return lastElement.getParentElement();
 
