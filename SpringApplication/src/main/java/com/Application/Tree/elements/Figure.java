@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Figure extends Environment {
-
     private final List<String> captions;
     private String graphic;
 

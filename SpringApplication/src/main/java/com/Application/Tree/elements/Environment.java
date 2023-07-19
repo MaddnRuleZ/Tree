@@ -17,9 +17,6 @@ public class Environment extends Parent {
         super(startPart, endPart, startIndex, level);
     }
 
-
-
-
     @Override
     public Element searchForID(UUID id) {
         if (this.getId().equals(id)) {
@@ -34,7 +31,4 @@ public class Environment extends Parent {
         }
         return null;
     }
-
-
-
 }

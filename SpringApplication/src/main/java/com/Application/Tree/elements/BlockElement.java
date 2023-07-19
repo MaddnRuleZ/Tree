@@ -19,9 +19,9 @@ public class BlockElement extends Child {
             } else if(line.contains("\\includegraphics")) {
                 figure.setGraphics(line);
             }
+        } else {
+            super.addText(line);
         }
-        super.addText(line);
-
     }
 
     @Override

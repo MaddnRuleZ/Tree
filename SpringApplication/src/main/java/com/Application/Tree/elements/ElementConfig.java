@@ -7,6 +7,7 @@ import com.Application.Tree.interfaces.Roots;
 /**
  * Class Containing the Configuration of the Structural Elements that wil be detected by the Scan- Algorithm
  *
+ *
  */
 public enum ElementConfig {
 

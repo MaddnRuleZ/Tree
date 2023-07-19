@@ -77,12 +77,14 @@
         X13_1
         X
         X
-        \caption
+        \newline
+        X13_2
+        X
+        X
     \chapter{newChapter2}
             X14
             X
             X
-            \caption
             \begin{algorithm}
                     X15
                     X

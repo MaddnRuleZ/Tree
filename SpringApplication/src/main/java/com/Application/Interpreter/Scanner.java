@@ -44,7 +44,7 @@ public class Scanner {
             if (newElement != null) {
                 currElement = newElement;
             } else {
-                if (currElement instanceof Parent && ((Parent) currElement).getChildElements().size() == 0) { //
+                if (currElement instanceof Parent && ((Parent) currElement).getChildElements().size() == 0) {
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     setParentChild(currElement, textBlockElement);
                     currElement = textBlockElement;
@@ -56,10 +56,9 @@ public class Scanner {
                     currElement = textBlockElement;
                     currElement.addText(text[i]);
 
-
-                } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) { //
-                    // label, caption
-                    BlockElement textBlockElement = new BlockElement(null, null, i + 1);
+                } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) {
+                    // label
+                    BlockElement textBlockElement = new BlockElement(null, null, i);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
                     currElement = textBlockElement;
