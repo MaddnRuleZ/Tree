@@ -46,15 +46,7 @@ public abstract class Element implements JsonParser, Exportable {
         Root.updateLevelCap(level);
     }
 
-
     public abstract List<String> toText();
-
-    public Element assignTextToTextBlock(String[] text, int endIndex) {
-        // TODO
-        this.text = TextFileReader.extractStrings(text, this.startIndex, endIndex);
-        return parentElement;
-    }
-
     public void setParent(Element parentElement) {
         this.parentElement = parentElement;
     }

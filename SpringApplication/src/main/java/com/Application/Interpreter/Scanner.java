@@ -94,7 +94,6 @@ public class Scanner {
         if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart())) {
 
-            lastElement.assignTextToTextBlock(text, index - 1);
             return lastElement.getParentElement();
         } else {
             Element newElement = ElementConfig.createElement(currentLine, index);
