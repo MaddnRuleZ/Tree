@@ -139,9 +139,7 @@ public abstract class Element implements JsonParser, Exportable {
     public abstract int levelOfDeepestSectioningChild();
 
     public void addText(String line) {
-        if (comment.extractInfo(line) || newLine.extractInfo(line)) {
-
-        } else {
+        if (!summary.extractContent(line) && !comment.extractContent(line) && !newLine.extractContent(line) ) { //&& !summary.extractContent(line)
             this.text.add(line);
         }
     }

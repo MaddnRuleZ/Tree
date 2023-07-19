@@ -9,11 +9,7 @@ import java.util.List;
  *
  */
 public abstract class AdditionalInformationContainer {
-    protected List<String> content;
     public AdditionalInformationContainer() {
-        content = new ArrayList<>();
     }
-    public List<String> getContent() {
-        return this.content;
-    }
+    public abstract boolean extractContent(String currentLine);
 }

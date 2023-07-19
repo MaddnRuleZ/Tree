@@ -1,12 +1,20 @@
 \part{options_text}[content_test]
     X1
-    X
     % comment1
+    X1_11
+    %comment2
+    X1_12
+    %\start{summary}
+    X summary content
+    X2_22
+    X summary content
+    %\finish{summary}
+    X1_23
     X
     X
     \newline
     X1_1
-    X
+    % comment2
     X
     \begin{figure}
         X1_2
