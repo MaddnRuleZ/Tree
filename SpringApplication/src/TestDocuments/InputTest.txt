@@ -7,7 +7,7 @@
         X
         X
         \begin{figure}
-            X
+            X420_3
             X
             X
         \end{figure}

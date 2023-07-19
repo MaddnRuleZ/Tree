@@ -45,14 +45,22 @@ public class Scanner {
                 currElement = newElement;
 
             } else {
+                String s = text[i];
+                //BlockElement block = new BlockElement(null, null);
+                //block.nameME();
+                // todo set currElement to return Value of this!
+                currElement = currElement.addText(s);
 
+                /*
                 if (currElement instanceof Parent && ((Parent) currElement).getChildElements().size() == 0) {
+                    // in Parent, DONE
                     BlockElement textBlockElement = new BlockElement(null, null);
                     setParentChild(currElement, textBlockElement);
                     currElement = textBlockElement;
                     currElement.addText(text[i]);
 
                 } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
+                    // in Blockelement
                     currElement.addText(text[i]);
                     BlockElement textBlockElement = new BlockElement(null, null);
                     Parent parent = currElement.getParentElement();
@@ -60,6 +68,7 @@ public class Scanner {
                     currElement = textBlockElement;
 
                 } else if (currElement instanceof Environment) {
+                    // DONE
                     BlockElement textBlockElement = new BlockElement(null, null);
                     Parent parent = currElement.getParentElement();
                     setParentChild(parent, textBlockElement);
@@ -67,6 +76,7 @@ public class Scanner {
                     currElement.addText(text[i]);
 
                 } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) {
+                    // Child
                     // label
                     BlockElement textBlockElement = new BlockElement(null, null);
                     Parent parent = currElement.getParentElement();
@@ -77,6 +87,8 @@ public class Scanner {
                 }  else {
                     currElement.addText(text[i]);
                 }
+
+                 */
             }
         }
         return root;

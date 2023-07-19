@@ -1,24 +1,16 @@
 \part{inputTesting}
     \section
         X0_1
-        X
+        X0_1_1
         X
 \input{SpringApplication/src/TestDocuments/InputTest.txt}
 \part{options_text}[content_test]
     X1
-    % comment1
-    % comment2
-    X
-    X
-    %\start{summary}
-    X2_22
-    X
-    X
-    %\finish{summary}
     X
     X
     \par
     X1_1
+    X
     X
     \begin{figure}
         X1_2

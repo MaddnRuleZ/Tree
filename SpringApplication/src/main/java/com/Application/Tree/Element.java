@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public abstract class Element implements JsonParser, Exportable {
     private final UUID id;
     private final int level;
-    private Element parentElement;
+    protected Element parentElement;
 
     protected List<String> text;
     protected final Summary summary;
@@ -28,7 +28,6 @@ public abstract class Element implements JsonParser, Exportable {
     private boolean chooseManualSummary;
     protected String content;
     protected String options;
-    //protected final int startIndex;
     private final String startPart;
     private final String endPart;
 
@@ -36,7 +35,6 @@ public abstract class Element implements JsonParser, Exportable {
         this.id = UUID.randomUUID();
         this.startPart = startPart;
         this.endPart = endPart;
-        //this.startIndex = startIndex;
         this.level = level;
         this.text = new ArrayList<>();
 
@@ -45,6 +43,12 @@ public abstract class Element implements JsonParser, Exportable {
         newLine = new NewLine();
         Root.updateLevelCap(level);
     }
+
+    /*
+    public void addText(String text) {
+        this.text.add(text);
+    }
+    */
 
     public abstract List<String> toText();
     public void setParent(Element parentElement) {
@@ -140,9 +144,12 @@ public abstract class Element implements JsonParser, Exportable {
      *
      * @param line line to Scan for Summary Comment or NewLine
      */
-    public void addText(String line) {
-        if (!summary.extractContent(line) && !comment.extractContent(line) && !newLine.extractContent(line) ) { //&& !summary.extractContent(line)
+    public Element addText(String line) {
+        // todo muss trotzdem hier durch?
+        if (!summary.extractContent(line) && !comment.extractContent(line) && !newLine.extractContent(line) ) {
             this.text.add(line);
         }
+        System.out.println("returned null");
+        return null; //?
     }
 }

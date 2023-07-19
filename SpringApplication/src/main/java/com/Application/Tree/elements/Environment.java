@@ -10,11 +10,25 @@ public class Environment extends Parent {
      *
      * @param startPart
      * @param endPart
-     * @param startIndex
      * @param level
      */
     public Environment(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
+    }
+
+    @Override
+    public Element addText(String line) {
+        BlockElement textBlockElement = new BlockElement(null, null);
+        textBlockElement.setParent(this);
+        this.addChild(textBlockElement);
+        textBlockElement.addText(line);
+        return textBlockElement;
+        /*
+        this.parentElement = textBlockElement;
+        Parent parent = (Parent) this.parentElement;
+        parent.addChild(textBlockElement);
+        textBlockElement.setParent(this);
+        */
     }
 
     @Override

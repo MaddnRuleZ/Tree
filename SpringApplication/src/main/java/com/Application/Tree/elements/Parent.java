@@ -13,8 +13,6 @@ public abstract class Parent extends Element {
 
     /**
      *
-     *
-     *
      * @param startPart
      * @param endPart
      * @param level
@@ -22,6 +20,22 @@ public abstract class Parent extends Element {
     public Parent(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
         childElements = new ArrayList<>();
+    }
+
+    @Override
+    public Element addText(String line) {
+        if (childElements.size() == 0) {
+            BlockElement textBlockElement = new BlockElement(null, null);
+            this.addChild(textBlockElement);
+            textBlockElement.setParent(this);
+            textBlockElement.addText(line);
+            return textBlockElement;
+
+        } else {
+            text.add(line);
+            return this;
+            //return super.addText(line);
+        }
     }
 
     public void addChild(Element element) {
