@@ -43,7 +43,9 @@ public class Scanner {
             Element newElement = scanLine(currElement, i);
             if (newElement != null) {
                 currElement = newElement;
+
             } else {
+
                 if (currElement instanceof Parent && ((Parent) currElement).getChildElements().size() == 0) {
                     BlockElement textBlockElement = new BlockElement(null, null, i);
                     setParentChild(currElement, textBlockElement);

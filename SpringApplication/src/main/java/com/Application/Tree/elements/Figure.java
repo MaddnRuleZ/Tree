@@ -11,7 +11,6 @@ public class Figure extends Environment {
     public static final String GRAPHICS_IDENT = "\\includegraphics";
     private String graphic;
 
-
     /**
      * Create a new Environment
      *

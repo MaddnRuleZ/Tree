@@ -62,15 +62,8 @@ public class Root implements JsonParser, Exportable, Roots {
     public static boolean isInit() {
         return instance == null;
     }
-
-
     public void addChild(Element element) {
         this.childElements.add(element);
-    }
-
-    public Root createRoot() {
-        //TODO
-        return null;
     }
 
     /**
@@ -112,4 +105,12 @@ public class Root implements JsonParser, Exportable, Roots {
         return -1;
     }
 
+    /**
+     * add the startHeader e.g the text before \startDocument to the Root
+     *
+     * @param startHeaderText
+     */
+    public void addStartHeader(List<String> startHeaderText) {
+        this.startHeaderText = startHeaderText;
+    }
 }

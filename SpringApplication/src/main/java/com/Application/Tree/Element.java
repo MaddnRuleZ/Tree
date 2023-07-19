@@ -28,7 +28,7 @@ public abstract class Element implements JsonParser, Exportable {
     private boolean chooseManualSummary;
     protected String content;
     protected String options;
-    protected final int startIndex;
+    //protected final int startIndex;
     private final String startPart;
     private final String endPart;
 
@@ -36,7 +36,7 @@ public abstract class Element implements JsonParser, Exportable {
         this.id = UUID.randomUUID();
         this.startPart = startPart;
         this.endPart = endPart;
-        this.startIndex = startIndex;
+        //this.startIndex = startIndex;
         this.level = level;
         this.text = new ArrayList<>();
 

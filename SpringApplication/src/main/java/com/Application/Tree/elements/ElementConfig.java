@@ -123,7 +123,6 @@ public enum ElementConfig {
         }
     };
 
-
     public final static int MAX_LEVEL = 100;
     private final String startPart;
     private final String endPart;
