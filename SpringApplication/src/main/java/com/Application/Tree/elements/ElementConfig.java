@@ -81,12 +81,10 @@ public enum ElementConfig {
         }
     },
 
-
-
     FIGURE("\\begin{figure}", "\\end{figure}", 9) {
         @Override
         Element getElement(int index, String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), index, getLevel());
+            return new Figure(getStartPart(), getEndPart(), index, getLevel());
         }
     },
 
@@ -97,18 +95,10 @@ public enum ElementConfig {
         }
     },
 
-
     LABEL("\\label", null, 10) {
         @Override
         Element getElement(int index, String currentLine) {
             return new Child(getStartPart(),null , index, getLevel());
-        }
-    },
-
-    CAPTION("\\caption", null, 10) {
-        @Override
-        Element getElement(int index, String currentLine) {
-            return new Child(getStartPart(), null, index, getLevel());
         }
     },
 

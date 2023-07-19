@@ -6,6 +6,16 @@
     X1_1
     X
     X
+    \begin{figure}
+        X1_2
+        X
+        \newline
+        X
+        X
+        \includegraphics[insertName]{insertName}
+        \caption
+        \label{labelName}
+    \end{figure}
     \begin{haw haw}[content_test]
         X3
         X

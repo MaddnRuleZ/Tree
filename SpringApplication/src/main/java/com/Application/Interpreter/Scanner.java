@@ -64,6 +64,7 @@ public class Scanner {
                     setParentChild(parent, textBlockElement);
                     currElement = textBlockElement;
                     currElement.addText(text[i]);
+
                 } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
                     currElement.addText(text[i]);
                     BlockElement textBlockElement = new BlockElement(null, null, i + 1);

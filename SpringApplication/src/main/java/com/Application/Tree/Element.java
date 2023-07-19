@@ -100,7 +100,6 @@ public abstract class Element implements JsonParser, Exportable {
         }
     }
 
-
     public void setContent(String content) {
         Pattern pattern = Pattern.compile("\\[([^]]*)\\]");
         Matcher matcher = pattern.matcher(content);
