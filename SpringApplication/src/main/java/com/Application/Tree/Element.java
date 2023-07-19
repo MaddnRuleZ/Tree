@@ -138,6 +138,12 @@ public abstract class Element implements JsonParser, Exportable {
      */
     public abstract int levelOfDeepestSectioningChild();
 
+    /**
+     * Check if the current line is Summary Comment or NewLine
+     * if so add the text to the Summary Comment or NewLine, else add the text to the BlockElement
+     *
+     * @param line line to Scan for Summary Comment or NewLine
+     */
     public void addText(String line) {
         if (!summary.extractContent(line) && !comment.extractContent(line) && !newLine.extractContent(line) ) { //&& !summary.extractContent(line)
             this.text.add(line);

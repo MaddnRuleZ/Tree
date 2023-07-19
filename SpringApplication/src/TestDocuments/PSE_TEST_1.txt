@@ -76,6 +76,7 @@
                             X12_1
                             X
                             X
+                            \par
                             X12_2
                             X
                             X
@@ -93,27 +94,27 @@
         X
         X
     \chapter{newChapter2}
-            X14
-            X
-            X
+                X14
+                X
+                X
             \begin{algorithm}
                     X15
                     X
                     \label
                     X
             \end{algorithm}
-            X16
-            X
-            X
+                X16
+                X
+                X
             \begin{figure}
                 \centering
                 \includegraphics[insertName]{insertName}
                 \caption
                 \label{labelName}
             \end{figure}
-            X17
-            X
-            X
+                X17
+                X
+                X
             \begin{figure}[htp]
                 \centering
                 X
