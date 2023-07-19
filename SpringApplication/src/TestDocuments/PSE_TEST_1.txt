@@ -74,3 +74,8 @@
             X16 // ERR HERE
             X
             X
+            \begin{figure}
+            X
+            X//check sub here
+            X
+            \end{figure}
