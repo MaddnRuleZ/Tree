@@ -24,11 +24,11 @@ public class MoveElementTreeCommandFactory implements CommandFactory {
         try {
             command = mapper.convertValue(attributes, MoveElementTreeCommand.class);
         } catch (IllegalArgumentException e) {
-            throw new NumParamsException("MoveElementTree");
+            throw new NumParamsException("MoveElementTree - mapping failed");
         }
 
         if (command.getElement() == null || command.getNewParent() == null || command.getPreviousElement() == null ){
-            throw new NumParamsException("MoveElementTree");
+            throw new NumParamsException("MoveElementTree - parameter not set");
         }
 
         command.setRoot(this.root);

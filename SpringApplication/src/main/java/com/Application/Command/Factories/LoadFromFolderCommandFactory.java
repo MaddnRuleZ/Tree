@@ -20,15 +20,13 @@ public class LoadFromFolderCommandFactory implements CommandFactory {
     public Command createCommand(JsonNode attributes) throws NumParamsException {
         ObjectMapper mapper = new ObjectMapper();
         LoadFromFolderCommand command;
-        try {
+        //try {
            command  = mapper.convertValue(attributes, LoadFromFolderCommand.class);
-        } catch (IllegalArgumentException e) {
-            throw new NumParamsException("LoadFromFolder");
-        }
-
-
+        /*} catch (IllegalArgumentException e) {
+            throw new NumParamsException("LoadFromFolder - mapping failed");
+        }*/
         if (command.getPath() == null){
-            throw new NumParamsException("LoadFromFolder");
+            throw new NumParamsException("LoadFromFolder - parameter not set");
         }
 
         command.setUser(this.user);

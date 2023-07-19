@@ -113,7 +113,11 @@ public abstract class Element implements JsonParser, Exportable {
      * @return level of the calling Element
      */
     public int calculateLevelFromElement() {
-        return this.getParentElement().calculateLevelFromElement() + 1;
+        Parent parent = this.getParentElement();
+        if (parent == null) {
+            return 0;
+        }
+        return parent.calculateLevelFromElement();
     }
 
     /**
