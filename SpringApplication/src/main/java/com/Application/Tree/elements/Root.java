@@ -148,4 +148,9 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         }
         text.append("\\end{document}");
     }
+
+    public List<Element> getChildren() {
+        return this.childElements;
+    }
+
 }

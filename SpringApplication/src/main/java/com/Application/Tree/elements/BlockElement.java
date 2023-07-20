@@ -12,6 +12,7 @@ public class BlockElement extends Child {
 
     /**
      *
+     *
      * @param startPart
      * @param endPart
      */
@@ -26,34 +27,20 @@ public class BlockElement extends Child {
      * @param line line to Scan for Summary Comment or NewLine
      */
     @Override
-    public Element addText(String line) {
+    public Element addTextBlockToElem(String line) {
         if (NewLine.checkLineForNewLineCharacters(line)) {
-            helperFunc(line);
+            newLine.extractContent(line);
+
             BlockElement textBlockElement = new BlockElement(null, null);
             Parent parent = (Parent) this.parentElement;
             textBlockElement.setParent(parent);
-            parent.addChild(textBlockElement); // here
+            parent.addChild(textBlockElement);
+
             return textBlockElement;
         } else {
-            return helperFunc(line);
-        }
-    }
-
-    private Element helperFunc(String line) {
-        if (this.getParentElement() instanceof Figure) {
-            Figure figure = (Figure) getParentElement();
-
-            if (line.contains(Figure.CAPTION_IDENT)) {
-                figure.addCaption(line);
-            } else if (line.contains(Figure.GRAPHICS_IDENT)) {
-                figure.setGraphics(line);
-            } else {
-                text.add(line);
+            if (!summary.extractContent(line) && !comment.extractContent(line)) {
+                this.text.add(line);
             }
-            return this;
-
-        } else {
-            text.add(line);
             return this;
         }
     }

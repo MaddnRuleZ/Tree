@@ -19,20 +19,55 @@ public class Environment extends Parent {
         super(startPart, endPart, level);
     }
 
+    /**
+     *
+     *
+     * @param line line to Scan for Summary Comment or NewLine
+     * @return
+     */
     @Override
-    public Element addText(String line) {
-        BlockElement textBlockElement = new BlockElement(null, null);
-        textBlockElement.setParent(this);
-        this.addChild(textBlockElement);
-        textBlockElement.addText(line);
-        return textBlockElement;
-        /*
-        this.parentElement = textBlockElement;
-        Parent parent = (Parent) this.parentElement;
-        parent.addChild(textBlockElement);
-        textBlockElement.setParent(this);
-        */
+    public Element addTextBlockToElem(String line) {
+        if (this.childElements.size() == 0) {
+            return generateTextBlockAsChild(line);
+
+            /*
+            BlockElement textBlockElement = new BlockElement(null, null);
+            textBlockElement.setParent(this);
+            this.addChild(textBlockElement);
+            textBlockElement.addTextBlockToElem(line);
+            return textBlockElement;
+             */
+
+        } else {
+            return generateTextToParent(line);
+
+            /*
+            BlockElement textBlockElement = new BlockElement(null, null);
+            Parent parent = (Parent) parentElement;
+            textBlockElement.setParent(parent);
+            parent.addChild(textBlockElement);
+            textBlockElement.addTextBlockToElem(line);
+            return textBlockElement;
+             */
+        }
     }
+
+    private void helperFunc(String line) {
+        if (this.getParentElement() instanceof Figure) {
+            Figure figure = (Figure) getParentElement();
+
+            if (line.contains(Figure.CAPTION_IDENT)) {
+                figure.addCaption(line);
+            } else if (line.contains(Figure.GRAPHICS_IDENT)) {
+                figure.setGraphics(line);
+            } else {
+                text.add(line);
+            }
+        } else {
+            text.add(line);
+        }
+    }
+
 
     @Override
     public Element searchForID(UUID id) {

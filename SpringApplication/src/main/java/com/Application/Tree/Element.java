@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public abstract class Element implements JsonParser, LaTeXTranslator {
     private final UUID id;
     private final int level;
-    protected Element parentElement;
+    protected Parent parentElement;
 
     protected List<String> text;
     protected final Summary summary;
@@ -49,17 +49,15 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         Root.updateLevelCap(level);
     }
 
-    /*
-    public void addText(String text) {
-        this.text.add(text);
-    }
-    */
+    public abstract Element addTextBlockToElem(String line);
 
     public void setParent(Element parentElement) {
+
+    public void setParent(Parent parentElement) {
         this.parentElement = parentElement;
     }
     public Parent getParentElement() {
-        return (Parent) parentElement;
+        return parentElement;
     }
     public String getEndPart() {
         return endPart;
@@ -150,20 +148,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
      */
     public abstract int levelOfDeepestSectioningChild();
 
-    /**
-     * Check if the current line is Summary Comment or NewLine
-     * if so add the text to the Summary Comment or NewLine, else add the text to the BlockElement
-     *
-     * @param line line to Scan for Summary Comment or NewLine
-     */
-    public Element addText(String line) {
-        // todo muss trotzdem hier durch?
-        if (!summary.extractContent(line) && !comment.extractContent(line) && !newLine.extractContent(line) ) {
-            this.text.add(line);
-        }
-        System.out.println("returned null");
-        return null; //?
-    }
+
 
     //TODO summary
     @Override

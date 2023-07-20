@@ -7,9 +7,6 @@ import com.Application.Tree.Element;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  *
  *
@@ -25,24 +22,6 @@ public class Sectioning extends Parent {
     public Sectioning(String startPart, int level) {
         super(startPart, null, level);
     }
-
-
-    /**
-     * Content in sectioning is curly Brackets
-     *
-     * @param optionsString
-     */
-    public void setContent(String optionsString) {
-        Pattern pattern = Pattern.compile("\\{([^}]*)\\}");
-        Matcher matcher = pattern.matcher(optionsString);
-
-        if (matcher.find()) {
-            this.options = matcher.group(1);
-        } else {
-            this.options = null;
-        }
-    }
-
 
     @Override
     public Element searchForID(UUID id) {

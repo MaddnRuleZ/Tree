@@ -1,7 +1,6 @@
 package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
-import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.elements.*;
 import com.Application.Tree.interfaces.Roots;
 
@@ -45,50 +44,9 @@ public class Scanner {
                 currElement = newElement;
 
             } else {
+                // todo make oneliner after debugging
                 String s = text[i];
-                //BlockElement block = new BlockElement(null, null);
-                //block.nameME();
-                // todo set currElement to return Value of this!
-                currElement = currElement.addText(s);
-
-                /*
-                if (currElement instanceof Parent && ((Parent) currElement).getChildElements().size() == 0) {
-                    // in Parent, DONE
-                    BlockElement textBlockElement = new BlockElement(null, null);
-                    setParentChild(currElement, textBlockElement);
-                    currElement = textBlockElement;
-                    currElement.addText(text[i]);
-
-                } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
-                    // in Blockelement
-                    currElement.addText(text[i]);
-                    BlockElement textBlockElement = new BlockElement(null, null);
-                    Parent parent = currElement.getParentElement();
-                    setParentChild(parent, textBlockElement);
-                    currElement = textBlockElement;
-
-                } else if (currElement instanceof Environment) {
-                    // DONE
-                    BlockElement textBlockElement = new BlockElement(null, null);
-                    Parent parent = currElement.getParentElement();
-                    setParentChild(parent, textBlockElement);
-                    currElement = textBlockElement;
-                    currElement.addText(text[i]);
-
-                } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) {
-                    // Child
-                    // label
-                    BlockElement textBlockElement = new BlockElement(null, null);
-                    Parent parent = currElement.getParentElement();
-                    setParentChild(parent, textBlockElement);
-                    currElement = textBlockElement;
-                    currElement.addText(text[i]);
-
-                }  else {
-                    currElement.addText(text[i]);
-                }
-
-                 */
+                currElement = currElement.addTextBlockToElem(s);
             }
         }
         return root;
@@ -109,7 +67,6 @@ public class Scanner {
             return lastElement.getParentElement();
         } else {
             Element newElement = ElementConfig.createElement(currentLine);
-
             if (newElement != null) {
                 newElement.setOptions(currentLine);
                 newElement.setContent(currentLine);
@@ -121,8 +78,10 @@ public class Scanner {
                     }
                 } else if (newElement.getLevel() > lastElement.getLevel()) {
                     setParentChild(lastElement, newElement);
+
                 } else if (newElement.getLevel() == lastElement.getLevel()) {
                     sameLevel(lastElement, newElement);
+
                 } else {
                     higherLevel(lastElement, newElement);
                 }
@@ -140,7 +99,7 @@ public class Scanner {
      * @param newElement currentElement created
      */
     private void sameLevel(Element lastElement, Element newElement) {
-        Element parent = lastElement.getParentElement();
+        Parent parent = lastElement.getParentElement();
 
         if (parent == null) {
             root.addChild(newElement);
@@ -164,7 +123,7 @@ public class Scanner {
         if (searchElem == null) {
             root.addChild(newElement);
         } else if (searchElem.getLevel() == newElement.getLevel()) {
-            Element parent = searchElem.getParentElement();
+            Parent parent = searchElem.getParentElement();
             setParentChild(parent, newElement);
         } else {
             setParentChild(searchElem, newElement);
@@ -180,11 +139,12 @@ public class Scanner {
      * @param child Child Element
      */
     private void setParentChild(Element parent, Element child) {
-        child.setParent(parent);
-        if (parent instanceof Parent parentInst) {
-            parentInst.addChild(child);
+        Parent parentChecked = (Parent) parent;
+        if (parentChecked != null) {
+            child.setParent(parentChecked);
+            parentChecked.addChild(child);
         } else {
-            System.out.println("### FATAL ERROR, SEE SCANNER CLASS");
+            System.out.println("Error: Element is no Parent!");
         }
     }
 }
