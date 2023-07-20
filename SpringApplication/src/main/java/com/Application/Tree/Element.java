@@ -8,6 +8,9 @@ import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -151,5 +154,34 @@ public abstract class Element implements JsonParser, Exportable {
         }
         System.out.println("returned null");
         return null; //?
+    }
+
+    //TODO comment ist doch Liste?
+    @Override
+    public ObjectNode toJsonEditor() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode node = mapper.createObjectNode();
+
+        node.put("id", this.id.toString());
+        node.put("type", this.getClass().getSimpleName());
+
+        if(this.getParentElement() == null) {
+            node.put("parent", "null");
+        } else {
+            node.put("parent", this.getParentElement().getId().toString());
+        }
+
+        node.put("content", this.content);
+        node.put("comment", "comment");
+        node.put("summary", "summary");
+        node.put("chooseManualSummary", this.chooseManualSummary);
+
+        return node;
+    }
+
+    @Override
+    public ObjectNode toJsonTree() {
+        //TODO
+        return null;
     }
 }

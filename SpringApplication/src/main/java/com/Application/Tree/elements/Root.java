@@ -4,6 +4,10 @@ import com.Application.Tree.Element;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
 import com.Application.Tree.interfaces.Roots;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 
@@ -83,11 +87,6 @@ public class Root implements JsonParser, Exportable, Roots {
     }
 
     @Override
-    public String toJson() {
-        return null;
-    }
-
-    @Override
     public List<String> toText() {
         List<String> text = new ArrayList<>();
         // todo @S add the startHeader here
@@ -112,5 +111,25 @@ public class Root implements JsonParser, Exportable, Roots {
      */
     public void addStartHeader(List<String> startHeaderText) {
         this.startHeaderText = startHeaderText;
+    }
+
+    @Override
+    public ObjectNode toJsonEditor() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode node = mapper.createObjectNode();
+
+        if (this.childElements != null && !this.childElements.isEmpty()) {
+            ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
+            for (Element child : this.childElements) {
+                childrenNode.add(child.toJsonEditor());
+            }
+            node.set("editor", childrenNode);
+        }
+        return node;
+    }
+
+    @Override
+    public ObjectNode toJsonTree() {
+        return null;
     }
 }

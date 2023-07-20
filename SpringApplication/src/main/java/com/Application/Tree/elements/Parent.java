@@ -1,6 +1,9 @@
 package com.Application.Tree.elements;
 
 import com.Application.Tree.Element;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,5 +87,24 @@ public abstract class Parent extends Element {
         }
 
         return deepestChildLevel;
+    }
+
+    @Override
+    public ObjectNode toJsonEditor() {
+        ObjectNode node = super.toJsonEditor();
+        if (this.getChildElements() != null && !this.getChildElements().isEmpty()) {
+            ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
+            for (Element child : this.getChildElements()) {
+                childrenNode.add(child.toJsonEditor());
+            }
+            node.set("children", childrenNode);
+        }
+        return node;
+    }
+
+    @Override
+    public ObjectNode toJsonTree() {
+        //TODO
+        return super.toJsonTree();
     }
 }

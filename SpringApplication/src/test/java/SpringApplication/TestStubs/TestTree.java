@@ -88,6 +88,8 @@ public class TestTree {
         child4.setParent(sectioning2);
         child5.setParent(sectioning3);
 
+        sectioning1.setParent(null);
+
 
         //add Elements to TestTree
         root.addChild(sectioning1);
@@ -107,5 +109,8 @@ public class TestTree {
 
         environmentList.add(environment1);
     }
+
+
+
 
 }
