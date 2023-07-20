@@ -27,32 +27,30 @@ public class Scanner {
     }
 
     /**
-     * todo wird noch geändert
-     * scan the given Document for Latex Structure Elements and return the root Element for this Part of the Tree
-     *
-     * Err List:
-     * first contains can be t/ false
+     * Parse the Document by scanning the line
+     * if a new Element is created or Add the text to the current last TextBlockElement
      *
      * @return root Element of Tree
      */
     public Roots parseDocument() {
-        Element currElement = null;
+        Element lastElement = null;
 
         for (int i = 0; i < text.length; i++) {
-            Element newElement = scanLine(currElement, i);
+            Element newElement = scanLine(lastElement, i);
             if (newElement != null) {
-                currElement = newElement;
+                lastElement = newElement;
 
             } else {
-                // todo make oneliner after debugging
-                String s = text[i];
-                currElement = currElement.addTextBlockToElem(s);
+                lastElement = lastElement.addTextBlockToElem(text[i]);
             }
         }
         return root;
     }
 
     /**
+     * Scan the line if there is a new Structure Element
+     *
+     *
      *
      * @param lastElement last Element that was created
      * @param index current index of the text
