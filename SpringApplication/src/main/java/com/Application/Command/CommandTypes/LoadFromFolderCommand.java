@@ -3,8 +3,8 @@ package com.Application.Command.CommandTypes;
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.FilePrinter;
 import com.Application.Printer.Printer;
-import com.Application.Tree.elements.Root;
-import com.Application.Tree.interfaces.Roots;
+import com.Application.Tree.elements.root.Root;
+import com.Application.Tree.elements.root.Roots;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 

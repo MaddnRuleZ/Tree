@@ -1,8 +1,11 @@
 package com.Application.Interpreter;
 
-import com.Application.Tree.Element;
+import com.Application.Tree.elements.Element;
 import com.Application.Tree.elements.*;
-import com.Application.Tree.interfaces.Roots;
+import com.Application.Tree.elements.parents.Parent;
+import com.Application.Tree.elements.root.Input;
+import com.Application.Tree.elements.root.Root;
+import com.Application.Tree.elements.root.Roots;
 
 /**
  * Scanner Class for Disassemble a Document into its Latex Structur Elements
@@ -27,11 +30,7 @@ public class Scanner {
     }
 
     /**
-     * todo wird noch geändert
      * scan the given Document for Latex Structure Elements and return the root Element for this Part of the Tree
-     *
-     * Err List:
-     * first contains can be t/ false
      *
      * @return root Element of Tree
      */
@@ -39,14 +38,15 @@ public class Scanner {
         Element currElement = null;
 
         for (int i = 0; i < text.length; i++) {
+            if (text[i].contains("\\startDocument")) {
+                root.
+            }
+
             Element newElement = scanLine(currElement, i);
             if (newElement != null) {
                 currElement = newElement;
-
             } else {
-                // todo make oneliner after debugging
-                String s = text[i];
-                currElement = currElement.addTextBlockToElem(s);
+                currElement = currElement.addTextBlockToElem(text[i]);
             }
         }
         return root;

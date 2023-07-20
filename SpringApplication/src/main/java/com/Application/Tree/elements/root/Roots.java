@@ -1,7 +1,7 @@
-package com.Application.Tree.interfaces;
+package com.Application.Tree.elements.root;
 
 import com.Application.Exceptions.UnknownElementException;
-import com.Application.Tree.Element;
+import com.Application.Tree.elements.Element;
 
 import java.util.List;
 import java.util.Map;

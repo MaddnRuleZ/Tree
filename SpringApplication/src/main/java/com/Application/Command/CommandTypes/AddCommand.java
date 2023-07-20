@@ -1,8 +1,10 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -40,8 +42,8 @@ public class AddCommand extends Command {
                 this.setSuccess(false);
             } else {
                 //TODO parse incoming content
-                Element newElement = null;
-                parentElement.addChildAfter(newElement, previousChild);
+                //Element newElement = new Element(this.content);
+                //parentElement.addChildAfter(newElement, previousChild);
                 this.setSuccess(true);
             }
         } catch (java.lang.ClassCastException e) {

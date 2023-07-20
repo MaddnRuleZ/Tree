@@ -1,9 +1,11 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -41,7 +43,7 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
                 this.setSuccess(false);
                 this.setFailureMessage("Element, new parent or previous element not found");
             } else {
-                moveElement(element, newParent, previousElement, root.MIN_LEVEL);
+                moveElement(element, newParent, previousElement);
                 this.setSuccess(true);
             }
         } catch (Exception e) {
@@ -61,6 +63,7 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
     public UUID getElement() {
         return element;
     }
+
     public UUID getNewParent() {
         return newParent;
     }

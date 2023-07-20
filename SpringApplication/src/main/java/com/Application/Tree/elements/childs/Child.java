@@ -1,7 +1,7 @@
-package com.Application.Tree.elements;
+package com.Application.Tree.elements.childs;
 
 import com.Application.Exceptions.UnknownElementException;
-import com.Application.Tree.Element;
+import com.Application.Tree.elements.Element;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- *
  *
  */
 public class Child extends Element {
@@ -26,12 +25,7 @@ public class Child extends Element {
 
     @Override
     public Element addTextBlockToElem(String line) {
-        BlockElement textBlockElement = new BlockElement(null, null);
-        Parent parent = (Parent) this.parentElement;
-        parent.addChild(textBlockElement);
-        textBlockElement.setParent(parent);
-        text.add(line);
-        return textBlockElement;
+        return generateTextSameLevel();
     }
 
 
