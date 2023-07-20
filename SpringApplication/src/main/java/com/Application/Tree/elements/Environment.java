@@ -23,20 +23,29 @@ public class Environment extends Parent {
      * @return
      */
     @Override
-    public Element addText(String line) {
+    public Element addTextBlockToElem(String line) {
         if (this.childElements.size() == 0) {
+            return generateTextBlockAsChild(line);
+
+            /*
             BlockElement textBlockElement = new BlockElement(null, null);
             textBlockElement.setParent(this);
             this.addChild(textBlockElement);
-            textBlockElement.addText(line);
+            textBlockElement.addTextBlockToElem(line);
             return textBlockElement;
+             */
+
         } else {
+            return generateTextToParent(line);
+
+            /*
             BlockElement textBlockElement = new BlockElement(null, null);
             Parent parent = (Parent) parentElement;
             textBlockElement.setParent(parent);
             parent.addChild(textBlockElement);
-            textBlockElement.addText(line);
+            textBlockElement.addTextBlockToElem(line);
             return textBlockElement;
+             */
         }
     }
 

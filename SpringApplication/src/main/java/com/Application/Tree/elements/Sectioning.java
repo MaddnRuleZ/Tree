@@ -4,9 +4,6 @@ package com.Application.Tree.elements;
 import com.Application.Tree.Element;
 
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  *
  *

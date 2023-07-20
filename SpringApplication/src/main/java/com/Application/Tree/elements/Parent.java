@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  *
+ *
  */
 public abstract class Parent extends Element {
     protected final List<Element> childElements;
@@ -26,18 +27,38 @@ public abstract class Parent extends Element {
     }
 
     @Override
-    public Element addText(String line) {
+    public Element addTextBlockToElem(String line) {
         if (childElements.size() == 0) {
+            return generateTextBlockAsChild(line);
+            /*
             BlockElement textBlockElement = new BlockElement(null, null);
             this.addChild(textBlockElement);
             textBlockElement.setParent(this);
-            textBlockElement.addText(line);
+            textBlockElement.addTextBlockToElem(line);
             return textBlockElement;
+            */
 
         } else {
             text.add(line);
             return this;
         }
+    }
+
+    // move n-1
+    protected BlockElement generateTextBlockAsChild(String line) {
+        BlockElement textBlockElement = new BlockElement(null, null);
+        this.addChild(textBlockElement);
+        textBlockElement.setParent(this);
+        textBlockElement.addTextBlockToElem(line);
+        return textBlockElement;
+    }
+
+    protected BlockElement generateTextToParent(String line) {
+        BlockElement textBlockElement = new BlockElement(null, null);
+        textBlockElement.setParent(parentElement);
+        parentElement.addChild(textBlockElement);
+        textBlockElement.addTextBlockToElem(line);
+        return textBlockElement;
     }
 
     public void addChild(Element element) {

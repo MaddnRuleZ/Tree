@@ -30,7 +30,7 @@
         \include
         \caption
     \end{figure}
-    X
+    X5_1
     X
     X
     \begin{Text Block Element}[content_test]

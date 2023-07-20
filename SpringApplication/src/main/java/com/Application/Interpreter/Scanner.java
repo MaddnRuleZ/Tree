@@ -46,7 +46,7 @@ public class Scanner {
             } else {
                 // todo make oneliner after debugging
                 String s = text[i];
-                currElement = currElement.addText(s);
+                currElement = currElement.addTextBlockToElem(s);
             }
         }
         return root;
@@ -72,15 +72,16 @@ public class Scanner {
                 newElement.setContent(currentLine);
                 if (lastElement == null) {
                     root.addChild(newElement);
-
                     if (newElement instanceof Input) {
                         Input inputRoot = (Input) root;
                         newElement.setParent(inputRoot);
                     }
                 } else if (newElement.getLevel() > lastElement.getLevel()) {
                     setParentChild(lastElement, newElement);
+
                 } else if (newElement.getLevel() == lastElement.getLevel()) {
                     sameLevel(lastElement, newElement);
+
                 } else {
                     higherLevel(lastElement, newElement);
                 }
@@ -98,7 +99,7 @@ public class Scanner {
      * @param newElement currentElement created
      */
     private void sameLevel(Element lastElement, Element newElement) {
-        Element parent = lastElement.getParentElement();
+        Parent parent = lastElement.getParentElement();
 
         if (parent == null) {
             root.addChild(newElement);
@@ -122,7 +123,7 @@ public class Scanner {
         if (searchElem == null) {
             root.addChild(newElement);
         } else if (searchElem.getLevel() == newElement.getLevel()) {
-            Element parent = searchElem.getParentElement();
+            Parent parent = searchElem.getParentElement();
             setParentChild(parent, newElement);
         } else {
             setParentChild(searchElem, newElement);
@@ -138,11 +139,12 @@ public class Scanner {
      * @param child Child Element
      */
     private void setParentChild(Element parent, Element child) {
-        child.setParent(parent);
-        if (parent instanceof Parent parentInst) {
-            parentInst.addChild(child);
+        Parent parentChecked = (Parent) parent;
+        if (parentChecked != null) {
+            child.setParent(parentChecked);
+            parentChecked.addChild(child);
         } else {
-            System.out.println("### FATAL ERROR, SEE SCANNER CLASS");
+            System.out.println("Error: Element is no Parent!");
         }
     }
 }

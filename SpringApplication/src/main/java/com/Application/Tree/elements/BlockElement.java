@@ -25,13 +25,15 @@ public class BlockElement extends Child {
      * @param line line to Scan for Summary Comment or NewLine
      */
     @Override
-    public Element addText(String line) {
+    public Element addTextBlockToElem(String line) {
         if (NewLine.checkLineForNewLineCharacters(line)) {
             newLine.extractContent(line);
+
             BlockElement textBlockElement = new BlockElement(null, null);
             Parent parent = (Parent) this.parentElement;
             textBlockElement.setParent(parent);
             parent.addChild(textBlockElement);
+
             return textBlockElement;
         } else {
             if (!summary.extractContent(line) && !comment.extractContent(line)) {
@@ -40,9 +42,6 @@ public class BlockElement extends Child {
             return this;
         }
     }
-
-    // Environment -> bzw Figure abstract class
-
 
     @Override
     public List<String> toText() {

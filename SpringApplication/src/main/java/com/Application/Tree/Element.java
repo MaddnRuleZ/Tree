@@ -1,6 +1,5 @@
 package com.Application.Tree;
 
-import com.Application.Interpreter.TextFileReader;
 import com.Application.Tree.additionalInfo.Comment;
 import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.additionalInfo.Summary;
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
 public abstract class Element implements JsonParser, Exportable {
     private final UUID id;
     private final int level;
-    protected Element parentElement;
+    protected Parent parentElement;
 
     protected List<String> text;
     protected final Summary summary;
@@ -47,23 +46,10 @@ public abstract class Element implements JsonParser, Exportable {
         Root.updateLevelCap(level);
     }
 
-    /**
-     * Check if the current line is Summary Comment or NewLine
-     * if so add the text to the Summary Comment or NewLine, else add the text to the BlockElement
-     *
-     * @param line line to Scan for Summary Comment or NewLine
-     */
-    public Element addText(String line) {
-        // remove, make abstract
-        System.out.println("#######");
-        // todo muss trotzdem hier durch?
-
-        System.out.println("returned null"); // curr never gets called
-        return null; //?
-    }
+    public abstract Element addTextBlockToElem(String line);
 
     public abstract List<String> toText();
-    public void setParent(Element parentElement) {
+    public void setParent(Parent parentElement) {
         this.parentElement = parentElement;
     }
     public Parent getParentElement() {
