@@ -22,10 +22,5 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-
-		Parser p = new Parser("SpringApplication/src/TestDocuments/PSE_TEST_1.txt");
-		Root root = (Root) p.startParsing();
-		for (Element child: root.getChildren()) {
-		}
 	}
 }

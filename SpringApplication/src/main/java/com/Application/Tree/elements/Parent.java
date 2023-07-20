@@ -26,6 +26,11 @@ public abstract class Parent extends Element {
         childElements = new ArrayList<>();
     }
 
+    /**
+     *
+     * @param line
+     * @return
+     */
     @Override
     public Element addTextBlockToElem(String line) {
         if (childElements.size() == 0) {
