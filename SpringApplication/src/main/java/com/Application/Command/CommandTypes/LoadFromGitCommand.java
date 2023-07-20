@@ -1,11 +1,10 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Interpreter.Parser;
-import com.Application.Printer.FilePrinter;
 import com.Application.Printer.GitPrinter;
 import com.Application.Printer.Printer;
-import com.Application.Tree.elements.Root;
-import com.Application.Tree.interfaces.Roots;
+import com.Application.Tree.elements.roots.Root;
+import com.Application.Tree.elements.roots.Roots;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 

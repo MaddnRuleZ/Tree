@@ -1,6 +1,6 @@
 package com.Application.Interpreter;
 
-import com.Application.Tree.interfaces.Roots;
+import com.Application.Tree.elements.roots.Roots;
 
 /**
  * Class for Parsing a single Latex Document,

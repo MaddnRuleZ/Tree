@@ -1,10 +1,10 @@
-package com.Application.Tree.elements;
+package com.Application.Tree.elements.roots;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
+import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.interfaces.LaTeXTranslator;
 import com.Application.Tree.interfaces.JsonParser;
-import com.Application.Tree.interfaces.Roots;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;

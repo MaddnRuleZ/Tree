@@ -2,7 +2,10 @@ package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.*;
-import com.Application.Tree.interfaces.Roots;
+import com.Application.Tree.elements.roots.Input;
+import com.Application.Tree.elements.parent.Parent;
+import com.Application.Tree.elements.roots.Root;
+import com.Application.Tree.elements.roots.Roots;
 
 /**
  * Scanner Class for Disassemble a Document into its Latex Structur Elements

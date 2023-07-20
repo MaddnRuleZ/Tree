@@ -1,6 +1,6 @@
 package com.Application.Command.CommandTypes;
 
-import com.Application.Tree.elements.Root;
+import com.Application.Tree.elements.roots.Root;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**

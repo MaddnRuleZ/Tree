@@ -2,7 +2,12 @@ package com.Application.Tree.elements;
 
 import com.Application.Interpreter.Parser;
 import com.Application.Tree.Element;
-import com.Application.Tree.interfaces.Roots;
+import com.Application.Tree.elements.childs.Child;
+import com.Application.Tree.elements.parent.Environment;
+import com.Application.Tree.elements.parent.Figure;
+import com.Application.Tree.elements.roots.Input;
+import com.Application.Tree.elements.parent.Sectioning;
+import com.Application.Tree.elements.roots.Roots;
 
 /**
  * Class Containing the Configuration of the Structural Elements that wil be detected by the Scan- Algorithm

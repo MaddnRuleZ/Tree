@@ -1,4 +1,4 @@
-package com.Application.Tree.interfaces;
+package com.Application.Tree.elements.roots;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;

@@ -3,7 +3,7 @@ package com.Application.Command.Factories;
 import com.Application.Command.CommandTypes.Command;
 import com.Application.Command.CommandTypes.MoveElementEditorCommand;
 import com.Application.Exceptions.NumParamsException;
-import com.Application.Tree.elements.Root;
+import com.Application.Tree.elements.roots.Root;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

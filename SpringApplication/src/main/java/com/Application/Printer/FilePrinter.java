@@ -1,11 +1,8 @@
 package com.Application.Printer;
 
-import com.Application.Tree.elements.Root;
+import com.Application.Tree.elements.roots.Root;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.List;
 
 public class FilePrinter extends Printer {
     private final String path;

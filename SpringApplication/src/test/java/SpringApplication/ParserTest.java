@@ -2,12 +2,10 @@ package SpringApplication;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Interpreter.Parser;
-import com.Application.Tree.elements.Root;
-import com.Application.Tree.interfaces.Roots;
+import com.Application.Tree.elements.roots.Roots;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ParserTest {

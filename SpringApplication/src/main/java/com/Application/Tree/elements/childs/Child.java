@@ -1,10 +1,8 @@
-package com.Application.Tree.elements;
+package com.Application.Tree.elements.childs;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 

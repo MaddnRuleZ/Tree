@@ -2,7 +2,7 @@ package com.Application.Command.CommandTypes.Interfaces;
 
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.ElementConfig;
-import com.Application.Tree.elements.Parent;
+import com.Application.Tree.elements.parent.Parent;
 
 /**
  * Interface that moves an element in the treeStructure

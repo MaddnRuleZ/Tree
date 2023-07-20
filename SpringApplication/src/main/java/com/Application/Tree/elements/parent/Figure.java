@@ -1,7 +1,9 @@
-package com.Application.Tree.elements;
+package com.Application.Tree.elements.parent;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
+import com.Application.Tree.elements.childs.BlockElement;
+import com.Application.Tree.elements.ElementConfig;
 
 import java.util.ArrayList;
 import java.util.List;
