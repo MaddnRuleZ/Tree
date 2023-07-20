@@ -51,8 +51,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
 
     public abstract Element addTextBlockToElem(String line);
 
-    public void setParent(Element parentElement) {
-
     public void setParent(Parent parentElement) {
         this.parentElement = parentElement;
     }
