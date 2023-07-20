@@ -11,6 +11,8 @@ public class Comment extends AdditionalInformationContainer {
     private final static String START_CHARACTER = "%";
     private final List<String> comment;
 
+
+
     public Comment() {
         comment = new ArrayList<>();
     }
@@ -22,6 +24,15 @@ public class Comment extends AdditionalInformationContainer {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * returns the comment as a string with % as delimiter
+     * @return comment as string
+     */
+    public String toString() {
+        return String.join("%", comment);
     }
 }
 

@@ -108,6 +108,10 @@ public abstract class Element implements JsonParser, Exportable {
         }
     }
 
+    /**
+     * parses the incoming String into comment
+     * @param comment
+     */
     public void setComment(String comment) {
         //TODO
     }
@@ -157,10 +161,9 @@ public abstract class Element implements JsonParser, Exportable {
         return null; //?
     }
 
-    //TODO comment ist doch Liste?
-    //TODO summary und conmment
+    //TODO summary
     @Override
-    public ObjectNode toJsonEditor() {
+    public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
@@ -172,9 +175,8 @@ public abstract class Element implements JsonParser, Exportable {
         } else {
             node.put("parent", this.getParentElement().getId().toString());
         }
-
         node.put("content", this.content);
-        node.put("comment", "comment");
+        node.put("comment", comment.toString());
         node.put("summary", "summary");
         node.put("chooseManualSummary", this.chooseManualSummary);
 
@@ -183,7 +185,7 @@ public abstract class Element implements JsonParser, Exportable {
 
     //TODO summary
     @Override
-    public ArrayNode toJsonTree() {
+    public ArrayNode toJsonTree() throws NullPointerException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();

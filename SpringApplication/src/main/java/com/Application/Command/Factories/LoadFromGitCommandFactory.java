@@ -50,6 +50,7 @@ public class LoadFromGitCommandFactory implements CommandFactory {
         }
 
         command.setUser(this.user);
+        command.setRoot(this.user.getRoot());
         return command;
     }
 }

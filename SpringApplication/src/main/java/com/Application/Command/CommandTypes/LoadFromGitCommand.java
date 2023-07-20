@@ -1,8 +1,12 @@
 package com.Application.Command.CommandTypes;
 
-import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
+import com.Application.Interpreter.Parser;
+import com.Application.Printer.FilePrinter;
+import com.Application.Printer.GitPrinter;
+import com.Application.Printer.Printer;
+import com.Application.Tree.elements.Root;
+import com.Application.Tree.interfaces.Roots;
 import com.Application.User;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
@@ -26,9 +30,35 @@ public class LoadFromGitCommand extends Command {
     */
    private String password;
 
+
+    /**
+     * path to the folder where the git repository should be cloned
+     */
+    private String path;
+
     @Override
     public JsonNode execute() {
-        //TODO
+        try {
+            acquireStructureWriteLock();
+            Printer printer = new GitPrinter(user, url, username, password);
+
+            Parser parser = new Parser(this.path);
+            Roots root = parser.startParsing();
+            if(root instanceof Root) {
+                this.user.setRoot((Root) root);
+                this.user.setPrinter(printer);
+            } else {
+                this.setFailureMessage("Something went wrong while parsing");
+                this.setSuccess(false);
+            }
+            this.setSuccess(true);
+
+        } catch (Exception e) {
+            this.setSuccess(false);
+            this.setFailureMessage(e.getMessage());
+        } finally {
+            releaseStructureWriteLock();
+        }
         return generateResponse(true);
     }
 

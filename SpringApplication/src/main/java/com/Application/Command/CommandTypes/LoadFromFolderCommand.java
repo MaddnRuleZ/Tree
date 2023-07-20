@@ -1,12 +1,11 @@
 package com.Application.Command.CommandTypes;
 
-import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.FilePrinter;
+import com.Application.Printer.Printer;
 import com.Application.Tree.elements.Root;
 import com.Application.Tree.interfaces.Roots;
 import com.Application.User;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
@@ -26,16 +25,19 @@ public class LoadFromFolderCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
+            Printer printer = new FilePrinter(path, user.getRoot());
+
             Parser parser = new Parser(this.path);
             Roots root = parser.startParsing();
             if(root instanceof Root) {
                 this.user.setRoot((Root) root);
-                this.user.setPrinter(new FilePrinter(this.path, this.user.getRoot()));
+                this.user.setPrinter(printer);
             } else {
-                this.setFailureMessage("Something went wrong while parsing the folder");
+                this.setFailureMessage("Something went wrong while parsing");
                 this.setSuccess(false);
             }
             this.setSuccess(true);
+
         } catch (Exception e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());

@@ -114,7 +114,7 @@ public class Root implements JsonParser, Exportable, Roots {
     }
 
     @Override
-    public ObjectNode toJsonEditor() {
+    public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
@@ -129,7 +129,7 @@ public class Root implements JsonParser, Exportable, Roots {
     }
 
     @Override
-    public ArrayNode toJsonTree() {
+    public ArrayNode toJsonTree() throws NullPointerException {
         ArrayNode node = JsonNodeFactory.instance.arrayNode();
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {

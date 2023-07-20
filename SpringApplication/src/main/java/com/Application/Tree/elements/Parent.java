@@ -63,19 +63,7 @@ public abstract class Parent extends Element {
         return this.childElements;
     }
 
-    /**
-     * recursiv generation of the Latex code
-     * generate the LaTeX code from the current Element as well as all Children, add it together and return it
-     *
-     * @return LateX code of the current Element
-     */
-    public List<String> toText() {
-        List<String> outText = new ArrayList<>();
-        for (Element child: this.childElements) {
-            outText.addAll(child.toText());
-        }
-        return outText;
-    }
+
 
     @Override
     public int levelOfDeepestSectioningChild() {
@@ -90,7 +78,7 @@ public abstract class Parent extends Element {
     }
 
     @Override
-    public ObjectNode toJsonEditor() {
+    public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectNode node = super.toJsonEditor();
         if (this.childElements != null && !this.childElements.isEmpty()) {
             ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
@@ -103,7 +91,7 @@ public abstract class Parent extends Element {
     }
 
     @Override
-    public ArrayNode toJsonTree() {
+    public ArrayNode toJsonTree() throws NullPointerException {
         ArrayNode node = super.toJsonTree();
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {

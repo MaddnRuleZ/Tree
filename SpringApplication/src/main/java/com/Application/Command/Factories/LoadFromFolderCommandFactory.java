@@ -41,6 +41,7 @@ public class LoadFromFolderCommandFactory implements CommandFactory {
         }
 
         command.setUser(this.user);
+        command.setRoot(this.user.getRoot());
         return command;
     }
 }

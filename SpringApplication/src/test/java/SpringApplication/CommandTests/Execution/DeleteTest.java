@@ -57,6 +57,7 @@ public class DeleteTest {
         assertEquals(tree.childrenList.get(3), sec1.getChildElements().get(4), "Child 4 should be child of Sectioning 1");
 
     }
+
 }
 
 

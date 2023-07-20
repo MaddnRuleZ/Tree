@@ -1,12 +1,10 @@
 package com.Application.Command;
 
-import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
-import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
+import com.Application.Command.CommandTypes.Command;
+import com.Application.Command.CommandTypes.GetCommand;
 import com.Application.Exceptions.FailureResponse;
-import com.Application.Exceptions.NumParamsException;
 import com.Application.Exceptions.ProcessingException;
-import com.Application.Exceptions.UnrecognizedCommandException;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @Component
 public class Controller {
     private final CommandHandler commandHandler;
+    private final User user;
 
     @Autowired
-    public Controller(CommandHandler commandHandler) {
+    public Controller(CommandHandler commandHandler, User user) {
         this.commandHandler = commandHandler;
+        this.user = user;
     }
 
     /**
@@ -33,7 +33,6 @@ public class Controller {
     @PostMapping("/api")
     public ResponseEntity<JsonNode> processRequest(@RequestBody JsonNode json) {
         try {
-            boolean success = false;
             HttpStatus status;
             JsonNode response = commandHandler.processCommand(json);
             if (commandHandler.isSuccess()) {
@@ -53,18 +52,16 @@ public class Controller {
      */
     @GetMapping("/LoadFullData")
     public ResponseEntity<JsonNode> processGetEditorRequest() {
-        return new ResponseEntity<>(HttpStatus.OK);
-        /* FEhler implementing Interfaces und Locking
-        try {
-            JsonNode response = IEditorResponse.super.generateResponse();
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode errorResponse = "Error: " + e.getFailureMessage();
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        }
-        */
+        Command command = new GetCommand(user.getRoot(), true);
+        HttpStatus status;
 
+        JsonNode response = command.execute();
+        if(command.isSuccess()) {
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, status);
     }
 
     /**
@@ -73,16 +70,15 @@ public class Controller {
      */
     @GetMapping("/LoadTreeData")
     public ResponseEntity<JsonNode> processGetTreeRequest() {
-        return new ResponseEntity<>(HttpStatus.OK);
-        /* FEhler implementing Interfaces und Locking
-        try {
-            JsonNode response = ITreeResponse.super.generateResponse();
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            JsonNode errorResponse = "Error: " + e.getFailureMessage();
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        }
-        */
+        Command command = new GetCommand(user.getRoot(), false);
+        HttpStatus status;
 
+        JsonNode response = command.execute();
+        if(command.isSuccess()) {
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, status);
     }
 }
