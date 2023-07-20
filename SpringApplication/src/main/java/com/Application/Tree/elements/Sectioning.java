@@ -23,24 +23,6 @@ public class Sectioning extends Parent {
         super(startPart, null, level);
     }
 
-
-    /**
-     * Content in sectioning is curly Brackets
-     *
-     * @param optionsString
-     */
-    public void setContent(String optionsString) {
-        Pattern pattern = Pattern.compile("\\{([^}]*)\\}");
-        Matcher matcher = pattern.matcher(optionsString);
-
-        if (matcher.find()) {
-            this.options = matcher.group(1);
-        } else {
-            this.options = null;
-        }
-    }
-
-
     @Override
     public Element searchForID(UUID id) {
         if (this.getId().equals(id)) {

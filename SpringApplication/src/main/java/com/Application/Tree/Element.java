@@ -47,11 +47,20 @@ public abstract class Element implements JsonParser, Exportable {
         Root.updateLevelCap(level);
     }
 
-    /*
-    public void addText(String text) {
-        this.text.add(text);
+    /**
+     * Check if the current line is Summary Comment or NewLine
+     * if so add the text to the Summary Comment or NewLine, else add the text to the BlockElement
+     *
+     * @param line line to Scan for Summary Comment or NewLine
+     */
+    public Element addText(String line) {
+        // remove, make abstract
+        System.out.println("#######");
+        // todo muss trotzdem hier durch?
+
+        System.out.println("returned null"); // curr never gets called
+        return null; //?
     }
-    */
 
     public abstract List<String> toText();
     public void setParent(Element parentElement) {
@@ -141,20 +150,7 @@ public abstract class Element implements JsonParser, Exportable {
      */
     public abstract int levelOfDeepestSectioningChild();
 
-    /**
-     * Check if the current line is Summary Comment or NewLine
-     * if so add the text to the Summary Comment or NewLine, else add the text to the BlockElement
-     *
-     * @param line line to Scan for Summary Comment or NewLine
-     */
-    public Element addText(String line) {
-        // todo muss trotzdem hier durch?
-        if (!summary.extractContent(line) && !comment.extractContent(line) && !newLine.extractContent(line) ) {
-            this.text.add(line);
-        }
-        System.out.println("returned null");
-        return null; //?
-    }
+
 
     //TODO comment ist doch Liste?
     @Override

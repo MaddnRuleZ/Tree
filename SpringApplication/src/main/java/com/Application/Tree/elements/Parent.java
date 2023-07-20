@@ -37,7 +37,6 @@ public abstract class Parent extends Element {
         } else {
             text.add(line);
             return this;
-            //return super.addText(line);
         }
     }
 

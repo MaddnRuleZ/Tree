@@ -10,11 +10,7 @@ public class NewLine extends AdditionalInformationContainer {
             "\\\\",
             "\\par"
     };
-
     private String newLine;
-
-    public NewLine() {
-    }
 
     @Override
     public boolean extractContent(String currentLine) {

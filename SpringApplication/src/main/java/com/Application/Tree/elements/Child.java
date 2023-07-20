@@ -21,12 +21,13 @@ public class Child extends Element {
         super(startPart, endPart, level);
     }
 
-    // og just text.add(line)
+
     @Override
     public Element addText(String line) {
         BlockElement textBlockElement = new BlockElement(null, null);
         Parent parent = (Parent) this.parentElement;
         parent.addChild(textBlockElement);
+        textBlockElement.setParent(parent);
         text.add(line);
         return textBlockElement;
     }

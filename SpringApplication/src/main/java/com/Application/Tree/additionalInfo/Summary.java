@@ -11,8 +11,8 @@ public class Summary extends AdditionalInformationContainer {
 
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
-    private boolean active;
     private final List<String> summary;
+    private boolean active;
 
     /**
      *
@@ -23,10 +23,12 @@ public class Summary extends AdditionalInformationContainer {
     }
 
     /**
+     * check if the current Line belongs to the summary,
+     * if so add it to the summary and return true,
+     * else return false.
      *
-     *
-     * @param currentLine
-     * @return
+     * @param currentLine line to check
+     * @return true if addet to summary, else false
      */
     @Override
     public boolean extractContent(String currentLine) {
@@ -44,7 +46,6 @@ public class Summary extends AdditionalInformationContainer {
             summary.add(currentLine);
             return true;
         }
-
         return false;
     }
 }

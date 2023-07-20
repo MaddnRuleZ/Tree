@@ -1,7 +1,6 @@
 package com.Application.Interpreter;
 
 import com.Application.Tree.Element;
-import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.elements.*;
 import com.Application.Tree.interfaces.Roots;
 
@@ -45,50 +44,9 @@ public class Scanner {
                 currElement = newElement;
 
             } else {
+                // todo make oneliner after debugging
                 String s = text[i];
-                //BlockElement block = new BlockElement(null, null);
-                //block.nameME();
-                // todo set currElement to return Value of this!
                 currElement = currElement.addText(s);
-
-                /*
-                if (currElement instanceof Parent && ((Parent) currElement).getChildElements().size() == 0) {
-                    // in Parent, DONE
-                    BlockElement textBlockElement = new BlockElement(null, null);
-                    setParentChild(currElement, textBlockElement);
-                    currElement = textBlockElement;
-                    currElement.addText(text[i]);
-
-                } else if (currElement instanceof BlockElement && NewLine.checkLineForNewLineCharacters(text[i])) {
-                    // in Blockelement
-                    currElement.addText(text[i]);
-                    BlockElement textBlockElement = new BlockElement(null, null);
-                    Parent parent = currElement.getParentElement();
-                    setParentChild(parent, textBlockElement);
-                    currElement = textBlockElement;
-
-                } else if (currElement instanceof Environment) {
-                    // DONE
-                    BlockElement textBlockElement = new BlockElement(null, null);
-                    Parent parent = currElement.getParentElement();
-                    setParentChild(parent, textBlockElement);
-                    currElement = textBlockElement;
-                    currElement.addText(text[i]);
-
-                } else if (currElement instanceof Child && !(currElement instanceof BlockElement)) {
-                    // Child
-                    // label
-                    BlockElement textBlockElement = new BlockElement(null, null);
-                    Parent parent = currElement.getParentElement();
-                    setParentChild(parent, textBlockElement);
-                    currElement = textBlockElement;
-                    currElement.addText(text[i]);
-
-                }  else {
-                    currElement.addText(text[i]);
-                }
-
-                 */
             }
         }
         return root;
@@ -109,12 +67,12 @@ public class Scanner {
             return lastElement.getParentElement();
         } else {
             Element newElement = ElementConfig.createElement(currentLine);
-
             if (newElement != null) {
                 newElement.setOptions(currentLine);
                 newElement.setContent(currentLine);
                 if (lastElement == null) {
                     root.addChild(newElement);
+
                     if (newElement instanceof Input) {
                         Input inputRoot = (Input) root;
                         newElement.setParent(inputRoot);
