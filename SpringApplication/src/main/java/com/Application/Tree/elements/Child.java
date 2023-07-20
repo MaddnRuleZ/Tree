@@ -26,14 +26,8 @@ public class Child extends Element {
 
     @Override
     public Element addTextBlockToElem(String line) {
-        BlockElement textBlockElement = new BlockElement(null, null);
-        Parent parent = (Parent) this.parentElement;
-        parent.addChild(textBlockElement);
-        textBlockElement.setParent(parent);
-        text.add(line);
-        return textBlockElement;
+        return generateTextSameLevel();
     }
-
 
 
     @Override

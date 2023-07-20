@@ -20,7 +20,8 @@ public class Environment extends Parent {
     }
 
     /**
-     *
+     * Add an new TextBlock to the Environment.
+     * On the Same Level if
      *
      * @param line line to Scan for Summary Comment or NewLine
      * @return
@@ -28,46 +29,15 @@ public class Environment extends Parent {
     @Override
     public Element addTextBlockToElem(String line) {
         if (this.childElements.size() == 0) {
-            return generateTextBlockAsChild(line);
-
-            /*
-            BlockElement textBlockElement = new BlockElement(null, null);
-            textBlockElement.setParent(this);
-            this.addChild(textBlockElement);
-            textBlockElement.addTextBlockToElem(line);
-            return textBlockElement;
-             */
-
+            BlockElement block = generateTextBlockAsChild();
+            block.addTextBlockToElem(line);
+            return block;
         } else {
-            return generateTextToParent(line);
-
-            /*
-            BlockElement textBlockElement = new BlockElement(null, null);
-            Parent parent = (Parent) parentElement;
-            textBlockElement.setParent(parent);
-            parent.addChild(textBlockElement);
-            textBlockElement.addTextBlockToElem(line);
-            return textBlockElement;
-             */
+            BlockElement block = generateTextSameLevel();
+            block.addTextBlockToElem(line);
+            return block;
         }
     }
-
-    private void helperFunc(String line) {
-        if (this.getParentElement() instanceof Figure) {
-            Figure figure = (Figure) getParentElement();
-
-            if (line.contains(Figure.CAPTION_IDENT)) {
-                figure.addCaption(line);
-            } else if (line.contains(Figure.GRAPHICS_IDENT)) {
-                figure.setGraphics(line);
-            } else {
-                text.add(line);
-            }
-        } else {
-            text.add(line);
-        }
-    }
-
 
     @Override
     public Element searchForID(UUID id) {

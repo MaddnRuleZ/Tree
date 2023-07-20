@@ -4,6 +4,7 @@ import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.additionalInfo.Comment;
 import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.additionalInfo.Summary;
+import com.Application.Tree.elements.BlockElement;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
 import com.Application.Tree.interfaces.LaTeXTranslator;
@@ -50,6 +51,13 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     }
 
     public abstract Element addTextBlockToElem(String line);
+
+    public BlockElement generateTextSameLevel() {
+        BlockElement blockElement = new BlockElement(null, null);
+        parentElement.addChild(blockElement);
+        blockElement.setParent(parentElement);
+        return blockElement;
+    }
 
     public void setParent(Parent parentElement) {
         this.parentElement = parentElement;

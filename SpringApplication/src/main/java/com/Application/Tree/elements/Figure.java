@@ -27,6 +27,20 @@ public class Figure extends Environment {
         captions = new ArrayList<>();
     }
 
+
+    @Override
+    public Element addTextBlockToElem(String line) {
+        if (this.childElements.size() == 0) {
+            BlockElement block = generateTextBlockAsChild();
+            block.addTextBlockToElem(line);
+            return block;
+        } else {
+            BlockElement block = generateTextSameLevel();
+            block.addTextBlockToElem(line);
+            return block;
+        }
+    }
+
     /**
      * Extract from the content of the Graphic String
      * from a Graphic-string: \includegraphics[insertName]{insertName}
@@ -34,7 +48,7 @@ public class Figure extends Environment {
      *
      * @param graphicsString raw graphic string to parse
      */
-    public void setGraphics(String graphicsString) {
+    protected void setGraphics(String graphicsString) {
         String regex = "\\[(.*?)\\]";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(graphicsString);
@@ -47,9 +61,10 @@ public class Figure extends Environment {
         }
     }
 
-    public void addCaption(String caption) {
+    protected void addCaption(String caption) {
         this.captions.add(caption);
     }
+
 
     public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);

@@ -44,7 +44,6 @@ public class BlockElement extends Child {
             return this;
         }
     }
-
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);
