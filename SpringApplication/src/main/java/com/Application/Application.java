@@ -2,9 +2,8 @@ package com.Application;
 
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.Clock;
-import com.Application.Tree.Element;
-import com.Application.Tree.elements.Root;
-import com.Application.Tree.interfaces.Roots;
+import com.Application.Tree.elements.Element;
+import com.Application.Tree.elements.root.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
