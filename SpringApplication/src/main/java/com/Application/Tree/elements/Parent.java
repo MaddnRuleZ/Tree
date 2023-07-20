@@ -92,9 +92,9 @@ public abstract class Parent extends Element {
     @Override
     public ObjectNode toJsonEditor() {
         ObjectNode node = super.toJsonEditor();
-        if (this.getChildElements() != null && !this.getChildElements().isEmpty()) {
+        if (this.childElements != null && !this.childElements.isEmpty()) {
             ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
-            for (Element child : this.getChildElements()) {
+            for (Element child : this.childElements) {
                 childrenNode.add(child.toJsonEditor());
             }
             node.set("children", childrenNode);
@@ -103,8 +103,13 @@ public abstract class Parent extends Element {
     }
 
     @Override
-    public ObjectNode toJsonTree() {
-        //TODO
-        return super.toJsonTree();
+    public ArrayNode toJsonTree() {
+        ArrayNode node = super.toJsonTree();
+        if (this.childElements != null && !this.childElements.isEmpty()) {
+            for (Element child : this.childElements) {
+                node.addAll(child.toJsonTree());
+            }
+        }
+        return node;
     }
 }

@@ -34,7 +34,7 @@ public class EditContentCommand extends Command {
                 releaseStructureWriteLock();
                 this.setSuccess(false);
             } else {
-                elementFound.setContent(content);
+                elementFound.setContentManually(content);
                 this.setSuccess(true);
             }
         } catch (Exception e) {

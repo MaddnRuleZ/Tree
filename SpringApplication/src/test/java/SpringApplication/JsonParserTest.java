@@ -27,6 +27,14 @@ public class JsonParserTest {
         assertNotNull(json, "JsonEditor should not be null");
     }
 
+    @Test
+    public void toJsonTreeTest() {
+        String json = tree.root.toJsonTree().toString();
+        String formattedJsonString = formatJsonString(json);
+        System.out.println(formattedJsonString);
+        assertNotNull(json, "JsonEditor should not be null");
+    }
+
     private static String formatJsonString(String jsonString) {
         try {
             ObjectMapper mapper = new ObjectMapper();

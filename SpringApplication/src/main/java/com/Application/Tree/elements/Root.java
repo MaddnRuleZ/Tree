@@ -129,7 +129,13 @@ public class Root implements JsonParser, Exportable, Roots {
     }
 
     @Override
-    public ObjectNode toJsonTree() {
-        return null;
+    public ArrayNode toJsonTree() {
+        ArrayNode node = JsonNodeFactory.instance.arrayNode();
+        if (this.childElements != null && !this.childElements.isEmpty()) {
+            for (Element child : this.childElements) {
+                node.addAll(child.toJsonTree());
+            }
+        }
+        return node;
     }
 }

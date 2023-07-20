@@ -1,6 +1,5 @@
 package com.Application.Tree;
 
-import com.Application.Interpreter.TextFileReader;
 import com.Application.Tree.additionalInfo.Comment;
 import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.additionalInfo.Summary;
@@ -9,6 +8,8 @@ import com.Application.Tree.elements.Root;
 import com.Application.Tree.interfaces.Exportable;
 import com.Application.Tree.interfaces.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.*;
@@ -157,6 +158,7 @@ public abstract class Element implements JsonParser, Exportable {
     }
 
     //TODO comment ist doch Liste?
+    //TODO summary und conmment
     @Override
     public ObjectNode toJsonEditor() {
         ObjectMapper mapper = new ObjectMapper();
@@ -179,9 +181,31 @@ public abstract class Element implements JsonParser, Exportable {
         return node;
     }
 
+    //TODO summary
     @Override
-    public ObjectNode toJsonTree() {
-        //TODO
-        return null;
+    public ArrayNode toJsonTree() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode node = mapper.createObjectNode();
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+
+        node.put("elementID", this.id.toString());
+        node.put("content", this.content);
+        if(this.getParentElement() == null) {
+            node.put("parentID", "null");
+        } else {
+            node.put("parentID", this.getParentElement().getId().toString());
+        }
+        node.put("summary", "summary");
+
+        arrayNode.add(node);
+        return arrayNode;
+    }
+
+    /**
+     * sets the given String as content
+     * @param content
+     */
+    public void setContentManually(String content) {
+        this.content = content;
     }
 }
