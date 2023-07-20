@@ -3,7 +3,7 @@ package SpringApplication;
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Interpreter.Parser;
 import com.Application.Tree.elements.Root;
-import com.Application.Tree.elements.root.Roots;
+import com.Application.Tree.interfaces.Roots;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -16,7 +16,6 @@ public class ParserTest {
 
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
-         * Feel free to add more test cases, save them in the same DIR
          */
         Parser parser = new Parser("SpringApplication/src/TestDocuments/PSE_TEST_1.txt");
         Roots root = parser.startParsing();

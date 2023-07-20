@@ -1,10 +1,7 @@
 package SpringApplication.TestStubs;
 
-import com.Application.Tree.elements.childs.Child;
-import com.Application.Tree.elements.parents.Environment;
-import com.Application.Tree.elements.parents.Parent;
-import com.Application.Tree.elements.parents.Sectioning;
-import com.Application.Tree.elements.root.Root;
+import com.Application.Tree.Element;
+import com.Application.Tree.elements.*;
 
 import java.util.ArrayList;
 

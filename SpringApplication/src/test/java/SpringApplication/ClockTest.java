@@ -1,7 +1,7 @@
 package SpringApplication;
 
 import com.Application.Printer.FilePrinter;
-import com.Application.Tree.elements.root.Root;
+import com.Application.Tree.elements.Root;
 import com.Application.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

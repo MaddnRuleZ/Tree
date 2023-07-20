@@ -1,8 +1,8 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
-import com.Application.Tree.elements.childs.Child;
-import com.Application.Tree.elements.parents.Parent;
+import com.Application.Tree.elements.Child;
+import com.Application.Tree.elements.Parent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

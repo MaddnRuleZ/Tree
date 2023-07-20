@@ -1,9 +1,7 @@
 package com.Application.Command.CommandTypes;
 
-import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.Root;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -34,7 +32,7 @@ public class EditContentCommand extends Command {
                 releaseStructureWriteLock();
                 this.setSuccess(false);
             } else {
-                elementFound.setContent(content);
+                elementFound.setContentManually(content);
                 this.setSuccess(true);
             }
         } catch (Exception e) {

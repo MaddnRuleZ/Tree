@@ -1,8 +1,4 @@
-package com.Application.Tree.elements.parents;
-
-import com.Application.Tree.elements.Element;
-import com.Application.Tree.elements.childs.BlockElement;
-import com.Application.Tree.elements.parents.Environment;
+package com.Application.Tree.elements;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
@@ -31,19 +27,6 @@ public class Figure extends Environment {
         captions = new ArrayList<>();
     }
 
-    @Override
-    public Element addTextBlockToElem(String line) {
-        if (this.childElements.size() == 0) {
-            BlockElement block = generateTextBlockAsChild();
-            block.addTextBlockToElem(line);
-            return block;
-        } else {
-            BlockElement block = generateTextSameLevel();
-            block.addTextBlockToElem(line);
-            return block;
-        }
-    }
-
     /**
      * Extract from the content of the Graphic String
      * from a Graphic-string: \includegraphics[insertName]{insertName}
@@ -51,7 +34,7 @@ public class Figure extends Environment {
      *
      * @param graphicsString raw graphic string to parse
      */
-    protected void setGraphics(String graphicsString) {
+    public void setGraphics(String graphicsString) {
         String regex = "\\[(.*?)\\]";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(graphicsString);
@@ -64,7 +47,7 @@ public class Figure extends Environment {
         }
     }
 
-    protected void addCaption(String caption) {
+    public void addCaption(String caption) {
         this.captions.add(caption);
     }
 

@@ -27,8 +27,8 @@
         X1_3
         X
         X
-        \caption{superSickCaption}
-        \includegraphics{graph2}[graph1]
+        \include
+        \caption
     \end{figure}
     X5_1
     X

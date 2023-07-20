@@ -3,7 +3,7 @@ package com.Application;
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.Clock;
 import com.Application.Printer.Printer;
-import com.Application.Tree.elements.root.Root;
+import com.Application.Tree.elements.Root;
 import org.springframework.stereotype.Component;
 
 /**

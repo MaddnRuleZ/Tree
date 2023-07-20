@@ -1,7 +1,6 @@
-package com.Application.Tree.elements.parents;
+package com.Application.Tree.elements;
 
-import com.Application.Tree.elements.Element;
-import com.Application.Tree.elements.childs.BlockElement;
+import com.Application.Tree.Element;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,13 +10,12 @@ import java.util.List;
 
 /**
  *
+ *
  */
 public abstract class Parent extends Element {
     protected final List<Element> childElements;
 
     /**
-     *
-     *
      *
      * @param startPart
      * @param endPart
@@ -28,28 +26,38 @@ public abstract class Parent extends Element {
         childElements = new ArrayList<>();
     }
 
-
     @Override
     public Element addTextBlockToElem(String line) {
         if (childElements.size() == 0) {
-            BlockElement block = generateTextBlockAsChild();
-            block.addTextBlockToElem(line);
-            return block;
+            return generateTextBlockAsChild(line);
+            /*
+            BlockElement textBlockElement = new BlockElement(null, null);
+            this.addChild(textBlockElement);
+            textBlockElement.setParent(this);
+            textBlockElement.addTextBlockToElem(line);
+            return textBlockElement;
+            */
+
         } else {
             text.add(line);
             return this;
         }
     }
 
-    /**
-     * Add a new TextBlock as Child of the currentElement and add first Line
-     *
-     * @return TextBlockElement just created
-     */
-    protected BlockElement generateTextBlockAsChild() {
+    // move n-1
+    protected BlockElement generateTextBlockAsChild(String line) {
         BlockElement textBlockElement = new BlockElement(null, null);
         this.addChild(textBlockElement);
         textBlockElement.setParent(this);
+        textBlockElement.addTextBlockToElem(line);
+        return textBlockElement;
+    }
+
+    protected BlockElement generateTextToParent(String line) {
+        BlockElement textBlockElement = new BlockElement(null, null);
+        textBlockElement.setParent(parentElement);
+        parentElement.addChild(textBlockElement);
+        textBlockElement.addTextBlockToElem(line);
         return textBlockElement;
     }
 
