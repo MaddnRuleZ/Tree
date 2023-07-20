@@ -59,5 +59,9 @@ public class LoadFromFolderCommand extends Command {
         this.user = user;
     }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+
 
 }

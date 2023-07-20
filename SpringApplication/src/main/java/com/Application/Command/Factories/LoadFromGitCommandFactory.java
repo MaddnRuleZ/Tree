@@ -7,6 +7,13 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Iterator;
+import java.util.Map;
+
+
+/*
+    Command has to be read manually due to problems with spring and using reflection
+ */
 /**
  *  Factory to create an LoadFromGitCommand
  */
@@ -18,12 +25,24 @@ public class LoadFromGitCommandFactory implements CommandFactory {
     }
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
-        ObjectMapper mapper = new ObjectMapper();
-        LoadFromGitCommand command;
-        try {
-           command  = mapper.convertValue(attributes, LoadFromGitCommand.class);
-        } catch (IllegalArgumentException e) {
-            throw new NumParamsException("LoadFromGit - mapping failed");
+        LoadFromGitCommand command = new LoadFromGitCommand();
+        Iterator<Map.Entry<String, JsonNode>> fieldsIterator = attributes.fields();
+        while (fieldsIterator.hasNext()) {
+            Map.Entry<String, JsonNode> field = fieldsIterator.next();
+            String value = field.getValue().asText();
+            switch (field.getKey()) {
+                case "url":
+                    command.setUrl(value);
+                    break;
+                case "username":
+                    command.setUsername(value);
+                    break;
+                case "password":
+                    command.setPassword(value);
+                    break;
+                default:
+                    throw new IllegalArgumentException("LoadFromGit - unknown parameter");
+            }
         }
 
         if (command.getUrl() == null || command.getUsername() == null || command.getPassword() == null ){

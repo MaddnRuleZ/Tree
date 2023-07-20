@@ -52,4 +52,16 @@ public class LoadFromGitCommand extends Command {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

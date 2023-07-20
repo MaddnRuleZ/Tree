@@ -7,24 +7,35 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Iterator;
+import java.util.Map;
+/*
+    Command has to be read manually due to problems with spring and using reflection
+ */
 /**
  * Factory to create an LoadFromFolderCommand
  */
+
 public class LoadFromFolderCommandFactory implements CommandFactory {
     private final User user;
 
     public LoadFromFolderCommandFactory(User user) {
         this.user = user;
     }
+
+
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException {
-        ObjectMapper mapper = new ObjectMapper();
-        LoadFromFolderCommand command;
-        //try {
-           command  = mapper.convertValue(attributes, LoadFromFolderCommand.class);
-        /*} catch (IllegalArgumentException e) {
-            throw new NumParamsException("LoadFromFolder - mapping failed");
-        }*/
+        LoadFromFolderCommand command = new LoadFromFolderCommand();
+        Iterator<Map.Entry<String, JsonNode>> fieldsIterator = attributes.fields();
+        Map.Entry<String, JsonNode> field = fieldsIterator.next();
+        String path = field.getValue().asText();
+        command.setPath(path);
+
+        if(fieldsIterator.hasNext()){
+            throw new NumParamsException("LoadFromFolder - too many parameters");
+        }
+
         if (command.getPath() == null){
             throw new NumParamsException("LoadFromFolder - parameter not set");
         }

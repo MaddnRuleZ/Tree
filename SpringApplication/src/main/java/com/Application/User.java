@@ -29,6 +29,7 @@ public class User {
      */
     private Clock clock;
 
+
     public void setPrinter(Printer Printer) throws IllegalStateException{
         if(this.printer != null) {
             throw new IllegalStateException("Printer already set");

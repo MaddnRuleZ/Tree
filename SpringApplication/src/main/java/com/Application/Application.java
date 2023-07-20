@@ -14,7 +14,6 @@ import java.util.List;
 @SpringBootApplication
 @SpringBootConfiguration
 @ComponentScan(basePackages = {"com.Application"})
-
 public class Application {
 
 	@Autowired
