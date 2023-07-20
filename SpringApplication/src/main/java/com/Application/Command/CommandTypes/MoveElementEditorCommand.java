@@ -41,7 +41,7 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
                 this.setSuccess(false);
                 this.setFailureMessage("Element, new parent or previous element not found");
             } else {
-                moveElement(element, newParent, previousElement);
+                moveElement(element, newParent, previousElement, root.MIN_LEVEL);
                 this.setSuccess(true);
             }
         } catch (Exception e) {

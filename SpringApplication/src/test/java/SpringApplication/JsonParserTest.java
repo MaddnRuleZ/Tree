@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class JsonParserTest {
 
     TestTree tree;
-    DeleteElementCommand command;
 
     @BeforeEach
     public void setUp() {

@@ -1,11 +1,12 @@
 package com.Application.Tree;
 
+import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.additionalInfo.Comment;
 import com.Application.Tree.additionalInfo.NewLine;
 import com.Application.Tree.additionalInfo.Summary;
 import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
-import com.Application.Tree.interfaces.Exportable;
+import com.Application.Tree.interfaces.LaTeXTranslator;
 import com.Application.Tree.interfaces.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
  *
  *
  */
-public abstract class Element implements JsonParser, Exportable {
+public abstract class Element implements JsonParser, LaTeXTranslator {
     private final UUID id;
     private final int level;
     protected Element parentElement;
@@ -54,7 +55,6 @@ public abstract class Element implements JsonParser, Exportable {
     }
     */
 
-    public abstract List<String> toText();
     public void setParent(Element parentElement) {
         this.parentElement = parentElement;
     }
@@ -63,6 +63,10 @@ public abstract class Element implements JsonParser, Exportable {
     }
     public String getEndPart() {
         return endPart;
+    }
+
+    public String getStartPart() throws UnknownElementException {
+        return startPart;
     }
     public String toJson() {
         return null;

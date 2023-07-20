@@ -27,8 +27,6 @@ public class TestTree {
     // Sec5 Env1 Child2 Child3 Child4   Child5  Env2
     //        |
     //       Sec6
-
-    //TODO sectioning 1 noch nicht mit Root verbunden
     public TestTree() {
         this.root = Root.getInstance();
 

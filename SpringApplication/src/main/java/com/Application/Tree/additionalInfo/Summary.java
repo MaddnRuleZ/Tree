@@ -1,7 +1,10 @@
 package com.Application.Tree.additionalInfo;
 
+import com.Application.Exceptions.UnknownElementException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -46,5 +49,16 @@ public class Summary extends AdditionalInformationContainer {
         }
 
         return false;
+    }
+
+    @Override
+    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+        text.append("\n");
+        for(String line : summary){
+            text.append(START_SUMMARY).append("\n");
+            text.append(line).append("\n");
+ text.append(END_SUMMARY).append("\n");
+        }
     }
 }

@@ -1,6 +1,9 @@
 package com.Application.Tree.elements;
 
+import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
+
+import java.util.Map;
 import java.util.UUID;
 
 public class Environment extends Parent {
@@ -45,4 +48,43 @@ public class Environment extends Parent {
         }
         return null;
     }
+
+    @Override
+    //TODO environment end und start part
+    public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+        text.append("\n");
+
+        if(this.summary != null) {
+            this.summary.toLaTeX(map, key);
+        }
+        if(this.comment != null) {
+            this.comment.toLaTeX(map, key);
+        }
+
+        text.append(this.getStartPart()).append("{").append(this.content).append("}");
+        text.append("\n");
+        if (this.childElements != null && !this.childElements.isEmpty()) {
+            for (Element child : this.childElements) {
+                child.toLaTeX(map, key);
+            }
+        }
+        text.append(this.getEndPart());
+        text.append("\n");
+
+        if(this.newLine != null) {
+            this.newLine.toLaTeX(map, key);
+        }
+    }
+/**
+    @Override
+    public String getStartPart() {
+        return ElementConfig.ENVIRONMENT.getStartPart();
+    }
+
+    @Override
+    public String getEndPart() {
+        return ElementConfig.ENVIRONMENT.getEndPart();
+    }
+    **/
 }

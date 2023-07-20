@@ -1,7 +1,10 @@
 package com.Application.Tree.additionalInfo;
 
+import com.Application.Exceptions.UnknownElementException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -33,6 +36,15 @@ public class Comment extends AdditionalInformationContainer {
      */
     public String toString() {
         return String.join("%", comment);
+    }
+
+    @Override
+    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+        text.append("\n");
+        for(String line : comment){
+            text.append("%").append(line).append("\n");
+        }
     }
 }
 

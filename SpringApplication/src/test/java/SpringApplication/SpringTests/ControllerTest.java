@@ -1,4 +1,4 @@
-package SpringApplication;
+package SpringApplication.SpringTests;
 
 // write a test class for the Rest Controller of a SpringApplication, it has to perform a componentScan of the package com.Application
 // and it has to use the annotation @SpringBootTest

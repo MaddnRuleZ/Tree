@@ -1,6 +1,8 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
+import com.Application.Tree.Element;
+import com.Application.Tree.elements.Parent;
 import com.Application.Tree.elements.Root;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -27,7 +29,25 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
 
     @Override
     public JsonNode execute() {
-        //TODO einfach aus MoveEditor kopieren
+        try {
+            acquireStructureWriteLock();
+            Parent newParent = (Parent) root.searchForID(this.newParent);
+            Element element = root.searchForID(this.element);
+            Element previousElement = newParent.searchForID(this.previousElement);
+
+            if (newParent == null || element == null || previousElement == null) {
+                this.setSuccess(false);
+                this.setFailureMessage("Element, new parent or previous element not found");
+            } else {
+                moveElement(element, newParent, previousElement, root.MIN_LEVEL);
+                this.setSuccess(true);
+            }
+        } catch (Exception e) {
+            this.setSuccess(false);
+            this.setFailureMessage(e.getMessage());
+        } finally {
+            releaseStructureWriteLock();
+        }
         return generateResponse(false);
     }
 

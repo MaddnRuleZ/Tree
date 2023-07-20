@@ -12,8 +12,8 @@ public interface IMoveElementCommand {
      * moves an element in the treeStructure
      * @return true if the element was moved successfully, false otherwise
      */
-    default boolean moveElement(Element element, Parent newParent, Element previousElement) throws IndexOutOfBoundsException, NullPointerException{
-        if (checkPossible(element, newParent)) {
+    default boolean moveElement(Element element, Parent newParent, Element previousElement, int minLevel) throws IndexOutOfBoundsException, NullPointerException{
+        if (checkPossible(element, newParent, minLevel)) {
             Parent oldParent = element.getParentElement();
             element.setParent(newParent);
             newParent.addChildAfter(previousElement, element);
@@ -29,9 +29,10 @@ public interface IMoveElementCommand {
      * check if new level of deepest sectioning child lies within part-level and subParagraph-level
      * @param element element to move
      * @param newParent new parent of the element
+     * @param minLevel minimum level of the element
      * @return true if it is possible to move the element, false otherwise
      */
-    default boolean checkPossible(Element element, Parent newParent) {
+    default boolean checkPossible(Element element, Parent newParent, int minLevel) {
         if(element instanceof Parent) {
             int newLevel = newParent.calculateLevelFromElement();
             int deepestSectioningChild = element.levelOfDeepestSectioningChild();
