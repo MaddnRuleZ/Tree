@@ -27,8 +27,6 @@ public class TestTree {
     // Sec5 Env1 Child2 Child3 Child4   Child5  Env2
     //        |
     //       Sec6
-
-    //TODO sectioning 1 noch nicht mit Root verbunden
     public TestTree() {
         this.root = Root.getInstance();
 
@@ -108,6 +106,23 @@ public class TestTree {
         sectioningList.add(sectioning6);
 
         environmentList.add(environment1);
+
+        //set content
+        child1.setContentManually("child1");
+        child2.setContentManually("child2");
+        child3.setContentManually("child3");
+        child4.setContentManually("child4");
+        child5.setContentManually("child5");
+
+        sectioning1.setContentManually("sectioning1");
+        sectioning2.setContentManually("sectioning2");
+        sectioning3.setContentManually("sectioning3");
+        sectioning4.setContentManually("sectioning4");
+        sectioning5.setContentManually("sectioning5");
+        sectioning6.setContentManually("sectioning6");
+
+        environment1.setContentManually("environment1");
+        environment2.setContentManually("environment2");
     }
 
 

@@ -1,5 +1,9 @@
 package com.Application.Tree.additionalInfo;
 
+import com.Application.Exceptions.UnknownElementException;
+
+import java.util.Map;
+
 /**
  *
  *
@@ -32,5 +36,11 @@ public class NewLine extends AdditionalInformationContainer {
 
     public String getNewLine() {
         return newLine;
+    }
+
+    @Override
+    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+        text.append("\n").append(newLine).append("\n");
     }
 }

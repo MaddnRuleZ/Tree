@@ -59,7 +59,6 @@ public enum ElementConfig {
         }
     },
 
-
     ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", 9) {
         @Override
         Element getElement( String currentLine) {
@@ -167,6 +166,19 @@ public enum ElementConfig {
             return new Environment("\\begin", "\\end", 9);
         }
         return null;
+    }
+
+    public static ElementConfig getSectioningType(int level) {
+        switch(level)  {
+            case 1: return PART;
+            case 2: return CHAPTER;
+            case 3: return SECTION;
+            case 4: return SUBSECTION;
+            case 5: return SUBSUBSECTION;
+            case 6: return PARAGRAPH;
+
+            default: return null;
+        }
     }
 
     public String getStartPart() {

@@ -1,13 +1,9 @@
 package com.Application.Command.CommandTypes;
 
-import com.Application.Command.CommandTypes.Interfaces.IEditorResponse;
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
-import com.Application.Command.CommandTypes.Interfaces.ITreeResponse;
 import com.Application.Exceptions.FailureResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.Application.Tree.elements.Root;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public abstract class Command implements ILocks {
     /**
@@ -18,6 +14,8 @@ public abstract class Command implements ILocks {
      * failure message, if success is false
      */
     private String failureMessage = null;
+
+    private Root root;
 
     /**
      * executes the command
@@ -37,13 +35,12 @@ public abstract class Command implements ILocks {
             try {
                 acquireStructureReadLock();
                 if(isEditorResponse) {
-                    response = IEditorResponse.generateResponse();
+                    response = root.toJsonEditor();
                 } else {
-                    response = ITreeResponse.generateResponse();
+                    response = root.toJsonTree();
                 }
-
-            } catch (JsonProcessingException e) {
-                response = FailureResponse.generateFailureResponse(e.getMessage());
+            } catch (NullPointerException e) {
+                response = FailureResponse.generateFailureResponse("Beim Erzeugen der Antwort ist ein Fehler aufgetreten.");
                 this.setSuccess(false);
             } finally {
                 releaseStructureReadLock();
@@ -68,5 +65,9 @@ public abstract class Command implements ILocks {
 
     public void setFailureMessage(String failureMessage) {
         this.failureMessage = failureMessage;
+    }
+
+    public void setRoot(Root root) {
+        this.root = root;
     }
 }

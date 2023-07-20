@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class JsonParserTest {
 
     TestTree tree;
-    DeleteElementCommand command;
 
     @BeforeEach
     public void setUp() {
@@ -22,6 +21,14 @@ public class JsonParserTest {
     @Test
     public void toJsonEditorTest() {
         String json = tree.root.toJsonEditor().toString();
+        String formattedJsonString = formatJsonString(json);
+        System.out.println(formattedJsonString);
+        assertNotNull(json, "JsonEditor should not be null");
+    }
+
+    @Test
+    public void toJsonTreeTest() {
+        String json = tree.root.toJsonTree().toString();
         String formattedJsonString = formatJsonString(json);
         System.out.println(formattedJsonString);
         assertNotNull(json, "JsonEditor should not be null");

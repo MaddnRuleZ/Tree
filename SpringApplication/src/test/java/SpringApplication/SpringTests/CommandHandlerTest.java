@@ -1,4 +1,4 @@
-package SpringApplication;
+package SpringApplication.SpringTests;
 
 import com.Application.Command.CommandHandler;
 import com.Application.Exceptions.NumParamsException;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * tests unrecognizable Commands
  */
-public class CommandHandlerJUnitTest {
+public class CommandHandlerTest {
     CommandHandler commandHandler;
     JsonNode response;
 

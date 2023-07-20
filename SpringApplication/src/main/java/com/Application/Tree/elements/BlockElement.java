@@ -1,9 +1,11 @@
 package com.Application.Tree.elements;
 
+import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 import com.Application.Tree.additionalInfo.NewLine;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlockElement extends Child {
     private static final int BLOCK_ELEMENT_LEVEL = 12;
@@ -44,7 +46,22 @@ public class BlockElement extends Child {
     }
 
     @Override
-    public List<String> toText() {
-        return this.text;
+    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+
+
+        if(this.summary != null) {
+            this.summary.toLaTeX(map, key);
+        }
+        if(this.comment != null) {
+            this.comment.toLaTeX(map, key);
+        }
+
+        text.append(this.content);
+
+        if(this.newLine != null) {
+            this.newLine.toLaTeX(map, key);
+        }
     }
+
 }

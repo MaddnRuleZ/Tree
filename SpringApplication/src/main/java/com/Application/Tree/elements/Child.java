@@ -1,9 +1,11 @@
 package com.Application.Tree.elements;
 
+import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -32,12 +34,7 @@ public class Child extends Element {
         return textBlockElement;
     }
 
-    @Override
-    public List<String> toText() {
-        List<String> text = new ArrayList<>();
-        text.addAll(this.text);
-        return text;
-    }
+
 
     @Override
     public Child searchForID(UUID id) {
@@ -50,5 +47,26 @@ public class Child extends Element {
     @Override
     public int levelOfDeepestSectioningChild() {
         return 0;
+    }
+
+
+    //TODO Child abstract method??? -> No implementation
+    @Override
+    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+        text.append("\n");
+
+        if(this.summary != null) {
+            this.summary.toLaTeX(map, key);
+        }
+        if(this.comment != null) {
+            this.comment.toLaTeX(map, key);
+        }
+
+        text.append(this.content);
+
+        if(this.newLine != null) {
+            this.newLine.toLaTeX(map, key);
+        }
     }
 }

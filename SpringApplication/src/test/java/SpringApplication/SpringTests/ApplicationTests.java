@@ -1,4 +1,4 @@
-package SpringApplication;
+package SpringApplication.SpringTests;
 
 import com.Application.Application;
 import org.junit.jupiter.api.Test;

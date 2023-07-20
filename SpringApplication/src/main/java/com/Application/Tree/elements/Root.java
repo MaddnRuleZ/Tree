@@ -1,7 +1,8 @@
 package com.Application.Tree.elements;
 
+import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
-import com.Application.Tree.interfaces.Exportable;
+import com.Application.Tree.interfaces.LaTeXTranslator;
 import com.Application.Tree.interfaces.JsonParser;
 import com.Application.Tree.interfaces.Roots;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,13 +13,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
 /**
  * This is the Singleton Function of the Root of the Whole LaTeX code.
  */
-public class Root implements JsonParser, Exportable, Roots {
+public class Root implements JsonParser, LaTeXTranslator, Roots {
     private final List<Element> childElements;
     private static Root instance;
 
@@ -86,15 +88,6 @@ public class Root implements JsonParser, Exportable, Roots {
         return null;
     }
 
-    @Override
-    public List<String> toText() {
-        List<String> text = new ArrayList<>();
-        // todo @S add the startHeader here
-        for (Element element: childElements) {
-            text.addAll(element.toText());
-        }
-        return text;
-    }
 
     /**
      * calculates the level of the calling Element from bottom to top
@@ -114,7 +107,7 @@ public class Root implements JsonParser, Exportable, Roots {
     }
 
     @Override
-    public ObjectNode toJsonEditor() {
+    public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
@@ -129,8 +122,31 @@ public class Root implements JsonParser, Exportable, Roots {
     }
 
     @Override
-    public ObjectNode toJsonTree() {
-        return null;
+    public ArrayNode toJsonTree() throws NullPointerException {
+        ArrayNode node = JsonNodeFactory.instance.arrayNode();
+        if (this.childElements != null && !this.childElements.isEmpty()) {
+            for (Element child : this.childElements) {
+                node.addAll(child.toJsonTree());
+            }
+        }
+        return node;
+    }
+
+
+    /*
+    TODO add the startHeader e.g the text before \startDocument to the Root and the endDocument
+     */
+    @Override
+    public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+        text.append(this.startHeaderText);
+        text.append("\n");
+        if (this.childElements != null && !this.childElements.isEmpty()) {
+            for (Element child : this.childElements) {
+                child.toLaTeX(map, key);
+            }
+        }
+        text.append("\\end{document}");
     }
 
     public List<Element> getChildren() {
