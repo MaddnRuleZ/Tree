@@ -68,7 +68,7 @@ public class Environment extends Parent {
             this.comment.toLaTeX(map, key);
         }
 
-        text.append(this.getStartPart()).append("{").append(this.content).append("}");
+        text.append(this.getStartPart());
         if(this.options != null) {
             text.append("[").append(this.options).append("]");
         }
@@ -85,15 +85,5 @@ public class Environment extends Parent {
             this.newLine.toLaTeX(map, key);
         }
     }
-    /** TODO
-    @Override
-    public String getStartPart() {
-        return ElementConfig.ENVIRONMENT.getStartPart();
-    }
 
-    @Override
-    public String getEndPart() {
-        return ElementConfig.ENVIRONMENT.getEndPart();
-    }
-    **/
 }

@@ -51,6 +51,15 @@ public class Summary extends AdditionalInformationContainer {
         return false;
     }
 
+    /**
+     * returns the summary as a string with . as delimiter
+     * @return summary as string
+     */
+    @Override
+    public String toString() {
+            return String.join(".", summary);
+    }
+
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);
@@ -60,5 +69,14 @@ public class Summary extends AdditionalInformationContainer {
             text.append(line).append("\n");
             text.append(END_SUMMARY).append("\n");
         }
+    }
+
+    public List<String> getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String text) {
+        this.summary.clear();
+        this.summary.add(text);
     }
 }

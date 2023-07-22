@@ -4,6 +4,7 @@ package com.Application.Tree.elements.parent;
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.ElementConfig;
+import com.Application.Tree.elements.roots.Root;
 
 import java.util.Map;
 import java.util.UUID;
@@ -79,13 +80,13 @@ public class Sectioning extends Parent {
 
     /**
      * calculates Level of Section to determine the type of Sectioning
+     * adds the calculated Level to the Root.MIN_LEVEL to get the correct Sectioning Type
      * @return String
      * @throws UnknownElementException if calculated Level is not known
      */
-    //TODO add minLevel, so that it doesn't start with 1
     @Override
     public String getStartPart() throws UnknownElementException{
-        int level = this.calculateLevelFromElement();
+        int level = Root.MIN_LEVEL + this.calculateLevelFromElement();
         ElementConfig type = ElementConfig.getSectioningType(level);
         if(type == null) {
             throw new UnknownElementException(this.getClass().getSimpleName());

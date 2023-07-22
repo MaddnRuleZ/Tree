@@ -8,6 +8,4 @@ import java.util.Map;
 
 public interface Roots {
     void addChild(Element childElement);
-
-    void toLaTeX(Map<String, StringBuilder> map, String root) throws UnknownElementException;
 }
