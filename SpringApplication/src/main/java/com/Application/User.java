@@ -30,9 +30,15 @@ public class User {
     private Clock clock;
 
 
+    /**
+     * sets the printer and starts the clock for updating the tree structure
+     * @param Printer printer to set
+     * @throws IllegalStateException if the printer is already set, should not occur during runtime
+     *
+     */
     public void setPrinter(Printer Printer) throws IllegalStateException{
         if(this.printer != null) {
-            throw new IllegalStateException("Printer already set");
+            throw new IllegalStateException("Printer already set.");
         }
         this.printer = Printer;
         if (printer != null) {

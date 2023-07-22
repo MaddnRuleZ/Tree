@@ -4,6 +4,7 @@ import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.elements.parent.Parent;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Map;
 import java.util.UUID;
@@ -36,14 +37,6 @@ public class Input extends Parent implements Roots {
             return null;
         }
         return path;
-    }
-
-
-
-
-    @Override
-    public Element searchForID(UUID id) {
-        return null;
     }
 
 

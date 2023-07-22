@@ -4,6 +4,7 @@ import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.childs.BlockElement;
 import com.Application.Tree.elements.ElementConfig;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +107,19 @@ public class Figure extends Environment {
         text.append("\n");
     }
 
+
+    //TODO captions.toString
+    @Override
+    public ObjectNode toJsonEditor() throws NullPointerException {
+        ObjectNode node = super.toJsonEditor();
+        node.put("fileLocation", this.graphic);
+
+        if(this.captions != null && !this.captions.isEmpty()) {
+            node.put("captions", this.captions.toString());
+        }
+        return node;
+    }
+
     @Override
     public String getStartPart() {
         return ElementConfig.FIGURE.getStartPart();
@@ -115,5 +129,7 @@ public class Figure extends Environment {
     public String getEndPart() {
         return ElementConfig.FIGURE.getEndPart();
     }
+
+
 
 }

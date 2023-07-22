@@ -69,6 +69,9 @@ public class Environment extends Parent {
         }
 
         text.append(this.getStartPart()).append("{").append(this.content).append("}");
+        if(this.options != null) {
+            text.append("[").append(this.options).append("]");
+        }
         text.append("\n");
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
@@ -82,7 +85,7 @@ public class Environment extends Parent {
             this.newLine.toLaTeX(map, key);
         }
     }
-/**
+    /** TODO
     @Override
     public String getStartPart() {
         return ElementConfig.ENVIRONMENT.getStartPart();

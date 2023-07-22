@@ -1,7 +1,14 @@
 package com.Application.Exceptions;
 
+/**
+ * thrown if an element is not found
+ */
 public class ElementNotFoundException extends ProcessingException{
-    public ElementNotFoundException(String element) {
-        super("Element not found" + element);
+
+    /**
+     * constructor
+     */
+    public ElementNotFoundException() {
+        super("Ein Element zum Ausführen der Aktion konnte nicht gefunden werden.");
     }
 }

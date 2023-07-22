@@ -1,5 +1,6 @@
 package com.Application.Command.CommandTypes.Interfaces;
 
+import com.Application.Exceptions.ElementNotFoundException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.elements.parent.Parent;
@@ -10,17 +11,16 @@ import com.Application.Tree.elements.parent.Parent;
 public interface IMoveElementCommand {
     /**
      * moves an element in the treeStructure
-     * @return true if the element was moved successfully, false otherwise
      */
-    default boolean moveElement(Element element, Parent newParent, Element previousElement, int minLevel) throws IndexOutOfBoundsException, NullPointerException{
+    default void moveElement(Element element, Parent newParent, Element previousElement, int minLevel) throws IndexOutOfBoundsException, ElementNotFoundException {
         if (checkPossible(element, newParent, minLevel)) {
             Parent oldParent = element.getParentElement();
             element.setParent(newParent);
             newParent.addChildAfter(previousElement, element);
             oldParent.removeChild(element);
-            return true;
+        } else {
+            throw new IndexOutOfBoundsException("Sectioning Elemente dürfen nur bis zu einem Level von " + ElementConfig.SUBPARAGRAPH.getLevel() + " verschachtelt werden.");
         }
-        return false;
     }
 
     //TODO minLevel, maxLevel ???
@@ -36,9 +36,7 @@ public interface IMoveElementCommand {
         if(element instanceof Parent) {
             int newLevel = newParent.calculateLevelFromElement();
             int deepestSectioningChild = element.levelOfDeepestSectioningChild();
-            if (newLevel + deepestSectioningChild + ElementConfig.PART.getLevel() > ElementConfig.SUBPARAGRAPH.getLevel()) {
-                return false;
-            }
+            return minLevel + newLevel + deepestSectioningChild + ElementConfig.PART.getLevel() <= ElementConfig.SUBPARAGRAPH.getLevel();
         }
         return true;
     }

@@ -7,8 +7,15 @@ import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class PrintCommandFactory implements CommandFactory {
+    /**
+     * printer of the LaTeX-Project
+     */
     private final Printer printer;
 
+    /**
+     * Constructor
+     * @param user user that holds information of LaTeX-Project
+     */
     public PrintCommandFactory(User user) {
         this.printer = user.getPrinter();
     }

@@ -23,6 +23,9 @@ public class CommandHandler {
      * contains a collection of command factories that are used to create specific types of commands
      */
     private final Map<String, CommandFactory> commandFactories;
+    /**
+     * indicates whether the command was executed successfully
+     */
     private boolean success;
 
     public CommandHandler(User user){
@@ -32,7 +35,8 @@ public class CommandHandler {
     /**
      * recognizes the command type specified in the Json file, extracts
      * the given attributes, and creates the corresponding command
-     * using the appropriate command factory, then executes the command
+     * using the appropriate command factory,
+     * then executes the command
      * @param jsonFile contains command that has to be processed
      * @return jsonString of tree structure, if it was possible to execute command
      */

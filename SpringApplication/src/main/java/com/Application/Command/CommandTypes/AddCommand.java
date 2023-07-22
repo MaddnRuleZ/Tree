@@ -1,5 +1,8 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Exceptions.ElementNotFoundException;
+import com.Application.Exceptions.ProcessingException;
+import com.Application.Exceptions.TypeException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.parent.Parent;
 import com.Application.Tree.elements.roots.Root;
@@ -8,7 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.UUID;
 
 /**
- * Command to add an element to the tree
+ * Command to add a new element to the tree
  */
 public class AddCommand extends Command {
     /**
@@ -35,19 +38,17 @@ public class AddCommand extends Command {
             acquireStructureWriteLock();
             Parent parentElement = (Parent) root.searchForID(this.parent);
             Element previousChild = root.searchForID(this.previousChild);
-            if(parentElement == null) {
-                this.setFailureMessage("Parent or previous child not found");
-                this.setSuccess(false);
+            if(parentElement == null || previousChild == null) {
+                throw new ElementNotFoundException();
+            } else if (!(parentElement instanceof  Parent)) {
+                throw new TypeException(Parent.class.getSimpleName(), parentElement.getClass().getSimpleName());
             } else {
                 //TODO parse incoming content
                 Element newElement = null;
                 parentElement.addChildAfter(newElement, previousChild);
                 this.setSuccess(true);
             }
-        } catch (java.lang.ClassCastException e) {
-            this.setFailureMessage("Parent is not a parent");
-            this.setSuccess(false);
-        } catch (Exception e) {
+        } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {

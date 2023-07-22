@@ -1,5 +1,6 @@
 package com.Application.Tree.elements.parent;
 
+import com.Application.Exceptions.ElementNotFoundException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.childs.BlockElement;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -65,9 +67,11 @@ public abstract class Parent extends Element {
         this.childElements.add(index, newChild);
     }
 
-    public void addChildAfter(Element previousElement, Element newChild) throws IndexOutOfBoundsException, NullPointerException {
+    public void addChildAfter(Element previousElement, Element newChild) throws ElementNotFoundException {
         int index = this.childElements.indexOf(previousElement);
-        if(newChild == null) throw new NullPointerException("newChild is null");
+        if (index == -1) {
+            throw new ElementNotFoundException();
+        }
         this.childElements.add(index + 1, newChild);
     }
 
@@ -80,6 +84,21 @@ public abstract class Parent extends Element {
     }
 
 
+
+    @Override
+    public Element searchForID(UUID id) {
+        if (this.getId().equals(id)) {
+            return this;
+        } else {
+            for (Element child: this.getChildElements()) {
+                Element foundElement = child.searchForID(id);
+                if (foundElement != null) {
+                    return foundElement;
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public int levelOfDeepestSectioningChild() {

@@ -133,9 +133,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
 
-    /*
-    TODO add the startHeader e.g the text before \startDocument to the Root and the endDocument
-     */
+
     @Override
     public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);

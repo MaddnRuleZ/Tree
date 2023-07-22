@@ -12,8 +12,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Factory to create an MoveElementTreeCommand
  */
 public class MoveElementTreeCommandFactory implements CommandFactory {
+    /**
+     * root of the LaTeX-Project
+     */
     private final Root root;
 
+    /**
+     * Constructor
+     * @param user user that holds information of LaTeX-Project
+     */
     public MoveElementTreeCommandFactory(User user) {
         this.root = user.getRoot();
     }

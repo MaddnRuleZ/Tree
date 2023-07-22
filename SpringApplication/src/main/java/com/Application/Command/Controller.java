@@ -19,6 +19,11 @@ public class Controller {
     private final CommandHandler commandHandler;
     private final User user;
 
+    /**
+     * Constructor using reflection
+     * @param commandHandler handler to process commands
+     * @param user user that holds information of LaTeX-Project
+     */
     @Autowired
     public Controller(CommandHandler commandHandler, User user) {
         this.commandHandler = commandHandler;

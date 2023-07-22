@@ -12,8 +12,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Factory to create a DeleteCommand
  */
 public class DeleteCommandFactory implements CommandFactory {
+    /**
+     * root of the LaTeX-Project
+     */
     private final Root root;
 
+    /**
+     * Constructor
+     * @param user user that holds information of LaTeX-Project
+     */
     public DeleteCommandFactory(User user) {
         this.root = user.getRoot();
     }
@@ -27,9 +34,6 @@ public class DeleteCommandFactory implements CommandFactory {
         } catch (IllegalArgumentException e){
             throw new NumParamsException("DeleteElement");
         }
-
-
-
         // throws only an Exception if the element is null, not if cascading missing in jsonFile
         // default value of cascading is false
         if (command.getElement() == null){

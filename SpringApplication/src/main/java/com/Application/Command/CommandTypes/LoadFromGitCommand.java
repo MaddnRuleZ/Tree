@@ -1,5 +1,7 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Exceptions.ParseException;
+import com.Application.Exceptions.ProcessingException;
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.GitPrinter;
 import com.Application.Printer.Printer;
@@ -47,12 +49,11 @@ public class LoadFromGitCommand extends Command {
                 this.user.setRoot((Root) root);
                 this.user.setPrinter(printer);
             } else {
-                this.setFailureMessage("Something went wrong while parsing");
-                this.setSuccess(false);
+                throw new ParseException("return value of parsing"+ root.getClass().getName());
             }
             this.setSuccess(true);
 
-        } catch (Exception e) {
+        } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {

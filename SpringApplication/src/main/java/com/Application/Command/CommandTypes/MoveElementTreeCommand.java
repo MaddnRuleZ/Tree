@@ -1,6 +1,9 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.IMoveElementCommand;
+import com.Application.Exceptions.ElementNotFoundException;
+import com.Application.Exceptions.ProcessingException;
+import com.Application.Exceptions.TypeException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.parent.Parent;
 import com.Application.Tree.elements.roots.Root;
@@ -31,18 +34,19 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Parent newParent = (Parent) root.searchForID(this.newParent);
+            Element newParent = root.searchForID(this.newParent);
             Element element = root.searchForID(this.element);
             Element previousElement = newParent.searchForID(this.previousElement);
 
             if (newParent == null || element == null || previousElement == null) {
-                this.setSuccess(false);
-                this.setFailureMessage("Element, new parent or previous element not found");
+                throw new ElementNotFoundException();
+            } else if (!(newParent instanceof  Parent)) {
+                throw new TypeException(Parent.class.getSimpleName(), newParent.getClass().getSimpleName());
             } else {
-                moveElement(element, newParent, previousElement, root.MIN_LEVEL);
+                moveElement(element, (Parent) newParent, previousElement, Root.MIN_LEVEL);
                 this.setSuccess(true);
             }
-        } catch (Exception e) {
+        } catch (ProcessingException | IndexOutOfBoundsException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
