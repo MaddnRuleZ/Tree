@@ -72,9 +72,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     public String getStartPart() throws UnknownElementException {
         return startPart;
     }
-    public String toJson() {
-        return null;
-    }
+
     public List<String> getText() {
         return this.text;
     }
@@ -118,12 +116,17 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
 
     /**
      * parses the incoming String into comment
-     * @param comment
+     * sets the comment of the calling Element
+     * @param comment to parse
      */
     public void setComment(String comment) {
         //TODO
     }
 
+    /**
+     * parses the incoming String into summary
+     * @param summary
+     */
     public void setSummary(String summary) {
         //TODO
     }
@@ -200,7 +203,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
 
     /**
      * sets the given String as content
-     * @param content
+     * @param content to set
      */
     public void setContentManually(String content) {
         this.content = content;

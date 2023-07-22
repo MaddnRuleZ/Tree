@@ -2,9 +2,16 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Exceptions.FailureResponse;
+import com.Application.Exceptions.GeneratingResponseException;
+import com.Application.Exceptions.ProcessingException;
 import com.Application.Tree.elements.roots.Root;
 import com.fasterxml.jackson.databind.JsonNode;
 
+/**
+ * abstract class for all commands
+ * provides success and failure message
+ * provides execute and generateResponse
+ */
 public abstract class Command implements ILocks {
     /**
      * indicates success of processing the command
@@ -14,7 +21,9 @@ public abstract class Command implements ILocks {
      * failure message, if success is false
      */
     private String failureMessage = null;
-
+    /**
+     * the root of the tree structure to be processed
+     */
     private Root root;
 
     /**
@@ -40,7 +49,7 @@ public abstract class Command implements ILocks {
                     response = root.toJsonTree();
                 }
             } catch (NullPointerException e) {
-                response = FailureResponse.generateFailureResponse("Beim Erzeugen der Antwort ist ein Fehler aufgetreten.");
+                response = FailureResponse.generateFailureResponse(new GeneratingResponseException().getMessage());
                 this.setSuccess(false);
             } finally {
                 releaseStructureReadLock();
@@ -54,11 +63,9 @@ public abstract class Command implements ILocks {
     public boolean isSuccess() {
         return success;
     }
-
     public void setSuccess(boolean success) {
         this.success = success;
     }
-
     public String getFailureMessage() {
         return failureMessage;
     }
@@ -66,7 +73,6 @@ public abstract class Command implements ILocks {
     public void setFailureMessage(String failureMessage) {
         this.failureMessage = failureMessage;
     }
-
     public void setRoot(Root root) {
         this.root = root;
     }

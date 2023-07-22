@@ -17,6 +17,10 @@ public class EditCommentCommandFactory implements CommandFactory {
      */
     private final Root root;
 
+    /**
+     * Constructor
+     * @param user user that holds information of LaTeX-Project
+     */
     public EditCommentCommandFactory(User user) {
         this.root = user.getRoot();
     }

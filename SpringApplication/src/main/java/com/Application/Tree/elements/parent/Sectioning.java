@@ -86,7 +86,7 @@ public class Sectioning extends Parent {
         }
 
         if(this.newLine != null) {
-            text.append(this.newLine);
+            this.newLine.toLaTeX(map, key);
         }
     }
 
@@ -101,7 +101,7 @@ public class Sectioning extends Parent {
         int level = this.calculateLevelFromElement();
         ElementConfig type = ElementConfig.getSectioningType(level);
         if(type == null) {
-            throw new UnknownElementException("Something went wrong while generating the LaTeX code for the element: " + this);
+            throw new UnknownElementException(this.getClass().getSimpleName());
         }
         return type.getStartPart();
     }

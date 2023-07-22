@@ -7,6 +7,10 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * main class of the application
+ * starts the application and initializes the spring boot context
+ */
 @SpringBootApplication
 @SpringBootConfiguration
 @ComponentScan(basePackages = {"com.Application"})

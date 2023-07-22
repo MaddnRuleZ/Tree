@@ -15,10 +15,16 @@ import java.util.Map;
 /**
  * Factory to create an LoadFromFolderCommand
  */
-
 public class LoadFromFolderCommandFactory implements CommandFactory {
+    /**
+     * user that holds information of LaTeX-Project
+     */
     private final User user;
 
+    /**
+     * Constructor
+     * @param user user that holds information of LaTeX-Project
+     */
     public LoadFromFolderCommandFactory(User user) {
         this.user = user;
     }

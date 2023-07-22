@@ -17,7 +17,10 @@ public class AddCommandFactory implements CommandFactory {
      */
     private final Root root;
 
-
+    /**
+     * Constructor
+     * @param user user that holds information of LaTeX-Project
+     */
     public AddCommandFactory(User user) {
         this.root = user.getRoot();
     }

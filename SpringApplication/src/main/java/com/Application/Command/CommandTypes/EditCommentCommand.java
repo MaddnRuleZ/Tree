@@ -1,5 +1,7 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Exceptions.ElementNotFoundException;
+import com.Application.Exceptions.ProcessingException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.roots.Root;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,13 +34,12 @@ public class EditCommentCommand extends Command {
             acquireStructureWriteLock();
             Element elementFound = root.searchForID(this.element);
             if(elementFound == null) {
-                releaseStructureWriteLock();
-                this.setSuccess(false);
+                throw new ElementNotFoundException();
             } else {
                 elementFound.setComment(comment);
                 this.setSuccess(true);
             }
-        } catch (Exception e) {
+        } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {

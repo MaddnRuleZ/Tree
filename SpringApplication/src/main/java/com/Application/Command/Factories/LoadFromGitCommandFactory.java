@@ -18,8 +18,15 @@ import java.util.Map;
  *  Factory to create an LoadFromGitCommand
  */
 public class LoadFromGitCommandFactory implements CommandFactory {
+    /**
+     * user that holds information of LaTeX-Project
+     */
     private final User user;
 
+    /**
+     * Constructor
+     * @param user user that holds information of LaTeX-Project
+     */
     public LoadFromGitCommandFactory(User user) {
         this.user = user;
     }
@@ -31,17 +38,10 @@ public class LoadFromGitCommandFactory implements CommandFactory {
             Map.Entry<String, JsonNode> field = fieldsIterator.next();
             String value = field.getValue().asText();
             switch (field.getKey()) {
-                case "url":
-                    command.setUrl(value);
-                    break;
-                case "username":
-                    command.setUsername(value);
-                    break;
-                case "password":
-                    command.setPassword(value);
-                    break;
-                default:
-                    throw new IllegalArgumentException("LoadFromGit - unknown parameter");
+                case "url" -> command.setUrl(value);
+                case "username" -> command.setUsername(value);
+                case "password" -> command.setPassword(value);
+                default -> throw new IllegalArgumentException("LoadFromGit - unknown parameter");
             }
         }
 

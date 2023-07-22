@@ -1,5 +1,7 @@
 package com.Application.Command.CommandTypes;
 
+import com.Application.Exceptions.ElementNotFoundException;
+import com.Application.Exceptions.ProcessingException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.parent.Parent;
 import com.Application.Tree.elements.roots.Root;
@@ -21,9 +23,10 @@ public class DeleteElementCommand extends Command {
      */
     private UUID element;
     /**
-     * Whether to delete the children of the element as well
+     * indicates if children should be deleted
+     * default false
      */
-    private boolean cascading;
+    private boolean cascading = false;
 
     @Override
     public JsonNode execute() {
@@ -31,12 +34,11 @@ public class DeleteElementCommand extends Command {
             acquireStructureWriteLock();
             Element elementFound = root.searchForID(this.element);
             if(elementFound == null) {
-                releaseStructureWriteLock();
-                this.setSuccess(false);
+                throw new ElementNotFoundException();
             } else {
                 delete(elementFound);
             }
-        } catch (Exception e) {
+        } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
@@ -66,7 +68,7 @@ public class DeleteElementCommand extends Command {
         if(parent.removeChild(element)) {
             this.setSuccess(true);
         } else {
-            this.setFailureMessage("Element could not be deleted");
+            this.setFailureMessage("Beim Löschen des Elements ist ein Fehler aufgetreten");
             this.setSuccess(false);
         }
     }
