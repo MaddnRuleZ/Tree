@@ -23,20 +23,7 @@ public class Sectioning extends Parent {
         super(startPart, null, level);
     }
 
-    @Override
-    public Element searchForID(UUID id) {
-        if (this.getId().equals(id)) {
-            return this;
-        } else {
-            for (Element child: this.getChildElements()) {
-                Element foundElement = child.searchForID(id);
-                if (foundElement != null) {
-                    return foundElement;
-                }
-            }
-        }
-        return null;
-    }
+
 
     @Override
     public int levelOfDeepestSectioningChild() {

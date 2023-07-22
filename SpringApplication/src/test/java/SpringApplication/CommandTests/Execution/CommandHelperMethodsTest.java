@@ -28,19 +28,22 @@ public class CommandHelperMethodsTest {
         tree = new TestTree();
     }
 
-
-    //TODO Suche beginnt bei Sectioning sollte bei Root beginnen
+    /**
+     * tests the method searchForId
+     */
     @Test
     public void searchForIdTest() {
         Parent sec1 = tree.sectioningList.get(0);
         Child child3 = tree.childrenList.get(2);
         UUID child3Id = child3.getId();
 
-        assertEquals(child3, sec1.searchForID(child3Id), "Child 3 should be found");
+        assertEquals(child3, tree.root.searchForID(child3Id), "Child 3 should be found");
     }
 
 
-    //TODO funktioniert noch nicht aus selbem Grund wie oben
+    /**
+     * tests the method calculateLevelFromElement
+     */
     @Test
     public void calculateLevelFromElementTest() {
         Parent sec1 = tree.sectioningList.get(0);
@@ -49,7 +52,7 @@ public class CommandHelperMethodsTest {
     }
 
     /**
-     * Testet die Methode levelOfDeepestSectioningChild
+     * tests the method levelOfDeepestSectioningChild
      */
     @Test
     public void calculateLevelFromDeepestSectioningChildTest() {

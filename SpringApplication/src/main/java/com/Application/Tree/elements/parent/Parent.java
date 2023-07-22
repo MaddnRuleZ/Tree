@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -83,6 +84,21 @@ public abstract class Parent extends Element {
     }
 
 
+
+    @Override
+    public Element searchForID(UUID id) {
+        if (this.getId().equals(id)) {
+            return this;
+        } else {
+            for (Element child: this.getChildElements()) {
+                Element foundElement = child.searchForID(id);
+                if (foundElement != null) {
+                    return foundElement;
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public int levelOfDeepestSectioningChild() {
