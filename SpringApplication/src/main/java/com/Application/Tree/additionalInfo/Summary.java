@@ -11,7 +11,6 @@ import java.util.Map;
  *
  */
 public class Summary extends AdditionalInformationContainer {
-
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
     private final List<String> summary;
@@ -59,7 +58,7 @@ public class Summary extends AdditionalInformationContainer {
         for(String line : summary){
             text.append(START_SUMMARY).append("\n");
             text.append(line).append("\n");
- text.append(END_SUMMARY).append("\n");
+            text.append(END_SUMMARY).append("\n");
         }
     }
 }

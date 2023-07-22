@@ -15,7 +15,6 @@ public class Application {
 	@Autowired
 	private User user;
 	private Clock clock;
-
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

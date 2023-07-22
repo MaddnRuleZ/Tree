@@ -64,6 +64,7 @@ public enum ElementConfig {
         }
     },
 
+
     ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", 9) {
         @Override
         Element getElement( String currentLine) {
@@ -173,6 +174,7 @@ public enum ElementConfig {
         return null;
     }
 
+    // todo das ist magic number hart codiert
     public static ElementConfig getSectioningType(int level) {
         switch(level)  {
             case 1: return PART;

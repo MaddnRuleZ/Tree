@@ -41,7 +41,6 @@ public class Child extends Element {
         return 0;
     }
 
-
     //TODO Child abstract method??? -> No implementation
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {

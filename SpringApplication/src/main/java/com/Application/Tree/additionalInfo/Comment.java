@@ -14,8 +14,9 @@ public class Comment extends AdditionalInformationContainer {
     private final static String START_CHARACTER = "%";
     private final List<String> comment;
 
-
-
+    /**
+     *
+     */
     public Comment() {
         comment = new ArrayList<>();
     }

@@ -30,13 +30,7 @@ public class BlockElement extends Child {
     public Element addTextBlockToElem(String line) {
         if (NewLine.checkLineForNewLineCharacters(line)) {
             newLine.extractContent(line);
-
-            BlockElement textBlockElement = new BlockElement(null, null);
-            Parent parent = (Parent) this.parentElement;
-            textBlockElement.setParent(parent);
-            parent.addChild(textBlockElement);
-
-            return textBlockElement;
+            return generateTextSameLevel();
         } else {
             if (!summary.extractContent(line) && !comment.extractContent(line)) {
                 this.text.add(line);
@@ -48,14 +42,12 @@ public class BlockElement extends Child {
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);
 
-
         if(this.summary != null) {
             this.summary.toLaTeX(map, key);
         }
         if(this.comment != null) {
             this.comment.toLaTeX(map, key);
         }
-
         text.append(this.content);
 
         if(this.newLine != null) {

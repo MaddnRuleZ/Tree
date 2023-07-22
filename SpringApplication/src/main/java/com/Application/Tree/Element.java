@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 
 /**
  *
- *
  */
 public abstract class Element implements JsonParser, LaTeXTranslator {
     private final UUID id;

@@ -8,7 +8,7 @@ import com.Application.Tree.elements.roots.Root;
 import com.Application.Tree.elements.roots.Roots;
 
 /**
- * Scanner Class for Disassemble a Document into its Latex Structur Elements
+ * Scanner Class for Disassemble a Document into its Latex Structure Elements
  *
  */
 public class Scanner {
@@ -17,6 +17,7 @@ public class Scanner {
 
     /**
      * Create a new Instance of the Scanner for Scanning a Text on Elements
+     * Difference between the First Document Root and every following Document root
      *
      * @param text Text the Scanner shall Scan
      */
@@ -30,10 +31,11 @@ public class Scanner {
     }
 
     /**
-     * Parse the Document by scanning the line
-     * if a new Element is created or Add the text to the current last TextBlockElement
+     * Parse the Document by scanning the document line by line
+     * if the line contains a new Element, created it or
+     * Add the text to the current last TextBlockElement
      *
-     * @return root Element of Tree
+     * @return root Element of Tree with rest of Tree as Children
      */
     public Roots parseDocument() {
         Element lastElement = null;
@@ -51,17 +53,15 @@ public class Scanner {
     }
 
     /**
-     * Scan the line if there is a new Structure Element
+     * Scan the line for new Structure Element or end the current LastElement (Environment only)
+     * if found, create it add it relative to the last Element and return it; else return null
      *
-     *
-     *
-     * @param lastElement last Element that was created
+     * @param lastElement last Element that was used
      * @param index current index of the text
      * @return the New Created Text Element with parent and child hierachie
      */
     private Element scanLine(Element lastElement, final int index) {
         String currentLine = text[index];
-        // End Environment
         if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart())) {
 

@@ -5,8 +5,7 @@ import com.Application.Tree.elements.roots.Roots;
 /**
  * Class for Parsing a single Latex Document,
  *
- *  input statement in this Doc will trigger recursive ex function
- *
+ * input statement in this Doc will trigger recursive ex function
  */
 public class Parser {
     private final TextFileReader textFileReader;
@@ -16,7 +15,7 @@ public class Parser {
 
     /**
      *
-     * @param filePath
+     * @param filePath The file path of the text file to be parsed.
      */
     public Parser(String filePath) {
         this.filePath = filePath;
@@ -24,9 +23,10 @@ public class Parser {
     }
 
     /**
-     * Start Parsing the Document, get the Text from the File and
+     * Start Parsing the Document
+     * get the Text from the File and call the Scanner for Scanning the Doc
      *
-     * @return finished Root, containing the Tree as Children
+     * @return finished Root, containing the full Tree as Children
      */
     public Roots startParsing() {
         if (!textFileReader.validateFile()) {
