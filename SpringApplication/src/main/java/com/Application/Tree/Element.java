@@ -25,7 +25,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     private final UUID id;
     private final int level;
     protected Parent parentElement;
-
     protected List<String> text;
     protected final Summary summary;
     protected final Comment comment;
