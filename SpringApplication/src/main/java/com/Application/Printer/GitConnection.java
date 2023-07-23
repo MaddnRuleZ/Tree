@@ -1,22 +1,16 @@
 package com.Application.Printer;
 
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * AUCHTUNG STILL OFFLINE UND STÜRZT TEILWEISE AB !
- *
- * Caution:
- * renaming the repo
- * renaming files, . . . will inevitably crash the dependencies !
- *
- * Logging in is still a mystey ...
- * apparently pops 1x up than saves its configuration?
- *
- * TODO LIST:
- * alle dirs . . . müssen vor innit gecheckt werden -> Fehlerpotential und wenig möglichkeiten zu überüfung
- * liste an common Exit Codes
  *
  */
 public class GitConnection {
@@ -36,65 +30,35 @@ public class GitConnection {
         this.OVERLEAF_DOCUMENT = document;
         this.username = username;
         this.p4ssw0rd = p4ssw0rd;
-
     }
 
-    /**
+    public void cloneRepository(String repoUrl, String localPath, String username, String password) {
+        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(username, password);
 
-     *
-     */
-    public boolean cloneAndInnitGitConnection() {
-        System.out.println("Cloning Remote Connection. . .");
-        int exit1 = executeCommand("cmd.exe", "/c", "cd", ROOT_WORKING_DIR, "&&", "git", "clone", OVERLEAF_URL);
-        if (exit1 != 0) {
-            System.out.println("ERROR IN CLONING: EXIT CODE:" + exit1);
-            return false;
-        }
-
-        System.out.println("Setting up remote connection");
-        int exit2 = executeCommand("cmd.exe", "/c", "cd", WORKING_DIR , "&&", "git", "remote", "add", "overleaf", OVERLEAF_URL);
-        if (exit2 != 0) {
-            System.out.println("ERROR IN SETTING REMOTE: EXIT CODE:" + exit2);
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     *
-     * @param commitMessage
-     */
-    public void commitAndPush(String commitMessage) {
-        System.out.println("Pushing Files to master w/ Message" + commitMessage);
-        int x = executeCommand("cmd.exe", "/c", "cd", "C:\\Users\\xmadd\\Desktop\\autoTesting\\64b430167d4b3be6afb4389c\\", "&&",
-                "git", "add", "main.tex", "&&",
-                "git", "commit", "-m", commitMessage, "&&",
-                "git", "push", "origin", "master");
-
-        System.out.println(x);
-    }
-
-
-    /**
-     * Execute a Command in the CMD shell
-     *
-     * @param command command[s] to execture
-     * @return returns the exit code of the command
-     */
-    private int executeCommand(String... command) {
-        int exitCode = -1;
         try {
-            ProcessBuilder builder = new ProcessBuilder(command);
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            exitCode = process.waitFor();
-            return exitCode;
-
-        } catch (IOException | InterruptedException e) {
+            Git.cloneRepository()
+                    .setURI(repoUrl)
+                    .setDirectory(new File(localPath))
+                    .setCredentialsProvider(credsProvider)
+                    .call();
+        } catch (GitAPIException e) {
             e.printStackTrace();
-            return exitCode;
         }
     }
+
+    public void pushChanges(String localPath, String username, String password) {
+        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(username, password);
+
+        try {
+            Git git = Git.open(new File(localPath));
+            git.push()
+                    .setCredentialsProvider(credsProvider)
+                    .call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * This method extracts the alphanumeric code from the end of the input string.

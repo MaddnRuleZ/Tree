@@ -33,6 +33,7 @@ public class Parser {
             return null;
         }
 
+
         this.text = textFileReader.readLinesFromFile();
         this.scanner = new Scanner(text);
         return scanner.parseDocument();

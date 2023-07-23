@@ -27,8 +27,11 @@
         X1_3
         X
         X
-        \include
-        \caption
+        \includegraphics{testgraph1}[moreStuff]
+        \caption{captionToAdd}
+        \label
+        X
+        X
     \end{figure}
     X5_1
     X
@@ -58,7 +61,7 @@
         X0_1
         X0_1_1
         X
-\input{SpringApplication/src/TestDocuments/InputTest.txt}
+\input{src/TestDocuments/InputTest.txt}
 \part{inputTesting}
     \chapter{haw haw}
         X7

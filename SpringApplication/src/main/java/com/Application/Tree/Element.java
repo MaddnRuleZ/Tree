@@ -37,6 +37,12 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     private final String startPart;
     private final String endPart;
 
+    /**
+     *
+     * @param startPart
+     * @param endPart
+     * @param level
+     */
     public Element(String startPart, String endPart, int level) {
         this.id = UUID.randomUUID();
         this.startPart = startPart;
@@ -50,8 +56,17 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         Root.updateLevelCap(level);
     }
 
+    /**
+     *
+     * @param line
+     * @return
+     */
     public abstract Element addTextBlockToElem(String line);
 
+    /**
+     *
+     * @return
+     */
     public BlockElement generateTextSameLevel() {
         BlockElement blockElement = new BlockElement(null, null);
         parentElement.addChild(blockElement);

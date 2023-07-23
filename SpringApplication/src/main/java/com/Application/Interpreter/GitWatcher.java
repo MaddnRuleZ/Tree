@@ -62,7 +62,6 @@ public class GitWatcher implements Runnable, ILocks {
     @Override
     public void run() {
         while (true) {
-
             try {
                 Thread.sleep(sleepTime);
                 boolean hasChanges = checkForRemoteChanges(path);

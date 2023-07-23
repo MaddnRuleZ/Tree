@@ -21,13 +21,12 @@ import java.util.UUID;
 /**
  * This is the Singleton Function of the Root of the Whole LaTeX code.
  */
+
 public class Root implements JsonParser, LaTeXTranslator, Roots {
+    public static int MIN_LEVEL = ElementConfig.MAX_LEVEL;
     private final List<Element> childElements;
     private static Root instance;
-
     private List<String> startHeaderText;
-
-    public static int MIN_LEVEL = ElementConfig.MAX_LEVEL;
 
     private Root() {
         // Private constructor to prevent instantiation from outside the class
@@ -135,8 +134,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         treeNode.set("tree", node);
         return treeNode;
     }
-
-
 
     @Override
     public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
