@@ -28,14 +28,24 @@ public class Clock implements Runnable, ILocks {
      */
     String failureMessage = "Error while exporting the tree";
 
+    /**
+     * true if an error occurs
+     */
     boolean failure = false;
 
 
+    /**
+     * creates a new clock
+     * @param printer  to LaTeX-Code
+     */
     public Clock(Printer printer) {
         this.printer = printer;
     }
 
-
+    /**
+     * starts the clock
+     * exports changes to storage all time seconds
+     */
     @Override
     public void run() {
         while (true) {
