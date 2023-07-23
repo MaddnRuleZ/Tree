@@ -6,6 +6,8 @@ import java.util.Map;
 
 public abstract class Printer {
 
+    private String path;
+
     public static Map<String, StringBuilder> map = new HashMap<>();
 
     /**

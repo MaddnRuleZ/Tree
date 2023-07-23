@@ -20,11 +20,17 @@ public class GitPrinter extends Printer {
      */
     private String password;
 
-    public GitPrinter(User user, String url, String username, String password) {
+    /**
+     * path to the folder where the git repository should be cloned
+     */
+    private String path;
+
+    public GitPrinter(User user, String url, String username, String password, String path) {
         this.user = user;
         this.url = url;
         this.username = username;
         this.password = password;
+        this.path = path;
 
     }
 

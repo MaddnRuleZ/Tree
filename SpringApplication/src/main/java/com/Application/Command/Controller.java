@@ -7,6 +7,7 @@ import com.Application.Exceptions.ProcessingException;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,6 +84,27 @@ public class Controller {
             status = HttpStatus.OK;
         } else {
             status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, status);
+    }
+
+    /**
+     * Processes a GET-request for changes
+     * @return if changes happened on remote repository
+     */
+    @GetMapping("/checkForUpdates")
+    public ResponseEntity<JsonNode> processCheckForUpdates() {
+        ObjectNode response = new ObjectMapper().createObjectNode();
+        HttpStatus status;
+        response.put("hasUpdates", user.getGitWatcher().hasChanges());
+        if(user.getGitWatcher().isFailure()) {
+            status = HttpStatus.BAD_REQUEST;
+            response.put("error", user.getGitWatcher().getFailureMessage());
+        } else if(user.getClock().isFailure()){
+            status = HttpStatus.BAD_REQUEST;
+            response.put("error", user.getClock().getFailureMessage());
+        } else {
+            status = HttpStatus.OK;
         }
         return new ResponseEntity<>(response, status);
     }

@@ -160,9 +160,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
      */
     public abstract int levelOfDeepestSectioningChild();
 
-
-
-    //TODO summary
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectMapper mapper = new ObjectMapper();
@@ -183,7 +180,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         } else {
             node.put("summary", summary.toString());
         }
-        node.put("summary", "summary");
         node.put("chooseManualSummary", this.chooseManualSummary);
 
         return node;

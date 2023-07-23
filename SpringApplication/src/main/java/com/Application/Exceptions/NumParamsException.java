@@ -10,6 +10,6 @@ public class NumParamsException extends ProcessingException {
      * @param commandName name of the command that caused the error
      */
     public NumParamsException(String commandName) {
-        super("Fehlender Parameter in JsonFile: " + commandName + "Dieser Fehler sollte nicht auftreten. Bitte überprüfen Sie die Erzeugung Json-Datei.");
+        super("Fehlender Parameter in JsonFile: " + commandName + "Dieser Fehler sollte nicht auftreten. Bitte überprüfen Sie die Erzeugung der Json-Dateien.");
     }
 }

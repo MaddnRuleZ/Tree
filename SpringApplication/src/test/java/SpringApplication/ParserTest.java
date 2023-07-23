@@ -2,6 +2,7 @@ package SpringApplication;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Interpreter.Parser;
+import com.Application.Tree.elements.roots.Root;
 import com.Application.Tree.elements.roots.Roots;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ public class ParserTest {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("SpringApplication/src/TestDocuments/PSE_TEST_1.txt");
-        Roots root = parser.startParsing();
+        Root root = (Root) parser.startParsing();
 
 
         //TODO: Ich habe die to Latex-Methode angefangen

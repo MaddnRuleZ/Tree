@@ -1,5 +1,6 @@
 package com.Application;
 
+import com.Application.Interpreter.GitWatcher;
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.Clock;
 import com.Application.Printer.Printer;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class User {
+
     /**
      * starting point of the tree structure
      */
@@ -28,6 +30,14 @@ public class User {
      * clock to update the tree structure by uploading the LaTeX-Code
      */
     private Clock clock;
+    /**
+     * GitWatcher to update the tree structure by pulling the repository
+     */
+    private GitWatcher gitWatcher;
+
+    public static boolean failure = false;
+
+
 
 
     /**
@@ -70,5 +80,14 @@ public class User {
 
     public void setRoot(Root root) {
         this.root = root;
+    }
+
+    public void setGitWatcher(GitWatcher gitWatcher) {
+        gitWatcher.setWatcherThread(new Thread(this.gitWatcher));
+        gitWatcher.getWatcherThread().start();
+    }
+
+    public GitWatcher getGitWatcher() {
+        return gitWatcher;
     }
 }

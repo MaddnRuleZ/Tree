@@ -2,6 +2,7 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Exceptions.ParseException;
 import com.Application.Exceptions.ProcessingException;
+import com.Application.Interpreter.GitWatcher;
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.GitPrinter;
 import com.Application.Printer.Printer;
@@ -31,7 +32,6 @@ public class LoadFromGitCommand extends Command {
     */
    private String password;
 
-
     /**
      * path to the folder where the git repository should be cloned
      */
@@ -41,13 +41,14 @@ public class LoadFromGitCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Printer printer = new GitPrinter(user, url, username, password);
+            Printer printer = new GitPrinter(user, url, username, password, path);
 
             Parser parser = new Parser(this.path);
             Roots root = parser.startParsing();
             if(root instanceof Root) {
                 this.user.setRoot((Root) root);
                 this.user.setPrinter(printer);
+                this.user.setGitWatcher(new GitWatcher(path, (Root) root));
             } else {
                 throw new ParseException("return value of parsing"+ root.getClass().getName());
             }

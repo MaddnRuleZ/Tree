@@ -24,4 +24,6 @@ public class LaTeXParserTest {
         tree.root.toLaTeX(map, "root");
         System.out.println(map.get("root").toString());
     }
+
+
 }
