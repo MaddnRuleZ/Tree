@@ -3,7 +3,8 @@ package com.Application.Tree.elements.childs;
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 import com.Application.Tree.additionalInfo.NewLine;
-import com.Application.Tree.elements.parent.Parent;
+import com.Application.Tree.elements.ElementConfig;
+import com.Application.Tree.elements.parent.Figure;
 
 import java.util.Map;
 
@@ -11,7 +12,6 @@ public class BlockElement extends Child {
     private static final int BLOCK_ELEMENT_LEVEL = 12;
 
     /**
-     *
      *
      * @param startPart
      * @param endPart
@@ -33,7 +33,15 @@ public class BlockElement extends Child {
             return generateTextSameLevel();
         } else {
             if (!summary.extractContent(line) && !comment.extractContent(line)) {
-                this.text.add(line);
+                // todo Enter this: if (parentElement.getStartPart().equals(ElementConfig.FIGURE.getStartPart())) { getStartPart wirft eine Exeption -> S fragen
+                    if (parentElement instanceof Figure) {
+                    Figure figure = (Figure) parentElement;
+                    if (!figure.setGraphics(line) && !figure.addCaption(line)) {
+                        this.text.add(line);
+                    }
+                } else {
+                    this.text.add(line);
+                }
             }
             return this;
         }
@@ -54,5 +62,4 @@ public class BlockElement extends Child {
             this.newLine.toLaTeX(map, key);
         }
     }
-
 }

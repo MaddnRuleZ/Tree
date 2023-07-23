@@ -12,7 +12,6 @@ import com.Application.Tree.elements.roots.Roots;
 /**
  * Class Containing the Configuration of the Structural Elements that wil be detected by the Scan- Algorithm
  *
- *
  */
 public enum ElementConfig {
     PART("\\part", null, 1) {
@@ -112,8 +111,7 @@ public enum ElementConfig {
         Element getElement(String currentLine) {
             String path = Input.extractPathRegex(currentLine);
             if (path == null) {
-                System.out.println("No Valid Path given");
-                return null;
+                throw new IllegalArgumentException("Input file has no valid File-Path given!:" + path);
             }
 
             Parser parser = new Parser(path);

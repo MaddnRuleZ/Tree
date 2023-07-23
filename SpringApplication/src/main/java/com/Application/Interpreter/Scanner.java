@@ -39,8 +39,11 @@ public class Scanner {
      */
     public Roots parseDocument() {
         Element lastElement = null;
-
         for (int i = 0; i < text.length; i++) {
+            if (text[i].contains("\\startdocument")) {
+                Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
+            }
+
             Element newElement = scanLine(lastElement, i);
             if (newElement != null) {
                 lastElement = newElement;
@@ -79,10 +82,8 @@ public class Scanner {
                     }
                 } else if (newElement.getLevel() > lastElement.getLevel()) {
                     setParentChild(lastElement, newElement);
-
                 } else if (newElement.getLevel() == lastElement.getLevel()) {
                     sameLevel(lastElement, newElement);
-
                 } else {
                     higherLevel(lastElement, newElement);
                 }

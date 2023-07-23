@@ -30,7 +30,6 @@ public class Figure extends Environment {
         captions = new ArrayList<>();
     }
 
-
     @Override
     public Element addTextBlockToElem(String line) {
         if (this.childElements.size() == 0) {
@@ -51,21 +50,35 @@ public class Figure extends Environment {
      *
      * @param graphicsString raw graphic string to parse
      */
-    protected void setGraphics(String graphicsString) {
+    public boolean setGraphics(String graphicsString) {
+        if (!graphicsString.contains(GRAPHICS_IDENT)) {
+            return false;
+        }
+
         String regex = "\\[(.*?)\\]";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(graphicsString);
 
         if (matcher.find()) {
             this.graphic = matcher.group(1);
+            return true;
         } else {
-            System.out.println("Error, Graphic String contains Illegal Format"); //TODO Error handling
-            this.graphic = null;
+            return false;
         }
     }
 
-    protected void addCaption(String caption) {
-        this.captions.add(caption);
+    /**
+     * check if the line is a caption, if so add and return true
+     *
+     * @param caption caption line to add
+     * @return true if caption was addet
+     */
+    public boolean addCaption(String caption) {
+        if (caption.contains(CAPTION_IDENT)) {
+            this.captions.add(caption);
+            return true;
+        }
+        return false;
     }
 
 
