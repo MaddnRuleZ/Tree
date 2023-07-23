@@ -7,6 +7,6 @@ public class ParseException extends ProcessingException {
      * @param message place where error occured
      */
     public ParseException(String message) {
-        super("Beim Parsen ist ein Fehler aufgetreten: " + message + " \n Bitte überprüfen Sie die Syntax der Datei.");
+        super("Beim Parsen ist ein Fehler aufgetreten: " + message + " \n Bitte überprüfen Sie die Syntax der Eingabe.");
     }
 }

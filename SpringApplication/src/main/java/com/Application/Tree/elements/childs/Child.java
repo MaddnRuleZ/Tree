@@ -41,7 +41,6 @@ public class Child extends Element {
         return 0;
     }
 
-    //TODO Child abstract method??? -> No implementation
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);
@@ -54,7 +53,8 @@ public class Child extends Element {
             this.comment.toLaTeX(map, key);
         }
 
-        text.append(this.content);
+        text.append(this.getStartPart());
+        text.append("{").append(this.content).append("}");
 
         if(this.newLine != null) {
             this.newLine.toLaTeX(map, key);

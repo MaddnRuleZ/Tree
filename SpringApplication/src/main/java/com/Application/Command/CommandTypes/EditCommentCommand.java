@@ -26,8 +26,6 @@ public class EditCommentCommand extends Command {
     private String comment;
 
 
-
-    //Comment muss noch geparst werden: in setComment???
     @Override
     public JsonNode execute() {
         try {

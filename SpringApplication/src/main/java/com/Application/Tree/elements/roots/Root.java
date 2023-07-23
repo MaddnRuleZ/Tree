@@ -5,6 +5,7 @@ import com.Application.Tree.Element;
 import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.interfaces.LaTeXTranslator;
 import com.Application.Tree.interfaces.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -122,14 +123,17 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     @Override
-    public ArrayNode toJsonTree() throws NullPointerException {
+    public JsonNode toJsonTree() throws NullPointerException {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode treeNode = mapper.createObjectNode();
         ArrayNode node = JsonNodeFactory.instance.arrayNode();
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                node.addAll(child.toJsonTree());
+                node.addAll((ArrayNode) child.toJsonTree());
             }
         }
-        return node;
+        treeNode.set("tree", node);
+        return treeNode;
     }
 
 

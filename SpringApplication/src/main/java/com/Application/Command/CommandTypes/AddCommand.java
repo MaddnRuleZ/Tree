@@ -1,13 +1,17 @@
 package com.Application.Command.CommandTypes;
 
 import com.Application.Exceptions.ElementNotFoundException;
+import com.Application.Exceptions.ParseException;
 import com.Application.Exceptions.ProcessingException;
 import com.Application.Exceptions.TypeException;
+import com.Application.Interpreter.Parser;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.parent.Parent;
 import com.Application.Tree.elements.roots.Root;
+import com.Application.Tree.elements.roots.Roots;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -36,17 +40,30 @@ public class AddCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Parent parentElement = (Parent) root.searchForID(this.parent);
+            Element parentElement = root.searchForID(this.parent);
             Element previousChild = root.searchForID(this.previousChild);
             if(parentElement == null || previousChild == null) {
                 throw new ElementNotFoundException();
-            } else if (!(parentElement instanceof  Parent)) {
+            } else if (!(parentElement instanceof Parent)) {
                 throw new TypeException(Parent.class.getSimpleName(), parentElement.getClass().getSimpleName());
             } else {
-                //TODO parse incoming content
-                Element newElement = null;
-                parentElement.addChildAfter(newElement, previousChild);
-                this.setSuccess(true);
+                Parser parser = new Parser(this.content);
+                Roots root = parser.startParsing();
+
+                if (root instanceof Root) {
+                    if (((Root) root).getChildren().size() == 0) {
+                        throw new ParseException("Es konnte kein Element geparst werden.");
+                    }
+
+                    List<Element> children = ((Parent) root).getChildElements();
+                    int index = ((Parent) parentElement).getChildElements().indexOf(previousChild) + 1;
+                    for (Element child : children) {
+                        child.setParent((Parent) parentElement);
+                        ((Parent) parentElement).addChildOnIndex(index, child);
+                        index++;
+                    }
+                    this.setSuccess(true);
+                }
             }
         } catch (ProcessingException e) {
             this.setSuccess(false);

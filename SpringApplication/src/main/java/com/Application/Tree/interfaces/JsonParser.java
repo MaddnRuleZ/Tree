@@ -1,6 +1,6 @@
 package com.Application.Tree.interfaces;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public interface JsonParser {
@@ -12,7 +12,8 @@ public interface JsonParser {
 
    /**
     * converts tree structure to Json for tree view
+    *
     * @return JsonObject
     */
-   ArrayNode toJsonTree() throws NullPointerException;
+   JsonNode toJsonTree() throws NullPointerException;
 }

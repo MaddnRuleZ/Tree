@@ -59,7 +59,7 @@ public class Figure extends Environment {
         if (matcher.find()) {
             this.graphic = matcher.group(1);
         } else {
-            System.out.println("Error, Graphic String contains Illegal Format");
+            System.out.println("Error, Graphic String contains Illegal Format"); //TODO Error handling
             this.graphic = null;
         }
     }
@@ -108,14 +108,15 @@ public class Figure extends Environment {
     }
 
 
-    //TODO captions.toString
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectNode node = super.toJsonEditor();
         node.put("fileLocation", this.graphic);
 
         if(this.captions != null && !this.captions.isEmpty()) {
-            node.put("captions", this.captions.toString());
+            for(String caption : this.captions) {
+                node.put("content", caption);
+            }
         }
         return node;
     }

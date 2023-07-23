@@ -1,5 +1,6 @@
 package com.Application.Tree;
 
+import com.Application.Exceptions.ParseException;
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.additionalInfo.Comment;
 import com.Application.Tree.additionalInfo.NewLine;
@@ -9,6 +10,7 @@ import com.Application.Tree.elements.parent.Parent;
 import com.Application.Tree.elements.roots.Root;
 import com.Application.Tree.interfaces.LaTeXTranslator;
 import com.Application.Tree.interfaces.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -116,9 +118,12 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
      * parses the incoming String into comment
      * sets the comment of the calling Element
      * @param comment to parse
+     * @throws ParseException if the comment is not valid
      */
-    public void setComment(String comment) {
-        //TODO
+    public void setComment(String comment) throws ParseException{
+        if(!this.comment.extractContent(comment)) {
+           throw new ParseException(comment);
+        }
     }
 
     /**
@@ -126,7 +131,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
      * @param summary
      */
     public void setSummary(String summary) {
-        //TODO
+       this.summary.setSummary(summary);
     }
 
     /**
@@ -173,15 +178,19 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         }
         node.put("content", this.content);
         node.put("comment", comment.toString());
+        if(!isChooseManualSummary() || summary == null || summary.getSummary() == null) {
+            node.put("summary", "null");
+        } else {
+            node.put("summary", summary.toString());
+        }
         node.put("summary", "summary");
         node.put("chooseManualSummary", this.chooseManualSummary);
 
         return node;
     }
 
-    //TODO summary
     @Override
-    public ArrayNode toJsonTree() throws NullPointerException {
+    public JsonNode toJsonTree() throws NullPointerException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
@@ -193,8 +202,11 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         } else {
             node.put("parentID", this.getParentElement().getId().toString());
         }
-        node.put("summary", "summary");
-
+        if(!isChooseManualSummary() || summary == null || summary.getSummary() == null) {
+            node.put("summary", "null");
+        } else {
+            node.put("summary", summary.toString());
+        }
         arrayNode.add(node);
         return arrayNode;
     }

@@ -43,8 +43,10 @@ public class TestTree {
         Sectioning sectioning5 = new Sectioning("sectioning5",2);
         Sectioning sectioning6 = new Sectioning("sectioning6",2);
 
+        //create environment
         Environment environment1 = new Environment("environment1", "environment1",2);
         Environment environment2 = new Environment("environment2", "environment2",2);
+
 
         //create children
         Child child1 = new Child("child1", "child1",1);
@@ -54,6 +56,8 @@ public class TestTree {
         Child child4 = new Child("child4", "child4",2);
 
         Child child5 = new Child("child5", "child5",2);
+
+
 
         //set children
         sectioning1.addChild(sectioning2);

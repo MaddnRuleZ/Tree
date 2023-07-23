@@ -3,6 +3,7 @@ package com.Application.Tree.elements.parent;
 import com.Application.Exceptions.ElementNotFoundException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.childs.BlockElement;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -126,11 +127,11 @@ public abstract class Parent extends Element {
     }
 
     @Override
-    public ArrayNode toJsonTree() throws NullPointerException {
-        ArrayNode node = super.toJsonTree();
+    public JsonNode toJsonTree() throws NullPointerException {
+        ArrayNode node = (ArrayNode) super.toJsonTree();
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                node.addAll(child.toJsonTree());
+                node.addAll((ArrayNode) child.toJsonTree());
             }
         }
         return node;
