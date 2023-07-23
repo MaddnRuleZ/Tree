@@ -2,7 +2,6 @@ package com.Application.Printer;
 
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Exceptions.ProcessingException;
-import com.Application.User;
 
 import java.io.IOException;
 
@@ -54,6 +53,12 @@ public class Clock implements Runnable, ILocks {
                 acquireStructureReadLock();
                 printer.export();
             } catch (InterruptedException | IOException e) {
+                failureMessage = "Etwaige Änderungen konnten nicht gespeichert werden. \n " +
+                        "Sollten Sie das LaTeX-Projekt aus einer Datei geladen haben, kann es sein dass der LaTeX-Code dennoch in eine temporären Datei gespeichert wurde. \n";
+                failure = true;
+                break;
+            }  catch (ProcessingException e) {
+                failureMessage = e.getMessage();
                 failure = true;
                 break;
             } finally {

@@ -1,6 +1,9 @@
 package com.Application.Printer;
 
+import com.Application.Exceptions.UnknownElementException;
 import com.Application.User;
+
+import java.io.IOException;
 
 public class GitPrinter extends Printer {
     /**
@@ -35,8 +38,8 @@ public class GitPrinter extends Printer {
     }
 
     @Override
-    public boolean export() {
+    public void export() throws IOException, UnknownElementException {
         //TODO
-        return false;
+
     }
 }
