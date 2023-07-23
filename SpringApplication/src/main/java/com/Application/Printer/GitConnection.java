@@ -36,11 +36,9 @@ public class GitConnection {
         this.OVERLEAF_DOCUMENT = document;
         this.username = username;
         this.p4ssw0rd = p4ssw0rd;
-
     }
 
     /**
-
      *
      */
     public boolean cloneAndInnitGitConnection() {

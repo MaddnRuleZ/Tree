@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class GitWatcher implements Runnable, ILocks {
-
     private Thread watcherThread;
     private final int sleepTime = 1000;
     private boolean changes = false;
@@ -33,7 +32,6 @@ public class GitWatcher implements Runnable, ILocks {
     @Override
     public void run() {
         while (true) {
-
             try {
                 Thread.sleep(sleepTime);
                 boolean hasChanges = checkForRemoteChanges(path);

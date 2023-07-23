@@ -137,7 +137,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
 
-
     @Override
     public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);

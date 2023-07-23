@@ -12,19 +12,16 @@ import java.util.Map;
 public class ParserTest {
     @Test
     public void testParser() throws UnknownElementException {
-
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("SpringApplication/src/TestDocuments/PSE_TEST_1.txt");
+        Parser parser = new Parser("src/TestDocuments/PSE_TEST_1.txt");
         Root root = (Root) parser.startParsing();
-
 
         //TODO: Ich habe die to Latex-Methode angefangen
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
         root.toLaTeX(map, "root");
         System.out.println(map.get("root").toString());
-
     }
 }
