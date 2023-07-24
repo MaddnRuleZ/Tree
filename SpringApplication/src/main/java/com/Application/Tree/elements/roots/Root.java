@@ -21,7 +21,6 @@ import java.util.UUID;
 /**
  * This is the Singleton Function of the Root of the Whole LaTeX code.
  */
-
 public class Root implements JsonParser, LaTeXTranslator, Roots {
     public static int MIN_LEVEL = ElementConfig.MAX_LEVEL;
     private final List<Element> childElements;
@@ -60,14 +59,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         }
     }
 
-    /**
-     * Check if the Root is already initialized
-     *
-     * @return true if Root is init, else false
-     */
-    public static boolean isInit() {
-        return instance == null;
-    }
     public void addChild(Element element) {
         this.childElements.add(element);
     }
@@ -151,5 +142,4 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     public List<Element> getChildren() {
         return this.childElements;
     }
-
 }

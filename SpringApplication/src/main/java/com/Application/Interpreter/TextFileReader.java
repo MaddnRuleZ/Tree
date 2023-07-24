@@ -14,37 +14,26 @@ public class TextFileReader {
     }
 
     public boolean validateFile() {
-        //TODO is tex-File??
         File file = new File(filePath);
-
-        // Check if file exists
         if (!file.exists()) {
             System.out.println("File does not exist: " + filePath);
             return false;
         }
-
-        // Check if file is a directory
         if (file.isDirectory()) {
             System.out.println("File is a directory: " + filePath);
             return false;
         }
-
-        // Check if file is readable
         if (!file.canRead()) {
             System.out.println("File is not readable: " + filePath);
             return false;
         }
-
         String type = file.getName().substring(file.getName().lastIndexOf(".") + 1);
         if(type.equals("tex")){
             System.out.println("File is not readable: " + filePath);
             return false;
         }
-
-        // File exists, is not a directory, and is readable
         return true;
     }
-
 
     /**
      * read the File from the given FilePath and return the Text
@@ -77,8 +66,7 @@ public class TextFileReader {
      */
     public static List<String> extractStrings(String[] inputArray, int startIndex, int endIndex) {
         if (startIndex < 0 || endIndex >= inputArray.length || startIndex > endIndex) {
-            // Invalid indices, return an empty list or throw an exception
-            return new ArrayList<>();
+            throw new IllegalArgumentException("Index out of Bounds for extracting Strings from Array");
         }
 
         List<String> resultList = new ArrayList<>(endIndex - startIndex + 1);

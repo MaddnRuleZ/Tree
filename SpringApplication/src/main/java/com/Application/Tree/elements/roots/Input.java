@@ -11,19 +11,26 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ *
+ */
 public class Input extends Parent implements Roots {
     private static final String startPart = "\\input";
 
     /**
-     *
+     * Input Constructor, call Constructor of Parent
      */
     public Input() {
         super(startPart, null, Root.MIN_LEVEL);
     }
 
     /**
-     * @param pathLine
-     * @return
+     * extract the Document path from an input command in the Latex File
+     * \\input{<filePath>}#
+     *
+     * @param pathLine path in the Document
+     * @return extracted Document File Path
      */
     public static String extractPathRegex(String pathLine) {
         String path;
@@ -33,12 +40,10 @@ public class Input extends Parent implements Roots {
         if (matcher.find()) {
             path = matcher.group(1);
         } else {
-            System.out.println("Error, couldn't parse the path");
-            return null;
+            throw new IllegalArgumentException("Error, couldn't parse the path");
         }
         return path;
     }
-
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {

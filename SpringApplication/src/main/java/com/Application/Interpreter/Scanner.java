@@ -22,7 +22,7 @@ public class Scanner {
      * @param text Text the Scanner shall Scan
      */
     public Scanner(String[] text) {
-        if (Root.isInit()) {
+        if (Root.getInstance().getChildren().size() == 0) {
             root = Root.getInstance();
         } else {
             root = new Input();

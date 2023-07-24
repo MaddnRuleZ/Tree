@@ -14,6 +14,7 @@ public class Parser {
     private String[] text;
 
     /**
+     * generate a new Parser for Parsing a LateX document
      *
      * @param filePath The file path of the text file to be parsed.
      */
@@ -30,9 +31,9 @@ public class Parser {
      */
     public Roots startParsing() {
         if (!textFileReader.validateFile()) {
-            return null;
+            throw new IllegalArgumentException("Provided File is not Valid, given Path:" + this.filePath + "\n"
+                    + "check Log for more details");
         }
-
 
         this.text = textFileReader.readLinesFromFile();
         this.scanner = new Scanner(text);

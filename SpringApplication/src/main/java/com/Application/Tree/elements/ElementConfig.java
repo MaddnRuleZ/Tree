@@ -10,10 +10,18 @@ import com.Application.Tree.elements.parent.Sectioning;
 import com.Application.Tree.elements.roots.Roots;
 
 /**
- * Class Containing the Configuration of the Structural Elements that wil be detected by the Scan- Algorithm
+ * Class Containing the Configuration of ALL the Structural Elements that wil be detected by the Scan -Algorithm
  *
  */
 public enum ElementConfig {
+
+    /**
+     * to add a new Structure Element form LaTeX to the Parser:
+     * - Copy one of the following, add the Start- and Endpart
+     * - Rename it
+     * - set Level so Elements will get correctly sorted in Parent/Child Hierarchy
+     * - change the returned Class type, see each Class for determining the correct functionality for your new Element
+     */
     PART("\\part", null, 1) {
         @Override
         Element getElement(String currentLine) {
@@ -106,23 +114,21 @@ public enum ElementConfig {
         }
     },
 
+    /**
+     * Document in Document detected, start a new Parser
+     */
     INPUT("\\input", null, 0) {
         @Override
         Element getElement(String currentLine) {
             String path = Input.extractPathRegex(currentLine);
-            if (path == null) {
-                throw new IllegalArgumentException("Input file has no valid File-Path given!:" + path);
-            }
-
             Parser parser = new Parser(path);
-            Roots root = parser.startParsing();
 
-           if (root instanceof Input) {
-               return (Element) root;
-           } else {
-               System.out.println("Illegal Program State on Creation of Element");
-               return null;
-           }
+            try {
+                return (Input) parser.startParsing();
+            } catch (ClassCastException e) {
+                System.out.println("Input Document couldn't be detected");
+                return null;
+            }
         }
     };
 
@@ -132,8 +138,8 @@ public enum ElementConfig {
     private final int level;
 
     /**
-     * Generate a New Element Configuration, for adding a new Detected Structure Element
-     * Elements are sorted in a semi-order, based on their Level
+     * Constructor for saving different Types of Elements and assigning them a Level
+     * Elements are sorted in a semi-order, based on their Level:
      *
      * @param startPart startPart of the new Element
      * @param endPart endPart of the new Element, can be null

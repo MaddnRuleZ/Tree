@@ -7,26 +7,32 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * Element -Child Class for Elements like Labels
  *
- *
+ * Child's can't have Children themselves and therefor represent a Leaf in the Tree
  */
 public class Child extends Element {
 
     /**
+     * Create a new Child
      *
-     * @param startPart
-     * @param endPart
+     * @param startPart Start String to init a Child Element
+     * @param endPart String necessary to end the Child Element
+     * @param level nesting level of the Element
      */
     public Child(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
     }
 
-
+    /**
+     * add a TextBlock to the Child and return it
+     *
+     * @return the new added TextBlock
+     */
     @Override
     public Element addTextBlockToElem(String line) {
         return generateTextSameLevel();
     }
-
 
     @Override
     public Child searchForID(UUID id) {
