@@ -14,21 +14,51 @@ import java.io.File;
 import java.io.IOException;
 
 public class GitWatcher implements Runnable, ILocks {
+    /**
+     * Thread that watches for changes in the git repository
+     */
     private Thread watcherThread;
+    /**
+     * time to sleep between checks
+     */
     private final int sleepTime = 1000;
+    /**
+     * true if changes were found
+     */
     private boolean changes = false;
+    /**
+     * path to the git repository
+     */
     private String path;
+    /**
+     * tree structure
+     */
     private Root root;
-
+    /**
+     * message to display if an error occurs
+     */
     String failureMessage = "Error while searching for remote changes";
 
+    /**
+     * true if an error occurs
+     */
     boolean failure = false;
 
+    /**
+     * creates a new watcher
+     * @param path to the git repository
+     * @param root tree structure
+     */
     public GitWatcher(String path, Root root) {
         this.path = path;
         this.root = root;
     }
 
+    /**
+     * starts the watcher
+     * checks for changes in the git repository all time seconds
+     * if changes were found, the tree structure is updated
+     */
     @Override
     public void run() {
         while (true) {
@@ -54,6 +84,13 @@ public class GitWatcher implements Runnable, ILocks {
         }
     }
 
+    /**
+     * checks for changes in the git repository
+     * @param path to the git repository
+     * @return true if changes were found
+     * @throws GitAPIException
+     * @throws IOException
+     */
     private boolean checkForRemoteChanges(String path) throws GitAPIException, IOException {
         File localRepoDir = new File(path);
         Repository repository = new FileRepositoryBuilder().setGitDir(localRepoDir).build();

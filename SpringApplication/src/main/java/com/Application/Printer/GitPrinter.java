@@ -1,5 +1,6 @@
 package com.Application.Printer;
 
+import com.Application.Exceptions.UnknownElementException;
 import com.Application.User;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullResult;
@@ -9,6 +10,8 @@ import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
+
+import java.io.IOException;
 
 public class GitPrinter extends Printer {
     /**
@@ -138,8 +141,8 @@ public class GitPrinter extends Printer {
 
 
     @Override
-    public boolean export() {
+    public void export() throws IOException, UnknownElementException {
         //TODO
-        return false;
+
     }
 }

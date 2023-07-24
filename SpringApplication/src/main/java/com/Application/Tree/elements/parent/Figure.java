@@ -83,15 +83,9 @@ public class Figure extends Environment {
 
 
     public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        StringBuilder text = map.get(key);
-        text.append("\n");
+        super.toLaTeXStart(map, key);
 
-        if(this.summary != null) {
-            this.summary.toLaTeX(map, key);
-        }
-        if(this.comment != null) {
-            this.comment.toLaTeX(map, key);
-        }
+        StringBuilder text = map.get(key);
 
         text.append(this.getStartPart()).append("{").append(this.content).append("}");
         text.append("\n");
@@ -113,11 +107,7 @@ public class Figure extends Environment {
 
         text.append(this.getEndPart());
 
-        if(this.newLine != null) {
-            this.newLine.toLaTeX(map, key);
-        }
-
-        text.append("\n");
+        super.toLaTeXEnd(map, key);
     }
 
 

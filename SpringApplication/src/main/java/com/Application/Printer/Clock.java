@@ -2,7 +2,6 @@ package com.Application.Printer;
 
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Exceptions.ProcessingException;
-import com.Application.User;
 
 import java.io.IOException;
 
@@ -28,14 +27,24 @@ public class Clock implements Runnable, ILocks {
      */
     String failureMessage = "Error while exporting the tree";
 
+    /**
+     * true if an error occurs
+     */
     boolean failure = false;
 
 
+    /**
+     * creates a new clock
+     * @param printer  to LaTeX-Code
+     */
     public Clock(Printer printer) {
         this.printer = printer;
     }
 
-
+    /**
+     * starts the clock
+     * exports changes to storage all time seconds
+     */
     @Override
     public void run() {
         while (true) {
@@ -44,6 +53,12 @@ public class Clock implements Runnable, ILocks {
                 acquireStructureReadLock();
                 printer.export();
             } catch (InterruptedException | IOException e) {
+                failureMessage = "Etwaige Änderungen konnten nicht gespeichert werden. \n " +
+                        "Sollten Sie das LaTeX-Projekt aus einer Datei geladen haben, kann es sein dass der LaTeX-Code dennoch in eine temporären Datei gespeichert wurde. \n";
+                failure = true;
+                break;
+            }  catch (ProcessingException e) {
+                failureMessage = e.getMessage();
                 failure = true;
                 break;
             } finally {

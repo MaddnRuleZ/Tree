@@ -128,14 +128,38 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
 
     @Override
     public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        toLaTeXStart(map, key);
         StringBuilder text = map.get(key);
-        text.append(this.startHeaderText);
-        text.append("\n");
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
                 child.toLaTeX(map, key);
             }
         }
+        toLaTeXEnd(map, key);
+    }
+
+    /**
+     * adds the startHeader e.g the text before \startDocument to the Root
+     * @param map of the LaTeX Code
+     * @param key of the LaTeX Code
+     * @throws UnknownElementException
+     */
+    @Override
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+        text.append(this.startHeaderText);
+        text.append("\n");
+    }
+
+    /**
+     * adds the endHeader e.g the text after \endDocument to the Root
+     * @param map of the LaTeX Code
+     * @param key of the LaTeX Code
+     * @throws UnknownElementException
+     */
+    @Override
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
         text.append("\\end{document}");
     }
 
