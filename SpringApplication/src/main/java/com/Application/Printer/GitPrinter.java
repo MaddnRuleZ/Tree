@@ -92,7 +92,6 @@ public class GitPrinter extends Printer {
             try {
                 // Open the existing repository
                 Git git = Git.open(repositoryPath);
-
                 // Set up credentials for authentication (if required)
                 CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
 
