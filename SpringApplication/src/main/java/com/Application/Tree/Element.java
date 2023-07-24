@@ -229,4 +229,24 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     public void setContentManually(String content) {
         this.content = content;
     }
+
+    @Override
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        StringBuilder text = map.get(key);
+
+        if (this.summary != null) {
+            this.summary.toLaTeX(map, key);
+        }
+        if (this.comment != null) {
+            this.comment.toLaTeX(map, key);
+        }
+    }
+
+
+    @Override
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        if(this.newLine != null) {
+            this.newLine.toLaTeX(map, key);
+        }
+    }
 }

@@ -11,4 +11,20 @@ public interface LaTeXTranslator {
      */
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException;
 
+    /**
+     * add the LaTeX-Code of summary and comments
+     * @param map map of the LaTeX-Code
+     * @param key key of the map
+     * @throws UnknownElementException
+     */
+    public void toLaTeXStart(Map<String,StringBuilder> map, String key) throws UnknownElementException;
+
+    /**
+     * add the LaTeX-Code of the newLine
+     * @param map map of the LaTeX-Code
+     * @param key key of the map
+     * @throws UnknownElementException
+     */
+    public void toLaTeXEnd(Map<String,StringBuilder> map, String key) throws UnknownElementException;
+
 }

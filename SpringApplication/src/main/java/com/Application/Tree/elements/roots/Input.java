@@ -42,15 +42,8 @@ public class Input extends Parent implements Roots {
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
+        super.toLaTeXStart(map, key);
         StringBuilder text = map.get(key);
-        text.append("\n");
-
-        if(this.summary != null) {
-            this.summary.toLaTeX(map, key);
-        }
-        if(this.comment != null) {
-            this.comment.toLaTeX(map, key);
-        }
 
         text.append(this.getStartPart()).append("{").append(this.content).append("}");
 
@@ -65,6 +58,7 @@ public class Input extends Parent implements Roots {
                 child.toLaTeX(map, newKey);
             }
         }
+        super.toLaTeXEnd(map, key);
     }
 
     public String getStartPart() {
