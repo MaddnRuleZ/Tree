@@ -2,14 +2,13 @@ package com.Application.Printer;
 
 import com.Application.User;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GitPrinter extends Printer {
     /**
@@ -19,7 +18,7 @@ public class GitPrinter extends Printer {
     /**
      * url to the git repository
      */
-    private String url;
+    private String overleafUrl;
     /**
      * username for the git repository
      */
@@ -32,26 +31,34 @@ public class GitPrinter extends Printer {
     /**
      * path to the folder where the git repository should be cloned
      */
-    private String path;
+    private String working_directory;
 
-    public GitPrinter(User user, String overleafUrl, String username, String password, String filePath) {
+    public GitPrinter(User user, String overleafUrl, String username, String password, String workingDir) {
         this.user = user;
-        this.url = overleafUrl;
+        this.overleafUrl = overleafUrl;
         this.username = username;
         this.password = password;
-        this.path = filePath;
+        this.working_directory = workingDir;
+        System.out.println(workingDir);
     }
 
     /**
-     * path has to contain a path that does not exi
-     *
+     * Clone or Overwrite a Git repository from the specified URL into the working directory.
      */
     public void cloneRepository() {
+        // Check if the directory already exists, and if so, delete it before cloning the repository
+        File repositoryPath = new File(this.working_directory);
+        if (repositoryPath.exists() && repositoryPath.isDirectory()) {
+            deleteDirectory(repositoryPath);
+        }
+
+        // Set up credentials for authentication (if required)
         CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
         try {
+            // Clone the repository from the specified URL into the working directory
             Git.cloneRepository()
-                    .setURI(this.url)
-                    .setDirectory(new File(this.path))
+                    .setURI(this.overleafUrl)
+                    .setDirectory(repositoryPath)
                     .setCredentialsProvider(credsProvider)
                     .call();
         } catch (GitAPIException e) {
@@ -59,64 +66,75 @@ public class GitPrinter extends Printer {
         }
     }
 
-    public void cloneOrUpdateRepository() {
-        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
-        File repositoryPath = new File(this.path);
-
-        if (repositoryPath.exists() && repositoryPath.isDirectory()) {
-            try {
-                Git git = Git.open(repositoryPath);
-                git.pull().setCredentialsProvider(credsProvider).call();
-                System.out.println("Repository updated successfully.");
-            } catch (IOException | GitAPIException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                Git.cloneRepository()
-                        .setURI(this.url)
-                        .setDirectory(repositoryPath)
-                        .setCredentialsProvider(credsProvider)
-                        .call();
-                System.out.println("Repository cloned successfully.");
-            } catch (GitAPIException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-
-    public void pushChanges(String localPath, String username, String password) {
+    public void pushChanges() {
         CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(username, password);
 
         try {
-            Git git = Git.open(new File(localPath));
+            Git git = Git.open(new File(this.working_directory));
             git.push()
                     .setCredentialsProvider(credsProvider)
+                    .setRemote(overleafUrl)
+                    .setRefSpecs(new RefSpec("refs/heads/master:refs/heads/master"))
                     .call();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Pull changes from the remote repository and update the local version.
+     */
+    public void pullRepository() {
+        File repositoryPath = new File(this.working_directory);
+
+        // Check if the directory exists and is a valid repository
+        if (repositoryPath.exists() && repositoryPath.isDirectory()) {
+            try {
+                // Open the existing repository
+                Git git = Git.open(repositoryPath);
+
+                // Set up credentials for authentication (if required)
+                CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
+
+                // Perform a pull operation to fetch and merge changes from the remote repository
+                PullResult pullResult = git.pull().setCredentialsProvider(credsProvider).call();
+
+                // Check the result of the pull operation
+                if (!pullResult.isSuccessful()) {
+                    System.out.println("Unable to update the repository.");
+                } else if (pullResult.getMergeResult() != null && pullResult.getMergeResult().getConflicts() != null) {
+                    System.out.println("There are merge conflicts that need to be resolved.");
+                } else {
+                    System.out.println("Repository updated successfully.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Local repository does not exist or is not a valid repository.");
+        }
+    }
 
     /**
-     * This method extracts the alphanumeric code from the end of the input string.
+     * Helper method to recursively delete a directory and its contents.
      *
-     * @param inputString The input string from which the code needs to be extracted.
-     * @return The extracted alphanumeric code, or null if no match is found.
+     * @param directory        The directory to be deleted.
      */
-    private String extractAlphanumericCode(String inputString) {
-        String pattern = "[a-zA-Z0-9]+$";
-        Pattern regex = Pattern.compile(pattern);
-        Matcher matcher = regex.matcher(inputString);
-
-        if (matcher.find()) {
-            return matcher.group();
-        } else {
-            return null;
+    private void deleteDirectory(File directory) {
+        File[] contents = directory.listFiles();
+        if (contents != null) {
+            for (File file : contents) {
+                if (file.isDirectory()) {
+                    // Recursively delete subdirectories and their contents
+                    deleteDirectory(file);
+                } else {
+                    // Delete individual files
+                    file.delete();
+                }
+            }
         }
+        // Delete the empty directory after its contents have been removed
+        directory.delete();
     }
 
 

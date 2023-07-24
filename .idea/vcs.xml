@@ -3,6 +3,9 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/SpringApplication/src/GitDirectoryTests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/SpringApplication/src/GitDirectoryTests/Overleaf_1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/SpringApplication/src/GitDirectoryTests/Overleaf_1/Overleaf_1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/SpringApplication/src/GitDirectoryTests/Overleaf_2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/SpringApplication/src/GitDirectoryTests/Test" vcs="Git" />
   </component>
 </project>
