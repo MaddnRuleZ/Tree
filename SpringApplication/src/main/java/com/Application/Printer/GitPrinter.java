@@ -15,38 +15,26 @@ import java.io.File;
 
 import java.io.IOException;
 
+/**
+ * Git Class for updating an Git -Overleaf repository with the Credentials
+ */
 public class GitPrinter extends Printer {
-    /**
-     *  user that holds information of LaTeX-Project
-     */
-    private User user;
-    /**
-     * url to the git repository
-     */
-    private String overleafUrl;
-    /**
-     * username for the git repository
-     */
-    private String username;
-    /**
-     * password for the git repository
-     */
-    private String password;
+    private final String overleafUrl;
+    private final String working_directory;
+    private final CredentialsProvider credentialsProvider;
 
     /**
-     * path to the folder where the git repository should be cloned
+     * Constructs a new instance of the GitPrinter class with the specified parameters.
+     *
+     * @param user The User object representing the user's information.
+     * @param overleafUrl The URL of the Overleaf repository used for Git operations.
+     * @param username The username associated with the Git repository.
+     * @param password The password (or authentication token) used for accessing the Git repository.
+     * @param workingDir The working directory where Git operations will be performed.
      */
-    private String working_directory;
-
-
-    private CredentialsProvider credentialsProvider;
-
-    public GitPrinter(User user, String overleafUrl, String username, String password, String workingDir) {
+    public GitPrinter(String overleafUrl, String username, String password, String workingDir) {
         credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
-        this.user = user;
         this.overleafUrl = overleafUrl;
-        this.username = username;
-        this.password = password;
         this.working_directory = workingDir;
         System.out.println(workingDir);
     }
@@ -60,12 +48,11 @@ public class GitPrinter extends Printer {
             deleteDirectory(repositoryPath);
         }
 
-        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
         try {
             Git.cloneRepository()
                     .setURI(this.overleafUrl)
                     .setDirectory(repositoryPath)
-                    .setCredentialsProvider(credsProvider)
+                    .setCredentialsProvider(this.credentialsProvider)
                     .call();
             return true;
         } catch (GitAPIException e) {
@@ -73,20 +60,22 @@ public class GitPrinter extends Printer {
         }
     }
 
+    /**
+     * Rebase the changes from the specified remote branch onto the current working branch.
+     *
+     * @param remoteBranch The name of the remote branch to rebase onto the current working branch.
+     * @return True if the rebase operation was successful, false otherwise.
+     */
     public boolean rebaseChanges(String remoteBranch) {
-        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(username, password);
-
         try {
             Git git = Git.open(new File(this.working_directory));
             git.fetch()
-                    .setCredentialsProvider(credsProvider)
+                    .setCredentialsProvider(this.credentialsProvider)
                     .setRemote(overleafUrl)
                     .call();
 
-
             RebaseCommand rebaseCommand = git.rebase();
             rebaseCommand.setUpstream(remoteBranch);
-
             rebaseCommand.call();
 
             return true;
@@ -96,17 +85,20 @@ public class GitPrinter extends Printer {
         }
     }
 
-
-
+    /**
+     * Pushes the local changes to the remote Git repository.
+     *
+     * @return True if the push operation was successful, false otherwise.
+     */
     public boolean pushChanges() {
-        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(username, password);
+        String refSpec = "refs/heads/master:refs/heads/master";
 
         try {
             Git git = Git.open(new File(this.working_directory));
             git.push()
-                    .setCredentialsProvider(credsProvider)
+                    .setCredentialsProvider(this.credentialsProvider)
                     .setRemote(overleafUrl)
-                    .setRefSpecs(new RefSpec("refs/heads/master:refs/heads/master"))
+                    .setRefSpecs(new RefSpec(refSpec))
                     .call();
             return true;
         } catch (Exception e) {
@@ -124,8 +116,8 @@ public class GitPrinter extends Printer {
         if (repositoryPath.exists() && repositoryPath.isDirectory()) {
             try {
                 Git git = Git.open(repositoryPath);
-                CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
-                PullResult pullResult = git.pull().setCredentialsProvider(credsProvider).call();
+                PullResult pullResult = git.pull()
+                        .setCredentialsProvider(credentialsProvider).call();
 
                 if (!pullResult.isSuccessful()) {
                     System.out.println("Unable to update the repository.");
@@ -167,19 +159,6 @@ public class GitPrinter extends Printer {
             }
         }
         directory.delete();
-    }
-
-
-    public void setPassword(String newPassword) {
-        this.credentialsProvider = new UsernamePasswordCredentialsProvider(this.username, newPassword);
-        this.password = newPassword;
-    }
-
-
-
-    public void setUsername(String newUsername) {
-        this.credentialsProvider = new UsernamePasswordCredentialsProvider(newUsername, this.password);
-        this.username = newUsername;
     }
 
     @Override

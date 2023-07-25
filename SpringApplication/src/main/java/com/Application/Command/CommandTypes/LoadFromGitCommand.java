@@ -41,7 +41,7 @@ public class LoadFromGitCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Printer printer = new GitPrinter(user, url, username, password, path);
+            Printer printer = new GitPrinter(url, username, password, path);
 
             Parser parser = new Parser(this.path);
             Roots root = parser.startParsing();
