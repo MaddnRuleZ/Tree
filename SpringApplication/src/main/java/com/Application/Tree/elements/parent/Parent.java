@@ -13,17 +13,24 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * Parent Abstract Class
  *
+ * The Parent abstract class represents a container element that groups and organizes child elements within the Parser.
  *
+ * A Parent element is defined by its startPart and endPart strings, which are used to identify the beginning and
+ * end of the parent container within the program. The hierarchical level (level) represents the nesting depth of this
+ * parent element in relation to other elements.
  */
 public abstract class Parent extends Element {
     protected final List<Element> childElements;
 
+
     /**
+     * Constructor for creating a new Parent object with the specified startPart, endPart, and level.
      *
-     * @param startPart
-     * @param endPart
-     * @param level
+     * @param startPart The startPart string that identifies the beginning of the parent container.
+     * @param endPart   The endPart string that identifies the end of the parent container.
+     * @param level     The hierarchical level of the parent container.
      */
     public Parent(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
@@ -53,7 +60,7 @@ public abstract class Parent extends Element {
      * @return TextBlockElement just created
      */
     protected BlockElement generateTextBlockAsChild() {
-        BlockElement textBlockElement = new BlockElement(null, null);
+        BlockElement textBlockElement = new BlockElement();
         this.addChild(textBlockElement);
         textBlockElement.setParent(this);
         return textBlockElement;
@@ -83,8 +90,6 @@ public abstract class Parent extends Element {
     public List<Element> getChildElements() {
         return this.childElements;
     }
-
-
 
     @Override
     public Element searchForID(UUID id) {

@@ -7,45 +7,52 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A class representing an Element's Summary.
  *
- *
+ * This class holds a List of Strings which represent the Summary of a Structure Element
  */
 public class Summary extends AdditionalInformationContainer {
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
-    private final List<String> summary;
-    private boolean active;
+    private final List<String> summaryText;
 
     /**
+     * while active all lines in the document will be added to this summary, and therefor not to the TextBlock
+     */
+    private boolean listeningOnDocument;
+
+    /**
+     * Creates a new Summary instance.
      *
+     * This constructor initializes the summary list as an empty ArrayList and sets the
+     * 'listeningOnDocument' status to false.
      */
     public Summary() {
-        summary = new ArrayList<>();
-        active = false;
+        summaryText = new ArrayList<>();
+        listeningOnDocument = false;
     }
 
     /**
-     * check if the current Line belongs to the summary,
-     * if so add it to the summary and return true,
-     * else return false.
+     * check if the current Line starts/ ends the summary
+     * or add the current line to the summary if the listener is active
      *
-     * @param currentLine line to check
-     * @return true if addet to summary, else false
+     * @param currentLine line to check for start/ end hints
+     * @return true if line was added to summary, else false
      */
     @Override
     public boolean extractContent(String currentLine) {
-        if (active && currentLine.contains(END_SUMMARY)) {
-            summary.add(currentLine);
-            active = false;
+        if (listeningOnDocument && currentLine.contains(END_SUMMARY)) {
+            summaryText.add(currentLine);
+            listeningOnDocument = false;
             return true;
 
-        } else if (!active && currentLine.contains(START_SUMMARY)) {
-            active = true;
-            summary.add(currentLine);
+        } else if (!listeningOnDocument && currentLine.contains(START_SUMMARY)) {
+            listeningOnDocument = true;
+            summaryText.add(currentLine);
             return true;
 
-        } else if (active) {
-            summary.add(currentLine);
+        } else if (listeningOnDocument) {
+            summaryText.add(currentLine);
             return true;
         }
         return false;
@@ -57,26 +64,36 @@ public class Summary extends AdditionalInformationContainer {
      */
     @Override
     public String toString() {
-            return String.join(".", summary);
+            return String.join(".", summaryText);
     }
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);
         text.append("\n");
-        for(String line : summary){
+        for(String line : summaryText){
             text.append(START_SUMMARY).append("\n");
             text.append(line).append("\n");
             text.append(END_SUMMARY).append("\n");
         }
     }
 
+    @Override
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
+    }
+
+    @Override
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
+    }
+
     public List<String> getSummary() {
-        return summary;
+        return summaryText;
     }
 
     public void setSummary(String text) {
-        this.summary.clear();
-        this.summary.add(text);
+        this.summaryText.clear();
+        this.summaryText.add(text);
     }
 }

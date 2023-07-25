@@ -7,24 +7,31 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A class representing an Element's Comments.
  *
- *
+ * Store each Comment in the Comment List
  */
 public class Comment extends AdditionalInformationContainer {
     private final static String START_CHARACTER = "%";
-    private final List<String> comment;
+    private final List<String> comments;
 
     /**
-     *
+     * Constructs a new Comment object. Initializes the comment list as an empty ArrayList.
      */
     public Comment() {
-        comment = new ArrayList<>();
+        comments = new ArrayList<>();
     }
 
+    /**
+     * Extracts content from the provided currentLine and stores it in the comment list.
+     *
+     * @param currentLine The current line of code to be checked for comments.
+     * @return true if a comment is found and added to the list, false otherwise.
+     */
     @Override
     public boolean extractContent(String currentLine) {
         if (currentLine.contains(START_CHARACTER)) {
-            comment.add(currentLine);
+            comments.add(currentLine);
             return true;
         }
         return false;
@@ -36,16 +43,26 @@ public class Comment extends AdditionalInformationContainer {
      * @return comment as string
      */
     public String toString() {
-        return String.join("%", comment);
+        return String.join("%", comments);
     }
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);
         text.append("\n");
-        for(String line : comment){
+        for(String line : comments){
             text.append("%").append(line).append("\n");
         }
+    }
+
+    @Override
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
+    }
+
+    @Override
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
     }
 }
 

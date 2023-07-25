@@ -2,22 +2,24 @@ package com.Application.Tree.elements.childs;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
-import com.Application.Tree.additionalInfo.NewLine;
-import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.elements.parent.Figure;
 
 import java.util.Map;
 
+/**
+ * BlockElement Class
+ *
+ * The BlockElement class represents a child element within the LaTeX Code.
+ * BlockElements are undetected Blocks of Text which represent no detected Structure Element
+ */
 public class BlockElement extends Child {
     private static final int BLOCK_ELEMENT_LEVEL = 12;
 
     /**
-     *
-     * @param startPart
-     * @param endPart
+     * Call the constructor of the parent class (Child) with null startPart and endPart and the block element level.
      */
-    public BlockElement(String startPart, String endPart) {
-        super(startPart, endPart, BLOCK_ELEMENT_LEVEL);
+    public BlockElement() {
+        super(null, null, BLOCK_ELEMENT_LEVEL);
     }
 
     /**
@@ -28,14 +30,13 @@ public class BlockElement extends Child {
      */
     @Override
     public Element addTextBlockToElem(String line) {
-        if (NewLine.checkLineForNewLineCharacters(line)) {
+        if (newLine.checkLineForNewLineCharacters(line)) {
             newLine.extractContent(line);
             return generateTextSameLevel();
         } else {
             if (!summary.extractContent(line) && !comment.extractContent(line)) {
                 // todo Enter this: if (parentElement.getStartPart().equals(ElementConfig.FIGURE.getStartPart())) { getStartPart wirft eine Exeption -> S fragen
-                    if (parentElement instanceof Figure) {
-                    Figure figure = (Figure) parentElement;
+                if (parentElement instanceof Figure figure) {
                     if (!figure.setGraphics(line) && !figure.addCaption(line)) {
                         this.text.add(line);
                     }

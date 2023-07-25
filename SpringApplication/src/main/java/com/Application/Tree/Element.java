@@ -68,7 +68,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
      * @return
      */
     public BlockElement generateTextSameLevel() {
-        BlockElement blockElement = new BlockElement(null, null);
+        BlockElement blockElement = new BlockElement();
         parentElement.addChild(blockElement);
         blockElement.setParent(parentElement);
         return blockElement;

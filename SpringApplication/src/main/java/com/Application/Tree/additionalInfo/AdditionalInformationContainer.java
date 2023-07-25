@@ -6,7 +6,5 @@ import com.Application.Tree.interfaces.LaTeXTranslator;
  *
  */
 public abstract class AdditionalInformationContainer implements LaTeXTranslator {
-    public AdditionalInformationContainer() {
-    }
     public abstract boolean extractContent(String currentLine);
 }

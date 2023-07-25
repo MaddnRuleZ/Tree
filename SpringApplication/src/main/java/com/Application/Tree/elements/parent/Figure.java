@@ -12,35 +12,34 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * Figure Class
+ *
+ * The Figure class represents an environment that contains graphical elements with captions in the Parser.
+ *
+ * The Figure environment typically includes graphics identified by "\\includegraphics" and their corresponding
+ * captions identified by "\\caption". The "graphic" field stores the "\\includegraphics" content for this figure.
+ *
+ * The captions are stored in the "captions" list, which can contain multiple captions associated with the figure.
+ */
 public class Figure extends Environment {
     private final List<String> captions;
     public static final String CAPTION_IDENT = "\\caption";
     public static final String GRAPHICS_IDENT = "\\includegraphics";
     private String graphic;
 
+
     /**
-     * Create a new Environment
+     * Constructor for creating a new Figure object with the specified startPart, endPart, and level.
      *
-     * @param startPart
-     * @param endPart
-     * @param level
+     * @param startPart The startPart string that identifies the beginning of the figure environment.
+     * @param endPart   The endPart string that identifies the end of the figure environment.
+     * @param level     The hierarchical level of the figure environment.
      */
     public Figure(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
         captions = new ArrayList<>();
-    }
-
-    @Override
-    public Element addTextBlockToElem(String line) {
-        if (this.childElements.size() == 0) {
-            BlockElement block = generateTextBlockAsChild();
-            block.addTextBlockToElem(line);
-            return block;
-        } else {
-            BlockElement block = generateTextSameLevel();
-            block.addTextBlockToElem(line);
-            return block;
-        }
     }
 
     /**

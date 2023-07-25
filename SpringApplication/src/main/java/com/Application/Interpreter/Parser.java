@@ -10,8 +10,6 @@ import com.Application.Tree.elements.roots.Roots;
 public class Parser {
     private final TextFileReader textFileReader;
     private final String filePath;
-    private Scanner scanner;
-    private String[] text;
 
     /**
      * generate a new Parser for Parsing a LateX document
@@ -35,8 +33,8 @@ public class Parser {
                     + "check Log for more details");
         }
 
-        this.text = textFileReader.readLinesFromFile();
-        this.scanner = new Scanner(text);
+        String[] text = textFileReader.readLinesFromFile();
+        Scanner scanner = new Scanner(text);
         return scanner.parseDocument();
     }
 }

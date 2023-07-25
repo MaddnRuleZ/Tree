@@ -7,25 +7,37 @@ import com.Application.Tree.elements.childs.BlockElement;
 import java.util.Map;
 import java.util.UUID;
 
+
+/**
+ * Environment Class
+ *
+ * The Environment class represents a parent container that holds elements within a program.
+ *
+ * An Environment typically groups and organizes various child elements within a specific context.
+ * It is defined by its startPart and endPart strings, which are used to identify the beginning and
+ * end of the environment container within the program. The hierarchical level (level) represents the
+ * nesting depth of this environment in relation to other elements.
+ */
 public class Environment extends Parent {
 
     /**
-     * Create a new Environment
+     * Constructor for creating a new Environment object with the specified startPart, endPart, and level.
      *
-     * @param startPart
-     * @param endPart
-     * @param level
+     * @param startPart The startPart string that identifies the beginning of the environment container.
+     * @param endPart   The endPart string that identifies the end of the environment container.
+     * @param level     The hierarchical level of the environment container.
      */
     public Environment(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
     }
 
     /**
-     * Add an new TextBlock to the Environment.
-     * On the Same Level if
+     * Add a new TextBlock to the Environment.
+     * If there are already child elements in the Environment, the new TextBlock will be added at the same level.
+     * Otherwise, it will be added as a child of the Environment.
      *
-     * @param line line to Scan for Summary Comment or NewLine
-     * @return
+     * @param line The line to scan for Summary Comment or NewLine to be added to the TextBlock.
+     * @return The newly created or existing TextBlockElement where the line is added.
      */
     @Override
     public Element addTextBlockToElem(String line) {
