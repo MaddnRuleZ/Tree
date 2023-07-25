@@ -1,6 +1,7 @@
 package com.Application.Tree.additionalInfo;
 
 import com.Application.Exceptions.UnknownElementException;
+import com.Application.Tree.interfaces.LaTeXTranslator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
  *
  * Store each Comment in the Comment List
  */
-public class Comment extends AdditionalInformationContainer {
+public class Comment implements LaTeXTranslator {
     private final static String START_CHARACTER = "%";
     private final List<String> comments;
 
@@ -28,7 +29,6 @@ public class Comment extends AdditionalInformationContainer {
      * @param currentLine The current line of code to be checked for comments.
      * @return true if a comment is found and added to the list, false otherwise.
      */
-    @Override
     public boolean extractContent(String currentLine) {
         if (currentLine.contains(START_CHARACTER)) {
             comments.add(currentLine);
@@ -57,12 +57,10 @@ public class Comment extends AdditionalInformationContainer {
 
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
     }
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
     }
 }
 

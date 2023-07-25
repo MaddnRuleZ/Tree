@@ -1,5 +1,7 @@
 package com.Application.Interpreter;
 
+import com.Application.Exceptions.FileInvalidException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,24 +15,20 @@ public class TextFileReader {
         this.filePath = filePath;
     }
 
-    public boolean validateFile() {
+    public boolean validateFile() throws FileInvalidException {
         File file = new File(filePath);
         if (!file.exists()) {
-            System.out.println("File does not exist: " + filePath);
-            return false;
+            throw new FileInvalidException("Datei existiert nicht " + filePath);
         }
         if (file.isDirectory()) {
-            System.out.println("File is a directory: " + filePath);
-            return false;
+            throw new FileInvalidException("Pfad ist ein Ordner " + filePath);
         }
         if (!file.canRead()) {
-            System.out.println("File is not readable: " + filePath);
-            return false;
+            throw new FileInvalidException("Datei ist nicht Lesbar " + filePath);
         }
         String type = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-        if(type.equals("tex")){
-            System.out.println("File is not readable: " + filePath);
-            return false;
+        if (type.equals("tex")){
+            throw new FileInvalidException("Datei endet nicht auf .tex " + filePath);
         }
         return true;
     }

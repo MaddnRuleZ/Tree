@@ -1,6 +1,7 @@
 package com.Application.Tree.additionalInfo;
 
 import com.Application.Exceptions.UnknownElementException;
+import com.Application.Tree.interfaces.LaTeXTranslator;
 
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  * NewLines Seper two TextBLockElements from each other. And will be stored in this Additional Container
  * Each TextBLockElement can only have one NewLineCharacter and multiple in one line will all be stored in one line too.
  */
-public class NewLine extends AdditionalInformationContainer {
+public class NewLine implements LaTeXTranslator {
 
     /**
      * Global Collection of all Strings that will seper two TextBlockElements from each other
@@ -29,7 +30,6 @@ public class NewLine extends AdditionalInformationContainer {
      * @param currentLine The current line of code to be checked for new line characters.
      * @return true if a new line character is found and set as the new line content, false otherwise.
      */
-    @Override
     public boolean extractContent(String currentLine) {
         if (checkLineForNewLineCharacters(currentLine)) {
             this.newLine = currentLine;
@@ -61,11 +61,9 @@ public class NewLine extends AdditionalInformationContainer {
 
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
     }
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
     }
 }

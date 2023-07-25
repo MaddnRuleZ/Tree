@@ -1,6 +1,7 @@
 package com.Application.Tree.additionalInfo;
 
 import com.Application.Exceptions.UnknownElementException;
+import com.Application.Tree.interfaces.LaTeXTranslator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
  *
  * This class holds a List of Strings which represent the Summary of a Structure Element
  */
-public class Summary extends AdditionalInformationContainer {
+public class Summary implements LaTeXTranslator {
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
     private final List<String> summaryText;
@@ -39,7 +40,6 @@ public class Summary extends AdditionalInformationContainer {
      * @param currentLine line to check for start/ end hints
      * @return true if line was added to summary, else false
      */
-    @Override
     public boolean extractContent(String currentLine) {
         if (listeningOnDocument && currentLine.contains(END_SUMMARY)) {
             summaryText.add(currentLine);
@@ -80,12 +80,12 @@ public class Summary extends AdditionalInformationContainer {
 
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
+
     }
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        // TODO, @S war nicht implementiert und daher nicht Komplierbar,
+
     }
 
     public List<String> getSummary() {

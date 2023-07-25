@@ -21,6 +21,7 @@ import java.util.UUID;
  * This is the Singleton Function of the Root of the Whole LaTeX code.
  */
 public class Root implements JsonParser, LaTeXTranslator, Roots {
+    public static final String START_DOCUMENT = "\\startdocument";
     public static int MIN_LEVEL;
     private final List<Element> childElements;
     private static Root instance;

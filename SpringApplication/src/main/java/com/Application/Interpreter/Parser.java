@@ -1,5 +1,6 @@
 package com.Application.Interpreter;
 
+import com.Application.Exceptions.FileInvalidException;
 import com.Application.Tree.elements.roots.Roots;
 
 /**
@@ -28,13 +29,16 @@ public class Parser {
      * @return finished Root, containing the full Tree as Children
      */
     public Roots startParsing() {
-        if (!textFileReader.validateFile()) {
-            throw new IllegalArgumentException("Provided File is not Valid, given Path:" + this.filePath + "\n"
-                    + "check Log for more details");
-        }
+        try {
+            if (!textFileReader.validateFile()) {
+                return null;
+            }
+            String[] text = textFileReader.readLinesFromFile();
+            Scanner scanner = new Scanner(text);
+            return scanner.parseDocument();
 
-        String[] text = textFileReader.readLinesFromFile();
-        Scanner scanner = new Scanner(text);
-        return scanner.parseDocument();
+        } catch(FileInvalidException exception) {
+            return null;
+        }
     }
 }

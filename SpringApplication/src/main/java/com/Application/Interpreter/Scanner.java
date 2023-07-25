@@ -40,7 +40,7 @@ public class Scanner {
     public Roots parseDocument() {
         Element lastElement = null;
         for (int i = 0; i < text.length; i++) {
-            if (text[i].contains("\\startdocument")) {
+            if (text[i].contains(Root.START_DOCUMENT)) {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
             }
 
@@ -49,6 +49,9 @@ public class Scanner {
                 lastElement = newElement;
 
             } else {
+                if (lastElement == null) {
+                    return null;
+                }
                 lastElement = lastElement.addTextBlockToElem(text[i]);
             }
         }

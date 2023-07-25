@@ -19,6 +19,9 @@ import java.util.UUID;
  * nesting depth of this environment in relation to other elements.
  */
 public class Environment extends Parent {
+    public static String DEFAULT_OPENING = "\\begin";
+    public static String DEFAULT_ENDING = "\\end";
+
 
     /**
      * Constructor for creating a new Environment object with the specified startPart, endPart, and level.

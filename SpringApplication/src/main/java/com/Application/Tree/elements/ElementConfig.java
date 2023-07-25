@@ -7,7 +7,6 @@ import com.Application.Tree.elements.parent.Environment;
 import com.Application.Tree.elements.parent.Figure;
 import com.Application.Tree.elements.roots.Input;
 import com.Application.Tree.elements.parent.Sectioning;
-import com.Application.Tree.elements.roots.Roots;
 
 /**
  * Class Containing the Configuration of ALL the Structural Elements that wil be detected by the Scan -Algorithm
@@ -71,7 +70,6 @@ public enum ElementConfig {
         }
     },
 
-
     ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", 9) {
         @Override
         Element getElement( String currentLine) {
@@ -132,7 +130,6 @@ public enum ElementConfig {
         }
     };
 
-    public final static int MAX_LEVEL = 100;
     private final String startPart;
     private final String endPart;
     private final int level;
@@ -172,8 +169,8 @@ public enum ElementConfig {
             }
         }
 
-        if (startPartLine.contains("\\begin")) {
-            return new Environment("\\begin", "\\end", 9);
+        if (startPartLine.contains(Environment.DEFAULT_OPENING)) {
+            return new Environment(Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, 9);
         }
         return null;
     }
