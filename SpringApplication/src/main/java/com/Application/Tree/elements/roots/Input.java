@@ -22,7 +22,7 @@ public class Input extends Parent implements Roots {
      * Input Constructor, call Constructor of Parent
      */
     public Input() {
-        super(startPart, null, Root.MIN_LEVEL);
+        super(startPart, null, 1);
     }
 
     /**

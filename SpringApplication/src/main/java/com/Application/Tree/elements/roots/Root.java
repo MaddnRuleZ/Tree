@@ -17,12 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
 /**
  * This is the Singleton Function of the Root of the Whole LaTeX code.
  */
 public class Root implements JsonParser, LaTeXTranslator, Roots {
-    public static int MIN_LEVEL = ElementConfig.MAX_LEVEL;
+    public static int MIN_LEVEL;
     private final List<Element> childElements;
     private static Root instance;
     private List<String> startHeaderText;
