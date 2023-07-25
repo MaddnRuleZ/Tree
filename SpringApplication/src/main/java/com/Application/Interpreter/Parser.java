@@ -10,7 +10,6 @@ import com.Application.Tree.elements.roots.Roots;
  */
 public class Parser {
     private final TextFileReader textFileReader;
-    private final String filePath;
 
     /**
      * generate a new Parser for Parsing a LateX document
@@ -18,7 +17,6 @@ public class Parser {
      * @param filePath The file path of the text file to be parsed.
      */
     public Parser(String filePath) {
-        this.filePath = filePath;
         this.textFileReader = new TextFileReader(filePath);
     }
 
@@ -37,7 +35,7 @@ public class Parser {
             Scanner scanner = new Scanner(text);
             return scanner.parseDocument();
 
-        } catch(FileInvalidException exception) {
+        } catch (FileInvalidException exception) {
             return null;
         }
     }

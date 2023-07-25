@@ -70,35 +70,35 @@ public enum ElementConfig {
         }
     },
 
-    ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", 9) {
+    ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", Environment.DEFAULT_LEVEL) {
         @Override
         Element getElement( String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
-    LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", 9) {
+    LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", Environment.DEFAULT_LEVEL) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
-    VERBATIM("\\begin{verbatim}", "\\end{verbatim}", 9) {
+    VERBATIM("\\begin{verbatim}", "\\end{verbatim}", Environment.DEFAULT_LEVEL) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
-    FIGURE("\\begin{figure}", "\\end{figure}", 9) {
+    FIGURE("\\begin{figure}", "\\end{figure}", Environment.DEFAULT_LEVEL) {
         @Override
         Element getElement(String currentLine) {
             return new Figure(getStartPart(), getEndPart(), getLevel());
         }
     },
 
-    EQUATION("\\begin{equation}", "\\end{equation}", 9) {
+    EQUATION("\\begin{equation}", "\\end{equation}", Environment.DEFAULT_LEVEL) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
@@ -170,7 +170,7 @@ public enum ElementConfig {
         }
 
         if (startPartLine.contains(Environment.DEFAULT_OPENING)) {
-            return new Environment(Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, 9);
+            return new Environment(Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, Environment.DEFAULT_LEVEL);
         }
         return null;
     }
