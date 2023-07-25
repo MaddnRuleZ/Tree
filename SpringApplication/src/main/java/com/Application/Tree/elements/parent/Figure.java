@@ -2,7 +2,6 @@ package com.Application.Tree.elements.parent;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
-import com.Application.Tree.elements.childs.BlockElement;
 import com.Application.Tree.elements.ElementConfig;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -81,8 +80,8 @@ public class Figure extends Environment {
     }
 
 
-    public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        super.toLaTeXStart(map, key);
+    public void toLaTeX(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level);
 
         StringBuilder text = map.get(key);
 
@@ -100,13 +99,13 @@ public class Figure extends Environment {
 
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                child.toLaTeX(map, key);
+                child.toLaTeX(map, key, level + 1);
             }
         }
 
         text.append(this.getEndPart());
 
-        super.toLaTeXEnd(map, key);
+        super.toLaTeXEnd(map, key, level+1);
     }
 
 

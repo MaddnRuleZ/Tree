@@ -19,7 +19,7 @@ public class ParserTest {
 
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        root.toLaTeX(map, "root");
+        root.toLaTeX(map, "root", 0);
         System.out.println(map.get("root").toString());
     }
 }

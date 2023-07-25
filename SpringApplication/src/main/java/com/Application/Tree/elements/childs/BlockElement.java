@@ -20,6 +20,7 @@ public class BlockElement extends Child {
      */
     public BlockElement() {
         super(null, null, BLOCK_ELEMENT_LEVEL);
+        this.type = this.getClass().getSuperclass().getSimpleName();
     }
 
     /**
@@ -48,16 +49,16 @@ public class BlockElement extends Child {
         }
     }
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
-        super.toLaTeXStart(map, key);
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level);
 
         StringBuilder text = map.get(key);
         text.append(this.content);
 
         if(this.newLine != null) {
-            this.newLine.toLaTeX(map, key);
+            this.newLine.toLaTeX(map, key, level);
         }
 
-        super.toLaTeXEnd(map, key);
+        super.toLaTeXEnd(map, key, level);
     }
 }

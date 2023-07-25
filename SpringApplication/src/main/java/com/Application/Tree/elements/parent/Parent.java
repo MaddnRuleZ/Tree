@@ -35,6 +35,7 @@ public abstract class Parent extends Element {
     public Parent(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
         childElements = new ArrayList<>();
+        this.type = this.getClass().getSimpleName();
     }
 
     /**

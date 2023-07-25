@@ -16,7 +16,7 @@ public class Clock implements Runnable, ILocks {
     /**
      * time to sleep between pushes
      */
-    private final int sleepTime = 1000;
+    private final int sleepTime = 50000;
     /**
      * tree structure to LaTeX-Code printer
      */
@@ -54,7 +54,7 @@ public class Clock implements Runnable, ILocks {
                 printer.export();
             } catch (InterruptedException | IOException e) {
                 failureMessage = "Etwaige Änderungen konnten nicht gespeichert werden. \n " +
-                        "Sollten Sie das LaTeX-Projekt aus einer Datei geladen haben, kann es sein dass der LaTeX-Code dennoch in eine temporären Datei gespeichert wurde. \n";
+                        "Sollten Sie das LaTeX-Projekt aus einer Datei geladen haben, kann es sein dass der LaTeX-Code dennoch in einer temporären Datei gespeichert wurde. \n";
                 failure = true;
                 break;
             }  catch (ProcessingException e) {

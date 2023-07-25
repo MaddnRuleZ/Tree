@@ -6,7 +6,6 @@ import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.elements.roots.Root;
 
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Sectioning Class
@@ -50,8 +49,8 @@ public class Sectioning extends Parent {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
-        super.toLaTeXStart(map, key);
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level);
 
         StringBuilder text = map.get(key);
 
@@ -66,11 +65,11 @@ public class Sectioning extends Parent {
 
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                child.toLaTeX(map, key);
+                child.toLaTeX(map, key, level + 1);
             }
         }
 
-        super.toLaTeXEnd(map, key);
+        super.toLaTeXEnd(map, key, level+1);
     }
 
     /**

@@ -21,7 +21,7 @@ public class LaTeXParserTest {
     public void parseTest() throws UnknownElementException {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        tree.root.toLaTeX(map, "root");
+        tree.root.toLaTeX(map, "root", 0);
         System.out.println(map.get("root").toString());
     }
 

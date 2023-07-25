@@ -71,8 +71,8 @@ public class Environment extends Parent {
 
     @Override
     //TODO environment end und start part
-    public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        super.toLaTeXStart(map, key);
+    public void toLaTeX(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level);
 
         StringBuilder text = map.get(key);
 
@@ -83,13 +83,13 @@ public class Environment extends Parent {
         text.append("\n");
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                child.toLaTeX(map, key);
+                child.toLaTeX(map, key, level);
             }
         }
         text.append(this.getEndPart());
         text.append("\n");
 
-        super.toLaTeXEnd(map, key);
+        super.toLaTeXEnd(map, key, level);
     }
 
 }

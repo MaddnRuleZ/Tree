@@ -21,7 +21,7 @@ public class FilePrinter extends Printer {
     public void export() throws IOException, UnknownElementException {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        this.root.toLaTeX(map, "root");
+        this.root.toLaTeX(map, "root", 0);
         for(String key : map.keySet()){
             File tempFile = File.createTempFile(key, "txt");
             Files.writeString(tempFile.toPath(), map.get(key));

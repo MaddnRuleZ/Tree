@@ -34,7 +34,7 @@ public class LoadFromFolderCommand extends Command {
                 this.user.setRoot((Root) root);
                 this.user.setPrinter(printer);
             } else {
-                throw new ParseException("return value of parsing"+ root.getClass().getName());
+                throw new ParseException("return value of parsing "+ root.getClass().getName());
             }
             this.setSuccess(true);
 

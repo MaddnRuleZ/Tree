@@ -68,23 +68,23 @@ public class Summary implements LaTeXTranslator {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
-        text.append("\n");
-        text.append(START_SUMMARY).append("\n");
+        text.append("\n").append("\n");
+        text.append("\t".repeat(level)).append(START_SUMMARY).append("\n");
         for(String line : summaryText){
-            text.append(line).append("\n");
+            text.append("\t".repeat(level)).append("%").append(line).append("\n");
         }
-        text.append(END_SUMMARY).append("\n");
+        text.append("\t".repeat(level)).append(END_SUMMARY).append("\n");
     }
 
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
 
     }
 
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
 
     }
 

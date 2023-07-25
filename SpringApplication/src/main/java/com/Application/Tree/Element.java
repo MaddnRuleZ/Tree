@@ -37,6 +37,8 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     private final String startPart;
     private final String endPart;
 
+    protected String type;
+
     /**
      *
      * @param startPart
@@ -119,7 +121,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     }
 
     public void setContent(String content) {
-        Pattern pattern = Pattern.compile("\\[([^]]*)\\]");
+        Pattern pattern = Pattern.compile("[\\{\\[](\\w*)[\\}\\]]");
         Matcher matcher = pattern.matcher(content);
 
         if (matcher.find()) {
@@ -181,7 +183,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         ObjectNode node = mapper.createObjectNode();
 
         node.put("id", this.id.toString());
-        node.put("type", this.getClass().getSimpleName());
+        node.put("type", this.type);
 
         if(this.getParentElement() == null) {
             node.put("parent", "null");
@@ -232,21 +234,21 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     }
 
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
 
         if (this.summary != null) {
-            this.summary.toLaTeX(map, key);
+            this.summary.toLaTeX(map, key, level);
         }
         if (this.comment != null) {
-            this.comment.toLaTeX(map, key);
+            this.comment.toLaTeX(map, key, level);
         }
     }
 
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         if(this.newLine != null) {
-            this.newLine.toLaTeX(map, key);
+            this.newLine.toLaTeX(map, key, level);
         }
     }
 

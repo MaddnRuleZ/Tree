@@ -22,6 +22,8 @@ public class Child extends Element {
      */
     public Child(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
+
+        this.type = this.getClass().getSimpleName();
     }
 
     /**
@@ -48,14 +50,14 @@ public class Child extends Element {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
-        super.toLaTeXStart(map, key);
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level);
 
         StringBuilder text = map.get(key);
 
         text.append(this.getStartPart());
         text.append("{").append(this.content).append("}");
 
-        super.toLaTeXEnd(map, key);
+        super.toLaTeXEnd(map, key, level);
     }
 }

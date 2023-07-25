@@ -21,7 +21,7 @@ public class ParserTestAdvanced {
         //TODO: Ich habe die to Latex-Methode angefangen
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        root.toLaTeX(map, "root");
+        root.toLaTeX(map, "root", 0);
         System.out.println(map.get("root").toString());
 
     }

@@ -43,9 +43,10 @@ public class JsonParserTest {
     public void EnvironmentJsonTest() {
         Parser parser = new Parser("src/TestDocuments/PSE_TEST_1.txt");
         Root root = (Root) parser.startParsing();
-        //String json = root.toJsonEditor().toString();
-        //String formattedJsonString = formatJsonString(json);
-        //System.out.println(formattedJsonString);
+        String json = root.toJsonEditor().toString();
+
+        String formattedJsonString = formatJsonString(json);
+        System.out.println(formattedJsonString);
     }
 
     private static String formatJsonString(String jsonString) {

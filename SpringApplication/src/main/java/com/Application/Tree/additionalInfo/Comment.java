@@ -47,7 +47,7 @@ public class Comment implements LaTeXTranslator {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
         text.append("\n");
         for(String line : comments){
@@ -56,11 +56,11 @@ public class Comment implements LaTeXTranslator {
     }
 
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
     }
 
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
     }
 }
 

@@ -2,7 +2,6 @@ package com.Application.Tree.elements.roots;
 
 import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
-import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.interfaces.LaTeXTranslator;
 import com.Application.Tree.interfaces.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -127,25 +126,27 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     @Override
-    public void toLaTeX(Map<String, StringBuilder> map, String key) throws UnknownElementException {
-        toLaTeXStart(map, key);
+    public void toLaTeX(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        toLaTeXStart(map, key, level);
         StringBuilder text = map.get(key);
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                child.toLaTeX(map, key);
+                child.toLaTeX(map, key, level);
             }
         }
-        toLaTeXEnd(map, key);
+        toLaTeXEnd(map, key, level);
     }
 
     /**
      * adds the startHeader e.g the text before \startDocument to the Root
-     * @param map of the LaTeX Code
-     * @param key of the LaTeX Code
+     *
+     * @param map   of the LaTeX Code
+     * @param key   of the LaTeX Code
+     * @param level
      * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
         text.append(this.startHeaderText);
         text.append("\n");
@@ -153,12 +154,14 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
 
     /**
      * adds the endHeader e.g the text after \endDocument to the Root
-     * @param map of the LaTeX Code
-     * @param key of the LaTeX Code
+     *
+     * @param map   of the LaTeX Code
+     * @param key   of the LaTeX Code
+     * @param level
      * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
         text.append("\\end{document}");
     }
