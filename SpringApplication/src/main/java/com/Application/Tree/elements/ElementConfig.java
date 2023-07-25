@@ -180,16 +180,16 @@ public enum ElementConfig {
 
     // todo das ist magic number hart codiert
     public static ElementConfig getSectioningType(int level) {
-        switch(level)  {
-            case 1: return PART;
-            case 2: return CHAPTER;
-            case 3: return SECTION;
-            case 4: return SUBSECTION;
-            case 5: return SUBSUBSECTION;
-            case 6: return PARAGRAPH;
-
-            default: return null;
-        }
+        return switch (level) {
+            case 1 -> PART;
+            case 2 -> CHAPTER;
+            case 3 -> SECTION;
+            case 4 -> SUBSECTION;
+            case 5 -> SUBSUBSECTION;
+            case 6 -> PARAGRAPH;
+            case 7 -> SUBPARAGRAPH;
+            default -> null;
+        };
     }
 
     public String getStartPart() {
