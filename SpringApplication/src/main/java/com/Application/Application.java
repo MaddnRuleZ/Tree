@@ -13,13 +13,12 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @SpringBootConfiguration
-@ComponentScan(basePackages = {"com.Application"})
 public class Application {
 
 	@Autowired
 	private User user;
 	private Clock clock;
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		SpringApplication.run(Application.class, args);
 	}
 }

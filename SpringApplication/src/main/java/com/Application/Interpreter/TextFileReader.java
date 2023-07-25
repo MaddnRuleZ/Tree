@@ -23,10 +23,12 @@ public class TextFileReader {
             System.out.println("File is a directory: " + filePath);
             return false;
         }
+
         if (!file.canRead()) {
             System.out.println("File is not readable: " + filePath);
             return false;
         }
+
         String type = file.getName().substring(file.getName().lastIndexOf(".") + 1);
         if(type.equals("tex")){
             System.out.println("File is not readable: " + filePath);

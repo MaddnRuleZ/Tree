@@ -71,11 +71,11 @@ public class Summary extends AdditionalInformationContainer {
     public void toLaTeX(Map<String,StringBuilder> map, String key) throws UnknownElementException {
         StringBuilder text = map.get(key);
         text.append("\n");
+        text.append(START_SUMMARY).append("\n");
         for(String line : summaryText){
-            text.append(START_SUMMARY).append("\n");
             text.append(line).append("\n");
-            text.append(END_SUMMARY).append("\n");
         }
+        text.append(END_SUMMARY).append("\n");
     }
 
     @Override

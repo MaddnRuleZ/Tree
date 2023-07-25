@@ -35,8 +35,9 @@ public class User {
      */
     private GitWatcher gitWatcher;
 
-    public static boolean failure = false;
-
+    public User() {
+        this.root = Root.getInstance();
+    }
 
     /**
      * sets the printer and starts the clock for updating the tree structure
