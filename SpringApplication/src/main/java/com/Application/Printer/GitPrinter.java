@@ -4,7 +4,9 @@ import com.Application.Exceptions.UnknownElementException;
 import com.Application.User;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -36,7 +38,11 @@ public class GitPrinter extends Printer {
      */
     private String working_directory;
 
+
+    private CredentialsProvider credentialsProvider;
+
     public GitPrinter(User user, String overleafUrl, String username, String password, String workingDir) {
+        credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
         this.user = user;
         this.overleafUrl = overleafUrl;
         this.username = username;
@@ -48,28 +54,51 @@ public class GitPrinter extends Printer {
     /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.
      */
-    public void cloneRepository() {
-        // Check if the directory already exists, and if so, delete it before cloning the repository
+    public boolean cloneRepository() {
         File repositoryPath = new File(this.working_directory);
         if (repositoryPath.exists() && repositoryPath.isDirectory()) {
             deleteDirectory(repositoryPath);
         }
 
-        // Set up credentials for authentication (if required)
         CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
         try {
-            // Clone the repository from the specified URL into the working directory
             Git.cloneRepository()
                     .setURI(this.overleafUrl)
                     .setDirectory(repositoryPath)
                     .setCredentialsProvider(credsProvider)
                     .call();
+            return true;
         } catch (GitAPIException e) {
-            e.printStackTrace();
+            return false;
         }
     }
 
-    public void pushChanges() {
+    public boolean rebaseChanges(String remoteBranch) {
+        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(username, password);
+
+        try {
+            Git git = Git.open(new File(this.working_directory));
+            git.fetch()
+                    .setCredentialsProvider(credsProvider)
+                    .setRemote(overleafUrl)
+                    .call();
+
+
+            RebaseCommand rebaseCommand = git.rebase();
+            rebaseCommand.setUpstream(remoteBranch);
+
+            rebaseCommand.call();
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+    public boolean pushChanges() {
         CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(username, password);
 
         try {
@@ -79,42 +108,46 @@ public class GitPrinter extends Printer {
                     .setRemote(overleafUrl)
                     .setRefSpecs(new RefSpec("refs/heads/master:refs/heads/master"))
                     .call();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     /**
      * Pull changes from the remote repository and update the local version.
      */
-    public void pullRepository() {
+    public boolean pullRepository() {
         File repositoryPath = new File(this.working_directory);
 
-        // Check if the directory exists and is a valid repository
         if (repositoryPath.exists() && repositoryPath.isDirectory()) {
             try {
-                // Open the existing repository
                 Git git = Git.open(repositoryPath);
-                // Set up credentials for authentication (if required)
                 CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
-
-                // Perform a pull operation to fetch and merge changes from the remote repository
                 PullResult pullResult = git.pull().setCredentialsProvider(credsProvider).call();
 
-                // Check the result of the pull operation
                 if (!pullResult.isSuccessful()) {
                     System.out.println("Unable to update the repository.");
+                    return false;
+
                 } else if (pullResult.getMergeResult() != null && pullResult.getMergeResult().getConflicts() != null) {
                     System.out.println("There are merge conflicts that need to be resolved.");
+                    return false;
+
                 } else {
                     System.out.println("Repository updated successfully.");
+                    return true;
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             System.out.println("Local repository does not exist or is not a valid repository.");
+            return false;
         }
+        return false;
     }
 
     /**
@@ -127,22 +160,30 @@ public class GitPrinter extends Printer {
         if (contents != null) {
             for (File file : contents) {
                 if (file.isDirectory()) {
-                    // Recursively delete subdirectories and their contents
                     deleteDirectory(file);
                 } else {
-                    // Delete individual files
                     file.delete();
                 }
             }
         }
-        // Delete the empty directory after its contents have been removed
         directory.delete();
     }
 
 
+    public void setPassword(String newPassword) {
+        this.credentialsProvider = new UsernamePasswordCredentialsProvider(this.username, newPassword);
+        this.password = newPassword;
+    }
+
+
+
+    public void setUsername(String newUsername) {
+        this.credentialsProvider = new UsernamePasswordCredentialsProvider(newUsername, this.password);
+        this.username = newUsername;
+    }
+
     @Override
     public void export() throws IOException, UnknownElementException {
         //TODO
-
     }
 }
