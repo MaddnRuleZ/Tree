@@ -5,9 +5,13 @@ import com.Application.User;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.RebaseCommand;
+import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
@@ -16,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Git Class for updating an Git -Overleaf repository with the Credentials
+ * Git Class for updating a Git -Overleaf repository with the Credentials
  */
 public class GitPrinter extends Printer {
     private final String overleafUrl;
@@ -140,6 +144,45 @@ public class GitPrinter extends Printer {
         }
         return false;
     }
+
+    /**
+     * Checks if the remote repository was changed compared to the local repository.
+     *
+     * @param remoteBranch The name of the remote branch to compare against the local branch.
+     * @return True if the remote repository was changed, false otherwise.
+     * @throws IOException  If an I/O error occurs while accessing the repository.
+     * @throws GitAPIException If an error occurs during Git operations.
+     */
+    public boolean isRemoteRepositoryChanged(String remoteBranch) throws IOException, GitAPIException {
+        Repository repository = new FileRepositoryBuilder()
+                .setGitDir(new File(this.working_directory, ".git"))
+                .build();
+
+        Git git = new Git(repository);
+
+        FetchResult fetchResult = git.fetch()
+                .setCredentialsProvider(this.credentialsProvider)
+                .setRemote(overleafUrl)
+                .call();
+
+        boolean hasChanges = !fetchResult.getTrackingRefUpdates().isEmpty();
+
+        if (!hasChanges) {
+            return false;
+        } else {
+            String localCommitId = repository.resolve("HEAD").getName();
+
+            try {
+                String remoteCommitId = repository.resolve("refs/remotes/origin/" + remoteBranch).getName();
+                return !localCommitId.equals(remoteCommitId);
+            } catch (Exception e) {
+                return true;
+            }
+        }
+    }
+
+
+
 
     /**
      * Helper method to recursively delete a directory and its contents.
