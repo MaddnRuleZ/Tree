@@ -4,10 +4,8 @@ import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.elements.parent.Parent;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +15,7 @@ import java.util.regex.Pattern;
  */
 public class Input extends Parent implements Roots {
     private static final String startPart = "\\input";
+    private static final String INPUT_REGEX_FORMAT = "\\\\input\\{([^}]*)\\}";
 
     /**
      * Input Constructor, call Constructor of Parent
@@ -34,8 +33,7 @@ public class Input extends Parent implements Roots {
      */
     public static String extractPathRegex(String pathLine) {
         String path;
-        String regexPattern = "\\\\input\\{([^}]*)\\}";
-        Pattern pattern = Pattern.compile(regexPattern);
+        Pattern pattern = Pattern.compile(INPUT_REGEX_FORMAT);
         Matcher matcher = pattern.matcher(pathLine);
         if (matcher.find()) {
             path = matcher.group(1);

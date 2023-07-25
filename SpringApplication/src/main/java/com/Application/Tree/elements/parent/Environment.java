@@ -7,7 +7,6 @@ import com.Application.Tree.elements.childs.BlockElement;
 import java.util.Map;
 import java.util.UUID;
 
-
 /**
  * Environment Class
  *
@@ -21,7 +20,7 @@ import java.util.UUID;
 public class Environment extends Parent {
     public static String DEFAULT_OPENING = "\\begin";
     public static String DEFAULT_ENDING = "\\end";
-
+    public static int DEFAULT_LEVEL = 9;
 
     /**
      * Constructor for creating a new Environment object with the specified startPart, endPart, and level.

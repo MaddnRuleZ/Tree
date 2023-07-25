@@ -1,5 +1,6 @@
 package com.Application.Interpreter;
 
+import com.Application.Exceptions.UnknownElementException;
 import com.Application.Tree.Element;
 import com.Application.Tree.elements.*;
 import com.Application.Tree.elements.roots.Input;
@@ -9,7 +10,6 @@ import com.Application.Tree.elements.roots.Roots;
 
 /**
  * Scanner Class for Disassemble a Document into its Latex Structure Elements
- *
  */
 public class Scanner {
     private final String[] text;
@@ -39,12 +39,18 @@ public class Scanner {
      */
     public Roots parseDocument() {
         Element lastElement = null;
+        Element newElement = null;
+
         for (int i = 0; i < text.length; i++) {
             if (text[i].contains(Root.START_DOCUMENT)) {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
             }
+            try {
+                newElement = scanLine(lastElement, i);
+            } catch (UnknownElementException e) {
+                newElement = null;
+            }
 
-            Element newElement = scanLine(lastElement, i);
             if (newElement != null) {
                 lastElement = newElement;
 
@@ -64,9 +70,9 @@ public class Scanner {
      *
      * @param lastElement last Element that was used
      * @param index current index of the text
-     * @return the New Created Text Element with parent and child hierachie
+     * @return the New Created Text Element with parent and child hierarchy
      */
-    private Element scanLine(Element lastElement, final int index) {
+    private Element scanLine(Element lastElement, final int index) throws UnknownElementException {
         String currentLine = text[index];
         if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart())) {
@@ -79,7 +85,7 @@ public class Scanner {
                 newElement.setContent(currentLine);
                 if (lastElement == null) {
                     root.addChild(newElement);
-                    if (newElement instanceof Input) {
+                    if (newElement.getStartPart().equals(ElementConfig.INPUT.getStartPart())) {
                         Input inputRoot = (Input) root;
                         newElement.setParent(inputRoot);
                     }
