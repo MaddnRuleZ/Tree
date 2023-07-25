@@ -52,11 +52,10 @@ public class Child extends Element {
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         super.toLaTeXStart(map, key, level);
-
+        String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
-        text.append(this.getStartPart());
-        text.append("{").append(this.content).append("}");
+        text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}");
 
         super.toLaTeXEnd(map, key, level);
     }

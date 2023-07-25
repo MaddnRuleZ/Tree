@@ -69,13 +69,16 @@ public class Summary implements LaTeXTranslator {
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
+        String indentationHead = getIndentation(level);
+        String indentationBody = getIndentation(level+1);
         StringBuilder text = map.get(key);
-        text.append("\n").append("\n");
-        text.append("\t".repeat(level)).append(START_SUMMARY).append("\n");
+
+        text.append(indentationHead).append("\n").append("\n");
+        text.append(indentationHead).append(START_SUMMARY).append("\n");
         for(String line : summaryText){
-            text.append("\t".repeat(level)).append("%").append(line).append("\n");
+            text.append(indentationBody).append("\t".repeat(level)).append("%").append(line).append("\n");
         }
-        text.append("\t".repeat(level)).append(END_SUMMARY).append("\n");
+        text.append(indentationHead).append(END_SUMMARY).append("\n");
     }
 
     @Override

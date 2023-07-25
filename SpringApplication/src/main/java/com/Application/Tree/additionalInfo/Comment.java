@@ -49,9 +49,10 @@ public class Comment implements LaTeXTranslator {
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
-        text.append("\n");
+        String indentation = getIndentation(level);
+
         for(String line : comments){
-            text.append("%").append(line).append("\n");
+            text.append(indentation).append("%").append(line).append("\n");
         }
     }
 

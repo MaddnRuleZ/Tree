@@ -5,6 +5,7 @@ import com.Application.Exceptions.UnknownElementException;
 import java.util.Map;
 
 public interface LaTeXTranslator {
+    int INIT_INDENTATION_LEVEL = 0;
     /**
      * get the recompiled source code of the Latex Doc
      * @return
@@ -30,5 +31,9 @@ public interface LaTeXTranslator {
      * @throws UnknownElementException
      */
     public void toLaTeXEnd(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException;
+
+    default String getIndentation(int level){
+        return "\t".repeat(level);
+    }
 
 }

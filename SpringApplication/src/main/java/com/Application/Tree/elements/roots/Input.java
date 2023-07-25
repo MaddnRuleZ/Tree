@@ -47,8 +47,9 @@ public class Input extends Parent implements Roots {
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         super.toLaTeXStart(map, key, level);
         StringBuilder text = map.get(key);
+        String indentation = getIndentation(level);
 
-        text.append(this.getStartPart()).append("{").append(this.content).append("}");
+        text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}");
 
         if(this.newLine != null) {
             this.newLine.toLaTeX(map, key, level);
@@ -58,7 +59,7 @@ public class Input extends Parent implements Roots {
         map.put(newKey, new StringBuilder());
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                child.toLaTeX(map, newKey, 0);
+                child.toLaTeX(map, newKey, INIT_INDENTATION_LEVEL);
             }
         }
         super.toLaTeXEnd(map, key, level);

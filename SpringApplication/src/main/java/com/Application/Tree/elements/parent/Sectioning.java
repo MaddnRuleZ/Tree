@@ -51,10 +51,11 @@ public class Sectioning extends Parent {
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         super.toLaTeXStart(map, key, level);
+        String indentation = getIndentation(level);
 
         StringBuilder text = map.get(key);
 
-        text.append(this.getStartPart());
+        text.append(indentation).append(this.getStartPart());
 
         if(this.options != null && this.options.equals("*")) {
             text.append("*");

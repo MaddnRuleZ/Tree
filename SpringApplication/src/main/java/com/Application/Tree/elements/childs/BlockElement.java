@@ -51,9 +51,10 @@ public class BlockElement extends Child {
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         super.toLaTeXStart(map, key, level);
+        String indentation = getIndentation(level);
 
         StringBuilder text = map.get(key);
-        text.append(this.content);
+        text.append(indentation).append(indentation).append(this.content);
 
         if(this.newLine != null) {
             this.newLine.toLaTeX(map, key, level);

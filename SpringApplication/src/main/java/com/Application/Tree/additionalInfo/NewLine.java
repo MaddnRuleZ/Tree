@@ -55,8 +55,9 @@ public class NewLine implements LaTeXTranslator {
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
+        String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
-        text.append("\n").append(newLine).append("\n");
+        text.append(indentation).append("\n").append(newLine).append("\n");
     }
 
     @Override

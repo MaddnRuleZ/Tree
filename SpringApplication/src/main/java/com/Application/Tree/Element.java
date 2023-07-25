@@ -237,7 +237,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
 
-        if (this.summary != null) {
+        if (this.chooseManualSummary && this.summary != null && this.summary.getSummary() != null && !this.summary.getSummary().isEmpty()) {
             this.summary.toLaTeX(map, key, level);
         }
         if (this.comment != null) {

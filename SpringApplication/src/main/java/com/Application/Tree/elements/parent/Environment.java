@@ -73,10 +73,11 @@ public class Environment extends Parent {
     //TODO environment end und start part
     public void toLaTeX(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         super.toLaTeXStart(map, key, level);
+        String indentation = getIndentation(level);
 
         StringBuilder text = map.get(key);
 
-        text.append(this.getStartPart());
+        text.append(indentation).append(this.getStartPart());
         if(this.options != null) {
             text.append("[").append(this.options).append("]");
         }
@@ -86,7 +87,7 @@ public class Environment extends Parent {
                 child.toLaTeX(map, key, level);
             }
         }
-        text.append(this.getEndPart());
+        text.append(indentation).append(this.getEndPart());
         text.append("\n");
 
         super.toLaTeXEnd(map, key, level);
