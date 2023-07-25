@@ -70,7 +70,7 @@ public class Figure extends Environment {
      * check if the line is a caption, if so add and return true
      *
      * @param caption caption line to add
-     * @return true if caption was addet
+     * @return true if caption was added
      */
     public boolean addCaption(String caption) {
         if (caption.contains(CAPTION_IDENT)) {
