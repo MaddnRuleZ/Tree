@@ -28,7 +28,6 @@ public class LoadFromFolderCommand extends Command {
         try {
             acquireStructureWriteLock();
             Printer printer = new FilePrinter(path, user.getRoot());
-
             Parser parser = new Parser(this.path);
             Roots root = parser.startParsing();
             if(root instanceof Root) {

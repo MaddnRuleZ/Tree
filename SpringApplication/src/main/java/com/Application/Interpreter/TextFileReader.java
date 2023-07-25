@@ -23,9 +23,11 @@ public class TextFileReader {
         if (file.isDirectory()) {
             throw new FileInvalidException("Pfad ist ein Ordner " + filePath);
         }
+
         if (!file.canRead()) {
             throw new FileInvalidException("Datei ist nicht Lesbar " + filePath);
         }
+
         String type = file.getName().substring(file.getName().lastIndexOf(".") + 1);
         if (type.equals("tex")){
             throw new FileInvalidException("Datei endet nicht auf .tex " + filePath);
