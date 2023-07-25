@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class CommandHelperMethodsTest {
     // Tree structure:
@@ -62,5 +63,12 @@ public class CommandHelperMethodsTest {
         assertEquals(3, sec1.levelOfDeepestSectioningChild(), "Deepest Child of sec1 should be on level 3");
         assertEquals(2, sec2.levelOfDeepestSectioningChild(), "Deepest Child of sec2 should be on level 2");
         assertEquals(1, sec3.levelOfDeepestSectioningChild(), "Deepest Child of sec3 should be on level 1");
+    }
+
+    @Test
+    public void checkOwnChild() {
+        Parent sec2 = tree.sectioningList.get(1);
+        Parent sec3 = tree.sectioningList.get(2);
+        assertFalse(sec2.checkOwnChild(sec3), "sec2 should not be child of sec3");
     }
 }

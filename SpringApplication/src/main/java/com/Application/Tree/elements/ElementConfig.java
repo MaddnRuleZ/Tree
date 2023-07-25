@@ -175,18 +175,29 @@ public enum ElementConfig {
         return null;
     }
 
-    // todo das ist magic number hart codiert
+    /**
+     * Get the ElementConfig of a Sectioning Element based on its Level
+     * @param level Level of the searched Sectioning Element
+     * @return ElementConfig of the Sectioning Element
+     */
     public static ElementConfig getSectioningType(int level) {
-        return switch (level) {
-            case 1 -> PART;
-            case 2 -> CHAPTER;
-            case 3 -> SECTION;
-            case 4 -> SUBSECTION;
-            case 5 -> SUBSUBSECTION;
-            case 6 -> PARAGRAPH;
-            case 7 -> SUBPARAGRAPH;
-            default -> null;
-        };
+        if(level == ElementConfig.PART.level) {
+            return PART;
+        } else if (level == ElementConfig.CHAPTER.level) {
+            return CHAPTER;
+        } else if (level == ElementConfig.SECTION.level) {
+            return SECTION;
+        } else if (level == ElementConfig.SUBSECTION.level) {
+            return SUBSECTION;
+        } else if (level == ElementConfig.SUBSUBSECTION.level) {
+            return SUBSUBSECTION;
+        } else if (level == ElementConfig.PARAGRAPH.level) {
+            return PARAGRAPH;
+        } else if (level == ElementConfig.SUBPARAGRAPH.level) {
+            return SUBPARAGRAPH;
+        } else {
+            return null;
+        }
     }
 
     public String getStartPart() {

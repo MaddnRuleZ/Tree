@@ -218,6 +218,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         } else {
             node.put("summary", summary.toString());
         }
+        node.put("chooseManualSummary", this.chooseManualSummary);
         arrayNode.add(node);
         return arrayNode;
     }
@@ -242,11 +243,27 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         }
     }
 
-
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key) throws UnknownElementException {
         if(this.newLine != null) {
             this.newLine.toLaTeX(map, key);
         }
     }
+
+    /**
+     * checks whether the calling Element is a child of the passed Element
+     * @param element to check
+     * @return true if the calling Element is a child of the passed Element
+     */
+    public boolean checkOwnChild(Element element) {
+        if(this.parentElement == null) {
+            return false;
+        }
+        if(this.parentElement.equals(element)) {
+            return true;
+        }
+        return this.parentElement.checkOwnChild(element);
+    }
+
+
 }

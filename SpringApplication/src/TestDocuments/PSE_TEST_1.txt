@@ -1,140 +1,414 @@
-\part{options_text}[content_test]
-    X1
-    X
-    % comment1
-    % comment2
-    X
-    X
-    X
+null
+
+%\start{summary}
+%\finish{summary}
+
+\part[options_text]{content_test}
+%\start{summary}
     %\start{summary}
         X Summ_1
         X
         X
     %\finish{summary}
-    X
-    X
-    X
+%\finish{summary}
+
+%    % comment1
+%    % comment2
+null
     \par
-    X1_1
-    X
-    X
-    X
-    \begin{figure}
-        X1_2
-        X
-        X
+
+    \par
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\begin{figure}{null}
+\caption{        \caption{captionToAdd}}
+\includegraphics{moreStuff}{moreStuff}
+
+%\start{summary}
+%\finish{summary}
+
+null
         \newline
-        X1_3
-        X
-        X
-        \includegraphics{testgraph1}[moreStuff]
-        \caption{captionToAdd}
-        \label
-        X
-        X
-    \end{figure}
-    X5_1
-    X
-    X
-    \begin{Text Block Element}[content_test]
-        X3
-        X
-        X
+
         \newline
-        X3_3
-        X
-        X
-    \end{haw haw}
-    X4
-    X
-    X
-    \begin{algorithm}
-        X5
-        X
-        X
-    \end{algorithm}
-    X6
-    X
-    X
-\part{inputTesting}
-    \section
-        X0_1
-        X0_1_1
-        X
-\input{src/TestDocuments/InputTest.txt}
-\part{inputTesting}
-    \chapter{haw haw}
-        X7
-        X
-        X
-        \section{haw haw_3}
-            X8
-            X
-            X
-            \subsection{haw haw}
-                X9
-                X
-                X
-                \subsubsection{haw haw}
-                    X10
-                    X
-                    X
-                    \paragraph{haw haw}
-                        X11
-                        X
-                        X
-                        \subparagraph{haw haw}
-                            X12
-                            X
-                            X
-                            \label
-                            X12_1
-                            X
-                            X
+
+%\start{summary}
+%\finish{summary}
+
+null
+        \newline
+
+        \newline
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\label{null}
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+\end{figure}
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\begin[Text Block Element]
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+\end
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\begin[algorithm]
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+\end
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\part[inputTesting]{null}
+%\start{summary}
+%\finish{summary}
+
+\chapter{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\part[inputTesting]{null}
+%\start{summary}
+%\finish{summary}
+
+\chapter[haw haw]{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\section[haw haw_3]{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\subsection[haw haw]{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\subsubsection[haw haw]{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\paragraph[haw haw]{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\subparagraph[haw haw]{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\label{null}
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
                             \par
-                            X12_2
-                            X
-                            X
-\part{fuck}
-    \chapter{newChapter}
-        X13
-        X
-        X
-        \label
-        X13_1
-        X
-        X
+
+                            \par
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+null
+
+null
+
+null
+
+null
+
+null
+
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\part[fuck]{null}
+%\start{summary}
+%\finish{summary}
+
+\chapter[newChapter]{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\label{null}
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
         \newline
-        X13_2
-        X
-        X
-    \chapter{newChapter2}
-                X14
-                X
-                X
-            \begin{algorithm}
-                    X15
-                    X
-                    \label
-                    X
-            \end{algorithm}
-                X16
-                X
-                X
-            \begin{figure}
-                \centering
-                \includegraphics[insertName]{insertName}
-                \caption
-                \label{labelName}
-            \end{figure}
-                X17
-                X
-                X
-            \begin{figure}[htp]
-                \centering
-                X
-                X
-                \includegraphics[insertName]{insertName}
-                \caption
-                \label{labelName}
-            \end{figure}
+
+        \newline
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\chapter[newChapter2]{null}
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\begin[algorithm]
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\label{null}
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+\end
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\begin{figure}{null}
+\caption{                \caption}
+\includegraphics{insertName}{insertName}
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\label{null}
+null
+\end{figure}
+null
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\begin{figure}{htp}
+\caption{                \caption}
+\includegraphics{insertName}{insertName}
+
+%\start{summary}
+%\finish{summary}
+
+null
+null
+
+null
+
+%\start{summary}
+%\finish{summary}
+
+\label{null}
+null
+\end{figure}
+null
+
+null
+
+null
+\end{document}
