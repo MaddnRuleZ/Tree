@@ -39,6 +39,7 @@ public class Sectioning extends Parent {
         return deepestChildLevel + 1;
     }
 
+
     @Override
     public int calculateLevelFromElement() {
         Parent parent = this.getParentElement();

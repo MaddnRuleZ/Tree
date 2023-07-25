@@ -17,7 +17,6 @@ public class ParserTest {
         Parser parser = new Parser("src/TestDocuments/PSE_TEST_1.txt");
         Root root = (Root) parser.startParsing();
 
-        //TODO: Ich habe die to Latex-Methode angefangen
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
         root.toLaTeX(map, "root");
