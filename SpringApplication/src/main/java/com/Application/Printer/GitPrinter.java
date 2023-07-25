@@ -26,7 +26,6 @@ public class GitPrinter extends Printer {
     /**
      * Constructs a new instance of the GitPrinter class with the specified parameters.
      *
-     * @param user The User object representing the user's information.
      * @param overleafUrl The URL of the Overleaf repository used for Git operations.
      * @param username The username associated with the Git repository.
      * @param password The password (or authentication token) used for accessing the Git repository.
