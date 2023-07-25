@@ -83,5 +83,4 @@
             X
             \includegraf{idk}
             X
-            X
             \end{algorithm}
