@@ -4,7 +4,9 @@ import com.Application.Exceptions.UnknownElementException;
 import com.Application.User;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -13,34 +15,25 @@ import java.io.File;
 
 import java.io.IOException;
 
+/**
+ * Git Class for updating an Git -Overleaf repository with the Credentials
+ */
 public class GitPrinter extends Printer {
-    /**
-     *  user that holds information of LaTeX-Project
-     */
-    private User user;
-    /**
-     * url to the git repository
-     */
-    private String overleafUrl;
-    /**
-     * username for the git repository
-     */
-    private String username;
-    /**
-     * password for the git repository
-     */
-    private String password;
+    private final String overleafUrl;
+    private final String working_directory;
+    private final CredentialsProvider credentialsProvider;
 
     /**
-     * path to the folder where the git repository should be cloned
+     * Constructs a new instance of the GitPrinter class with the specified parameters.
+     *
+     * @param overleafUrl The URL of the Overleaf repository used for Git operations.
+     * @param username The username associated with the Git repository.
+     * @param password The password (or authentication token) used for accessing the Git repository.
+     * @param workingDir The working directory where Git operations will be performed.
      */
-    private String working_directory;
-
-    public GitPrinter(User user, String overleafUrl, String username, String password, String workingDir) {
-        this.user = user;
+    public GitPrinter(String overleafUrl, String username, String password, String workingDir) {
+        credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
         this.overleafUrl = overleafUrl;
-        this.username = username;
-        this.password = password;
         this.working_directory = workingDir;
         System.out.println(workingDir);
     }
@@ -48,73 +41,104 @@ public class GitPrinter extends Printer {
     /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.
      */
-    public void cloneRepository() {
-        // Check if the directory already exists, and if so, delete it before cloning the repository
+    public boolean cloneRepository() {
         File repositoryPath = new File(this.working_directory);
         if (repositoryPath.exists() && repositoryPath.isDirectory()) {
             deleteDirectory(repositoryPath);
         }
 
-        // Set up credentials for authentication (if required)
-        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
         try {
-            // Clone the repository from the specified URL into the working directory
             Git.cloneRepository()
                     .setURI(this.overleafUrl)
                     .setDirectory(repositoryPath)
-                    .setCredentialsProvider(credsProvider)
+                    .setCredentialsProvider(this.credentialsProvider)
                     .call();
+            return true;
         } catch (GitAPIException e) {
-            e.printStackTrace();
+            return false;
         }
     }
 
-    public void pushChanges() {
-        CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(username, password);
+    /**
+     * Rebase the changes from the specified remote branch onto the current working branch.
+     *
+     * @param remoteBranch The name of the remote branch to rebase onto the current working branch.
+     * @return True if the rebase operation was successful, false otherwise.
+     */
+    public boolean rebaseChanges(String remoteBranch) {
+        try {
+            Git git = Git.open(new File(this.working_directory));
+            git.fetch()
+                    .setCredentialsProvider(this.credentialsProvider)
+                    .setRemote(overleafUrl)
+                    .call();
+
+            RebaseCommand rebaseCommand = git.rebase();
+            rebaseCommand.setUpstream(remoteBranch);
+            rebaseCommand.call();
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Pushes the local changes to the remote Git repository.
+     *
+     * @return True if the push operation was successful, false otherwise.
+     */
+    public boolean pushChanges() {
+        String refSpec = "refs/heads/master:refs/heads/master";
 
         try {
             Git git = Git.open(new File(this.working_directory));
             git.push()
-                    .setCredentialsProvider(credsProvider)
+                    .setCredentialsProvider(this.credentialsProvider)
                     .setRemote(overleafUrl)
-                    .setRefSpecs(new RefSpec("refs/heads/master:refs/heads/master"))
+                    .setRefSpecs(new RefSpec(refSpec))
                     .call();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     /**
      * Pull changes from the remote repository and update the local version.
      */
-    public void pullRepository() {
+    public boolean pullRepository() {
         File repositoryPath = new File(this.working_directory);
 
-        // Check if the directory exists and is a valid repository
         if (repositoryPath.exists() && repositoryPath.isDirectory()) {
             try {
-                // Open the existing repository
                 Git git = Git.open(repositoryPath);
-                // Set up credentials for authentication (if required)
-                CredentialsProvider credsProvider = new UsernamePasswordCredentialsProvider(this.username, this.password);
+                PullResult pullResult = git.pull()
+                        .setCredentialsProvider(credentialsProvider).call();
 
-                // Perform a pull operation to fetch and merge changes from the remote repository
-                PullResult pullResult = git.pull().setCredentialsProvider(credsProvider).call();
-
-                // Check the result of the pull operation
                 if (!pullResult.isSuccessful()) {
                     System.out.println("Unable to update the repository.");
+                    return false;
+
                 } else if (pullResult.getMergeResult() != null && pullResult.getMergeResult().getConflicts() != null) {
                     System.out.println("There are merge conflicts that need to be resolved.");
+                    return false;
+
                 } else {
                     System.out.println("Repository updated successfully.");
+                    return true;
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             System.out.println("Local repository does not exist or is not a valid repository.");
+            return false;
         }
+        return false;
     }
 
     /**
@@ -127,22 +151,17 @@ public class GitPrinter extends Printer {
         if (contents != null) {
             for (File file : contents) {
                 if (file.isDirectory()) {
-                    // Recursively delete subdirectories and their contents
                     deleteDirectory(file);
                 } else {
-                    // Delete individual files
                     file.delete();
                 }
             }
         }
-        // Delete the empty directory after its contents have been removed
         directory.delete();
     }
-
 
     @Override
     public void export() throws IOException, UnknownElementException {
         //TODO
-
     }
 }
