@@ -1,127 +1,69 @@
 package com.Application.Interpreter;
 
 import com.Application.Command.CommandTypes.Interfaces.ILocks;
+import com.Application.Command.RequestInterceptor;
 import com.Application.Exceptions.ParseException;
+import com.Application.Printer.GitPrinter;
 import com.Application.Tree.elements.roots.Root;
 import com.Application.Tree.elements.roots.Roots;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.PullCommand;
+import com.Application.User;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.IOException;
 
-public class GitWatcher implements Runnable, ILocks {
-    /**
-     * Thread that watches for changes in the git repository
-     */
-    private Thread watcherThread;
-    /**
-     * time to sleep between checks
-     */
-    private final int sleepTime = 1000;
-    /**
-     * true if changes were found
-     */
-    private boolean changes = false;
-    /**
-     * path to the git repository
-     */
-    private String path;
-    /**
-     * tree structure
-     */
-    private Root root;
+
+@Component
+public class GitWatcher implements ILocks {
+
+    private final User user;
+
     /**
      * message to display if an error occurs
      */
-    String failureMessage = "Error while searching for remote changes";
+    String failureMessage = null;
 
     /**
      * true if an error occurs
      */
     boolean failure = false;
-
     /**
-     * creates a new watcher
-     * @param path to the git repository
-     * @param root tree structure
+     * true if changes were found
      */
-    public GitWatcher(String path, Root root) {
-        this.path = path;
-        this.root = root;
-    }
+    private boolean changes = false;
 
-    /**
-     * starts the watcher
-     * checks for changes in the git repository all time seconds
-     * if changes were found, the tree structure is updated
-     */
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(sleepTime);
-                boolean hasChanges = checkForRemoteChanges(path);
-                if (hasChanges) {
-                    acquireStructureWriteLock();
-                    Parser parser = new Parser(path);
-                    Roots parsed = parser.startParsing();
-                    if (parsed instanceof Root) {
-                        root = (Root) parsed;
-                    } else {
-                        throw new ParseException("return value of parsing" + root.getClass().getName());
-                    }
-                }
-            } catch (GitAPIException | IOException | InterruptedException | ParseException e) {
-                failure = true;
-                break;
-            } finally {
-                releaseStructureWriteLock();
-            }
-        }
+
+    @Autowired
+    public GitWatcher(User user) {
+        this.user = user;
     }
 
     /**
      * checks for changes in the git repository
-     * @param path to the git repository
-     * @return true if changes were found
-     * @throws GitAPIException
-     * @throws IOException
+     * if changes were found, the structure will be updated
      */
-    private boolean checkForRemoteChanges(String path) throws GitAPIException, IOException {
-        File localRepoDir = new File(path);
-        Repository repository = new FileRepositoryBuilder().setGitDir(localRepoDir).build();
-        Git git = new Git(repository);
-
-        PullCommand pullCommand = git.pull();
-        pullCommand.call();
-
-        //TODO check for changes
-
-        return false;
-    }
-
-    public void setWatcherThread(Thread watcherThread) {
-        this.watcherThread = watcherThread;
-    }
-
-    public Thread getWatcherThread() {
-        return watcherThread;
-    }
-
-    public int getSleepTime() {
-        return sleepTime;
+    @Scheduled(fixedRate = 60000)
+    public void check() {
+        if(user.getPrinter() != null || user.getPrinter() instanceof GitPrinter) {
+            /*
+            try {
+                //TODO checkForUpdates
+                acquireStructureWriteLock();
+                //TODO updateStructure
+            } catch (GitAPIException | IOException | InterruptedException | ParseException e) {
+                failure = true;
+                failureMessage = e.getMessage();
+            } finally {
+                releaseStructureWriteLock();
+            }
+            */
+        }
     }
 
     public boolean hasChanges() {
         return changes;
-    }
-
-    public void setChanges(boolean hasChanges) {
-        this.changes = hasChanges;
     }
 
     public String getFailureMessage() {

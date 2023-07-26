@@ -1,8 +1,7 @@
 package com.Application;
 
-import com.Application.Interpreter.GitWatcher;
+import com.Application.Interpreter.GitWatcherOld;
 import com.Application.Interpreter.Parser;
-import com.Application.Printer.Clock;
 import com.Application.Printer.Printer;
 import com.Application.Tree.elements.roots.Root;
 import org.springframework.stereotype.Component;
@@ -26,14 +25,6 @@ public class User {
      * LaTeX-Code to tree structure parser
      */
     private Parser parser;
-    /**
-     * clock to update the tree structure by uploading the LaTeX-Code
-     */
-    private Clock clock;
-    /**
-     * GitWatcher to update the tree structure by pulling the repository
-     */
-    private GitWatcher gitWatcher;
 
     public User() {
         this.root = Root.getInstance();
@@ -50,11 +41,6 @@ public class User {
             throw new IllegalStateException("Printer already set.");
         }
         this.printer = Printer;
-        if (printer != null) {
-            this.clock = new Clock(printer);
-            clock.setClockThread(new Thread(clock));
-            clock.getClockThread().start();
-        }
     }
 
     public void setParser(Parser parser) {
@@ -73,20 +59,8 @@ public class User {
         return parser;
     }
 
-    public Clock getClock() {
-        return clock;
-    }
-
     public void setRoot(Root root) {
         this.root = root;
     }
 
-    public void setGitWatcher(GitWatcher gitWatcher) {
-        gitWatcher.setWatcherThread(new Thread(this.gitWatcher));
-        gitWatcher.getWatcherThread().start();
-    }
-
-    public GitWatcher getGitWatcher() {
-        return gitWatcher;
-    }
 }

@@ -2,7 +2,7 @@ package com.Application.Command.CommandTypes;
 
 import com.Application.Exceptions.ParseException;
 import com.Application.Exceptions.ProcessingException;
-import com.Application.Interpreter.GitWatcher;
+import com.Application.Interpreter.GitWatcherOld;
 import com.Application.Interpreter.Parser;
 import com.Application.Printer.GitPrinter;
 import com.Application.Printer.Printer;
@@ -48,7 +48,6 @@ public class LoadFromGitCommand extends Command {
             if(root instanceof Root) {
                 this.user.setRoot((Root) root);
                 this.user.setPrinter(printer);
-                this.user.setGitWatcher(new GitWatcher(path, (Root) root));
             } else {
                 throw new ParseException("return value of parsing"+ root.getClass().getName());
             }

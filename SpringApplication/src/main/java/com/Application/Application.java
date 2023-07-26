@@ -1,12 +1,12 @@
 package com.Application;
 
-import com.Application.Printer.Clock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,11 +16,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @SpringBootApplication
 @SpringBootConfiguration
+@EnableScheduling
 public class Application {
 
 	@Autowired
 	private User user;
-	private Clock clock;
 
 
 	@Bean
