@@ -22,20 +22,6 @@ public class Application {
 	@Autowired
 	private User user;
 
-
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:4200") // Or you can use "*" to allow all origins
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS") // Or you can use "*" to allow all methods
-						.allowedHeaders("Content-Type", "Authorization") // Or you can use "*" to allow all headers
-						.allowCredentials(true);
-			}
-		};
-	}
 	public static void main(String[] args){
 		SpringApplication.run(Application.class, args);
 	}

@@ -35,7 +35,7 @@ public class AutoExport implements ILocks {
     //TODO currently not executed --> remove false statement
     @Scheduled(fixedRate = 60000)
     public void check() {
-        if(user.getPrinter() != null || false) { //<-- remove false statement
+        if(user.getPrinter() != null && false) { //<-- remove false statement
             boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
             if (!noRecentRequests) {
                 try {
