@@ -1,9 +1,9 @@
 package com.Application.Command.CommandTypes;
 
 
-import com.Application.Command.CommandTypes.Interfaces.ILocks;
 import com.Application.Printer.Printer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 //TODO
@@ -11,13 +11,13 @@ import com.fasterxml.jackson.databind.JsonNode;
  * responsible for overwriting the LaTeX file with changes
  * that have been made in the tree structure
  */
-public class PrintCommand extends Command {
+public class ExportCommand extends Command {
     /**
      * printer that holds information of LaTeX-Project
      */
     private Printer printer;
 
-    public PrintCommand(Printer printer) {
+    public ExportCommand(Printer printer) {
         this.printer = printer;
     }
 
@@ -27,13 +27,17 @@ public class PrintCommand extends Command {
         try {
             acquireStructureReadLock();
             this.printer.export();
+            this.setSuccess(true);
         } catch (Exception e) {
-            e.printStackTrace();
+            this.setSuccess(false);
+            this.setFailureMessage(e.getMessage());
         } finally {
             releaseStructureReadLock();
+
         }
-        return null;
+        return generateSuccessResponse();
     }
+
 
     public Printer getPrinter() {
         return printer;

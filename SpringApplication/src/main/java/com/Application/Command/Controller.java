@@ -1,6 +1,7 @@
 package com.Application.Command;
 
 import com.Application.Command.CommandTypes.Command;
+import com.Application.Command.CommandTypes.ExportCommand;
 import com.Application.Command.CommandTypes.GetCommand;
 import com.Application.Exceptions.FailureResponse;
 import com.Application.Exceptions.ProcessingException;
@@ -43,10 +44,9 @@ public class Controller {
         try {
             HttpStatus status;
             JsonNode response = commandHandler.processCommand(json);
-            String jsonString = response.toString();
 
-            String formattedJsonString = formatJsonString(jsonString);
-            System.out.println(formattedJsonString);
+            printJsonString(response);
+
             if (commandHandler.isSuccess()) {
                 status = HttpStatus.OK;
             } else {
@@ -66,8 +66,10 @@ public class Controller {
     public ResponseEntity<JsonNode> processGetEditorRequest() {
         Command command = new GetCommand(user.getRoot(), true);
         HttpStatus status;
-
         JsonNode response = command.execute();
+
+        printJsonString(response);
+
         if(command.isSuccess()) {
             status = HttpStatus.OK;
         } else {
@@ -86,6 +88,9 @@ public class Controller {
         HttpStatus status;
 
         JsonNode response = command.execute();
+
+        printJsonString(response);
+
         if(command.isSuccess()) {
             status = HttpStatus.OK;
         } else {
@@ -102,6 +107,9 @@ public class Controller {
     public ResponseEntity<JsonNode> processCheckForUpdates() {
         ObjectNode response = new ObjectMapper().createObjectNode();
         HttpStatus status;
+
+        printJsonString(response);
+
         response.put("hasUpdates", user.getGitWatcher().hasChanges());
         if(user.getGitWatcher().isFailure()) {
             status = HttpStatus.BAD_REQUEST;
@@ -115,20 +123,35 @@ public class Controller {
         return new ResponseEntity<>(response, status);
     }
 
-    //@GetMapping("/Export")
-    //TODO: Export
+    @GetMapping("/Export")
     public ResponseEntity<JsonNode> processExportRequest() {
-        return null;
+        Command command = new ExportCommand(user.getPrinter());
+        HttpStatus status;
+
+        JsonNode response = command.execute();
+        if(command.isSuccess()) {
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, status);
     }
 
-    private static String formatJsonString(String jsonString) {
+
+    /**
+     * ForTesting
+     * Prints the JsonNode in a readable format
+     * @param response the JsonNode to be printed
+     * @return
+     */
+    private static void printJsonString(JsonNode response) {
         try {
+            String jsonString = response.toString();
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(jsonString);
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode);
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

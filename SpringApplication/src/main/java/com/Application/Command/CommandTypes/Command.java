@@ -6,6 +6,8 @@ import com.Application.Exceptions.GeneratingResponseException;
 import com.Application.Exceptions.ProcessingException;
 import com.Application.Tree.elements.roots.Root;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * abstract class for all commands
@@ -56,6 +58,22 @@ public abstract class Command implements ILocks {
             }
         } else {
             response = FailureResponse.generateFailureResponse(this.getFailureMessage());
+        }
+        return response;
+    }
+
+    /**
+     * generates response containing if command was successful
+     * @return JsonNode of response
+     */
+    public JsonNode generateSuccessResponse() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode response = mapper.createObjectNode();
+        if(this.isSuccess()) {
+            response.put("success", true);
+        } else {
+            response.put("success", false);
+            response.put("failureMessage", this.getFailureMessage());
         }
         return response;
     }
