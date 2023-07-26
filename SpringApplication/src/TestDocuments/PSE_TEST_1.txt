@@ -1,9 +1,47 @@
-\part{test_2}
+\part{options_text}[content_test]
     X1
     X
+    % comment1
+    % comment2
     X
-    \begin{haw haw}
+    X
+    X
+    %\start{summary}
+        X Summ_1
+        X
+        X
+    %\finish{summary}
+    X
+    X
+    X
+    \par
+    X1_1
+    X
+    X
+    X
+    \begin{figure}
+        X1_2
+        X
+        X
+        \newline
+        X1_3
+        X
+        X
+        \includegraphics{testgraph1}[moreStuff]
+        \caption{captionToAdd}
+        \label
+        X
+        X
+    \end{figure}
+    X5_1
+    X
+    X
+    \begin{Text Block Element}[content_test]
         X3
+        X
+        X
+        \newline
+        X3_3
         X
         X
     \end{haw haw}
@@ -14,14 +52,17 @@
         X5
         X
         X
-        \section{test} //func?
-            X
-            X
-            X
     \end{algorithm}
     X6
     X
     X
+\part{inputTesting}
+    \section
+        X0_1
+        X0_1_1
+        X
+\input{src/TestDocuments/InputTest.txt}
+\part{inputTesting}
     \chapter{haw haw}
         X7
         X
@@ -50,7 +91,7 @@
                             X12_1
                             X
                             X
-                            \caption
+                            \par
                             X12_2
                             X
                             X
@@ -63,24 +104,37 @@
         X13_1
         X
         X
-        \caption
+        \newline
+        X13_2
+        X
+        X
     \chapter{newChapter2}
-            X14
-            X
-            X
-            \caption
+                X14
+                X
+                X
             \begin{algorithm}
                     X15
                     X
                     \label
                     X
             \end{algorithm}
-            X16 // ERR HERE
-            X
-            X
-            \begin{algorithm}
-            X16_1
-            X
-            \includegraf{idk}
-            X
-            \end{algorithm}
+                X16
+                X
+                X
+            \begin{figure}
+                \centering
+                \includegraphics[insertName]{insertName}
+                \caption
+                \label{labelName}
+            \end{figure}
+                X17
+                X
+                X
+            \begin{figure}[htp]
+                \centering
+                X
+                X
+                \includegraphics[insertName]{insertName}
+                \caption
+                \label{labelName}
+            \end{figure}
