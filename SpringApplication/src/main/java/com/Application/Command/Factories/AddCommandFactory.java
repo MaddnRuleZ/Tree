@@ -35,7 +35,7 @@ public class AddCommandFactory implements CommandFactory {
             throw new NumParamsException("AddElement");
         }
 
-        if (command.getContent() == null || command.getParent() == null || command.getPreviousChild() == null ){
+        if (command.getContent() == null || command.getParent() == null){
             throw new NumParamsException("AddElement");
         }
 

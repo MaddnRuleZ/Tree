@@ -142,4 +142,22 @@ public abstract class Parent extends Element {
         }
         return node;
     }
+
+    /**
+     * Returns the index of the child with the specified id
+     * if no child with the specified id exists or the id is null, -1 is returned
+     * @param id
+     * @return index of child with specified id
+     */
+    public int getIndexOfChild(UUID id) {
+        if(id == null) {
+            return -1;
+        }
+        for (int i = 0; i < this.childElements.size(); i++) {
+            if (this.childElements.get(i).getId().equals(id)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

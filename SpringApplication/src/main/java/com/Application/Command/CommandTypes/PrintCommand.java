@@ -6,7 +6,7 @@ import com.Application.Printer.Printer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 
-//TODO Klasse löschen ?
+//TODO
 /**
  * responsible for overwriting the LaTeX file with changes
  * that have been made in the tree structure
@@ -17,9 +17,21 @@ public class PrintCommand extends Command {
      */
     private Printer printer;
 
+    public PrintCommand(Printer printer) {
+        this.printer = printer;
+    }
 
+    //TODO
     @Override
     public JsonNode execute() {
+        try {
+            acquireStructureReadLock();
+            this.printer.export();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            releaseStructureReadLock();
+        }
         return null;
     }
 

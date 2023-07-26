@@ -36,7 +36,6 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
             acquireStructureWriteLock();
             Element newParent = root.searchForID(this.newParent);
             Element element = root.searchForID(this.element);
-            Element previousElement = newParent.searchForID(this.previousElement);
 
             if (newParent == null || element == null || previousElement == null) {
                 throw new ElementNotFoundException();

@@ -7,6 +7,8 @@ import com.Application.Tree.Element;
 import com.Application.Tree.elements.ElementConfig;
 import com.Application.Tree.elements.parent.Parent;
 
+import java.util.UUID;
+
 /**
  * Interface that moves an element in the treeStructure
  */
@@ -14,12 +16,13 @@ public interface IMoveElementCommand {
     /**
      * moves an element in the treeStructure
      */
-    default void moveElement(Element element, Parent newParent, Element previousElement, int minLevel) throws OwnChildException, LevelException , ElementNotFoundException {
+    default void moveElement(Element element, Parent newParent, UUID previousElement, int minLevel) throws OwnChildException, LevelException , ElementNotFoundException {
       if(checkPossibleLevel(element, newParent, minLevel)){
             if(checkPossibleParent(element, newParent)) {
                 Parent oldParent = element.getParentElement();
                 element.setParent(newParent);
-                newParent.addChildAfter(previousElement, element);
+                int indexPreviousElement = newParent.getIndexOfChild(previousElement);
+                newParent.addChildOnIndex(indexPreviousElement, element);
                 oldParent.removeChild(element);
             } else {
                 throw new OwnChildException();

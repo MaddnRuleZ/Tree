@@ -27,16 +27,17 @@ public class Parser {
      * @return finished Root, containing the full Tree as Children
      */
     public Roots startParsing() {
+        /*
         try {
             if (!textFileReader.validateFile()) {
                 return null;
-            }
+            }*/
             String[] text = textFileReader.readLinesFromFile();
             Scanner scanner = new Scanner(text);
             return scanner.parseDocument();
-
+/*
         } catch (FileInvalidException exception) {
             return null;
-        }
+        }*/
     }
 }

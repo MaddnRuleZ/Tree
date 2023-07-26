@@ -40,30 +40,32 @@ public class AddCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element parentElement = root.searchForID(this.parent);
-            Element previousChild = root.searchForID(this.previousChild);
-            if(parentElement == null || previousChild == null) {
+            Element foundParentElement = root.searchForID(this.parent);
+
+            if(foundParentElement == null ) {
                 throw new ElementNotFoundException();
-            } else if (!(parentElement instanceof Parent)) {
-                throw new TypeException(Parent.class.getSimpleName(), parentElement.getClass().getSimpleName());
-            } else {
-                Parser parser = new Parser(this.content);
-                Roots root = parser.startParsing();
+            } else if (!(foundParentElement instanceof Parent)) {
+                throw new TypeException(Parent.class.getSimpleName(), foundParentElement.getClass().getSimpleName());
+            }
 
-                if (root instanceof Root) {
-                    if (((Root) root).getChildren().size() == 0) {
-                        throw new ParseException("Es konnte kein Element geparst werden.");
-                    }
+            Parent parentElement = (Parent) foundParentElement;
+            Parser parser = new Parser(this.content);
+            Roots foundRoot = parser.startParsing();
 
-                    List<Element> children = ((Parent) root).getChildElements();
-                    int index = ((Parent) parentElement).getChildElements().indexOf(previousChild) + 1;
-                    for (Element child : children) {
-                        child.setParent((Parent) parentElement);
-                        ((Parent) parentElement).addChildOnIndex(index, child);
-                        index++;
-                    }
-                    this.setSuccess(true);
+            if (foundRoot instanceof Root) {
+                Root root = (Root) foundRoot;
+                if (root.getChildren().size() == 0) {
+                    throw new ParseException("Es konnte kein Element geparst werden.");
                 }
+
+                List<Element> children = root.getChildren();
+                int index = parentElement.getIndexOfChild(this.previousChild);
+                for (Element child : children) {
+                    child.setParent(parentElement);
+                    parentElement.addChildOnIndex(index, child);
+                    index++;
+                }
+                this.setSuccess(true);
             }
         } catch (ProcessingException e) {
             this.setSuccess(false);
@@ -73,7 +75,6 @@ public class AddCommand extends Command {
         }
         return generateResponse(true);
     }
-
 
     public String getContent() {
         return content;

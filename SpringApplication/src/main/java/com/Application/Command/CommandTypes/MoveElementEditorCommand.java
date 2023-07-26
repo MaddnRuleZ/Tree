@@ -38,9 +38,9 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
             acquireStructureWriteLock();
             Element newParent = root.searchForID(this.newParent);
             Element element = root.searchForID(this.element);
-            Element previousElement = newParent.searchForID(this.previousElement);
 
-            if (newParent == null || element == null || previousElement == null) {
+
+            if (newParent == null || element == null) {
                 throw new ElementNotFoundException();
             } else if (!(newParent instanceof  Parent)) {
                 throw new TypeException(Parent.class.getSimpleName(), newParent.getClass().getSimpleName());

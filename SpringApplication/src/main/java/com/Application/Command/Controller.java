@@ -43,6 +43,10 @@ public class Controller {
         try {
             HttpStatus status;
             JsonNode response = commandHandler.processCommand(json);
+            String jsonString = response.toString();
+
+            String formattedJsonString = formatJsonString(jsonString);
+            System.out.println(formattedJsonString);
             if (commandHandler.isSuccess()) {
                 status = HttpStatus.OK;
             } else {
@@ -109,5 +113,22 @@ public class Controller {
             status = HttpStatus.OK;
         }
         return new ResponseEntity<>(response, status);
+    }
+
+    //@GetMapping("/Export")
+    //TODO: Export
+    public ResponseEntity<JsonNode> processExportRequest() {
+        return null;
+    }
+
+    private static String formatJsonString(String jsonString) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.readTree(jsonString);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
