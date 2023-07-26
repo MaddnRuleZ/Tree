@@ -5,6 +5,8 @@ import com.Application.Command.CommandTypes.ExportCommand;
 import com.Application.Command.CommandTypes.GetCommand;
 import com.Application.Exceptions.FailureResponse;
 import com.Application.Exceptions.ProcessingException;
+import com.Application.Interpreter.GitWatcher;
+import com.Application.Printer.AutoExport;
 import com.Application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -101,22 +103,24 @@ public class Controller {
 
     /**
      * Processes a GET-request for changes
-     * @return if changes happened on remote repository
+     * @param gitWatcher watcher to check for errors on download
+     * @param autoExport autoExport to check for errors on upload
+     * @return if changes happened and if an error occurred
      */
     @GetMapping("/checkForUpdates")
-    public ResponseEntity<JsonNode> processCheckForUpdates() {
+    public ResponseEntity<JsonNode> processCheckForUpdates(GitWatcher gitWatcher, AutoExport autoExport) {
         ObjectNode response = new ObjectMapper().createObjectNode();
         HttpStatus status;
 
         printJsonString(response);
 
-        response.put("hasUpdates", user.getGitWatcher().hasChanges());
-        if(user.getGitWatcher().isFailure()) {
+        response.put("hasUpdates", gitWatcher.hasChanges());
+        if(gitWatcher.isFailure()) {
             status = HttpStatus.BAD_REQUEST;
-            response.put("error", user.getGitWatcher().getFailureMessage());
-        } else if(user.getClock().isFailure()){
+            response.put("error", gitWatcher.getFailureMessage());
+        } else if(autoExport.isFailure()){
             status = HttpStatus.BAD_REQUEST;
-            response.put("error", user.getClock().getFailureMessage());
+            response.put("error", autoExport.getFailureMessage());
         } else {
             status = HttpStatus.OK;
         }
