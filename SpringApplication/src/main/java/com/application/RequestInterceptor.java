@@ -1,4 +1,4 @@
-package com.application.command;
+package com.application;
 
 import com.application.ApplicationConfig;
 import com.application.printer.AutoExport;

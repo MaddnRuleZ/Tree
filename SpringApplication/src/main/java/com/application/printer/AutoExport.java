@@ -1,7 +1,7 @@
 package com.application.printer;
 
 import com.application.command.types.interfaces.ILocks;
-import com.application.command.RequestInterceptor;
+import com.application.RequestInterceptor;
 import com.application.exceptions.PrintException;
 import com.application.exceptions.ProcessingException;
 import com.application.User;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * watches the HTTP requests and detects if there are no recent requests
+ * watches the HTTP requests and detects if there are recent requests
  * if there are no recent requests, the structure will be exported
  * {@link RequestInterceptor}
  */
