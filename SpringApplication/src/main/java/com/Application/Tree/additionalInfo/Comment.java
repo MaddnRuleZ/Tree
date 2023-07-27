@@ -39,10 +39,13 @@ public class Comment implements LaTeXTranslator {
 
 
     /**
-     * returns the comment as a string with % as delimiter
+     * returns the comment as a string with % as delimiter, if there is no comment it returns null
      * @return comment as string
      */
     public String toString() {
+        if (comments.isEmpty()) {
+            return null;
+        }
         return String.join("%", comments);
     }
 

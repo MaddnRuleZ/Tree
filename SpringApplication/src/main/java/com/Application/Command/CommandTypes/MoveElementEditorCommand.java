@@ -76,4 +76,19 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
     public void setRoot(Root root) {
         this.root = root;
     }
+
+
+    //---------for Testing----------------------------
+    public void setElement(UUID element) {
+        this.element = element;
+    }
+
+    public void setNewParent(UUID newParent) {
+        this.newParent = newParent;
+    }
+
+    public void setPreviousElement(UUID previousElement) {
+        this.previousElement = previousElement;
+    }
+    //-------------------------------------------------------
 }

@@ -59,12 +59,15 @@ public class Summary implements LaTeXTranslator {
     }
 
     /**
-     * returns the summary as a string with . as delimiter
+     * returns the summary as a string with . as delimiter, if there is no summary it returns null
      * @return summary as string
      */
     @Override
     public String toString() {
-            return String.join(".", summaryText);
+        if(summaryText.isEmpty()){
+            return null;
+        }
+        return String.join(".", summaryText);
     }
 
     @Override

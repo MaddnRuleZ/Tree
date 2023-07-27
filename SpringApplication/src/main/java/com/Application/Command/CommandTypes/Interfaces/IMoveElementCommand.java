@@ -22,7 +22,7 @@ public interface IMoveElementCommand {
                 Parent oldParent = element.getParentElement();
                 element.setParent(newParent);
                 int indexPreviousElement = newParent.getIndexOfChild(previousElement);
-                newParent.addChildOnIndex(indexPreviousElement, element);
+                newParent.addChildOnIndex(indexPreviousElement + 1, element);
                 oldParent.removeChild(element);
             } else {
                 throw new OwnChildException();

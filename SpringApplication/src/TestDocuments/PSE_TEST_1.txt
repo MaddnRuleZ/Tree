@@ -109,6 +109,11 @@
         X
         X
     \chapter{newChapter2}
+
+    \begin{itemize}
+        \item 1
+        \item 2
+    \end{itemize}
                 X14
                 X
                 X

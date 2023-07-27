@@ -266,6 +266,4 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         }
         return this.parentElement.checkOwnChild(element);
     }
-
-
 }
