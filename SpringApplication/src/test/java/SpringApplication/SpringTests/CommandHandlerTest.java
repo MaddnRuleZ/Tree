@@ -1,9 +1,8 @@
 package SpringApplication.SpringTests;
 
-import com.Application.Command.CommandHandler;
-import com.Application.Exceptions.NumParamsException;
-import com.Application.Exceptions.UnrecognizedCommandException;
-import com.Application.User;
+import com.application.Command.CommandHandler;
+import com.application.Exceptions.UnrecognizedCommandException;
+import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

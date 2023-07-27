@@ -1,8 +1,8 @@
 package SpringApplication;
 
 import SpringApplication.TestStubs.TestTree;
-import com.Application.Exceptions.UnknownElementException;
-import com.Application.Tree.interfaces.LaTeXTranslator;
+import com.application.Exceptions.UnknownElementException;
+import com.application.Tree.interfaces.LaTeXTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

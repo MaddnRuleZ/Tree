@@ -1,13 +1,11 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
-import com.Application.Command.CommandTypes.DeleteElementCommand;
-import com.Application.Command.CommandTypes.MoveElementEditorCommand;
-import com.Application.Exceptions.OwnChildException;
-import com.Application.Tree.Element;
-import com.Application.Tree.elements.childs.Child;
-import com.Application.Tree.elements.parent.Environment;
-import com.Application.Tree.elements.parent.Parent;
+import com.application.Command.CommandTypes.MoveElementEditorCommand;
+import com.application.Exceptions.OwnChildException;
+import com.application.Tree.elements.childs.Child;
+import com.application.Tree.elements.parent.Environment;
+import com.application.Tree.elements.parent.Parent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

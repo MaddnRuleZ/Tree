@@ -1,6 +1,6 @@
 package SpringApplication.SpringTests;
 
-// write a test class for the Rest Controller of a SpringApplication, it has to perform a componentScan of the package com.Application
+// write a test class for the Rest Controller of a SpringApplication, it has to perform a componentScan of the package com.application
 // and it has to use the annotation @SpringBootTest
 // the test class has to be annotated with @RunWith and @AutoConfigureMockMvc
 // the test class has to have a private MockMvc field, autowired
@@ -12,25 +12,20 @@ package SpringApplication.SpringTests;
 // the test method has to use the method andExpect of the ResultActions class, and it has to use the method isOk of the ResultMatcher class
 
 
-import com.Application.Application;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.application.Application;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = Application.class)
-@ComponentScan(basePackages = "com.Application")
+@ComponentScan(basePackages = "com.application")
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 public class ControllerTest {

@@ -1,8 +1,8 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
-import com.Application.Command.CommandTypes.DeleteElementCommand;
-import com.Application.Tree.elements.parent.Parent;
+import com.application.Command.CommandTypes.DeleteElementCommand;
+import com.application.Tree.elements.parent.Parent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
