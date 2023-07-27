@@ -91,7 +91,7 @@ public class Figure extends Environment {
         text.append("\n");
 
         for (String caption : captions) {
-            text.append(indentationBody).append(CAPTION_IDENT).append("{").append(caption).append("}");
+            text.append(indentationBody).append(caption);
             text.append("\n");
         }
 
