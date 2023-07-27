@@ -46,7 +46,7 @@ public class Comment implements LaTeXTranslator {
         if (comments.isEmpty()) {
             return null;
         }
-        return String.join("", comments);
+        return String.join("\n", comments);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Comment implements LaTeXTranslator {
         String indentation = getIndentation(level);
 
         for(String line : comments){
-            text.append(indentation).append(line).append("\n");
+            text.append(indentation).append("%").append(line).append("\n");
         }
     }
 
