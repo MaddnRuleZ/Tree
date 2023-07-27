@@ -9,6 +9,7 @@ import com.application.tree.Element;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
@@ -77,28 +78,37 @@ public class AddCommand extends Command {
         return generateResponse(true);
     }
 
+    @JsonProperty
     public String getContent() {
         return content;
     }
 
+    @JsonProperty
     public UUID getParent() {
         return parent;
     }
 
-    public Root getRoot() {
-        return root;
+    @JsonProperty
+    public UUID getPreviousChild() {
+        return previousChild;
     }
 
     public void setRoot(Root root) {
         this.root = root;
     }
 
+    @JsonProperty
     public void setContent(String content) {
         this.content = content;
     }
 
+    @JsonProperty
     public void setParent(UUID parent) {
         this.parent = parent;
     }
 
+    @JsonProperty
+    public void setPreviousChild(UUID previousChild) {
+        this.previousChild = previousChild;
+    }
 }

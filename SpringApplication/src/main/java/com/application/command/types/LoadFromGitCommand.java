@@ -1,19 +1,17 @@
 package com.application.command.types;
 
-import com.application.exceptions.ParseException;
+import com.application.User;
+import com.application.command.types.interfaces.ILoadCommand;
 import com.application.exceptions.ProcessingException;
-import com.application.interpreter.Parser;
 import com.application.printer.GitPrinter;
 import com.application.printer.Printer;
-import com.application.tree.elements.roots.Root;
-import com.application.tree.elements.roots.Roots;
-import com.application.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * command to load a tree from a git repository
  */
-public class LoadFromGitCommand extends Command {
+public class LoadFromGitCommand extends Command implements ILoadCommand {
     /**
      *  user that holds information of LaTeX-Project
      */
@@ -41,17 +39,7 @@ public class LoadFromGitCommand extends Command {
         try {
             acquireStructureWriteLock();
             Printer printer = new GitPrinter(url, username, password, path);
-
-            Parser parser = new Parser(this.path);
-            Roots root = parser.startParsing();
-            if(root instanceof Root) {
-                this.user.setRoot((Root) root);
-                this.user.setPrinter(printer);
-            } else {
-                throw new ParseException(this.getClass().getSimpleName(), root.getClass().getSimpleName(), Root.class.getSimpleName());
-            }
-            this.setSuccess(true);
-
+            this.setSuccess(load(user, printer, path));
         } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
@@ -62,35 +50,48 @@ public class LoadFromGitCommand extends Command {
     }
 
 
+    @JsonProperty
     public User getUser() {
         return user;
     }
 
+    @JsonProperty
     public String getUrl() {
         return url;
     }
 
+    @JsonProperty
     public String getUsername() {
         return username;
     }
 
+    @JsonProperty
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setUser(User user) {
         this.user = user;
     }
 
+    @JsonProperty
     public void setUrl(String url) {
         this.url = url;
     }
 
+    @JsonProperty
     public void setUsername(String username) {
         this.username = username;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @JsonProperty
+    public void setPath(String path) {
+        this.path = path;
     }
 }

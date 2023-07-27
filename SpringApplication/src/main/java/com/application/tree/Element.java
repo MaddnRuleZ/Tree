@@ -177,6 +177,21 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
      */
     public abstract int levelOfDeepestSectioningChild();
 
+    /**
+     * checks if the calling Element is a child of the passed Element
+     * @param element to check
+     * @return true if the calling Element is a child of the passed Element
+     */
+    public boolean checkOwnChild(Element element) {
+        if(this.parentElement == null) {
+            return false;
+        }
+        if(this.parentElement.equals(element)) {
+            return true;
+        }
+        return this.parentElement.checkOwnChild(element);
+    }
+
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectMapper mapper = new ObjectMapper();
@@ -250,20 +265,5 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         if(this.newLine != null) {
             this.newLine.toLaTeX(map, key, level);
         }
-    }
-
-    /**
-     * checks if the calling Element is a child of the passed Element
-     * @param element to check
-     * @return true if the calling Element is a child of the passed Element
-     */
-    public boolean checkOwnChild(Element element) {
-        if(this.parentElement == null) {
-            return false;
-        }
-        if(this.parentElement.equals(element)) {
-            return true;
-        }
-        return this.parentElement.checkOwnChild(element);
     }
 }

@@ -4,6 +4,7 @@ import com.application.exceptions.ElementNotFoundException;
 import com.application.exceptions.ProcessingException;
 import com.application.tree.Element;
 import com.application.tree.elements.roots.Root;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -48,17 +49,24 @@ public class EditCommentCommand extends Command {
     }
 
 
-    public Root getRoot() {
-        return root;
-    }
-
+    @JsonProperty
     public UUID getElement() {
         return element;
     }
+    @JsonProperty
     public String getComment() {
         return comment;
     }
     public void setRoot(Root root) {
         this.root = root;
+    }
+
+    @JsonProperty
+    public void setElement(UUID element) {
+        this.element = element;
+    }
+    @JsonProperty
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

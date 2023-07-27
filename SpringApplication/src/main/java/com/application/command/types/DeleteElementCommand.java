@@ -5,6 +5,7 @@ import com.application.exceptions.ProcessingException;
 import com.application.tree.Element;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
@@ -69,27 +70,26 @@ public class DeleteElementCommand extends Command {
         this.setSuccess(true);
 
     }
-
+    @JsonProperty
     public UUID getElement() {
         return element;
     }
 
+    @JsonProperty
     public boolean isCascading() {
         return cascading;
     }
 
-    public void setRoot(Root root) {
-        this.root = root;
-    }
-
-    //--------only for Testing--------------
-
-    public void setElement(UUID element) {
-        this.element = element;
-    }
-
+    @JsonProperty
     public void setCascading(boolean cascading) {
         this.cascading = cascading;
     }
-    //----------------------
+
+    @JsonProperty
+    public void setElement(UUID element) {
+        this.element = element;
+    }
+    public void setRoot(Root root) {
+        this.root = root;
+    }
 }

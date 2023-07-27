@@ -5,6 +5,7 @@ import com.application.exceptions.*;
 import com.application.tree.Element;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -55,38 +56,38 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
         return generateResponse(true);
     }
 
-
-    public Root getRoot() {
-        return root;
-    }
-
-    public UUID getElement() {
-        return element;
-    }
-    public UUID getNewParent() {
-        return newParent;
-    }
-
-    public UUID getPreviousElement() {
-        return previousElement;
-    }
-
     public void setRoot(Root root) {
         this.root = root;
     }
 
+    @JsonProperty
+    public UUID getElement() {
+        return element;
+    }
 
-    //---------for Testing----------------------------
+    @JsonProperty
+    public UUID getNewParent() {
+        return newParent;
+    }
+
+    @JsonProperty
+    public UUID getPreviousElement() {
+        return previousElement;
+    }
+
+    @JsonProperty
     public void setElement(UUID element) {
         this.element = element;
     }
 
+    @JsonProperty
     public void setNewParent(UUID newParent) {
         this.newParent = newParent;
     }
 
+    @JsonProperty
     public void setPreviousElement(UUID previousElement) {
         this.previousElement = previousElement;
     }
-    //-------------------------------------------------------
+
 }

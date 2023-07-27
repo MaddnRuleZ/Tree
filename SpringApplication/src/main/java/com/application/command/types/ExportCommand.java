@@ -33,13 +33,4 @@ public class ExportCommand extends Command {
         }
         return generateSuccessResponse();
     }
-
-
-    public Printer getPrinter() {
-        return printer;
-    }
-
-    public void setPrinter(Printer printer) {
-        this.printer = printer;
-    }
 }

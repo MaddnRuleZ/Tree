@@ -4,6 +4,7 @@ import com.application.exceptions.ElementNotFoundException;
 import com.application.exceptions.ProcessingException;
 import com.application.tree.Element;
 import com.application.tree.elements.roots.Root;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
@@ -56,11 +57,23 @@ public class EditSummaryCommand extends Command {
         return root;
     }
 
+    @JsonProperty
     public UUID getElement() {
         return element;
     }
 
+    @JsonProperty
     public String getSummary() {
         return summary;
+    }
+
+    @JsonProperty
+    public void setElement(UUID element) {
+        this.element = element;
+    }
+
+    @JsonProperty
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }

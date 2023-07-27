@@ -67,17 +67,7 @@ public class Controller {
     @GetMapping("/LoadFullData")
     public ResponseEntity<JsonNode> processGetEditorRequest() {
         Command command = new GetCommand(user.getRoot(), true);
-        HttpStatus status;
-        JsonNode response = command.execute();
-
-        printJsonString(response);
-
-        if(command.isSuccess()) {
-            status = HttpStatus.OK;
-        } else {
-            status = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(response, status);
+        return getJsonNodeResponseEntity(command);
     }
 
     /**
@@ -87,19 +77,11 @@ public class Controller {
     @GetMapping("/LoadTreeData")
     public ResponseEntity<JsonNode> processGetTreeRequest() {
         Command command = new GetCommand(user.getRoot(), false);
-        HttpStatus status;
-
-        JsonNode response = command.execute();
-
-        printJsonString(response);
-
-        if(command.isSuccess()) {
-            status = HttpStatus.OK;
-        } else {
-            status = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(response, status);
+        return getJsonNodeResponseEntity(command);
     }
+
+
+
 
     /**
      * Processes a GET-request for changes
@@ -137,6 +119,26 @@ public class Controller {
         HttpStatus status;
 
         JsonNode response = command.execute();
+        if(command.isSuccess()) {
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, status);
+    }
+
+    /**
+     * creates a ResponseEntity for getData requests
+     * @param command the command to be executed
+     * @return the ResponseEntity
+     */
+    private ResponseEntity<JsonNode> getJsonNodeResponseEntity(Command command) {
+        HttpStatus status;
+
+        JsonNode response = command.execute();
+
+        printJsonString(response);
+
         if(command.isSuccess()) {
             status = HttpStatus.OK;
         } else {

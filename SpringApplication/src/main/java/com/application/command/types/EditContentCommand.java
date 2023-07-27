@@ -5,6 +5,7 @@ import com.application.exceptions.ProcessingException;
 import com.application.tree.Element;
 import com.application.tree.elements.roots.Root;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
 
@@ -47,20 +48,27 @@ public class EditContentCommand extends Command {
     }
 
 
-
-    public Root getRoot() {
-        return root;
-    }
-
+    @JsonProperty
     public UUID getElement() {
         return element;
     }
 
+    @JsonProperty
     public String getContent() {
         return content;
     }
 
     public void setRoot(Root root) {
         this.root = root;
+    }
+
+    @JsonProperty
+    public void setElement(UUID element) {
+        this.element = element;
+    }
+
+    @JsonProperty
+    public void setContent(String content) {
+        this.content = content;
     }
 }
