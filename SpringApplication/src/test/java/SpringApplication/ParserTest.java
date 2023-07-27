@@ -1,8 +1,8 @@
 package SpringApplication;
 
-import com.application.Exceptions.UnknownElementException;
-import com.application.Interpreter.Parser;
-import com.application.Tree.elements.roots.Root;
+import com.application.exceptions.UnknownElementException;
+import com.application.interpreter.Parser;
+import com.application.tree.elements.roots.Root;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

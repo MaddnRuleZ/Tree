@@ -1,8 +1,8 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
-import com.application.Command.CommandTypes.DeleteElementCommand;
-import com.application.Tree.elements.parent.Parent;
+import com.application.command.types.DeleteElementCommand;
+import com.application.tree.elements.parent.Parent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
-// Tree structure:
+// tree structure:
 //                        root
 //                          |
 //      --------------Sectioning1---------------

@@ -1,7 +1,7 @@
 package SpringApplication.CommandTests.Generation;
 
-import com.application.Command.CommandHandler;
-import com.application.Exceptions.NumParamsException;
+import com.application.command.CommandHandler;
+import com.application.exceptions.NumParamsException;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

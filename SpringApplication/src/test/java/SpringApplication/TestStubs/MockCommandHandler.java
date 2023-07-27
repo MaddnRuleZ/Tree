@@ -1,11 +1,11 @@
 package SpringApplication.TestStubs;
 
-import com.application.Command.CommandHandler;
-import com.application.Command.CommandTypes.Command;
-import com.application.Command.Factories.CommandFactory;
-import com.application.Exceptions.NumParamsException;
-import com.application.Exceptions.ProcessingException;
-import com.application.Exceptions.UnrecognizedCommandException;
+import com.application.command.CommandHandler;
+import com.application.command.types.Command;
+import com.application.command.factories.CommandFactory;
+import com.application.exceptions.NumParamsException;
+import com.application.exceptions.ProcessingException;
+import com.application.exceptions.UnrecognizedCommandException;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 

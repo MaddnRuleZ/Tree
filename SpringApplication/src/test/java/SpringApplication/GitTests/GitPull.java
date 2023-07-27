@@ -1,6 +1,6 @@
 package SpringApplication.GitTests;
 
-import com.application.Printer.GitPrinter;
+import com.application.printer.GitPrinter;
 import org.junit.jupiter.api.Test;
 
 public class GitPull {

@@ -1,7 +1,7 @@
 package SpringApplication.SpringTests;
 
-import com.application.Command.CommandHandler;
-import com.application.Exceptions.UnrecognizedCommandException;
+import com.application.command.CommandHandler;
+import com.application.exceptions.UnrecognizedCommandException;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

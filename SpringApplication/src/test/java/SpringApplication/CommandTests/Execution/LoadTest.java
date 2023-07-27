@@ -1,7 +1,7 @@
 package SpringApplication.CommandTests.Execution;
 
-import com.application.Command.CommandHandler;
-import com.application.Exceptions.ProcessingException;
+import com.application.command.CommandHandler;
+import com.application.exceptions.ProcessingException;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

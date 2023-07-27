@@ -1,17 +1,17 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
-import com.application.Command.CommandTypes.MoveElementEditorCommand;
-import com.application.Exceptions.OwnChildException;
-import com.application.Tree.elements.childs.Child;
-import com.application.Tree.elements.parent.Environment;
-import com.application.Tree.elements.parent.Parent;
+import com.application.command.types.MoveElementEditorCommand;
+import com.application.exceptions.OwnChildException;
+import com.application.tree.elements.childs.Child;
+import com.application.tree.elements.parent.Environment;
+import com.application.tree.elements.parent.Parent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Tree structure:
+// tree structure:
 //                        root
 //                          |
 //      --------------Sectioning1---------------

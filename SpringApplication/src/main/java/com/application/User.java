@@ -1,8 +1,8 @@
 package com.application;
 
-import com.application.Interpreter.Parser;
-import com.application.Printer.Printer;
-import com.application.Tree.elements.roots.Root;
+import com.application.interpreter.Parser;
+import com.application.printer.Printer;
+import com.application.tree.elements.roots.Root;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,7 +37,7 @@ public class User {
      */
     public void setPrinter(Printer Printer) throws IllegalStateException{
         if(this.printer != null) {
-            throw new IllegalStateException("Printer already set.");
+            throw new IllegalStateException("printer already set.");
         }
         this.printer = Printer;
     }

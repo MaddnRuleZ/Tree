@@ -1,10 +1,10 @@
 package SpringApplication.TestStubs;
 
-import com.application.Tree.elements.childs.Child;
-import com.application.Tree.elements.parent.Environment;
-import com.application.Tree.elements.parent.Parent;
-import com.application.Tree.elements.parent.Sectioning;
-import com.application.Tree.elements.roots.Root;
+import com.application.tree.elements.childs.Child;
+import com.application.tree.elements.parent.Environment;
+import com.application.tree.elements.parent.Parent;
+import com.application.tree.elements.parent.Sectioning;
+import com.application.tree.elements.roots.Root;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class TestTree {
     public ArrayList<Parent> sectioningList = new ArrayList<>();
     public ArrayList<Environment> environmentList = new ArrayList<>();
 
-    // Tree structure:
+    // tree structure:
     //                        root
     //                          |
     //      --------------Sectioning1---------------
