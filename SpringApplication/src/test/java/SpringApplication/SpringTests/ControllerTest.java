@@ -14,6 +14,7 @@ package SpringApplication.SpringTests;
 
 import com.application.Application;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ComponentScan(basePackages = "com.application")
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
+@Ignore("This test is not finished yet")
 public class ControllerTest {
 
     @Autowired

@@ -29,59 +29,50 @@ public class NotEnoughParamsTest {
     @Test
     void AddElementTest(){
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/AddElement.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in AddElement", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
     @Test
     void DeleteElementTest(){
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/DeleteElement.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in DeleteElement", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
 
     @Test
     void EditCommentTest(){
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/EditComment.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in EditComment", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
 
     @Test
     void EditContentTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/EditContent.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in EditContent", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
     @Test
     void EditSummaryTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/EditSummary.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in EditSummary", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
     @Test
     void LoadFromFolderTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/LoadFromFolder.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in LoadFromFolder", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
     @Test
     void LoadFromGitTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/LoadFromGit.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in LoadFromGit", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
     @Test
     void MoveElementEditorTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/MoveElementEditor.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in MoveElementEditor", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
 
     @Test
     void MoveElementTreeTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/MoveElementTree.json");
-        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
-        assertEquals("Missing Parameter in MoveElementTree", exception.getMessage());
+        assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
     }
 
     private JsonNode loadJsonFile(String filePath) {

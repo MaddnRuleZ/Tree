@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  *
  */
-public abstract class Element implements JsonParser, LaTeXTranslator {
+public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     private final UUID id;
     private final int level;
     protected Parent parentElement;
@@ -151,10 +151,8 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
        this.summary.setSummary(summary);
     }
 
-    /**
-     * calculates the level of the calling Element from bottom to top
-     * @return level of the calling Element
-     */
+
+    @Override
     public int calculateLevelFromElement() {
         Parent parent = this.getParentElement();
         if (parent == null) {
@@ -163,25 +161,8 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
         return parent.calculateLevelFromElement();
     }
 
-    /**
-     * searches for the element with the given id
-     * @param id to search for
-     * @return found Element or null
-     */
-    public abstract Element searchForID(UUID id);
 
-    /**
-     * traverses the tree starting from calling Element
-     * Passed Sections add 1 to the level
-     * @return level of the deepest sectioning child
-     */
-    public abstract int levelOfDeepestSectioningChild();
-
-    /**
-     * checks if the calling Element is a child of the passed Element
-     * @param element to check
-     * @return true if the calling Element is a child of the passed Element
-     */
+    @Override
     public boolean checkOwnChild(Element element) {
         if(this.parentElement == null) {
             return false;

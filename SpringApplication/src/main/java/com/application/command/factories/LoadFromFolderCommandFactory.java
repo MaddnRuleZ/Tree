@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 /*
     command has to be read manually due to problems with spring and using reflection
  */
@@ -33,6 +34,9 @@ public class LoadFromFolderCommandFactory implements CommandFactory {
     public Command createCommand(JsonNode attributes) throws NumParamsException {
         LoadFromFolderCommand command = new LoadFromFolderCommand();
         Iterator<Map.Entry<String, JsonNode>> fieldsIterator = attributes.fields();
+        if(!fieldsIterator.hasNext()) {
+            throw new NumParamsException("LoadFromFolder - missing parameter");
+        }
         Map.Entry<String, JsonNode> field = fieldsIterator.next();
         String path = field.getValue().asText();
         command.setPath(path);
