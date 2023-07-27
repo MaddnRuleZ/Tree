@@ -2,6 +2,7 @@ package com.application.exceptions;
 
 import com.application.tree.elements.ElementConfig;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class LevelException extends ProcessingException{
 
     /**

@@ -48,7 +48,7 @@ public class LoadFromGitCommand extends Command {
                 this.user.setRoot((Root) root);
                 this.user.setPrinter(printer);
             } else {
-                throw new ParseException("return value of parsing"+ root.getClass().getName());
+                throw new ParseException(this.getClass().getSimpleName(), root.getClass().getSimpleName(), Root.class.getSimpleName());
             }
             this.setSuccess(true);
 

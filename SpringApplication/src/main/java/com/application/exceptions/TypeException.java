@@ -1,9 +1,10 @@
 package com.application.exceptions;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class TypeException extends ProcessingException {
 
     /**
-     * constructor
+     * thrown if the type of element is not the required one
      * @param required type required
      * @param found type found
      */

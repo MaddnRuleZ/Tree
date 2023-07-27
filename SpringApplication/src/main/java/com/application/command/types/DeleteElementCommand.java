@@ -65,12 +65,9 @@ public class DeleteElementCommand extends Command {
                 index++;
             }
         }
-        if(parent.removeChild(element)) {
-            this.setSuccess(true);
-        } else {
-            this.setFailureMessage("Beim Löschen des Elements ist ein Fehler aufgetreten");
-            this.setSuccess(false);
-        }
+        parent.removeChild(element);
+        this.setSuccess(true);
+
     }
 
     public UUID getElement() {
@@ -85,7 +82,7 @@ public class DeleteElementCommand extends Command {
         this.root = root;
     }
 
-    //--------TODO: nur für Testzwecke --------------
+    //--------only for Testing--------------
 
     public void setElement(UUID element) {
         this.element = element;
@@ -94,5 +91,5 @@ public class DeleteElementCommand extends Command {
     public void setCascading(boolean cascading) {
         this.cascading = cascading;
     }
-    //--------TODO: nur für Testzwecke --------------
+    //----------------------
 }

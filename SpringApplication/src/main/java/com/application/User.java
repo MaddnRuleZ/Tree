@@ -6,8 +6,8 @@ import com.application.tree.elements.roots.Root;
 import org.springframework.stereotype.Component;
 
 /**
- * holds the tree structure and classes responsible for translating
- * the structure in different formats
+ * holds the tree structure and
+ * classes responsible for translating the structure in different formats
  */
 @Component
 public class User {

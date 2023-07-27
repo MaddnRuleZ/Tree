@@ -86,7 +86,6 @@ public abstract class Command implements ILocks {
     public String getFailureMessage() {
         return failureMessage;
     }
-
     public void setFailureMessage(String failureMessage) {
         this.failureMessage = failureMessage;
     }

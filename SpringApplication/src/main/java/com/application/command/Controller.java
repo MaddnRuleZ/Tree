@@ -127,6 +127,10 @@ public class Controller {
         return new ResponseEntity<>(response, status);
     }
 
+    /**
+     * Processes a GET-request for the export
+     * @return if export was successful
+     */
     @GetMapping("/Export")
     public ResponseEntity<JsonNode> processExportRequest() {
         Command command = new ExportCommand(user.getPrinter());

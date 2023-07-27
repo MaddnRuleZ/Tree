@@ -253,7 +253,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator {
     }
 
     /**
-     * checks whether the calling Element is a child of the passed Element
+     * checks if the calling Element is a child of the passed Element
      * @param element to check
      * @return true if the calling Element is a child of the passed Element
      */

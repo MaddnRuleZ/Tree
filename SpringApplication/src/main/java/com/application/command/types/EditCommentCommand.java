@@ -34,7 +34,7 @@ public class EditCommentCommand extends Command {
             if(elementFound == null) {
                 throw new ElementNotFoundException();
             } else {
-                elementFound.setComment(comment);
+                elementFound.setComment(this.comment);
                 this.setSuccess(true);
             }
         } catch (ProcessingException e) {
@@ -58,7 +58,6 @@ public class EditCommentCommand extends Command {
     public String getComment() {
         return comment;
     }
-
     public void setRoot(Root root) {
         this.root = root;
     }

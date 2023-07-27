@@ -3,6 +3,7 @@ package com.application.exceptions;
 /**
  * Exception that is thrown if an error occurs during printing
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class PrintException extends ProcessingException {
     /**
      * creates a new PrintException

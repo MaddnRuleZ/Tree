@@ -6,10 +6,10 @@ package com.application.exceptions;
 public class NumParamsException extends ProcessingException {
 
     /**
-     * constructor
+     * thrown if the received JsonFile misses a parameter
      * @param commandName name of the command that caused the error
      */
     public NumParamsException(String commandName) {
-        super("Fehlender Parameter in JsonFile: " + commandName + "Dieser Fehler sollte nicht auftreten. Bitte überprüfen Sie die Erzeugung der Json-Dateien.");
+        super("Missing Parameter in JsonFile: " + commandName);
     }
 }

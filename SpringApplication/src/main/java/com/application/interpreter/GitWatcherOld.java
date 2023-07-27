@@ -111,8 +111,6 @@ public class GitWatcherOld implements Runnable, ILocks {
         PullCommand pullCommand = git.pull();
         pullCommand.call();
 
-        //TODO check for changes
-
         return false;
     }
 

@@ -54,7 +54,7 @@ public class AddCommand extends Command {
 
             if (foundRoot instanceof Root) {
                 if (root.getChildren().size() == 0) {
-                    throw new ParseException("Es konnte kein Element geparst werden.");
+                    throw new ParseException(this.content);
                 }
 
                 List<Element> children = root.getChildren();
@@ -65,6 +65,8 @@ public class AddCommand extends Command {
                     index++;
                 }
                 this.setSuccess(true);
+            } else {
+                throw new ParseException(this.getClass().getSimpleName(), foundRoot.getClass().getSimpleName(), Root.class.getSimpleName());
             }
         } catch (ProcessingException e) {
             this.setSuccess(false);
@@ -99,7 +101,4 @@ public class AddCommand extends Command {
         this.parent = parent;
     }
 
-    public void setPreviousChild(UUID previousChild) {
-        this.previousChild = previousChild;
-    }
 }

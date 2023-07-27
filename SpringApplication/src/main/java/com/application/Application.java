@@ -18,6 +18,10 @@ public class Application {
 	@Autowired
 	private User user;
 
+	/**
+	 * starts the application and initializes the spring boot context
+	 * @param args
+	 */
 	public static void main(String[] args){
 		SpringApplication.run(Application.class, args);
 	}

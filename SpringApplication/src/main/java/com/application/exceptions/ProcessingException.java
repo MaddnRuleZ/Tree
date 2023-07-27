@@ -1,5 +1,6 @@
 package com.application.exceptions;
 
+
 /**
  * always thrown if an error occurs during the execution of a command
  */

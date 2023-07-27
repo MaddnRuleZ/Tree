@@ -31,8 +31,6 @@ public interface IMoveElementCommand {
         }
     }
 
-    //TODO minLevel, maxLevel ???
-
     /**
      * checks if it is possible to move an element to a new parent
      * check if new level of deepest sectioning child lies within part-level and subParagraph-level

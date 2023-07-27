@@ -4,8 +4,6 @@ package com.application.command.types;
 import com.application.printer.Printer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-
-//TODO
 /**
  * responsible for overwriting the LaTeX file with changes
  * that have been made in the tree structure
@@ -20,7 +18,6 @@ public class ExportCommand extends Command {
         this.printer = printer;
     }
 
-    //TODO
     @Override
     public JsonNode execute() {
         try {

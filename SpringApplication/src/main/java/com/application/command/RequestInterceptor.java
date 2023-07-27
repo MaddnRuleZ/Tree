@@ -1,5 +1,7 @@
 package com.application.command;
 
+import com.application.ApplicationConfig;
+import com.application.printer.AutoExport;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,8 @@ import java.util.Queue;
 
 /**
  * preprocesses requests and logs their timestamps to check if there were no incoming requests for a certain time
- * only requests that are processed by the \api endpoint are logged (see ApplicationConfig)
+ * only requests that are processed by the \api endpoint are logged {@link  ApplicationConfig}
+ * used {@link AutoExport}
  */
 @Component
 public class RequestInterceptor implements HandlerInterceptor {

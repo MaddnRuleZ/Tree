@@ -11,9 +11,20 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * watches the HTTP requests and detects if there are no recent requests
+ * if there are no recent requests, the structure will be exported
+ * {@link RequestInterceptor}
+ */
 @Component
 public class AutoExport implements ILocks {
+    /**
+     * Interceptor to check for recent requests
+     */
     private final RequestInterceptor requestInterceptor;
+    /**
+     * user containing printer and root
+     */
     private final User user;
     /**
      * message to display if an error occurs
@@ -40,7 +51,6 @@ public class AutoExport implements ILocks {
             if (!noRecentRequests) {
                 try {
                     acquireStructureReadLock();
-                    System.out.println("exporting:"+ System.currentTimeMillis());
                     user.getPrinter().export();
                 }  catch (ProcessingException e) {
                     failureMessage = e.getMessage();

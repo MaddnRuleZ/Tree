@@ -31,6 +31,10 @@ public class ApplicationConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api");
     }
 
+    /**
+     * enables CORS for the application
+     * @param registry the registry of the application
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

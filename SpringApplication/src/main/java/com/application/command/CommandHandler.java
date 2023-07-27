@@ -72,7 +72,6 @@ public class CommandHandler {
     private Map<String, CommandFactory> initializeCommandFactories(User user) {
         Map<String, CommandFactory> commandFactories = new HashMap<>();
 
-        //commandFactories.put("PrintCommand", new PrintCommandFactory(user));
         commandFactories.put("AddElement", new AddCommandFactory(user));
         commandFactories.put("DeleteElement", new DeleteCommandFactory(user));
         commandFactories.put("EditSummary", new EditSummaryCommandFactory(user));

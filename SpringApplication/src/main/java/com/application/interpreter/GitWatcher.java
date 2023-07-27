@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * watches the git repository for changes
+ * if changes were found, the structure will be updated
+ */
 @Component
 public class GitWatcher implements ILocks {
 
@@ -40,18 +43,7 @@ public class GitWatcher implements ILocks {
     @Scheduled(fixedRate = 60000)
     public void check() {
         if(user.getPrinter() != null || user.getPrinter() instanceof GitPrinter) {
-            /*
-            try {
-                //TODO checkForUpdates
-                acquireStructureWriteLock();
-                //TODO updateStructure
-            } catch (GitAPIException | IOException | InterruptedException | ParseException e) {
-                failure = true;
-                failureMessage = e.getMessage();
-            } finally {
-                releaseStructureWriteLock();
-            }
-            */
+            //TODO call Git
         }
     }
 
