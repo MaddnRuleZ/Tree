@@ -61,7 +61,6 @@
         X0_1
         X0_1_1
         X
-\input{src/TestDocuments/InputTest.txt}
 \part{inputTesting}
     \chapter{haw haw}
         X7

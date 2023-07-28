@@ -38,20 +38,17 @@ public abstract class Parent extends Element {
     }
 
     /**
+     * Add an TextBlock to the Element,
+     * if the Parent does already have an TextBlock, add the Text to the Element
      *
-     * @param line
-     * @return
+     * @param line current Line in the Text
+     * @return the TextBlock if added or this
      */
     @Override
     public Element addTextBlockToElem(String line) {
-        if (childElements.size() == 0) {
-            BlockElement block = generateTextBlockAsChild();
-            block.addTextBlockToElem(line);
-            return block;
-        } else {
-            text.add(line);
-            return this;
-        }
+        BlockElement block = generateTextBlockAsChild();
+        block.addTextBlockToElem(line);
+        return block;
     }
 
     /**

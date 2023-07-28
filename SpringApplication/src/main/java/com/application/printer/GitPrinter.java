@@ -178,9 +178,6 @@ public class GitPrinter extends Printer {
         }
     }
 
-
-
-
     /**
      * Helper method to recursively delete a directory and its contents.
      *

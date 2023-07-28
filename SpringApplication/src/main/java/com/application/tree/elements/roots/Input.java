@@ -11,7 +11,8 @@ import java.util.regex.Pattern;
 
 
 /**
- *
+ * Class Represents an Input Statement in the LateX file and is an Element
+ * Represents an Input Document inside the main.tex file and Stores all Items of the Document inside it as Children
  */
 public class Input extends Parent implements Roots {
     private static final String startPart = "\\input";

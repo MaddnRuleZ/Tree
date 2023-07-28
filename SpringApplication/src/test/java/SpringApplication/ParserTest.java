@@ -14,7 +14,7 @@ public class ParserTest {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/TestDocuments/PSE_TEST_1.txt");
+        Parser parser = new Parser("src/test/java/SpringApplication/TestDocuments/PSE_TEST_1.txt");
         Root root = (Root) parser.startParsing();
 
         Map<String, StringBuilder> map = new HashMap<>();

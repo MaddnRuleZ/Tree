@@ -35,6 +35,7 @@ public class Parser {
             Scanner scanner = new Scanner(text);
             return scanner.parseDocument();
         } catch (FileInvalidException exception) {
+            System.out.println("Invalid File");
             return null;
         }
     }

@@ -15,6 +15,9 @@ import java.util.Map;
 public class Summary implements LaTeXTranslator {
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
+    /**
+     * Line by Line the Text of the Summary
+     */
     private final List<String> summaryText;
 
     /**
@@ -34,8 +37,7 @@ public class Summary implements LaTeXTranslator {
     }
 
     /**
-     * check if the current Line starts/ ends the summary
-     * or add the current line to the summary if the listener is active
+     * if the line starts/Ends the Summary or the Listener is active, then add the line to the Summary
      *
      * @param currentLine line to check for start/ end hints
      * @return true if line was added to summary, else false

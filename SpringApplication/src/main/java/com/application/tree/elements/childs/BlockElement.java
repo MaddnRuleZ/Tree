@@ -24,8 +24,9 @@ public class BlockElement extends Child {
     }
 
     /**
-     * Check if Parent is Figure -> BlockElement inside Figure
-     * add Caption / GraphicString to the Figure
+     * add a TextBlock to the Element and generate it on the same Level
+     * Check if Parent is Figure -> this BlockElement inside Figure
+     * add Caption / GraphicString to the Figure when in current Line
      *
      * @param line line to Scan for Summary Comment or NewLine
      */

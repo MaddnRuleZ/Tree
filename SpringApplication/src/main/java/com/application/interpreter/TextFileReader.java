@@ -16,27 +16,16 @@ public class TextFileReader {
         this.filePath = filePath;
     }
 
-    //TODO auskommentiert bei E
     public boolean validateFile() throws FileInvalidException {
         File file = new File(filePath);
-        /* TODO
         if (!file.exists()) {
             throw new FileInvalidException("Datei existiert nicht " + filePath);
         }
-        *
-         */
         if (file.isDirectory()) {
             throw new FileInvalidException("Pfad ist ein Ordner " + filePath);
         }
-        /*
         if (!file.canRead()) {
             throw new FileInvalidException("Datei ist nicht Lesbar " + filePath);
-        }
-        *
-         */
-        String type = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-        if (type.equals("tex") ||type.equals("txt")){ //TODO hinzugefügt
-            throw new FileInvalidException("Datei endet nicht auf .tex " + filePath);
         }
         return true;
     }

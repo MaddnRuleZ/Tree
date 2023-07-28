@@ -44,8 +44,7 @@ public class Figure extends Environment {
     }
 
     /**
-     * Extract from the content of the Graphic String
-     * from a Graphic-string: \includegraphics[insertName]{insertName}
+     * if the String Contains a Part of the Graphic-string extract it,
      * get everything in between "[" and "}"
      *
      * @param graphicsString raw graphic string to parse
@@ -68,9 +67,9 @@ public class Figure extends Environment {
     }
 
     /**
-     * check if the line is a caption, if so add and return true
+     * check if the line is a caption, if so add it to the Figure and return true
      *
-     * @param caption caption line to add
+     * @param caption current Line to check if Caption
      * @return true if caption was added
      */
     public boolean addCaption(String caption) {

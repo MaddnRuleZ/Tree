@@ -22,7 +22,6 @@ public class Child extends Element {
      */
     public Child(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
-
         this.type = this.getClass().getSimpleName();
     }
 
