@@ -86,12 +86,10 @@ public class Summary implements LaTeXTranslator {
 
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
-
     }
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
-
     }
 
     public List<String> getSummary() {

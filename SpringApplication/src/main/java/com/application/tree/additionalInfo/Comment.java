@@ -31,7 +31,7 @@ public class Comment implements LaTeXTranslator {
      */
     public boolean extractContent(String currentLine) {
         if (currentLine.contains(START_CHARACTER)) {
-            comments.add(currentLine);
+            comments.add(currentLine.replace(START_CHARACTER, ""));
             return true;
         }
         return false;
@@ -61,10 +61,12 @@ public class Comment implements LaTeXTranslator {
 
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+
     }
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+
     }
 }
 
