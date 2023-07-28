@@ -24,7 +24,6 @@ import java.util.UUID;
 public abstract class Parent extends Element {
     protected final List<Element> childElements;
 
-
     /**
      * Constructor for creating a new Parent object with the specified startPart, endPart, and level.
      *
