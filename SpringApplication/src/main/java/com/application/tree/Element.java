@@ -66,8 +66,10 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     public abstract Element addTextBlockToElem(String line);
 
     /**
+     * generate an TextBlock on the Same Level the current Element is on
+     * add the parent of this Element a TextBlock and set the TextBlocks parent as the parent
      *
-     * @return
+     * @return return the BlockElement just Created
      */
     public BlockElement generateTextSameLevel() {
         BlockElement blockElement = new BlockElement();

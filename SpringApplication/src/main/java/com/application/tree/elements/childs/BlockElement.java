@@ -36,7 +36,6 @@ public class BlockElement extends Child {
             return generateTextSameLevel();
         } else {
             if (!summary.extractContent(line) && !comment.extractContent(line)) {
-                // todo Enter this: if (parentElement.getStartPart().equals(ElementConfig.FIGURE.getStartPart())) { getStartPart wirft eine Exeption -> S fragen
                 if (parentElement instanceof Figure figure) {
                     if (!figure.setGraphics(line) && !figure.addCaption(line)) {
                         this.text.add(line);
