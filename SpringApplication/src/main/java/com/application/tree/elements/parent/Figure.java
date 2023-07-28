@@ -3,6 +3,8 @@ package com.application.tree.elements.parent;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -116,9 +118,13 @@ public class Figure extends Environment {
         node.put("fileLocation", this.graphic);
 
         if(this.captions != null && !this.captions.isEmpty()) {
+            ArrayNode captionNode = JsonNodeFactory.instance.arrayNode();
             for(String caption : this.captions) {
                 node.put("content", caption);
             }
+            node.set("captions", captionNode);
+        } else {
+            node.set("captions", null);
         }
         return node;
     }
