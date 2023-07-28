@@ -11,6 +11,14 @@ import com.application.tree.elements.parent.Sectioning;
 /**
  * Class Containing the Configuration of ALL the Structural Elements that wil be detected by the Scan -Algorithm
  *
+ * Elements are Sorted in the Tree in an SEMI-ORDER identified by the Elements Level
+ * When comparing two Elements, how they are Related to Each other the Level decides which should be Parent and which Child.
+ * So the Tree gets Balanced
+ *
+ * \Part                                \Part               [indentation represent who is parent and child]
+ * \Section [will be sorted to ->]          \Section
+ * \Label                                       \Label
+ *
  */
 public enum ElementConfig {
 

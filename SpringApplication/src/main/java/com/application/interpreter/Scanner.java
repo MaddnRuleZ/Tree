@@ -46,7 +46,7 @@ public class Scanner {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
             }
             try {
-                newElement = scanLine(lastElement, i);
+                newElement = scanCurrentLine(lastElement, i);
             } catch (UnknownElementException e) {
                 newElement = null;
             }
@@ -72,7 +72,7 @@ public class Scanner {
      * @param index current index of the text
      * @return the New Created Text Element with parent and child hierarchy
      */
-    private Element scanLine(Element lastElement, final int index) throws UnknownElementException {
+    private Element scanCurrentLine(Element lastElement, final int index) throws UnknownElementException {
         String currentLine = text[index];
         if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart())) {
@@ -120,7 +120,8 @@ public class Scanner {
     }
 
     /**
-     * higher lvl, navigate tree struct up, search matching Parent to add Element to
+     * newElement is in the Hierarchy higher Up, so
+     * navigate tree up, search matching Parent to add Element to
      *
      * @param lastElement lastElement created
      * @param newElement currentElement created
