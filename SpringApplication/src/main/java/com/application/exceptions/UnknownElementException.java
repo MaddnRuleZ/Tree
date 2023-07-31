@@ -15,11 +15,11 @@ public class UnknownElementException extends ProcessingException{
     }
 
     /**
-     * thrown if input url is null
-     * @param name
-     * @param url
+     * thrown if an unknown element is found
+     * @param found type of the element that caused the error
+     * @param requested type of the element that was requested
      */
-    public UnknownElementException(String name, String url) {
-        super("Beim Ausführen des Befehls ist ein unbekanntes Element aufgetreten: " + name + " Url: " + url);
+    public UnknownElementException(String found, String requested) {
+        super("Beim Ausführen des Befehls ist ein unbekanntes Element aufgetreten: " + found + " Requested: " + requested);
     }
 }

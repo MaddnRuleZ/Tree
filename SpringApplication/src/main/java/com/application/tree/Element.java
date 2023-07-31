@@ -222,10 +222,10 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
 
-        if (this.chooseManualSummary && this.summary != null && this.summary.getSummary() != null && !this.summary.getSummary().isEmpty()) {
+        if (hasSummary()) {
             this.summary.toLaTeX(map, key, level);
         }
-        if (this.comment != null) {
+        if (hasComment()) {
             this.comment.toLaTeX(map, key, level);
         }
     }
@@ -265,5 +265,16 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
     public boolean isChooseManualSummary() {
         return chooseManualSummary;
+    }
+
+    /**
+     * @return true, if the Element has a Summary and chooses the manual Summary
+     */
+    private boolean hasSummary() {
+        return this.chooseManualSummary && !(this.summary == null)  && !this.summary.getSummary().isEmpty();
+    }
+
+    private boolean hasComment() {
+        return this.comment != null && !this.comment.getComments().isEmpty();
     }
 }
