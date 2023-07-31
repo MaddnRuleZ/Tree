@@ -1,6 +1,7 @@
 package com.application.interpreter;
 
 import com.application.command.types.interfaces.ILocks;
+import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.ParseException;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
@@ -90,6 +91,8 @@ public class GitWatcherOld implements Runnable, ILocks {
             } catch (GitAPIException | IOException | InterruptedException | ParseException e) {
                 failure = true;
                 break;
+            } catch (FileInvalidException e) {
+                throw new RuntimeException(e);
             } finally {
                 releaseStructureWriteLock();
             }

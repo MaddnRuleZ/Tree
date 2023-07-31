@@ -1,5 +1,6 @@
 package com.application.tree.elements;
 
+import com.application.exceptions.FileInvalidException;
 import com.application.interpreter.Parser;
 import com.application.tree.Element;
 import com.application.tree.elements.childs.Child;
@@ -80,7 +81,7 @@ public enum ElementConfig {
 
     ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", Environment.DEFAULT_LEVEL) {
         @Override
-        Element getElement( String currentLine) {
+        Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
@@ -122,6 +123,8 @@ public enum ElementConfig {
 
     /**
      * Document in Document detected, start a new Parser
+     * level is not used here, Input gets its level Dynamically assigned based on the next Structure Elements Level in Order
+     * to balance it best in the Tree
      */
     INPUT("\\input", null, 0) {
         @Override
@@ -134,9 +137,13 @@ public enum ElementConfig {
             } catch (ClassCastException e) {
                 System.out.println("Input Document couldn't be detected");
                 return null;
+            } catch (FileInvalidException e) {
+                return null;
             }
         }
     };
+
+    public static final int BLOCK_ELEMENT_LEVEL = 99999;
 
     private final String startPart;
     private final String endPart;
@@ -166,9 +173,11 @@ public enum ElementConfig {
 
     /**
      * Create a new Element based on the line the Scanner read in the TextFile
+     * Scan the Elements in the Config if any match, return it.
+     * alternatively check if the Line can be Recognized to any Unrecognized Environment
      *
      * @param startPartLine textLine containing one of the startParts
-     * @return new Created Element
+     * @return return the new Created Element, null in case no found
      */
     public static Element createElement(String startPartLine) {
         for (final ElementConfig sectioning: ElementConfig.values()) {

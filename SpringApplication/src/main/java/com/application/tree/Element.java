@@ -21,9 +21,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * Element representing a Latex Command
  */
 public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
+    private static final String OPTIONS_REGEX = "\\{([^}]+)\\}";
+    private static final String CONTENT_REGEX = "\\[([^\\]]+)\\]";
     private final UUID id;
     private final int level;
     protected Parent parentElement;
@@ -40,10 +42,12 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     protected String type;
 
     /**
+     * Create a new Structure Element
+     * representing a LaTeX Command for Sectioning different Parts in a Document
      *
-     * @param startPart
-     * @param endPart
-     * @param level
+     * @param startPart startString to initialize the Element
+     * @param endPart endingString to initialize the Element, can be null
+     * @param level SEMI Order Level for sorting by hierarchy (Check ElementConfig for detail)
      */
     public Element(String startPart, String endPart, int level) {
         this.id = UUID.randomUUID();
@@ -59,9 +63,10 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     /**
+     * Add an TextBlock to the currentElement based on the currentText Line
      *
-     * @param line
-     * @return
+     * @param line current Line in the Text
+     * @return the new Created TextBlockElement
      */
     public abstract Element addTextBlockToElem(String line);
 
@@ -78,42 +83,19 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         return blockElement;
     }
 
-    public void setParent(Parent parentElement) {
-        this.parentElement = parentElement;
-    }
-    public Parent getParentElement() {
-        return parentElement;
-    }
-    public String getEndPart() {
-        return endPart;
-    }
 
-    public String getStartPart() throws UnknownElementException {
-        return startPart;
-    }
-
-    public List<String> getText() {
-        return this.text;
-    }
-    public UUID getId() {
-        return this.id;
-    }
-    public int getLevel() {
-        return level;
-    }
-    public String getOptions() {
-        return this.options;
-    }
-    public boolean isChooseManualSummary() {
-        return chooseManualSummary;
-    }
     public void setChooseManualSummary(boolean chooseManualSummary) {
         this.chooseManualSummary = chooseManualSummary;
     }
 
-    public void setOptions(String optionsString) {
-        Pattern pattern = Pattern.compile("\\{([^}]*)\\}");
-        Matcher matcher = pattern.matcher(optionsString);
+    /**
+     * Extract and set the Options String of the Element
+     *
+     * @param options whole String to extract Options from
+     */
+    public void setOptions(String options) {
+        Pattern pattern = Pattern.compile(OPTIONS_REGEX);
+        Matcher matcher = pattern.matcher(options);
 
         if (matcher.find()) {
             this.options = matcher.group(1);
@@ -122,8 +104,14 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         }
     }
 
+
+    /**
+     * Extract and set the Content String of the Element
+     *
+     * @param content whole String to extract Content from
+     */
     public void setContent(String content) {
-        Pattern pattern = Pattern.compile("[\\{\\[](\\w*)[\\}\\]]");
+        Pattern pattern = Pattern.compile(CONTENT_REGEX);
         Matcher matcher = pattern.matcher(content);
 
         if (matcher.find()) {
@@ -147,12 +135,12 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     /**
      * parses the incoming String into summary
+     *
      * @param summary
      */
     public void setSummary(String summary) {
        this.summary.setSummary(summary);
     }
-
 
     @Override
     public int calculateLevelFromElement() {
@@ -162,7 +150,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         }
         return parent.calculateLevelFromElement();
     }
-
 
     @Override
     public boolean checkOwnChild(Element element) {
@@ -248,5 +235,35 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         if(this.newLine != null) {
             this.newLine.toLaTeX(map, key, level);
         }
+    }
+
+    public void setParent(Parent parentElement) {
+        this.parentElement = parentElement;
+    }
+    public Parent getParentElement() {
+        return parentElement;
+    }
+    public String getEndPart() {
+        return endPart;
+    }
+
+    public String getStartPart() throws UnknownElementException {
+        return startPart;
+    }
+
+    public List<String> getText() {
+        return this.text;
+    }
+    public UUID getId() {
+        return this.id;
+    }
+    public int getLevel() {
+        return level;
+    }
+    public String getOptions() {
+        return this.options;
+    }
+    public boolean isChooseManualSummary() {
+        return chooseManualSummary;
     }
 }

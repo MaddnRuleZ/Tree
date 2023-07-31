@@ -18,9 +18,11 @@ import java.util.UUID;
 
 /**
  * This is the Singleton Function of the Root of the Whole LaTeX code.
+ *
+ *
  */
 public class Root implements JsonParser, LaTeXTranslator, Roots {
-    public static final String START_DOCUMENT = "\\startdocument";
+    public static final String START_DOCUMENT = "\\begin{document}";
     public static int MIN_LEVEL;
     private final List<Element> childElements;
     private static Root instance;
@@ -88,9 +90,9 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     /**
-     * add the startHeader e.g the text before \startDocument to the Root
+     * add the startHeader e.g the text before \begin{document} to the Root
      *
-     * @param startHeaderText
+     * @param startHeaderText List of Strings that represent the StartHeader
      */
     public void addStartHeader(List<String> startHeaderText) {
         this.startHeaderText = startHeaderText;

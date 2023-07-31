@@ -15,14 +15,14 @@ import java.util.regex.Pattern;
  * Represents an Input Document inside the main.tex file and Stores all Items of the Document inside it as Children
  */
 public class Input extends Parent implements Roots {
-    private static final String startPart = "\\input";
-    private static final String INPUT_REGEX_FORMAT = "\\\\input\\{([^}]*)\\}";
+    private static final String START_PART = "\\\\input";
+    private static final String INPUT_REGEX_FORMAT = START_PART + "\\{([^}]*)\\}";
 
     /**
      * Input Constructor, call Constructor of Parent
      */
     public Input() {
-        super(startPart, null, 1);
+        super(START_PART, null, 99999);
     }
 
     /**

@@ -1,9 +1,13 @@
+F Dead Zone Edge Case
+F
+F
+F
+\begin{document}
 \part{options_text}[content_test]
     X1
     X
     % comment1
     % comment2
-    X
     X
     X
     %\start{summary}
@@ -21,6 +25,8 @@
     X
     \begin{figure}
         X1_2
+        X
+        X
         X
         X
         \newline
@@ -56,12 +62,22 @@
     X6
     X
     X
+    CautionPath below this has to be correct in order to work!!
 \part{inputTesting}
     \section
         X0_1
         X0_1_1
         X
-\part{inputTesting}
+        X
+    \paragraph
+        X
+        X
+    \section
+        X420
+        X
+        X
+        X
+\part{Part_2}
     \chapter{haw haw}
         X7
         X
@@ -108,14 +124,13 @@
         X
         X
     \chapter{newChapter2}
-
-    \begin{itemize}
-        \item 1
-        \item 2
-    \end{itemize}
-                X14
-                X
-                X
+            \begin{itemize}
+                \item 1
+                \item 2
+            \end{itemize}
+            X14
+            X
+            X
             \begin{algorithm}
                     X15
                     X

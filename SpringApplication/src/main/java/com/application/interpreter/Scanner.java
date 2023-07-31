@@ -10,6 +10,7 @@ import com.application.tree.elements.roots.Roots;
 
 /**
  * Scanner Class for Disassemble a Document into its Latex Structure Elements
+ *
  */
 public class Scanner {
     private final String[] text;
@@ -37,28 +38,23 @@ public class Scanner {
      *
      * @return root Element of tree with rest of tree as Children
      */
-    public Roots parseDocument() {
+    public Roots parseDocument() throws UnknownElementException {
         Element lastElement = null;
         Element newElement = null;
 
         for (int i = 0; i < text.length; i++) {
             if (text[i].contains(Root.START_DOCUMENT)) {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
+                continue;
             }
-            try {
                 newElement = scanCurrentLine(lastElement, i);
-            } catch (UnknownElementException e) {
-                newElement = null;
-            }
 
             if (newElement != null) {
                 lastElement = newElement;
-
             } else {
-                if (lastElement == null) {
-                    return null;
+                if (lastElement != null) {
+                    lastElement = lastElement.addTextBlockToElem(text[i]);
                 }
-                lastElement = lastElement.addTextBlockToElem(text[i]);
             }
         }
         return root;
@@ -80,15 +76,15 @@ public class Scanner {
             return lastElement.getParentElement();
         } else {
             Element newElement = ElementConfig.createElement(currentLine);
+            // if lastElement instance of Input, setLevel to lastElements Level
+
             if (newElement != null) {
                 newElement.setOptions(currentLine);
                 newElement.setContent(currentLine);
+
                 if (lastElement == null) {
                     root.addChild(newElement);
-                    if (newElement.getStartPart().equals(ElementConfig.INPUT.getStartPart())) {
-                        Input inputRoot = (Input) root;
-                        newElement.setParent(inputRoot);
-                    }
+                    setInputRootParentChildHierarchy(newElement);
                 } else if (newElement.getLevel() > lastElement.getLevel()) {
                     setParentChild(lastElement, newElement);
                 } else if (newElement.getLevel() == lastElement.getLevel()) {
@@ -102,6 +98,8 @@ public class Scanner {
             }
         }
     }
+
+
 
     /**
      * add the newElement to the same Parent as the lastElement
@@ -157,6 +155,22 @@ public class Scanner {
             parentChecked.addChild(child);
         } else {
             System.out.println("Error: Element is no Parent!");
+        }
+    }
+
+    /**
+     * In case Root is instance of Input, also set the Elements Parent as the Root
+     *
+     * @param newElement
+     * @throws UnknownElementException
+     */
+    private void setInputRootParentChildHierarchy(Element newElement) {
+        try {
+            if (newElement.getStartPart().equals(ElementConfig.INPUT.getStartPart())) {
+                Input inputRoot = (Input) root;
+                newElement.setParent(inputRoot);
+            }
+        } catch (UnknownElementException ignored) {
         }
     }
 }

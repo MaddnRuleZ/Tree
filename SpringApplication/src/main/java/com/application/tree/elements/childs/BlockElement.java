@@ -2,6 +2,7 @@ package com.application.tree.elements.childs;
 
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
+import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.parent.Figure;
 
 import java.util.Map;
@@ -13,13 +14,12 @@ import java.util.Map;
  * BlockElements are undetected Blocks of Text which represent no detected Structure Element
  */
 public class BlockElement extends Child {
-    private static final int BLOCK_ELEMENT_LEVEL = 12;
 
     /**
      * Call the constructor of the parent class (Child) with null startPart and endPart and the block element level.
      */
     public BlockElement() {
-        super(null, null, BLOCK_ELEMENT_LEVEL);
+        super(null, null, ElementConfig.BLOCK_ELEMENT_LEVEL);
         this.type = this.getClass().getSuperclass().getSimpleName();
     }
 

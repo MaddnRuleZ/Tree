@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Parent Abstract Class
+ * Element Composite's Parent Abstract Class
  *
  * The Parent abstract class represents a container element that groups and organizes child elements within the Parser.
  *

@@ -1,0 +1,45 @@
+F Dead Zone Edge Case
+F
+F
+F
+\begin{document}
+\begin{env_outher}
+    X
+    X
+    X
+    \begin{env_inner}
+        X
+        X
+        X
+    \end{env_inner}
+    X
+    X
+    X
+\end{env_outher}
+\part{options_text}[content_test]
+    X1
+    X
+    X
+    \input{src/test/java/SpringApplication/TestDocuments/InputTest2.txt} // block Error
+    X
+    X
+    X
+    \section{section1}
+        \input{src/test/java/SpringApplication/TestDocuments/InputTest2.txt} // stimmt
+        \paragraph{para1}
+            X_1
+            X
+            X
+    \section{section2}
+        X
+        X
+        X
+        \input{src/test/java/SpringApplication/TestDocuments/InputTest2.txt}
+        X
+        X
+        \begin{customEnvironment}
+            X
+            X
+            \input{src/test/java/SpringApplication/TestDocuments/InputTest2.txt}
+            X // Block Moved in input here
+        \end{endEnvironment}
