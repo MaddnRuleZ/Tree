@@ -81,6 +81,7 @@ public class Environment extends Parent {
         if(this.options != null) {
             text.append("[").append(this.options).append("]");
         }
+        text.append("{").append(this.content).append("}");
         text.append("\n");
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {

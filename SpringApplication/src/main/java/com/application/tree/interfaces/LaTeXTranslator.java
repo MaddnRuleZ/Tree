@@ -32,6 +32,11 @@ public interface LaTeXTranslator {
      */
     public void toLaTeXEnd(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException;
 
+    /**
+     * get the indentation for the LaTeX-Code
+     * @param level level of the indentation
+     * @return indentation
+     */
     default String getIndentation(int level){
         return "\t".repeat(level);
     }

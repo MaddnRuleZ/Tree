@@ -59,14 +59,32 @@ public class Comment implements LaTeXTranslator {
         }
     }
 
+    /**
+     * never to be executed because comments are the End Part and have no start
+     * @param map   map of the LaTeX-Code
+     * @param key   key of the map
+     * @param level
+     * @throws UnknownElementException
+     */
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
-
+        assert false;
     }
 
+    /**
+     * never to be executed because comments are the end
+     * @param map   map of the LaTeX-Code
+     * @param key   key of the map
+     * @param level level of indentation
+     * @throws UnknownElementException
+     */
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        assert false;
+    }
 
+    public List<String> getComments() {
+        return comments;
     }
 }
 

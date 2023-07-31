@@ -55,6 +55,7 @@ public class Child extends Element {
         StringBuilder text = map.get(key);
 
         text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}");
+        text.append("\n");
 
         super.toLaTeXEnd(map, key, level);
     }
