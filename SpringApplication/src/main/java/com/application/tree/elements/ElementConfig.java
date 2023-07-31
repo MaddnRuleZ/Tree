@@ -123,8 +123,8 @@ public enum ElementConfig {
 
     /**
      * Document in Document detected, start a new Parser
-     * level is not used here, Input gets its level Dynamically assigned based on the next Structure Elements Level in Order
-     * to balance it best in the Tree
+     *
+     * Level gets set to Max in Input Class
      */
     INPUT("\\input", null, 0) {
         @Override
@@ -144,7 +144,7 @@ public enum ElementConfig {
     };
 
     public static final int BLOCK_ELEMENT_LEVEL = 99999;
-
+    public static final int INPUT_DOCUMENT_LEVEL = 99999;
     private final String startPart;
     private final String endPart;
     private final int level;
