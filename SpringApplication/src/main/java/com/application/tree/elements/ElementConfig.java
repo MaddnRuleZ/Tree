@@ -25,7 +25,7 @@ public enum ElementConfig {
 
     /**
      * to add a new Structure Element form LaTeX to the Parser:
-     * - Copy one of the following, add the Start- and Endpart
+     * - Copy one of the following, add the Start- and EndPart
      * - Rename it
      * - set Level so Elements will get correctly sorted in Parent/Child Hierarchy
      * - change the returned Class type, see each Class for determining the correct functionality for your new Element
@@ -79,35 +79,35 @@ public enum ElementConfig {
         }
     },
 
-    ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", Environment.DEFAULT_LEVEL) {
+    ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
-    LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", Environment.DEFAULT_LEVEL) {
+    LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
-    VERBATIM("\\begin{verbatim}", "\\end{verbatim}", Environment.DEFAULT_LEVEL) {
+    VERBATIM("\\begin{verbatim}", "\\end{verbatim}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 
-    FIGURE("\\begin{figure}", "\\end{figure}", Environment.DEFAULT_LEVEL) {
+    FIGURE("\\begin{figure}", "\\end{figure}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
             return new Figure(getStartPart(), getEndPart(), getLevel());
         }
     },
 
-    EQUATION("\\begin{equation}", "\\end{equation}", Environment.DEFAULT_LEVEL) {
+    EQUATION("\\begin{equation}", "\\end{equation}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
@@ -123,8 +123,8 @@ public enum ElementConfig {
 
     /**
      * Document in Document detected, start a new Parser
-     * level is not used here, Input gets its level Dynamically assigned based on the next Structure Elements Level in Order
-     * to balance it best in the Tree
+     *
+     * Level gets set to Max in Input Class
      */
     INPUT("\\input", null, 0) {
         @Override
@@ -144,7 +144,8 @@ public enum ElementConfig {
     };
 
     public static final int BLOCK_ELEMENT_LEVEL = 99999;
-
+    public static final int INPUT_DOCUMENT_LEVEL = 99999;
+    private static final int ENVIRONMENT_DEFAULT_LEVEL = 9;
     private final String startPart;
     private final String endPart;
     private final int level;
@@ -215,6 +216,10 @@ public enum ElementConfig {
         } else {
             return null;
         }
+    }
+
+    public static int GET_ENVIRONMENT_DEFAULT_LEVEL() {
+        return ENVIRONMENT_DEFAULT_LEVEL;
     }
 
     public String getStartPart() {

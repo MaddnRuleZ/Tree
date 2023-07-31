@@ -76,7 +76,6 @@ public class Scanner {
             return lastElement.getParentElement();
         } else {
             Element newElement = ElementConfig.createElement(currentLine);
-            // if lastElement instance of Input, setLevel to lastElements Level
 
             if (newElement != null) {
                 newElement.setOptions(currentLine);

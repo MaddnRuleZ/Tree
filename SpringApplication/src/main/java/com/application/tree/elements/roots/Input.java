@@ -3,6 +3,7 @@ package com.application.tree.elements.roots;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
+import com.application.tree.elements.childs.BlockElement;
 import com.application.tree.elements.parent.Parent;
 
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.regex.Pattern;
 /**
  * Class Represents an Input Statement in the LateX file and is an Element
  * Represents an Input Document inside the main.tex file and Stores all Items of the Document inside it as Children
+ *
  */
 public class Input extends Parent implements Roots {
     private static final String START_PART = "\\\\input";
@@ -22,12 +24,12 @@ public class Input extends Parent implements Roots {
      * Input Constructor, call Constructor of Parent
      */
     public Input() {
-        super(START_PART, null, 99999);
+        super(START_PART, null, ElementConfig.INPUT_DOCUMENT_LEVEL);
     }
 
     /**
      * extract the Document path from an input command in the Latex File
-     * \\input{<filePath>}#
+     * \\input{<filePath>}
      *
      * @param pathLine path in the Document
      * @return extracted Document File Path
@@ -42,6 +44,13 @@ public class Input extends Parent implements Roots {
             throw new IllegalArgumentException("Error, couldn't parse the path");
         }
         return path;
+    }
+
+    @Override
+    public Element addTextBlockToElem(String line) {
+        BlockElement block = generateTextSameLevel();
+        block.addTextBlockToElem(line);
+        return block;
     }
 
     @Override
