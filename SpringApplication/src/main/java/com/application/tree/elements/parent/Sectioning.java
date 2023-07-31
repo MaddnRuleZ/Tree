@@ -55,8 +55,8 @@ public class Sectioning extends Parent {
 
         StringBuilder text = map.get(key);
 
+        // \section[options]{content} or \section*{content}
         text.append(indentation).append(this.getStartPart());
-
         if(this.options != null && this.options.equals("*")) {
             text.append("*");
         } else if (this.options != null) {
@@ -65,6 +65,7 @@ public class Sectioning extends Parent {
         text.append("{").append(this.content).append("}");
         text.append("\n");
 
+        //children
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
                 child.toLaTeX(map, key, level + 1);

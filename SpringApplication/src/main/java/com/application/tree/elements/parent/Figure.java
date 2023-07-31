@@ -83,29 +83,28 @@ public class Figure extends Environment {
 
     public void toLaTeX(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         super.toLaTeXStart(map, key, level);
-        String indentationHead = getIndentation(level);
         String indentationBody = getIndentation(level+1);
 
         StringBuilder text = map.get(key);
 
-        text.append(indentationHead).append(this.getStartPart()).append("{").append(this.content).append("}");
-        text.append("\n");
-
+        // \caption{caption_content}
         for (String caption : captions) {
-            text.append(indentationBody).append(caption);
+            text.append(indentationBody).append(CAPTION_IDENT).append("{").append(caption).append("}");
             text.append("\n");
         }
 
+        //TODO graphic options???
+
+        // \includegraphics{graphic}
         text.append(indentationBody).append(GRAPHICS_IDENT).append("{").append(this.graphic).append("}");
         text.append("\n");
 
+        // children
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
                 child.toLaTeX(map, key, level + 1);
             }
         }
-
-        text.append(indentationHead).append(this.getEndPart());
 
         super.toLaTeXEnd(map, key, level+1);
     }
@@ -128,15 +127,7 @@ public class Figure extends Environment {
         return node;
     }
 
-    @Override
-    public String getStartPart() {
-        return ElementConfig.FIGURE.getStartPart();
-    }
 
-    @Override
-    public String getEndPart() {
-        return ElementConfig.FIGURE.getEndPart();
-    }
 
 
 

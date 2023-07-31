@@ -72,26 +72,62 @@ public class Environment extends Parent {
     @Override
     //TODO environment end und start part
     public void toLaTeX(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
-        super.toLaTeXStart(map, key, level);
+        this.toLaTeXStart(map, key, level);
         String indentation = getIndentation(level);
-
         StringBuilder text = map.get(key);
 
-        text.append(indentation).append(this.getStartPart());
-        if(this.options != null) {
-            text.append("[").append(this.options).append("]");
-        }
-        text.append("{").append(this.content).append("}");
-        text.append("\n");
+        // children
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
                 child.toLaTeX(map, key, level);
             }
         }
+        this.toLaTeXEnd(map, key, level);
+    }
+
+    /**
+     * add the LaTeX-Code of summary and comments;
+     * adds the LaTeX-Code of \begin{content}[options] e.g. \begin{figure}[htbp]
+     * @param map   map of the LaTeX-Code
+     * @param key   key of the map
+     * @param level
+     * @throws UnknownElementException
+     */
+    @Override
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level);
+
+        String indentation = getIndentation(level);
+        StringBuilder text = map.get(key);
+
+        text.append(indentation).append(this.getStartPart());
+        text.append("{").append(this.content).append("}");
+        if(this.options != null) {
+            text.append("[").append(this.options).append("]");
+        }
+        text.append("\n");
+    }
+
+    /**
+     * add the LaTeX-Code of the newLine;
+     * adds the LaTeX-Code of \end{content} e.g. \end{figure}
+     * @param map   map of the LaTeX-Code
+     * @param key   key of the map
+     * @param level
+     * @throws UnknownElementException
+     */
+    @Override
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        String indentation = getIndentation(level);
+        StringBuilder text = map.get(key);
+
         text.append(indentation).append(this.getEndPart());
+        text.append("{").append(this.content).append("}");
         text.append("\n");
 
         super.toLaTeXEnd(map, key, level);
     }
+
+
 
 }

@@ -59,10 +59,6 @@ public class BlockElement extends Child {
             text.append(indentation).append(line).append("\n");
         }
 
-        if(this.newLine != null) {
-            this.newLine.toLaTeX(map, key, level);
-        }
-
         super.toLaTeXEnd(map, key, level);
     }
 }
