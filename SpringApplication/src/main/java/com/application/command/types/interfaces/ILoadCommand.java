@@ -35,6 +35,7 @@ public interface ILoadCommand {
     default boolean reset(User user) {
         user = new User();
         return true;
+        //TODO reset Root
     }
 
 }

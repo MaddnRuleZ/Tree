@@ -2,6 +2,8 @@ package com.application.printer;
 
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.elements.roots.Input;
+import com.application.tree.elements.roots.Root;
+import com.application.tree.interfaces.LaTeXTranslator;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.RebaseCommand;
@@ -16,6 +18,10 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import java.io.File;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Git Class for updating a Git -Overleaf repository with the Credentials
@@ -33,7 +39,8 @@ public class GitPrinter extends Printer {
      * @param password      The password (or authentication token) used for accessing the Git repository.
      * @param workingDir    The working directory where Git operations will be performed.
      */
-    public GitPrinter(String overleafUrl, String username, String password, String workingDir) {
+    public GitPrinter(String overleafUrl, String username, String password, String workingDir, Root root) {
+        super(root);// TODO path to main file
         credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
         this.overleafUrl = overleafUrl;
         this.working_directory = workingDir;
@@ -200,9 +207,15 @@ public class GitPrinter extends Printer {
 
     @Override
     public void export() throws IOException, UnknownElementException {
-        // TODO generate Latex String @see FilePrinter
-        // TODO push changes to git
-
-
+        Map<String, StringBuilder> map = new HashMap<>();
+        map.put(this.getPath(), new StringBuilder());
+        this.getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        for(String key : map.keySet()) {
+            if (key == null) {
+                throw new UnknownElementException(null, "File Path");
+            }
+            Files.writeString(Path.of(key), map.get(key));
+        }
+        this.pushChanges();
     }
 }

@@ -38,7 +38,7 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Printer printer = new GitPrinter(url, username, password, path);
+            Printer printer = new GitPrinter(url, username, password, path, user.getRoot());
             this.setSuccess(load(user, printer, path));
         } catch (ProcessingException e) {
             this.setSuccess(false);

@@ -111,7 +111,7 @@ public class Figure extends Environment {
             }
         }
 
-        super.toLaTeXEnd(map, key, level+1);
+        super.toLaTeXEnd(map, key, level);
     }
 
 
