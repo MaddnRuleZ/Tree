@@ -1,0 +1,97 @@
+# Start Zone in Header
+Das ist der Header des Dokuments und wird gespeichert als dieser
+\documentclass{article}
+\usepackage{graphicx}
+
+\begin{document}
+\part{Einführung}
+    \section{Allgemeines über das Schnabeltier}
+        Das Schnabeltier, auch bekannt als \textit{Ornithorhynchus anatinus}, ist ein einzigartiges Tier aus Australien. Es ist ein semi-aquatisches Säugetier, das sowohl Merkmale von Säugetieren als auch von Vögeln aufweist.
+
+        \subsection{Lebensraum}
+        Schnabeltiere leben hauptsächlich in den Gewässern und Flüssen entlang der östlichen Küste Australiens.
+
+        \subsection{Ernährung}
+        Sie ernähren sich hauptsächlich von kleinen Fischen, Krebstieren und Insekten, die sie mit ihrem empfindlichen Schnabel im Schlamm suchen.
+
+    \section{Merkmale des Schnabeltiers}
+        Das Schnabeltier hat einige einzigartige Merkmale, die es von anderen Tieren unterscheiden.
+
+        \subsection{Schnabel}
+        Der Schnabel des Schnabeltiers ähnelt dem eines Entenschnabels. Er ist jedoch mit Elektrorezeptoren ausgestattet, die es ihm ermöglichen, Beutetiere im Wasser zu orten.
+
+            \begin{algorithm}
+                  \Procedure{Dijkstra}{$G, s$} \Comment{Graph $G$ and source vertex $s$}
+                        \State Initialize distance array $dist$ with $\infty$ values
+                        \State Set $dist[s] \gets 0$ \Comment{Distance from source to itself is 0}
+                        \State Initialize empty priority queue $Q$
+                        \State Insert $(s, 0)$ into $Q$ \Comment{Tuple: (vertex, distance)}
+
+                        \While{$Q$ is not empty}
+                          \State $(u, d_u) \gets$ \Call{ExtractMin}{$Q$} \Comment{Remove the vertex with minimum distance}
+
+                          \ForAll{neighbors $v$ of $u$}
+                            \State $d_v \gets dist[u] +$ \Call{Weight}{$u, v$} \Comment{Compute tentative distance}
+                            \If{$d_v < dist[v]$}
+                              \State $dist[v] \gets d_v$ \Comment{Update distance to $v$}
+                              \State \Call{DecreaseKey}{$Q, v, d_v$} \Comment{Update $v$'s position in $Q$}
+                            \EndIf
+                          \EndFor
+                        \EndWhile
+                        \State \textbf{return} $dist$
+                  \EndProcedure
+            \end{algorithm}
+
+        \subsection{Eier legen}
+        Eines der erstaunlichsten Merkmale des Schnabeltiers ist, dass es Eier legt, obwohl es ein Säugetier ist. Die Weibchen legen Eier in Nestern, die sie in Ufernähe bauen.
+
+    \section{Gefährdung und Schutz}
+    Das Schnabeltier ist eine gefährdete Art, die durch den Verlust ihres Lebensraums und Umweltverschmutzung bedroht ist. Viele Organisationen setzen sich für den Schutz dieser faszinierenden Tiere ein.
+
+\part{Forschung}
+    \section{Entdeckungsgeschichte}
+    Das Schnabeltier wurde erstmals von europäischen Forschern im späten 18. Jahrhundert entdeckt. Die eigenartigen Merkmale des Tiers sorgten für Kontroversen und Zweifel an der Echtheit der Berichte.
+
+        \subsection{Wissenschaftliche Klassifizierung}
+        Aufgrund seiner einzigartigen Eigenschaften wurde das Schnabeltier zunächst als Fälschung angesehen. Es wurde schließlich als echte Art anerkannt und in die wissenschaftliche Klassifizierung aufgenommen.
+
+            \begin{customEnvironment}
+                The platypus (Ornithorhynchus anatinus) is a unique and fascinating mammal native to Australia.
+
+                \textbf{Physical Features:}
+                The platypus has a beak-like snout, which is soft and rubbery, resembling that of a duck. This snout is sensitive to touch and equipped with electroreceptors, allowing the platypus to detect electrical signals produced by its prey underwater.
+
+                \textbf{Reproduction:}
+                The female platypus lays eggs, making it one of the few mammals that do so. She incubates the eggs by curling her body around them to keep them warm until they hatch.
+                \newline
+
+                \textbf{Habitat:}
+                 Platypuses are primarily found in freshwater habitats, such as rivers, streams, and lakes. They build burrows along the banks for shelter and protection.
+
+                 \textbf{Feeding Habits:}
+                 Platypuses are carnivorous and feed on aquatic invertebrates, such as insects, worms, and small crustaceans. Their bill allows them to scoop up food from the muddy bottoms of rivers and streams.
+
+                 \textbf{Conservation Status:}
+                 The platypus is listed as "Near Threatened" due to habitat loss, pollution, and climate change, which affect their freshwater environments.
+            \end{customEnvironment}
+
+    \section{Aktuelle Forschung}
+    Forscher untersuchen weiterhin das Verhalten, die Fortpflanzung und die Lebensweise des Schnabeltiers. Neue Erkenntnisse helfen dabei, effektive Schutzmaßnahmen zu entwickeln.
+
+        \subsection{Genomsequenzierung}
+        Die Genomsequenzierung des Schnabeltiers hat interessante Einblicke in seine evolutionäre Geschichte und einzigartige genetische Merkmale geliefert.
+
+    \section{Faszination für die Wissenschaft}
+    Das Schnabeltier ist immer noch ein faszinierendes Forschungsobjekt, da es viele Geheimnisse birgt, die die Wissenschaftler begeistern.
+
+
+\part{Schlussfolgerung}
+    Das Schnabeltier ist zweifellos ein erstaunliches Tier, das die Welt der Wissenschaft und die Neugier der Menschen seit seiner Entdeckung fasziniert hat. Seine einzigartigen Merkmale machen es zu einem wichtigen Ziel für den Schutz und die Erforschung der Tierwelt.
+
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.6\textwidth]{schnabeltier.jpg}
+      \caption{Ein Schnabeltier (Quelle: Pixabay)}
+    \end{figure}
+
+    Das wohl auffälligste Merkmal ist sein Schnabel, der dem eines Entenvogels ähnelt. Der Schnabel ist weich und flexibel, und er dient sowohl als Tastorgan als auch als Werkzeug zum Fangen von Nahrung unter Wasser. Unter dem Schnabel verbergen sich Sinnesorgane, die es dem Schnabeltier ermöglichen, elektrische Signale seiner Beutetiere wahrzunehmen.

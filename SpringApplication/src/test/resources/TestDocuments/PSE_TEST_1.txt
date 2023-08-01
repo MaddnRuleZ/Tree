@@ -1,9 +1,11 @@
-F Dead Zone Edge Case
-F
-F
-F
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{algorithm}
+
+
 \begin{document}
-\part[options_text]{content_test}
+\part{options_text}[content_test]
     X1
     X
     % comment1
@@ -11,7 +13,7 @@ F
     X
     X
     %\start{summary}
-        X Summ_1
+        X
         X
         X
     %\finish{summary}
@@ -41,7 +43,7 @@ F
     X5_1
     X
     X
-    \begin{content_test}[Text Block Element]
+    \begin{Text Block Element}[content_test]
         X3
         X
         X
