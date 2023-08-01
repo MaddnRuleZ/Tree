@@ -18,15 +18,24 @@ public class TextFileReader {
 
     public boolean validateFile() throws FileInvalidException {
         File file = new File(filePath);
+        String fileName = file.getName();
         if (!file.exists()) {
             throw new FileInvalidException("Datei existiert nicht " + filePath);
         }
+
         if (file.isDirectory()) {
             throw new FileInvalidException("Pfad ist ein Ordner " + filePath);
         }
+
         if (!file.canRead()) {
             throw new FileInvalidException("Datei ist nicht Lesbar " + filePath);
         }
+
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (!fileExtension.equalsIgnoreCase("txt") && !fileExtension.equalsIgnoreCase("tex")) {
+            throw new FileInvalidException("Datei Endung muss .txt oder .tex sein");
+        }
+
         return true;
     }
 

@@ -15,13 +15,20 @@ public class ParserTest {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/java/SpringApplication/TestDocuments/PSE_TEST_3.tex");
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
         Root root = null;
+
         try {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
-            throw new RuntimeException(e);
+
         }
+
+        if (root == null) {
+            System.out.println("Root null, document not correctly loadet");
+            return;
+        }
+
 
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());

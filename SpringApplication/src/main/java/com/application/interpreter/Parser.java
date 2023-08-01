@@ -27,7 +27,7 @@ public class Parser {
      *
      * @return finished Root, containing the full tree as Children
      */
-    public Roots startParsing() throws FileInvalidException{
+    public Roots startParsing() throws FileInvalidException {
         try {
             if (!textFileReader.validateFile()) {
                 return null;

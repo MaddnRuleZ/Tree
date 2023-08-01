@@ -126,7 +126,7 @@ public enum ElementConfig {
      *
      * Level gets set to Max in Input Class
      */
-    INPUT("\\input", null, 0) {
+    INPUT("\\input", null, 99999) {
         @Override
         Element getElement(String currentLine) {
             String path = Input.extractPathRegex(currentLine);
