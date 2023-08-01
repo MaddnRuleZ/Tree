@@ -5,6 +5,8 @@ import com.application.printer.Printer;
 import com.application.tree.elements.roots.Root;
 import org.springframework.stereotype.Component;
 
+import static com.application.tree.elements.roots.Root.resetInstance;
+
 /**
  * holds the tree structure and
  * classes responsible for translating the structure in different formats
@@ -28,7 +30,6 @@ public class User {
     public User() {
         this.root = Root.getInstance();
     }
-
 
     /**
      * sets the printer and starts the clock for updating the tree structure

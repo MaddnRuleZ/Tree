@@ -54,9 +54,9 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
      * Reset the Singleton Root instance.
      * This method sets the instance variable to null, allowing the next call to getInstance() to create a new instance.
      */
-    public static void resetInstance() {
+    public static Root resetInstance() {
         instance = null;
-        getInstance();
+        return getInstance();
     }
 
 
@@ -160,10 +160,11 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
-        text.append(this.startHeaderText);
-        text.append("\n");
-        text.append(START_DOCUMENT);
-        text.append("\n");
+
+        for(String line : this.startHeaderText){
+            text.append(line);
+            text.append("\n");
+        }
     }
 
     /**
