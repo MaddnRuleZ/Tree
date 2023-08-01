@@ -21,8 +21,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Element representing a Latex Command
+ * Element representing a LaTeX Command
  *
+ * This class serves as the base abstract class for different LaTeX elements
+ * that can be part of a document structure. It contains common functionality
+ * and attributes that are shared among its subclasses.
  */
 public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     private static final String OPTIONS_REGEX = "\\{([^}]+)\\}";
@@ -31,7 +34,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     private final int level;
     protected Parent parentElement;
     protected StringBuilder textBuilder;
-    protected List<String> text;
     protected final Summary summary;
     protected final Comment comment;
     protected final NewLine newLine;
@@ -56,7 +58,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         this.startPart = startPart;
         this.endPart = endPart;
         this.level = level;
-        this.text = new ArrayList<>();
         this.textBuilder = new StringBuilder();
 
         comment = new Comment();
@@ -125,6 +126,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     /**
      * parses the incoming String into comment
      * sets the comment of the calling Element
+     *
      * @param comment to parse
      * @throws ParseException if the comment is not valid
      */
@@ -253,9 +255,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         return startPart;
     }
 
-    public List<String> getText() {
-        return this.text;
-    }
     public UUID getId() {
         return this.id;
     }

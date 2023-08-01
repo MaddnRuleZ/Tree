@@ -61,9 +61,7 @@ F
     X6
     X
     X
-    CautionPath below this has to be correct in order to work!!
 \part{inputTesting}
-    \input{SpringApplication/TestDocuments/InputTest.txt}
     \section
         X0_1
         X0_1_1

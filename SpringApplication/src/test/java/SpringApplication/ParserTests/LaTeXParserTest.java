@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LaTeXParserTest {
-
     TestTree tree;
 
     @BeforeEach
@@ -25,6 +24,4 @@ public class LaTeXParserTest {
         tree.root.toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
         System.out.println(map.get("root").toString());
     }
-
-
 }

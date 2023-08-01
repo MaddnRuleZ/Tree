@@ -26,11 +26,10 @@ public class CombinedParserAndLaTeXParserTest {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
         root.toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
-        for(String key : map.keySet()) {
+        for (String key : map.keySet()) {
             assert key != null;
             if (key.equals("root")) {
                 String output = map.get(key).toString();
-
                 System.out.println(output);
             }
         }

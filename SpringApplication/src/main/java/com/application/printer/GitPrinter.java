@@ -16,9 +16,6 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import java.io.File;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Git Class for updating a Git -Overleaf repository with the Credentials
@@ -31,10 +28,10 @@ public class GitPrinter extends Printer {
     /**
      * Constructs a new instance of the GitPrinter class with the specified parameters.
      *
-     * @param overleafUrl The URL of the Overleaf repository used for Git operations.
-     * @param username The username associated with the Git repository.
-     * @param password The password (or authentication token) used for accessing the Git repository.
-     * @param workingDir The working directory where Git operations will be performed.
+     * @param overleafUrl   The URL of the Overleaf repository used for Git operations.
+     * @param username      The username associated with the Git repository.
+     * @param password      The password (or authentication token) used for accessing the Git repository.
+     * @param workingDir    The working directory where Git operations will be performed.
      */
     public GitPrinter(String overleafUrl, String username, String password, String workingDir) {
         credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
@@ -205,5 +202,7 @@ public class GitPrinter extends Printer {
     public void export() throws IOException, UnknownElementException {
         // TODO generate Latex String @see FilePrinter
         // TODO push changes to git
+
+
     }
 }
