@@ -1,13 +1,12 @@
 package com.application.interpreter;
 
 import com.application.exceptions.FileInvalidException;
-import com.application.exceptions.UnknownElementException;
 import com.application.tree.elements.roots.Roots;
 
 /**
- * Class for Parsing a single Latex Document,
+ * Class for recursively Parsing a single Latex Document,
  *
- * input statement in this Doc will trigger recursive ex function
+ * input statement in this Doc will trigger recursive call of this Class
  */
 public class Parser {
     private final TextFileReader textFileReader;
@@ -25,19 +24,15 @@ public class Parser {
      * Start Parsing the Document
      * get the Text from the File and call the Scanner for Scanning the Doc
      *
-     * @return finished Root, containing the full tree as Children
+     * @return finished Root, containing the full tree as Children, null if Error occurred
      */
-    public Roots startParsing() throws FileInvalidException{
-        try {
-            if (!textFileReader.validateFile()) {
-                return null;
-            }
-            String[] text = textFileReader.readLinesFromFile();
-            Scanner scanner = new Scanner(text);
-
-            return scanner.parseDocument();
-        } catch (UnknownElementException e) {
+    public Roots startParsing() throws FileInvalidException {
+        if (!textFileReader.validateFile()) {
             return null;
         }
+        String[] text = textFileReader.readLinesFromFile();
+        Scanner scanner = new Scanner(text);
+
+        return scanner.parseDocument();
     }
 }

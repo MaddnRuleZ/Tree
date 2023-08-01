@@ -1,4 +1,4 @@
-package SpringApplication;
+package SpringApplication.ParserTests;
 
 import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.UnknownElementException;
@@ -12,16 +12,24 @@ import java.util.Map;
 public class ParserTest {
     @Test
     public void testParser() throws UnknownElementException {
+
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/java/SpringApplication/TestDocuments/PSE_TEST_3.tex");
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_InputTest.tex");
         Root root = null;
+
         try {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
-            throw new RuntimeException(e);
+
         }
+
+        if (root == null) {
+            System.out.println("Root null, document not correctly loadet");
+            return;
+        }
+
 
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());

@@ -7,9 +7,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * TextFileReader class for Reading validating and extracting Text from LaTeX documents
+ *
+ */
 public class TextFileReader {
     private final String filePath;
     public TextFileReader(String filePath) {
@@ -18,14 +22,22 @@ public class TextFileReader {
 
     public boolean validateFile() throws FileInvalidException {
         File file = new File(filePath);
+        String fileName = file.getName();
         if (!file.exists()) {
             throw new FileInvalidException("Datei existiert nicht " + filePath);
         }
+
         if (file.isDirectory()) {
             throw new FileInvalidException("Pfad ist ein Ordner " + filePath);
         }
+
         if (!file.canRead()) {
             throw new FileInvalidException("Datei ist nicht Lesbar " + filePath);
+        }
+
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (!fileExtension.equalsIgnoreCase("txt") && !fileExtension.equalsIgnoreCase("tex")) {
+            throw new FileInvalidException("Datei Endung muss .txt oder .tex sein");
         }
         return true;
     }
@@ -65,9 +77,7 @@ public class TextFileReader {
         }
 
         List<String> resultList = new ArrayList<>(endIndex - startIndex + 1);
-        for (int i = startIndex; i <= endIndex; i++) {
-            resultList.add(inputArray[i]);
-        }
+        resultList.addAll(Arrays.asList(inputArray).subList(startIndex, endIndex + 1));
         return resultList;
     }
 }

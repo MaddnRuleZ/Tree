@@ -28,7 +28,6 @@ F
         X
         X
         X
-        X
         \newline
         X1_3
         X

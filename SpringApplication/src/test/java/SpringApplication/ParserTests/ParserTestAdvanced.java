@@ -1,4 +1,4 @@
-package SpringApplication;
+package SpringApplication.ParserTests;
 
 import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.UnknownElementException;

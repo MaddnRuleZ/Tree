@@ -38,7 +38,7 @@ public class Scanner {
      *
      * @return root Element of tree with rest of tree as Children
      */
-    public Roots parseDocument() throws UnknownElementException {
+    public Roots parseDocument() {
         Element lastElement = null;
         Element newElement = null;
 
@@ -47,7 +47,7 @@ public class Scanner {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
                 continue;
             }
-                newElement = scanCurrentLine(lastElement, i);
+            newElement = scanCurrentLine(lastElement, i);
 
             if (newElement != null) {
                 lastElement = newElement;
@@ -68,7 +68,7 @@ public class Scanner {
      * @param index current index of the text
      * @return the New Created Text Element with parent and child hierarchy
      */
-    private Element scanCurrentLine(Element lastElement, final int index) throws UnknownElementException {
+    private Element scanCurrentLine(Element lastElement, final int index) {
         String currentLine = text[index];
         if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart())) {
