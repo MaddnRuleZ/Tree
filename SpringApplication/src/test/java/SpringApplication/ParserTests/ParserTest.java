@@ -12,7 +12,6 @@ import java.util.Map;
  *
  */
 public class ParserTest {
-
     @Test
     public void testParser() throws UnknownElementException {
         /*
