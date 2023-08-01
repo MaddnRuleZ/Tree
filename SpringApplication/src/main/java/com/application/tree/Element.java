@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 
 /**
  * Element representing a Latex Command
+ *
  */
 public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     private static final String OPTIONS_REGEX = "\\{([^}]+)\\}";
@@ -83,7 +84,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         return blockElement;
     }
 
-
     public void setChooseManualSummary(boolean chooseManualSummary) {
         this.chooseManualSummary = chooseManualSummary;
     }
@@ -103,7 +103,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
             this.options = null;
         }
     }
-
 
     /**
      * Extract and set the Content String of the Element

@@ -1,4 +1,4 @@
-package SpringApplication;
+package SpringApplication.ParserTests;
 
 import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.UnknownElementException;
@@ -9,21 +9,31 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParserTestAdvanced {
-
+public class ParserTest {
     @Test
-    public void testParser() throws UnknownElementException, FileInvalidException {
+    public void testParser() throws UnknownElementException {
+
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/TestDocuments/PSE_TEST_2.txt");
-        Root root = (Root) parser.startParsing();
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_InputTest.tex");
+        Root root = null;
 
-        //TODO: Ich habe die to Latex-Methode angefangen
+        try {
+            root = (Root) parser.startParsing();
+        } catch (FileInvalidException e) {
+
+        }
+
+        if (root == null) {
+            System.out.println("Root null, document not correctly loadet");
+            return;
+        }
+
+
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
         root.toLaTeX(map, "root", 0);
         System.out.println(map.get("root").toString());
-
     }
 }

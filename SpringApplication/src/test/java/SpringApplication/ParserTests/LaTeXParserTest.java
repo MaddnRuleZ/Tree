@@ -1,4 +1,4 @@
-package SpringApplication;
+package SpringApplication.ParserTests;
 
 import SpringApplication.TestStubs.TestTree;
 import com.application.exceptions.UnknownElementException;
