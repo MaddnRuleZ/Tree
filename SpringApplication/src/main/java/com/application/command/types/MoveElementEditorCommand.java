@@ -15,10 +15,6 @@ import java.util.UUID;
  */
 public class MoveElementEditorCommand extends Command implements IMoveElementCommand {
     /**
-     * user that holds information of LaTeX-Project
-     */
-    private Root root;
-    /**
      * element to move
      */
     private UUID element;
@@ -35,8 +31,8 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element newParent = root.searchForID(this.newParent);
-            Element element = root.searchForID(this.element);
+            Element newParent = this.getRoot().searchForID(this.newParent);
+            Element element = this.getRoot().searchForID(this.element);
 
             if (newParent == null || element == null) {
                 throw new ElementNotFoundException();
@@ -54,10 +50,6 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
             releaseStructureWriteLock();
         }
         return generateResponse(true);
-    }
-
-    public void setRoot(Root root) {
-        this.root = root;
     }
 
     @JsonProperty

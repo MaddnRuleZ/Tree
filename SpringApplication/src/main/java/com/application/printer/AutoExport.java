@@ -48,18 +48,19 @@ public class AutoExport implements ILocks {
     public void check() {
         if(user.getPrinter() != null && false) { //<-- remove false statement
             boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
-            if (!noRecentRequests) {
+            if (!noRecentRequests && requestInterceptor.hasChanges()) {
                 try {
                     acquireStructureReadLock();
                     user.getPrinter().export();
+
                 }  catch (ProcessingException e) {
                     failureMessage = e.getMessage();
                     failure = true;
                 } catch (IOException e) {
                     failureMessage = new PrintException().getMessage();
                     failure = true;
-
                 } finally {
+                    requestInterceptor.resetChanges();
                     releaseStructureReadLock();
                 }
             }

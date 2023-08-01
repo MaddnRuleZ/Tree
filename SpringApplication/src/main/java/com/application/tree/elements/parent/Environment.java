@@ -100,7 +100,7 @@ public class Environment extends Parent {
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
-        text.append(indentation).append(this.getStartPart());
+        text.append(indentation).append("\\begin");
         text.append("{").append(this.content).append("}");
         if(this.options != null) {
             text.append("[").append(this.options).append("]");

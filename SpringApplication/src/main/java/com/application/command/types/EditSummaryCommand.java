@@ -14,10 +14,6 @@ import java.util.UUID;
  */
 public class EditSummaryCommand extends Command {
     /**
-     * The root of the tree
-     */
-    private Root root;
-    /**
      * The element to be edited
      */
     private UUID element;
@@ -30,7 +26,7 @@ public class EditSummaryCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element elementFound = root.searchForID(this.element);
+            Element elementFound = this.getRoot().searchForID(this.element);
             if(elementFound == null) {
                 throw new ElementNotFoundException();
             } else {
@@ -45,17 +41,9 @@ public class EditSummaryCommand extends Command {
             releaseStructureWriteLock();
         }
 
-        return generateResponse(true);
+        return this.generateResponse(true);
     }
 
-
-    public void setRoot(Root root) {
-        this.root = root;
-    }
-
-    public Root getRoot() {
-        return root;
-    }
 
     @JsonProperty
     public UUID getElement() {

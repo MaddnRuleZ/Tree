@@ -45,9 +45,9 @@ public abstract class Command implements ILocks {
             try {
                 acquireStructureReadLock();
                 if(isEditorResponse) {
-                    response = root.toJsonEditor();
+                    response = this.root.toJsonEditor();
                 } else {
-                    response = root.toJsonTree();
+                    response = this.root.toJsonTree();
                 }
             } catch (NullPointerException e) {
                 response = FailureResponse.generateFailureResponse(new GeneratingResponseException().getMessage());
@@ -91,5 +91,9 @@ public abstract class Command implements ILocks {
     }
     public void setRoot(Root root) {
         this.root = root;
+    }
+
+    public Root getRoot() {
+        return root;
     }
 }

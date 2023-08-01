@@ -1,157 +1,112 @@
-F Dead Zone Edge Case
-F
-F
-F
+[F Dead Zone Edge Case, F, F, F, \begin{document}]
 \begin{document}
-\part{options_text}[content_test]
-    X1
-    X
-    % comment1
-    % comment2
-    X
-    X
-    %\start{summary}
-        X Summ_1
-        X
-        X
-    %\finish{summary}
-    X
-    X
-    X
-    \par
-    X1_1
-    X
-    X
-    X
-    \begin{figure}
-        X1_2
-        X
-        X
-        X
-        \newline
-        X1_3
-        X
-        X
-        \includegraphics{testgraph1}[moreStuff]
-        \caption{captionToAdd}
-        \label
-        X
-        X
-    \end{figure}
-    X5_1
-    X
-    X
-    \begin{Text Block Element}[content_test]
-        X3
-        X
-        X
-        \newline
-        X3_3
-        X
-        X
-    \end{haw haw}
-    X4
-    X
-    X
-    \begin{algorithm}
-        X5
-        X
-        X
-    \end{algorithm}
-    X6
-    X
-    X
-\part{inputTesting}
-    \section
-        X0_1
-        X0_1_1
-        X
-        X
-    \paragraph
-        X
-        X
-    \section
-        X420
-        X
-        X
-        X
-\part{Part_2}
-    \chapter{haw haw}
-        X7
-        X
-        X
-        \section{haw haw_3}
-            X8
-            X
-            X
-            \subsection{haw haw}
-                X9
-                X
-                X
-                \subsubsection{haw haw}
-                    X10
-                    X
-                    X
-                    \paragraph{haw haw}
-                        X11
-                        X
-                        X
-                        \subparagraph{haw haw}
-                            X12
-                            X
-                            X
-                            \label
-                            X12_1
-                            X
-                            X
-                            \par
-                            X12_2
-                            X
-                            X
-\part{fuck}
-    \chapter{newChapter}
-        X13
-        X
-        X
-        \label
-        X13_1
-        X
-        X
-        \newline
-        X13_2
-        X
-        X
-    \chapter{newChapter2}
-            \begin{itemize}
-                \item 1
-                \item 2
-            \end{itemize}
-            X14
-            X
-            X
-            \begin{algorithm}
-                    X15
-                    X
-                    \label
-                    X
-            \end{algorithm}
-                X16
-                X
-                X
-            \begin{figure}
-                \centering
-                \includegraphics[insertName]{insertName}
-                \caption
-                \label{labelName}
-            \end{figure}
-                X17
-                X
-                X
-            \begin{figure}[htp]
-                \centering
-                X
-                X
-                \includegraphics[insertName]{insertName}
-                \caption
-                \label{labelName}
-            \end{figure}
+
+
+%\start{summary}
+	% Versuch bla bla bla
+%\finish{summary}
+\part[options_text]{content_test}
+	%      comment1
+	%      comment2
+	    \par
+
+	\begin{null}[figure]
+		\caption{        \caption{captionToAdd}}
+		\includegraphics{moreStuff}
+		        \newline
+
+		\label{null}
+
+
+	\end{figure}{null}
+
+
+	\begin{content_test}[Text Block Element]
+	        \newline
+
+	\end{content_test}
+
+
+	\begin{null}[algorithm]
+
+	\end{null}
+
+
+
+\part[inputTesting]{null}
+	\chapter{null}
+
+		\section{null}
+
+
+
+	\chapter{null}
+
+
+
+\part[Part_2]{null}
+	\chapter[haw haw]{null}
+
+		\section[haw haw_3]{null}
+
+			\subsection[haw haw]{null}
+
+				\subsubsection[haw haw]{null}
+
+					\paragraph[haw haw]{null}
+
+						\subparagraph[haw haw]{null}
+
+							\label{null}
+
+							                            \par
+
+
+
+
+
+
+
+
+\part[fuck]{null}
+	\chapter[newChapter]{null}
+
+		\label{null}
+
+		        \newline
+
+
+	\chapter[newChapter2]{null}
+		\begin{null}[itemize]
+
+		\end{null}
+
+
+		\begin{null}[algorithm]
+
+		\label{null}
+
+
+		\end{null}
+
+
+		\begin{null}[figure]
+			\caption{                \caption}
+			\includegraphics{insertName}
+
+			\label{null}
+
+		\end{figure}{null}
+
+
+		\begin{htp}[figure]
+			\caption{                \caption}
+			\includegraphics{insertName}
+
+			\label{null}
+
+		\end{figure}{htp}
+
+
+
+\end{document}

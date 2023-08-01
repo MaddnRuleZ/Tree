@@ -16,10 +16,6 @@ import java.util.UUID;
  */
 public class DeleteElementCommand extends Command {
     /**
-     * The root of the tree
-     */
-    private Root root;
-    /**
      * The element to be deleted
      */
     private UUID element;
@@ -33,7 +29,7 @@ public class DeleteElementCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element elementFound = root.searchForID(this.element);
+            Element elementFound = this.getRoot().searchForID(this.element);
             if(elementFound == null) {
                 throw new ElementNotFoundException();
             } else {
@@ -88,8 +84,5 @@ public class DeleteElementCommand extends Command {
     @JsonProperty
     public void setElement(UUID element) {
         this.element = element;
-    }
-    public void setRoot(Root root) {
-        this.root = root;
     }
 }

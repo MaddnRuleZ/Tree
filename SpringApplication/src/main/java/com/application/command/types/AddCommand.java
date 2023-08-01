@@ -20,10 +20,6 @@ import java.util.UUID;
  */
 public class AddCommand extends Command {
     /**
-     * The root of the tree
-     */
-    private Root root;
-    /**
      * The content of the element to be added
      */
     private String content;
@@ -41,7 +37,7 @@ public class AddCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element foundParentElement = root.searchForID(this.parent);
+            Element foundParentElement = this.getRoot().searchForID(this.parent);
 
             if(foundParentElement == null ) {
                 throw new ElementNotFoundException();
@@ -54,11 +50,11 @@ public class AddCommand extends Command {
             Roots foundRoot = parser.startParsing();
 
             if (foundRoot instanceof Root) {
-                if (root.getChildren().size() == 0) {
+                if (this.getRoot().getChildren().size() == 0) {
                     throw new ParseException(this.content);
                 }
 
-                List<Element> children = root.getChildren();
+                List<Element> children = this.getRoot().getChildren();
                 int index = parentElement.getIndexOfChild(this.previousChild);
                 for (Element child : children) {
                     child.setParent(parentElement);
@@ -91,10 +87,6 @@ public class AddCommand extends Command {
     @JsonProperty
     public UUID getPreviousChild() {
         return previousChild;
-    }
-
-    public void setRoot(Root root) {
-        this.root = root;
     }
 
     @JsonProperty

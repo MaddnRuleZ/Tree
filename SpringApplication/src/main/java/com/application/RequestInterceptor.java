@@ -31,6 +31,11 @@ public class RequestInterceptor implements HandlerInterceptor {
     private final long timeThresholdInMilliseconds = 2 * 60 * 1000;
 
     /**
+     * shows if a request came in since the last time it was resetted {@link AutoExport}
+     */
+    private boolean changes = false;
+
+    /**
      * adds the current timestamp to the queue and removes old timestamps
      * @param request the request
      * @param response the response
@@ -42,6 +47,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         long currentTimestamp = System.currentTimeMillis();
         requestTimestamps.add(currentTimestamp);
         removeOldTimestamps();
+        changes = true;
         return true;
     }
 
@@ -61,5 +67,16 @@ public class RequestInterceptor implements HandlerInterceptor {
      */
     public boolean hasNoRecentRequests() {
         return requestTimestamps.isEmpty();
+    }
+
+    public boolean hasChanges() {
+        return changes;
+    }
+
+    /**
+     * resets changes to false
+     */
+    public void resetChanges() {
+        this.changes = false;
     }
 }

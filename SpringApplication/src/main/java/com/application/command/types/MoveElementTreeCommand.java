@@ -14,10 +14,6 @@ import java.util.UUID;
 
 public class MoveElementTreeCommand extends Command implements IMoveElementCommand {
     /**
-     * user that holds information of LaTeX-Project
-     */
-    private Root root;
-    /**
      * element to move
      */
     private UUID element;
@@ -35,8 +31,8 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element newParent = root.searchForID(this.newParent);
-            Element element = root.searchForID(this.element);
+            Element newParent = this.getRoot().searchForID(this.newParent);
+            Element element = this.getRoot().searchForID(this.element);
 
             if (newParent == null || element == null || previousElement == null) {
                 throw new ElementNotFoundException();
@@ -55,11 +51,6 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
         return generateResponse(false);
     }
 
-
-    public Root getRoot() {
-        return root;
-    }
-
     @JsonProperty
     public UUID getNewParent() {
         return newParent;
@@ -73,10 +64,6 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
     @JsonProperty
     public UUID getPreviousElement() {
         return previousElement;
-    }
-
-    public void setRoot(Root root) {
-        this.root = root;
     }
 
     @JsonProperty
