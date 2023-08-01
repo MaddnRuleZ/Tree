@@ -54,13 +54,14 @@ public class Comment implements LaTeXTranslator {
         StringBuilder text = map.get(key);
         String indentation = getIndentation(level);
 
+        // % line
         for(String line : comments){
-            text.append(indentation).append("%").append(line).append("\n");
+            text.append(indentation).append("% ").append(line).append("\n");
         }
     }
 
     /**
-     * never to be executed because comments are the End Part and have no start
+     * never to be executed because comments are the start
      * @param map   map of the LaTeX-Code
      * @param key   key of the map
      * @param level
@@ -72,7 +73,7 @@ public class Comment implements LaTeXTranslator {
     }
 
     /**
-     * never to be executed because comments are the end
+     * never to be executed because comments are the start
      * @param map   map of the LaTeX-Code
      * @param key   key of the map
      * @param level level of indentation

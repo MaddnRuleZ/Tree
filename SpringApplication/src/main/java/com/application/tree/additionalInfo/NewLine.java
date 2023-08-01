@@ -57,14 +57,37 @@ public class NewLine implements LaTeXTranslator {
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
-        text.append(indentation).append(newLine).append("\n");
+
+        // e.g. \newline, \\, \par
+        if(newLine == null) {
+            text.append("\n");
+        } else {
+            text.append(indentation).append(newLine).append("\n");
+        }
+
     }
 
+    /**
+     * never to be executed because NewLine is the End
+     * @param map   map of the LaTeX-Code
+     * @param key   key of the map
+     * @param level level of the Element
+     * @throws UnknownElementException
+     */
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        assert false;
     }
 
+    /**
+     * never to be executed because NewLine is the End
+     * @param map   map of the LaTeX-Code
+     * @param key   key of the map
+     * @param level level of the Element
+     * @throws UnknownElementException
+     */
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        assert false;
     }
 }

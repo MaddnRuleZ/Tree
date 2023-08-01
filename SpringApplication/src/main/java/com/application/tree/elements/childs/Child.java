@@ -54,6 +54,7 @@ public class Child extends Element {
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
+        // \startPart{content}, e.g \label{content}
         text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}");
         text.append("\n");
 

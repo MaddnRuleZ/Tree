@@ -81,17 +81,33 @@ public class Summary implements LaTeXTranslator {
         text.append(indentationHead).append("\n").append("\n");
         text.append(indentationHead).append(START_SUMMARY).append("\n");
         for(String line : summaryText){
-            text.append(indentationBody).append("\t".repeat(level)).append("%").append(line).append("\n");
+            text.append(indentationBody).append("% ").append(line).append("\n");
         }
         text.append(indentationHead).append(END_SUMMARY).append("\n");
     }
 
+    /**
+     * never to be executed because the summary is the start
+     * @param map   map of the LaTeX-Code
+     * @param key   key of the map
+     * @param level level of the element
+     * @throws UnknownElementException
+     */
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        assert false;
     }
 
+    /**
+     * never to be executed because the summary is the start
+     * @param map   map of the LaTeX-Code
+     * @param key   key of the map
+     * @param level level of the element
+     * @throws UnknownElementException
+     */
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        assert false;
     }
 
     public List<String> getSummary() {

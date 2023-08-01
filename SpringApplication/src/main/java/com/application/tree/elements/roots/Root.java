@@ -23,6 +23,7 @@ import java.util.UUID;
  */
 public class Root implements JsonParser, LaTeXTranslator, Roots {
     public static final String START_DOCUMENT = "\\begin{document}";
+    public static final String END_DOCUMENT = "\\end{document}";
     public static int MIN_LEVEL;
     private final List<Element> childElements;
     private static Root instance;
@@ -140,7 +141,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     /**
-     * adds the startHeader e.g the text before \startDocument to the Root
+     * adds the startHeader and the text before \begin{document}
      *
      * @param map   of the LaTeX Code
      * @param key   of the LaTeX Code
@@ -152,10 +153,12 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         StringBuilder text = map.get(key);
         text.append(this.startHeaderText);
         text.append("\n");
+        text.append(START_DOCUMENT);
+        text.append("\n");
     }
 
     /**
-     * adds the endHeader e.g the text after \endDocument to the Root
+     * adds the endHeader
      *
      * @param map   of the LaTeX Code
      * @param key   of the LaTeX Code
@@ -165,7 +168,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
-        text.append("\\end{document}");
+        text.append(END_DOCUMENT);
     }
 
     public List<Element> getChildren() {
