@@ -8,14 +8,17 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ *
+ */
 public class ParserTest {
+
     @Test
     public void testParser() throws UnknownElementException {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_InputTest.tex");
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
         Root root = null;
 
         try {
@@ -24,7 +27,7 @@ public class ParserTest {
 
         }
         if (root == null) {
-            System.out.println("Root null, document not correctly loadet");
+            System.out.println("Root null, document not correctly loaded");
             return;
         }
 

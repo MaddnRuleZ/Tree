@@ -21,7 +21,6 @@ public class Parser {
         this.textFileReader = new TextFileReader(filePath);
     }
 
-
     /**
      * Call this function when starting the Parsing of a full new Directory
      */
@@ -44,6 +43,4 @@ public class Parser {
         Scanner scanner = new Scanner(text);
         return scanner.parseDocument();
     }
-
-
 }

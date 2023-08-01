@@ -91,7 +91,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         return null;
     }
 
-
     /**
      * calculates the level of the calling Element from bottom to top
      * @return level of the calling Element

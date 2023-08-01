@@ -43,33 +43,32 @@ public class Scanner {
         Element newElement = null;
 
         for (int i = 0; i < text.length; i++) {
-            if (text[i].contains(Root.START_DOCUMENT)) {
+            String line = text[i];
+            if (line.contains(Root.START_DOCUMENT)) {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
                 continue;
             }
-            newElement = scanCurrentLine(lastElement, i);
+            newElement = scanCurrentLine(lastElement, line);
 
             if (newElement != null) {
                 lastElement = newElement;
-            } else {
-                if (lastElement != null) {
-                    lastElement = lastElement.addTextBlockToElem(text[i]);
-                }
+            } else if (lastElement != null) {
+                lastElement = lastElement.addTextBlockToElem(text[i]);
             }
         }
         return root;
     }
 
     /**
-     * Scan the line for new Structure Element or end the current LastElement (Environment only)
+     * Scan the line for new Structure Element
+     * or end the current LastElement (Environment only)
      * if found, create it add it relative to the last Element and return it; else return null
      *
      * @param lastElement last Element that was used
-     * @param index current index of the text
+     * @param currentLine current Line to scan in the Text
      * @return the New Created Text Element with parent and child hierarchy
      */
-    private Element scanCurrentLine(Element lastElement, final int index) {
-        String currentLine = text[index];
+    private Element scanCurrentLine(Element lastElement, String currentLine) {
         if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart())) {
 
@@ -98,8 +97,6 @@ public class Scanner {
         }
     }
 
-
-
     /**
      * add the newElement to the same Parent as the lastElement
      *
@@ -118,10 +115,11 @@ public class Scanner {
 
     /**
      * newElement is in the Hierarchy higher Up, so
-     * navigate tree up, search matching Parent to add Element to
+     * navigate tree up, until Element can be added based on it's level
+     * that set Parent/Child status
      *
-     * @param lastElement lastElement created
-     * @param newElement currentElement created
+     * @param lastElement lastElement created, already in the Tree
+     * @param newElement currentElement created, to add to Tree
      */
     private void higherLevel(Element lastElement, Element newElement) {
         Element searchElem = lastElement;
@@ -140,20 +138,18 @@ public class Scanner {
     }
 
     /**
-     * set the double linked Connection between two Elements
+     * set a double linked Connection between two Elements
      * set the Parent as Parent for the Child,
      * set the Child as Child for the Parent,
      *
-     * @param parent Parent Element
+     * @param parentElement Parent Element
      * @param child Child Element
      */
-    private void setParentChild(Element parent, Element child) {
-        Parent parentChecked = (Parent) parent;
-        if (parentChecked != null) {
-            child.setParent(parentChecked);
-            parentChecked.addChild(child);
-        } else {
-            System.out.println("Error: Element is no Parent!");
+    private void setParentChild(Element parentElement, Element child) {
+        Parent parent = (Parent) parentElement;
+        if (parent != null) {
+            child.setParent(parent);
+            parent.addChild(child);
         }
     }
 
