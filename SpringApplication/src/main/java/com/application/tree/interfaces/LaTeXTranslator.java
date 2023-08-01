@@ -38,7 +38,8 @@ public interface LaTeXTranslator {
      * @return indentation
      */
     default String getIndentation(int level){
-        return "\t".repeat(level);
+        return ""; //TODO: currently set to null
+        //return "\t".repeat(level);
     }
 
 }

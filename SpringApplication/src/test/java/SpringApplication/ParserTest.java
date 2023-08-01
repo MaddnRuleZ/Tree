@@ -28,4 +28,23 @@ public class ParserTest {
         root.toLaTeX(map, "root", 0);
         System.out.println(map.get("root").toString());
     }
+
+    @Test
+    public void doubleParserTest() throws UnknownElementException, FileInvalidException {
+        /*
+         * test the Parser and check if the file in sys.out is like the input_file below >>>
+         */
+        Parser parser = new Parser("src/test/java/SpringApplication/TestDocuments/PSE_TEST_1.txt");
+        Root root = null;
+        try {
+            root = (Root) parser.startParsing();
+        } catch (FileInvalidException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        Parser parserTwo = new Parser("src/test/java/SpringApplication/TestDocuments/PSE_TEST_1.txt");
+        root =  (Root) parserTwo.startParsing();
+
+    }
 }

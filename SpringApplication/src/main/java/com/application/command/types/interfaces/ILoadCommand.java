@@ -20,6 +20,7 @@ public interface ILoadCommand {
      * @throws ParseException
      */
     default boolean load(User user, Printer printer, String path) throws ParseException, FileInvalidException {
+        reset(user);
         Parser parser = new Parser(path);
         Roots root = parser.startParsing();
         if(root instanceof Root) {
@@ -28,6 +29,11 @@ public interface ILoadCommand {
         } else {
             throw new ParseException(this.getClass().getSimpleName(), root.getClass().getSimpleName(), Root.class.getSimpleName());
         }
+        return true;
+    }
+
+    default boolean reset(User user) {
+        user = new User();
         return true;
     }
 
