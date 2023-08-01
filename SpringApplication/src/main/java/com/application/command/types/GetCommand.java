@@ -20,6 +20,7 @@ public class GetCommand extends Command {
 
     @Override
     public JsonNode execute() {
+        this.setSuccess(true);
         return generateResponse(isEditorGet);
     }
 }
