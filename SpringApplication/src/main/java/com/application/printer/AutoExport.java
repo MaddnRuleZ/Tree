@@ -36,6 +36,12 @@ public class AutoExport implements ILocks {
      */
     boolean failure = false;
 
+    /**
+     * time threshold in milliseconds after which the structure is exported
+     * At the moment, the threshold is set to 1 minutes
+     */
+    private final long timeThresholdInMilliseconds = 1 * 60 * 1000;
+
     @Autowired
     public AutoExport(RequestInterceptor requestInterceptor, User user) {
         this.requestInterceptor = requestInterceptor;
@@ -44,9 +50,10 @@ public class AutoExport implements ILocks {
 
 
     //TODO currently not executed --> remove false statement
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = timeThresholdInMilliseconds)
     public void check() {
-        if(user.getPrinter() != null && false) { //<-- remove false statement
+        if(user.getPrinter() != null) {
+            System.out.println("checking");
             boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
             if (!noRecentRequests && requestInterceptor.hasChanges()) {
                 try {

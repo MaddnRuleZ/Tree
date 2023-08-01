@@ -28,7 +28,7 @@ public class RequestInterceptor implements HandlerInterceptor {
      * and is removed from the queue
      * At the moment, the threshold is set to 2 minutes
      */
-    private final long timeThresholdInMilliseconds = 2 * 60 * 1000;
+    private final long timeThresholdInMilliseconds = 1 * 60 * 1000;
 
     /**
      * shows if a request came in since the last time it was resetted {@link AutoExport}

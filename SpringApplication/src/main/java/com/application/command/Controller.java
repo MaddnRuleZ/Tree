@@ -159,6 +159,7 @@ public class Controller {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(jsonString);
             System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode));
+            System.out.println("\n \n \n \n \n");
         } catch (Exception e) {
             e.printStackTrace();
         }
