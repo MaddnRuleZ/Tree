@@ -3,7 +3,7 @@ F
 F
 F
 \begin{document}
-\part{options_text}[content_test]
+\part[options_text]{content_test}
     X1
     X
     % comment1
@@ -41,7 +41,7 @@ F
     X5_1
     X
     X
-    \begin{Text Block Element}[content_test]
+    \begin{content_test}[Text Block Element]
         X3
         X
         X
