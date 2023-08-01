@@ -39,13 +39,9 @@ public class BlockElement extends Child {
             if (!summary.extractContent(line) && !comment.extractContent(line)) {
                 if (parentElement instanceof Figure figure) {
                     if (!figure.setGraphics(line) && !figure.addCaption(line)) {
-                        //this.text.add(line);
-                        this.textBuilder.append(line);
                         addText(line);
                     }
                 } else {
-                    //this.text.add(line);
-                    this.textBuilder.append(line);
                     addText(line);
                 }
             }
@@ -54,22 +50,14 @@ public class BlockElement extends Child {
     }
 
     private void addText(String line) {
-        this.textBuilder.append(line);
+        this.textBuilder.append(line).append("\n");
         this.content = textBuilder.toString();
     }
-
-
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         super.toLaTeXStart(map, key, level);
-        String indentation = getIndentation(level);
 
-        StringBuilder text = map.get(key);
-
-        for(String line : this.text) {
-            text.append(indentation).append(line).append("\n");
-        }
 
         super.toLaTeXEnd(map, key, level);
     }

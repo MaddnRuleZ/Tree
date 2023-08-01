@@ -34,10 +34,10 @@ public class GitPrinter extends Printer {
     /**
      * Constructs a new instance of the GitPrinter class with the specified parameters.
      *
-     * @param overleafUrl The URL of the Overleaf repository used for Git operations.
-     * @param username The username associated with the Git repository.
-     * @param password The password (or authentication token) used for accessing the Git repository.
-     * @param workingDir The working directory where Git operations will be performed.
+     * @param overleafUrl   The URL of the Overleaf repository used for Git operations.
+     * @param username      The username associated with the Git repository.
+     * @param password      The password (or authentication token) used for accessing the Git repository.
+     * @param workingDir    The working directory where Git operations will be performed.
      */
     public GitPrinter(String overleafUrl, String username, String password, String workingDir, Root root) {
         super(root);// TODO path to main file

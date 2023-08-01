@@ -51,6 +51,16 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     /**
+     * Reset the Singleton Root instance.
+     * This method sets the instance variable to null, allowing the next call to getInstance() to create a new instance.
+     */
+    public static void resetInstance() {
+        instance = null;
+        getInstance();
+    }
+
+
+    /**
      * Update the Minimum Level Cap from the Complete file
      *
      * @param newLevelCap level of new Created Element

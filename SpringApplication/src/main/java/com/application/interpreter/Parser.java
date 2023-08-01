@@ -1,6 +1,7 @@
 package com.application.interpreter;
 
 import com.application.exceptions.FileInvalidException;
+import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
 
 /**
@@ -20,6 +21,14 @@ public class Parser {
         this.textFileReader = new TextFileReader(filePath);
     }
 
+
+    /**
+     * Call this function when starting the Parsing of a full new Directory
+     */
+    public void initStartParsing() {
+        Root.resetInstance();
+    }
+
     /**
      * Start Parsing the Document
      * get the Text from the File and call the Scanner for Scanning the Doc
@@ -30,9 +39,11 @@ public class Parser {
         if (!textFileReader.validateFile()) {
             return null;
         }
+
         String[] text = textFileReader.readLinesFromFile();
         Scanner scanner = new Scanner(text);
-
         return scanner.parseDocument();
     }
+
+
 }
