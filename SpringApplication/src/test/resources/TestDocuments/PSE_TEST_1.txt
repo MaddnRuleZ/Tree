@@ -141,7 +141,7 @@ F
             \begin{figure}
                 \centering
                 \includegraphics[insertName]{insertName}
-                \caption
+                \caption{content}
                 \label{labelName}
             \end{figure}
                 X17
@@ -152,6 +152,6 @@ F
                 X
                 X
                 \includegraphics[insertName]{insertName}
-                \caption
+                \caption{content}
                 \label{labelName}
             \end{figure}

@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
  * and attributes that are shared among its subclasses.
  */
 public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
-    private static final String OPTIONS_REGEX = "\\{([^}]+)\\}";
-    private static final String CONTENT_REGEX = "\\[([^\\]]+)\\]";
+    protected static final String CONTENT_REGEX = "\\{([^}]+)\\}";
+    private static final String OPTIONS_REGEX = "\\[([^\\]]+)\\]";
     private final UUID id;
     private final int level;
     protected Parent parentElement;

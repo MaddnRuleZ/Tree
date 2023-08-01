@@ -73,8 +73,13 @@ public class Figure extends Environment {
      * @return true if caption was added
      */
     public boolean addCaption(String caption) {
-        if (caption.contains(CAPTION_IDENT)) {
-            this.captions.add(caption);
+        if (!caption.contains(CAPTION_IDENT)) {
+            return false;
+        }
+
+        Matcher matcher = Pattern.compile(CONTENT_REGEX).matcher(caption);
+        if (matcher.find()) {
+            this.captions.add(matcher.group(1));
             return true;
         }
         return false;
