@@ -1,6 +1,10 @@
 package SpringApplication;
 
 import SpringApplication.TestStubs.TestTree;
+import com.application.exceptions.FileInvalidException;
+import com.application.interpreter.Parser;
+import com.application.tree.elements.roots.Root;
+import com.application.tree.interfaces.LaTeXTranslator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,4 +47,5 @@ public class JsonParserTest {
         }
         return null;
     }
+
 }

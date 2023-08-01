@@ -52,7 +52,7 @@ public class AutoExport implements ILocks {
     //TODO currently not executed --> remove false statement
     @Scheduled(fixedRate = timeThresholdInMilliseconds)
     public void check() {
-        if(user.getPrinter() != null) {
+        if(user.getPrinter() != null && false) { //<---remove false statement
             System.out.println("checking");
             boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
             if (!noRecentRequests && requestInterceptor.hasChanges()) {
