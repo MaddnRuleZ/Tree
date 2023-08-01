@@ -43,7 +43,20 @@ public class GitWatcher implements ILocks {
     @Scheduled(fixedRate = 60000)
     public void check() {
         if(user.getPrinter() != null || user.getPrinter() instanceof GitPrinter) {
-            //TODO call Git
+            GitPrinter printer = (GitPrinter) user.getPrinter();
+            /* TODO
+            if(printer.isRemoteRepositoryChanged()) {
+                try {
+                    acquireStructureReadLock();
+                    printer.pullRepository();
+                    changes = true;
+                } catch (Exception e) {
+                    failureMessage = e.getMessage();
+                    failure = true;
+                } finally {
+                    releaseStructureReadLock();
+                }
+            }*/
         }
     }
 

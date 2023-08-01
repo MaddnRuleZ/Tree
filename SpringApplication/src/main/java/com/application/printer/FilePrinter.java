@@ -16,22 +16,13 @@ import java.util.Map;
  * printer for exporting the tree to a file
  */
 public class FilePrinter extends Printer {
-    /**
-     * file to export to
-     */
-    private final File mainFile;
-    /**
-     * tree structure to be exported
-     */
-    private final Root root;
 
     /**
-     * @param currentFile file to export to
+     * @param path file to export to
      * @param root tree structure to be exported
      */
-    public FilePrinter(String currentFile, Root root) {
-        this.mainFile = new File(currentFile);
-        this.root = root;
+    public FilePrinter(String path, Root root) {
+        super(path, root);
     }
 
     /**
@@ -41,8 +32,8 @@ public class FilePrinter extends Printer {
      */
     public void export() throws IOException, UnknownElementException {
         Map<String, StringBuilder> map = new HashMap<>();
-        map.put(mainFile.getPath(), new StringBuilder());
-        this.root.toLaTeX(map, mainFile.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        map.put(this.getPath(), new StringBuilder());
+        this.getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
         for(String key : map.keySet()){
             if(key == null) {
                 throw new UnknownElementException(null, "File Path");
