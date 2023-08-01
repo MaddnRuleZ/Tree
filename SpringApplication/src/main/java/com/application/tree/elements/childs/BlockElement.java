@@ -39,15 +39,26 @@ public class BlockElement extends Child {
             if (!summary.extractContent(line) && !comment.extractContent(line)) {
                 if (parentElement instanceof Figure figure) {
                     if (!figure.setGraphics(line) && !figure.addCaption(line)) {
-                        this.text.add(line);
+                        //this.text.add(line);
+                        this.textBuilder.append(line);
+                        addText(line);
                     }
                 } else {
-                    this.text.add(line);
+                    //this.text.add(line);
+                    this.textBuilder.append(line);
+                    addText(line);
                 }
             }
             return this;
         }
     }
+
+    private void addText(String line) {
+        this.textBuilder.append(line);
+        this.content = textBuilder.toString();
+    }
+
+
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {

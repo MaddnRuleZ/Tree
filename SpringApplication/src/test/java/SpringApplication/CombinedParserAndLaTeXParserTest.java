@@ -14,13 +14,10 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class CombinedParserAndLaTeXParserTest {
-
     Root root;
-
-
     @BeforeEach
     public void setUp() throws FileInvalidException {
-        Parser parser = new Parser("src/test/java/SpringApplication/TestDocuments/PSE_TEST_1.txt");
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
         root = (Root) parser.startParsing();
     }
 
@@ -31,7 +28,7 @@ public class CombinedParserAndLaTeXParserTest {
         root.toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
         for(String key : map.keySet()) {
             assert key != null;
-            if(key.equals("root")) {
+            if (key.equals("root")) {
                 String output = map.get(key).toString();
 
                 System.out.println(output);

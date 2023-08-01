@@ -30,6 +30,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     private final UUID id;
     private final int level;
     protected Parent parentElement;
+    protected StringBuilder textBuilder;
     protected List<String> text;
     protected final Summary summary;
     protected final Comment comment;
@@ -56,6 +57,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         this.endPart = endPart;
         this.level = level;
         this.text = new ArrayList<>();
+        this.textBuilder = new StringBuilder();
 
         comment = new Comment();
         summary = new Summary();
@@ -169,11 +171,12 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         node.put("id", this.id.toString());
         node.put("type", this.type);
 
-        if(this.getParentElement() == null) {
+        if (this.getParentElement() == null) {
             node.put("parent", "null");
         } else {
             node.put("parent", this.getParentElement().getId().toString());
         }
+
         node.put("content", this.content);
         node.put("comment", comment.toString());
         if(!isChooseManualSummary() || summary == null || summary.getSummary() == null) {
@@ -194,7 +197,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
         node.put("elementID", this.id.toString());
         node.put("content", this.content);
-        if(this.getParentElement() == null) {
+        if (this.getParentElement() == null) {
             node.put("parentID", "null");
         } else {
             node.put("parentID", this.getParentElement().getId().toString());
