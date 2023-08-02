@@ -6,6 +6,7 @@ import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.roots.Root;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Sectioning Class
@@ -90,4 +91,5 @@ public class Sectioning extends Parent {
         }
         return type.getStartPart();
     }
+
 }

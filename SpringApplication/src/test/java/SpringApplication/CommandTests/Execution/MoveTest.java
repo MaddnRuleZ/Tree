@@ -1,6 +1,7 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
+import com.application.User;
 import com.application.command.types.MoveElementEditorCommand;
 import com.application.exceptions.OwnChildException;
 import com.application.tree.elements.childs.Child;
@@ -31,7 +32,9 @@ public class MoveTest {
     public void setUp() {
         tree = new TestTree();
         command = new MoveElementEditorCommand();
-        command.setRoot(tree.root);
+        User user = new User();
+        user.setRoot(tree.root);
+        command.setUser(user);
     }
 
     @Test

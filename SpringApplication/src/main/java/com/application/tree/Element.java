@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     protected static final String CONTENT_REGEX = "\\{([^}]+)\\}";
     private static final String OPTIONS_REGEX = "\\[([^\\]]+)\\]";
-    private final UUID id;
+    private UUID id;
     private final int level;
     protected Parent parentElement;
     protected StringBuilder textBuilder;
@@ -277,5 +277,9 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     private boolean hasComment() {
         return this.comment != null && !this.comment.getComments().isEmpty();
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

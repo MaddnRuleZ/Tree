@@ -79,7 +79,7 @@ public class Environment extends Parent {
         // children
         if (this.childElements != null && !this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                child.toLaTeX(map, key, level);
+                child.toLaTeX(map, key, level + 1);
             }
         }
         this.toLaTeXEnd(map, key, level);
@@ -121,7 +121,7 @@ public class Environment extends Parent {
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
-        text.append(indentation).append(this.getEndPart());
+        text.append(indentation).append("\\end");
         text.append("{").append(this.content).append("}");
         text.append("\n");
 

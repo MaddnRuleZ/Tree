@@ -1,6 +1,8 @@
 package SpringApplication.ParserTests;
 
+import SpringApplication.TestStubs.ComplexTestTree;
 import SpringApplication.TestStubs.TestTree;
+import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +15,8 @@ public class LaTeXParserTest {
     TestTree tree;
 
     @BeforeEach
-    public void setUp() {
-        tree = new TestTree();
+    public void setUp() throws ParseException {
+        tree = new ComplexTestTree();
     }
 
     @Test

@@ -58,6 +58,10 @@ public class BlockElement extends Child {
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
         super.toLaTeXStart(map, key, level);
 
+        String indentation = getIndentation(level);
+        StringBuilder text = map.get(key);
+
+        text.append(indentation).append(this.content);
 
         super.toLaTeXEnd(map, key, level);
     }

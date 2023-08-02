@@ -1,7 +1,9 @@
-package SpringApplication;
+package SpringApplication.ParserTests;
 
+import SpringApplication.TestStubs.ComplexTestTree;
 import SpringApplication.TestStubs.TestTree;
 import com.application.exceptions.FileInvalidException;
+import com.application.exceptions.ParseException;
 import com.application.interpreter.Parser;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
@@ -17,8 +19,8 @@ public class JsonParserTest {
     TestTree tree;
 
     @BeforeEach
-    public void setUp() {
-        tree = new TestTree();
+    public void setUp() throws ParseException {
+        tree = new ComplexTestTree();
     }
 
     @Test
