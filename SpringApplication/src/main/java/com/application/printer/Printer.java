@@ -5,11 +5,11 @@ import com.application.exceptions.UnknownElementException;
 import com.application.tree.elements.roots.Root;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Printer {
-
     private String path;
 
     private User user;
@@ -24,7 +24,8 @@ public abstract class Printer {
      * @param path file to export to
      */
     public Printer(String path, User user) {
-        this.path = path;
+        //this.path = path;
+        this.path = Path.of(path).getParent().getParent().toString() + "/PrinterTestOutput/exportFile.tex"; //TODO <-- remove defaultPath
         this.user = user;
     }
 
