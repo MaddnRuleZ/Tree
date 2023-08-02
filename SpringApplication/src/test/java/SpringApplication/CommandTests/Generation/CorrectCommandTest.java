@@ -2,6 +2,7 @@ package SpringApplication.CommandTests.Generation;
 
 import SpringApplication.TestStubs.MockCommandHandler;
 import SpringApplication.TestStubs.TestTree;
+import com.application.exceptions.ParseException;
 import com.application.exceptions.ProcessingException;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,9 +23,9 @@ public class CorrectCommandTest {
     MockCommandHandler commandHandler;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws ParseException {
         User user = new User();
-        user.setRoot(new TestTree().root);
+        user.setRoot(TestTree.createTestTree().root);
         commandHandler = new MockCommandHandler(user);
     }
 

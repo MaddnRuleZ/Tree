@@ -12,24 +12,35 @@ package SpringApplication.SpringTests;
 // the test method has to use the method andExpect of the ResultActions class, and it has to use the method isOk of the ResultMatcher class
 
 
+import SpringApplication.TestStubs.ComplexTestTree;
+import SpringApplication.TestStubs.TestTree;
 import com.application.Application;
+import com.application.User;
+import com.application.exceptions.ParseException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.File;
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(
@@ -38,7 +49,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ComponentScan(basePackages = "com.application")
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-@Ignore("This test is not finished yet")
 public class ControllerTest {
 
     @Autowired
@@ -51,7 +61,7 @@ public class ControllerTest {
         mvc.perform(post("/api")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(jsonContent))
-                .andExpect(status().isOk());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -60,8 +70,22 @@ public class ControllerTest {
     }
 
     @Test
-    public void testLoadTreeDAtaGetEndpoint() throws Exception {
+    public void testLoadTreeDataGetEndpoint() throws Exception {
         mvc.perform(get("/LoadTreeData")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testHasChangesEndpoint() throws Exception {
+        MvcResult result = mvc.perform(get("/checkForUpdates"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String responseBody = result.getResponse().getContentAsString();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+        boolean hasUpdates = jsonNode.get("hasUpdates").asBoolean();
+        assertFalse(hasUpdates);
     }
 
 

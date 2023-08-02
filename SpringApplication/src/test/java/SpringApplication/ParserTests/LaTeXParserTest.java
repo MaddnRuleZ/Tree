@@ -16,7 +16,7 @@ public class LaTeXParserTest {
 
     @BeforeEach
     public void setUp() throws ParseException {
-        tree = new ComplexTestTree();
+        tree = ComplexTestTree.createTestTree();
     }
 
     @Test

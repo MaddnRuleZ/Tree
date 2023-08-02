@@ -78,7 +78,7 @@ public class Summary implements LaTeXTranslator {
         String indentationBody = getIndentation(level+1);
         StringBuilder text = map.get(key);
 
-        text.append(indentationHead).append("\n").append("\n");
+        text.append(indentationHead).append("\n");
         text.append(indentationHead).append(START_SUMMARY).append("\n");
         for(String line : summaryText){
             text.append(indentationBody).append("% ").append(line).append("\n");

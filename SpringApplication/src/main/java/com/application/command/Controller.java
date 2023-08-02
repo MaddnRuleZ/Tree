@@ -93,9 +93,6 @@ public class Controller {
     public ResponseEntity<JsonNode> processCheckForUpdates(GitWatcher gitWatcher, AutoExport autoExport) {
         ObjectNode response = new ObjectMapper().createObjectNode();
         HttpStatus status;
-
-        printJsonString(response);
-
         response.put("hasUpdates", gitWatcher.hasChanges());
         if(gitWatcher.isFailure()) {
             status = HttpStatus.BAD_REQUEST;
@@ -106,6 +103,8 @@ public class Controller {
         } else {
             status = HttpStatus.OK;
         }
+        printJsonString(response);
+
         return new ResponseEntity<>(response, status);
     }
 

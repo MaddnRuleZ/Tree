@@ -20,7 +20,7 @@ public class JsonParserTest {
 
     @BeforeEach
     public void setUp() throws ParseException {
-        tree = new ComplexTestTree();
+        tree = ComplexTestTree.createTestTree();
     }
 
     @Test

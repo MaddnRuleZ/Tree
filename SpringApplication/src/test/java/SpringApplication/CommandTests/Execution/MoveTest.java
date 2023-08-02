@@ -4,6 +4,7 @@ import SpringApplication.TestStubs.TestTree;
 import com.application.User;
 import com.application.command.types.MoveElementEditorCommand;
 import com.application.exceptions.OwnChildException;
+import com.application.exceptions.ParseException;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Parent;
@@ -29,8 +30,8 @@ public class MoveTest {
     MoveElementEditorCommand command;
 
     @BeforeEach
-    public void setUp() {
-        tree = new TestTree();
+    public void setUp() throws ParseException {
+        tree = TestTree.createTestTree();
         command = new MoveElementEditorCommand();
         User user = new User();
         user.setRoot(tree.root);

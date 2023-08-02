@@ -3,6 +3,7 @@ package com.application.tree.additionalInfo;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.interfaces.LaTeXTranslator;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -59,11 +60,8 @@ public class NewLine implements LaTeXTranslator {
         StringBuilder text = map.get(key);
 
         // e.g. \newline, \\, \par
-        if(newLine == null) {
-            text.append("\n");
-        } else {
-            text.append(indentation).append(newLine).append("\n");
-        }
+        text.append(indentation).append(newLine).append("\n");
+
 
     }
 
@@ -89,5 +87,9 @@ public class NewLine implements LaTeXTranslator {
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         assert false;
+    }
+
+    public String getNewLine() {
+        return newLine;
     }
 }

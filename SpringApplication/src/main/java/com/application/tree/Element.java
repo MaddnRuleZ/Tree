@@ -236,7 +236,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
-        if(this.newLine != null) {
+        if(hasNewLine()) {
             this.newLine.toLaTeX(map, key, level);
         }
     }
@@ -277,6 +277,10 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     private boolean hasComment() {
         return this.comment != null && !this.comment.getComments().isEmpty();
+    }
+
+    private boolean hasNewLine() {
+        return this.newLine != null && this.newLine.getNewLine() != null;
     }
 
     public void setId(UUID id) {

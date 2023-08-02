@@ -14,17 +14,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class ComplexTestTree extends TestTree{
-
-    public Root root;
-    public ArrayList<Child> childrenList = new ArrayList<>();
-    public ArrayList<Parent> sectioningList = new ArrayList<>();
-
     public int sectioningCounter = 0;
     public int figureCounter = 0;
     public int childCounter = 0;
-
     public int envCounter = 0;
-    public ArrayList<Environment> environmentList = new ArrayList<>();
 
     UUID[] uuids = {
             UUID.fromString("6ba18b12-10e1-4e0e-9a49-24ca4b4e1bc2"),
@@ -78,49 +71,7 @@ public class ComplexTestTree extends TestTree{
     public int uuidCounter = 0;
 
     public ComplexTestTree() throws ParseException {
-        this.root = Root.getInstance();
-        root.addStartHeader(new ArrayList<String>() {
-            {
-                add("\\documentclass[12pt]{article}");
-                add("\\usepackage{amsmath}");
-                add("\\begin{document}"); }
-        });
-
-        //create sectioning
-        Sectioning sectioning1 = createSectioning(null);
-        Sectioning sectioning2 = createSectioning(null);
-        Sectioning sectioning3 = createSectioning(sectioning1);
-        Sectioning sectioning4 = createSectioning(sectioning1);
-
-        Sectioning sectioning5 = createSectioning(sectioning2);
-        Sectioning sectioning6 = createSectioning(sectioning2);
-
-        //create environment
-        Environment environment1 = createEnvironment(sectioning1);
-        Environment environment2 = createEnvironment(sectioning3);
-
-        //create figure
-        Figure figure1 = createFigure(sectioning1);
-        Figure figure2 = createFigure(sectioning3);
-
-        //create children
-        Child child1 = createChild(sectioning1);
-        Child child2 = createChild(sectioning2);
-        Child child3 = createChild(sectioning2);
-        Child child4 = createChild(sectioning3);
-        Child child5 = createChild(sectioning5);
-
-        //create blockelement
-        BlockElement blockElement1 = createBlockelement(sectioning1);
-        BlockElement blockElement2 = createBlockelement(sectioning3);
-        BlockElement blockElement3 = createBlockelement(sectioning5);
-        BlockElement blockElement4 = createBlockelement(sectioning6);
-
-        //create inline equation
-        BlockElement inlineEquation1 = createInlineEquation(sectioning5);
-
-
-
+        super();
     }
 
     public Sectioning createSectioning(Parent parent) throws ParseException {
@@ -136,7 +87,7 @@ public class ComplexTestTree extends TestTree{
 
         sectioning.setParent(parent);
 
-        sectioning.setContent("sec"+ sectioningCounter);
+        sectioning.setContent("\\section*{"+"sec"+ sectioningCounter+ "}");
         sectioningCounter++;
 
         sectioning.setComment("%comment1");
@@ -159,7 +110,7 @@ public class ComplexTestTree extends TestTree{
 
         figure.setParent(parent);
 
-        figure.setContent("figure"+ figureCounter);
+        figure.setContent("\\begin{figure}");
         figureCounter++;
 
         figure.setComment("%comment1");
@@ -186,7 +137,7 @@ public class ComplexTestTree extends TestTree{
 
         environment.setParent(parent);
 
-        environment.setContent("environment"+ envCounter);
+        environment.setContent("\\begin{environment"+ envCounter +"}");
         envCounter++;
 
         environment.setComment("%comment1");
@@ -205,7 +156,26 @@ public class ComplexTestTree extends TestTree{
         parent.addChild(child);
         child.setParent(parent);
 
-        child.setContent("child"+ childCounter);
+        child.setContent("\\label{child"+ childCounter +"}");
+        childCounter++;
+
+        child.setComment("%comment1");
+        child.setSummary("summaryText");
+        child.setChooseManualSummary(true);
+
+        childrenList.add(child);
+        return child;
+    }
+
+    public Child createLabel(Parent parent) throws ParseException {
+        Child child = new Child("\\label", null, 0);
+        child.setId(uuids[uuidCounter]);
+        uuidCounter++;
+
+        parent.addChild(child);
+        child.setParent(parent);
+
+        child.setContent("\\label{label"+ childCounter +"}");
         childCounter++;
 
         child.setComment("%comment1");
@@ -224,7 +194,10 @@ public class ComplexTestTree extends TestTree{
         parent.addChild(blockElement);
         blockElement.setParent(parent);
 
-        blockElement.setContent("blockElement blablablablalbslvgbjwegbvqeujigjdieuweda \n \n \n"+ childCounter);
+        blockElement.addTextBlockToElem("blockElement blablablablalbslvgbjwegbvqeujigjdieuweda"+ childCounter);
+        blockElement.addTextBlockToElem("blockElement blablablablalbslvgbjwegbvqeujigjdieuweda"+ childCounter);
+        blockElement.addTextBlockToElem("blockElement blablablablalbslvgbjwegbvqeujigjdieuweda"+ childCounter);
+        blockElement.addTextBlockToElem("blockElement blablablablalbslvgbjwegbvqeujigjdieuweda"+ childCounter);
         childCounter++;
 
         blockElement.setComment("%comment1");
@@ -243,7 +216,7 @@ public class ComplexTestTree extends TestTree{
         parent.addChild(blockElement);
         blockElement.setParent(parent);
 
-        blockElement.setContent("inlineEquation $\sqrt{1+2}$ \n \n \n"+ childCounter);
+        blockElement.addTextBlockToElem("inlineEquation $\sqrt{1+2}$");
         childCounter++;
 
         blockElement.setComment("%comment1");
@@ -254,9 +227,57 @@ public class ComplexTestTree extends TestTree{
         return blockElement;
     }
 
-    @Test
-    public void createTestTree() throws ParseException {
+    public static TestTree createTestTree() throws ParseException {
         ComplexTestTree testTree = new ComplexTestTree();
+
+        testTree.uuidCounter = 0;
+        testTree.sectioningCounter = 0;
+        testTree.figureCounter = 0;
+        testTree.childCounter = 0;
+        testTree.envCounter = 0;
+
+        testTree.root = Root.getInstance();
+        testTree.root.addStartHeader(new ArrayList<String>() {
+            {
+                add("\\documentclass[12pt]{article}");
+                add("\\usepackage{amsmath}");
+                add("\\begin{document}"); }
+        });
+
+        //create sectioning
+        Sectioning sectioning1 = testTree.createSectioning(null);
+        Sectioning sectioning2 = testTree.createSectioning(null);
+        Sectioning sectioning3 = testTree.createSectioning(sectioning1);
+        Sectioning sectioning4 = testTree.createSectioning(sectioning1);
+
+        Sectioning sectioning5 = testTree.createSectioning(sectioning2);
+        Sectioning sectioning6 = testTree.createSectioning(sectioning2);
+
+        //create environment
+        Environment environment1 = testTree.createEnvironment(sectioning1);
+        Environment environment2 = testTree.createEnvironment(sectioning3);
+
+        //create figure
+        Figure figure1 = testTree.createFigure(sectioning1);
+        Figure figure2 = testTree.createFigure(sectioning3);
+
+        //create children
+        Child child1 = testTree.createChild(sectioning1);
+        Child child2 = testTree.createChild(sectioning2);
+        Child child3 = testTree.createChild(sectioning2);
+        Child label4 = testTree.createLabel(sectioning3);
+        Child label5 = testTree.createLabel(sectioning5);
+
+        //create blockelement
+        BlockElement blockElement1 = testTree.createBlockelement(sectioning1);
+        BlockElement blockElement2 = testTree.createBlockelement(sectioning3);
+        BlockElement blockElement3 = testTree.createBlockelement(sectioning5);
+        BlockElement blockElement4 = testTree.createBlockelement(sectioning6);
+
+        //create inline equation
+        BlockElement inlineEquation1 = testTree.createInlineEquation(sectioning5);
+
+        return testTree;
     }
 
 }

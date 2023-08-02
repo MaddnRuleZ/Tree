@@ -61,7 +61,12 @@ public class BlockElement extends Child {
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
-        text.append(indentation).append(this.content);
+        if(this.content != null){
+            for(String line : this.content.split("\n")){
+                text.append(indentation).append(line).append("\n");
+            }
+        }
+
 
         super.toLaTeXEnd(map, key, level);
     }

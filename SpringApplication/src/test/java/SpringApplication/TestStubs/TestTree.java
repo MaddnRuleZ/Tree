@@ -1,5 +1,6 @@
 package SpringApplication.TestStubs;
 
+import com.application.exceptions.ParseException;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Parent;
@@ -30,8 +31,20 @@ public class TestTree {
     // Sec5 Env1 Child2 Child3 Child4   Child5  Env2
     //        |
     //       Sec6
-    public TestTree() {
-        this.root = Root.getInstance();
+
+    TestTree() {
+
+    }
+
+
+    /**
+     * creates a tree for testing purposes
+     * @return TestTree
+     * @throws ParseException
+     */
+    public static TestTree createTestTree() throws ParseException {
+        TestTree testTree = new TestTree();
+        testTree.root = Root.getInstance();
 
         //create sectioning
         Sectioning sectioning1 = new Sectioning("sectioning1", 0);
@@ -97,22 +110,22 @@ public class TestTree {
 
 
         //add Elements to TestTree
-        root.addChild(sectioning1);
+        testTree.root.addChild(sectioning1);
 
-        childrenList.add(child1);
-        childrenList.add(child2);
-        childrenList.add(child3);
-        childrenList.add(child4);
-        childrenList.add(child5);
+        testTree.childrenList.add(child1);
+        testTree.childrenList.add(child2);
+        testTree.childrenList.add(child3);
+        testTree.childrenList.add(child4);
+        testTree.childrenList.add(child5);
 
-        sectioningList.add(sectioning1);
-        sectioningList.add(sectioning2);
-        sectioningList.add(sectioning3);
-        sectioningList.add(sectioning4);
-        sectioningList.add(sectioning5);
-        sectioningList.add(sectioning6);
+        testTree.sectioningList.add(sectioning1);
+        testTree.sectioningList.add(sectioning2);
+        testTree.sectioningList.add(sectioning3);
+        testTree.sectioningList.add(sectioning4);
+        testTree.sectioningList.add(sectioning5);
+        testTree.sectioningList.add(sectioning6);
 
-        environmentList.add(environment1);
+        testTree.environmentList.add(environment1);
 
         //set content
         child1.setContentManually("child1");
@@ -130,6 +143,7 @@ public class TestTree {
 
         environment1.setContentManually("environment1");
         environment2.setContentManually("environment2");
+        return testTree;
     }
 
 

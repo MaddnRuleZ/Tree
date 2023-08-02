@@ -1,6 +1,7 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
+import com.application.exceptions.ParseException;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Parent;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +26,8 @@ public class CommandHelperMethodsTest {
     TestTree tree;
 
     @BeforeEach
-    public void setUp() {
-        tree = new TestTree();
+    public void setUp() throws ParseException {
+        tree = TestTree.createTestTree();
     }
 
     /**

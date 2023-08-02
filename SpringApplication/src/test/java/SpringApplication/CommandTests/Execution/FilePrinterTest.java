@@ -8,6 +8,7 @@ import com.application.interpreter.Parser;
 import com.application.printer.FilePrinter;
 import com.application.printer.Printer;
 import com.application.command.types.LoadFromFolderCommand;
+import com.application.tree.elements.roots.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,23 +17,23 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FilePrinterTest {
-    String path = "src/test/java/SpringApplication/TestDocuments/PSE_TEST_1.txt";
+    String pathOfTestDocument = "src/test/resources/TestDocuments/PSE_TEST_1.txt";
+    String pathOfPrinter = "src/test/resources/PrinterTestOutput/PSE_TEST_1_FilePrinter.txt";
+    Printer printer;
 
     @BeforeEach
     void setUp() throws ParseException, UnknownElementException, IOException, FileInvalidException {
-        LoadFromFolderCommand command = new LoadFromFolderCommand();
+        Parser parser = new Parser(pathOfTestDocument);
         User user = new User();
-        Printer printer = new FilePrinter(path, user);
-        Parser parser = new Parser(path);
-        boolean success = command.load(user, printer, path);
-
-        assert success;
-
-        printer.export();
+        Root root = (Root) parser.startParsing();
+        user.setRoot(root);
+        this.printer = new FilePrinter(pathOfPrinter, user);
     }
 
     @Test
-    void export() {
-        //TODO: implement
+    void exportTest() throws UnknownElementException, IOException {
+        printer.export();
     }
+
+
 }
