@@ -8,9 +8,9 @@ import com.application.tree.elements.parent.Figure;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Root;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class ComplexTestTree extends TestTree{
@@ -162,7 +162,7 @@ public class ComplexTestTree extends TestTree{
         figure.setContent("figure"+ figureCounter);
         figureCounter++;
 
-        figure.setComment("comment1");
+        figure.setComment("%comment1");
         figure.setSummary("summaryText");
         figure.setChooseManualSummary(true);
 
@@ -189,7 +189,7 @@ public class ComplexTestTree extends TestTree{
         environment.setContent("environment"+ envCounter);
         envCounter++;
 
-        environment.setComment("comment1");
+        environment.setComment("%comment1");
         environment.setSummary("summaryText");
         environment.setChooseManualSummary(true);
 
@@ -252,6 +252,11 @@ public class ComplexTestTree extends TestTree{
 
         childrenList.add(blockElement);
         return blockElement;
+    }
+
+    @Test
+    public void createTestTree() throws ParseException {
+        ComplexTestTree testTree = new ComplexTestTree();
     }
 
 }

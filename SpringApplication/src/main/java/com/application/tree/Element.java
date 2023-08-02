@@ -181,7 +181,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
         node.put("content", this.content);
         node.put("comment", comment.toString());
-        if(!isChooseManualSummary() || summary == null || summary.getSummary() == null) {
+        if(!hasSummary()) {
             node.put("summary", "null");
         } else {
             node.put("summary", summary.toString());
@@ -204,7 +204,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         } else {
             node.put("parentID", this.getParentElement().getId().toString());
         }
-        if(!isChooseManualSummary() || summary == null || summary.getSummary() == null) {
+        if(!hasSummary()) {
             node.put("summary", "null");
         } else {
             node.put("summary", summary.toString());
