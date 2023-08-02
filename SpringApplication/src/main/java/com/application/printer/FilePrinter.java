@@ -1,5 +1,6 @@
 package com.application.printer;
 
+import com.application.User;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.roots.Root;
@@ -19,10 +20,9 @@ public class FilePrinter extends Printer {
 
     /**
      * @param path file to export to
-     * @param root tree structure to be exported
      */
-    public FilePrinter(String path, Root root) {
-        super(path, root);
+    public FilePrinter(String path, User user) {
+        super(path, user);
     }
 
     /**
@@ -33,7 +33,7 @@ public class FilePrinter extends Printer {
     public void export() throws IOException, UnknownElementException {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put(this.getPath(), new StringBuilder());
-        this.getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        this.getUser().getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
         for(String key : map.keySet()){
             if(key == null) {
                 throw new UnknownElementException(null, "File Path");

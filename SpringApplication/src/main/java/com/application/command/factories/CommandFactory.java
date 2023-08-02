@@ -1,5 +1,6 @@
 package com.application.command.factories;
 
+import com.application.User;
 import com.application.command.types.Command;
 import com.application.exceptions.NumParamsException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public interface CommandFactory {
 
+
     /**
      * creates a command from a JsonNode, sets the attributes of command
      * @param attributes attributes of command that has to be mapped
@@ -18,4 +20,5 @@ public interface CommandFactory {
      * @throws IllegalArgumentException if mapping of attributes to command is not possible
      */
     Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException;
+
 }

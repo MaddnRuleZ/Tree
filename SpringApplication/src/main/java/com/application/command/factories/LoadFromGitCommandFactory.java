@@ -17,10 +17,7 @@ import java.util.Map;
  *  Factory to create an LoadFromGitCommand
  */
 public class LoadFromGitCommandFactory implements CommandFactory {
-    /**
-     * user that holds information of LaTeX-Project
-     */
-    private final User user;
+    private User user;
 
     /**
      * Constructor
@@ -49,7 +46,6 @@ public class LoadFromGitCommandFactory implements CommandFactory {
         }
 
         command.setUser(this.user);
-        command.setRoot(this.user.getRoot());
         return command;
     }
 }

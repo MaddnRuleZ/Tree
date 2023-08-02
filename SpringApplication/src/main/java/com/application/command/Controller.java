@@ -66,7 +66,7 @@ public class Controller {
      */
     @GetMapping("/LoadFullData")
     public ResponseEntity<JsonNode> processGetEditorRequest() {
-        Command command = new GetCommand(user.getRoot(), true);
+        Command command = new GetCommand(user, true);
         return getJsonNodeResponseEntity(command);
     }
 
@@ -76,7 +76,7 @@ public class Controller {
      */
     @GetMapping("/LoadTreeData")
     public ResponseEntity<JsonNode> processGetTreeRequest() {
-        Command command = new GetCommand(user.getRoot(), false);
+        Command command = new GetCommand(user, false);
         return getJsonNodeResponseEntity(command);
     }
 

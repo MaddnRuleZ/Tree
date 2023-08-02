@@ -12,17 +12,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Factory to create an EditSummaryCommand
  */
 public class EditSummaryCommandFactory implements CommandFactory{
-    /**
-     * root of the LaTeX-Project
-     */
-    private final Root root;
+    private User user;
 
     /**
      * Constructor
      * @param user user that holds information of LaTeX-Project
      */
     public EditSummaryCommandFactory(User user) {
-        this.root = user.getRoot();
+        this.user = user;
     }
 
     @Override
@@ -39,7 +36,7 @@ public class EditSummaryCommandFactory implements CommandFactory{
             throw new NumParamsException("EditSummary");
         }
 
-        command.setRoot(this.root);
+        command.setUser(this.user);
         return command;
     }
 }

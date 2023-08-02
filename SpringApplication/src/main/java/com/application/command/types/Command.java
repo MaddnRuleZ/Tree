@@ -1,5 +1,6 @@
 package com.application.command.types;
 
+import com.application.User;
 import com.application.command.types.interfaces.ILocks;
 import com.application.exceptions.FailureResponse;
 import com.application.exceptions.GeneratingResponseException;
@@ -22,10 +23,8 @@ public abstract class Command implements ILocks {
      * failure message, if success is false
      */
     private String failureMessage = null;
-    /**
-     * the root of the tree structure to be processed
-     */
-    private Root root;
+
+    private User user;
 
     /**
      * executes the command
@@ -45,9 +44,9 @@ public abstract class Command implements ILocks {
             try {
                 acquireStructureReadLock();
                 if(isEditorResponse) {
-                    response = this.root.toJsonEditor();
+                    response = this.user.getRoot().toJsonEditor();
                 } else {
-                    response = this.root.toJsonTree();
+                    response = this.user.getRoot().toJsonTree();
                 }
             } catch (NullPointerException e) {
                 response = FailureResponse.generateFailureResponse(new GeneratingResponseException().getMessage());
@@ -89,11 +88,10 @@ public abstract class Command implements ILocks {
     public void setFailureMessage(String failureMessage) {
         this.failureMessage = failureMessage;
     }
-    public void setRoot(Root root) {
-        this.root = root;
+    public User getUser() {
+        return user;
     }
-
-    public Root getRoot() {
-        return root;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -13,10 +13,6 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class LoadFromFolderCommand extends Command implements ILoadCommand {
     /**
-     *  user that holds information of LaTeX-Project
-     */
-    private User user;
-    /**
      * path to the folder
      */
     private String path;
@@ -25,8 +21,8 @@ public class LoadFromFolderCommand extends Command implements ILoadCommand {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Printer printer = new FilePrinter(path, user.getRoot());
-            this.setSuccess(load(user, printer, path));
+            Printer printer = new FilePrinter(path, this.getUser());
+            this.setSuccess(load(this.getUser(), printer, path));
         } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
@@ -36,22 +32,11 @@ public class LoadFromFolderCommand extends Command implements ILoadCommand {
         return generateResponse(true);
     }
 
-
-    @JsonProperty
-    public User getUser() {
-        return user;
-    }
-
     @JsonProperty
     public String getPath() {
         return path;
     }
 
-
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     @JsonProperty
     public void setPath(String path) {

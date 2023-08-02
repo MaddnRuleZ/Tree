@@ -1,5 +1,6 @@
 package com.application.printer;
 
+import com.application.User;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.roots.Root;
@@ -39,8 +40,8 @@ public class GitPrinter extends Printer {
      * @param password      The password (or authentication token) used for accessing the Git repository.
      * @param workingDir    The working directory where Git operations will be performed.
      */
-    public GitPrinter(String overleafUrl, String username, String password, String workingDir, Root root) {
-        super(root);// TODO path to main file
+    public GitPrinter(String overleafUrl, String username, String password, String workingDir, User user) {
+        super(user);// TODO path to main file
         credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
         this.overleafUrl = overleafUrl;
         this.working_directory = workingDir;
@@ -209,7 +210,7 @@ public class GitPrinter extends Printer {
     public void export() throws IOException, UnknownElementException {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put(this.getPath(), new StringBuilder());
-        this.getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        this.getUser().getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
         for(String key : map.keySet()) {
             if (key == null) {
                 throw new UnknownElementException(null, "File Path");

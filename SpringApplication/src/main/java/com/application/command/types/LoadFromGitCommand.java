@@ -12,10 +12,6 @@ import com.fasterxml.jackson.databind.JsonNode;
  * command to load a tree from a git repository
  */
 public class LoadFromGitCommand extends Command implements ILoadCommand {
-    /**
-     *  user that holds information of LaTeX-Project
-     */
-   private User user;
    /**
     * url to the git repository
     */
@@ -38,8 +34,9 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Printer printer = new GitPrinter(url, username, password, path, user.getRoot());
-            this.setSuccess(load(user, printer, path));
+            this.getUser().resetUser();
+            Printer printer = new GitPrinter(url, username, password, path, this.getUser());
+            this.setSuccess(load(this.getUser(), printer, path));
         } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
@@ -47,12 +44,6 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
             releaseStructureWriteLock();
         }
         return generateResponse(true);
-    }
-
-
-    @JsonProperty
-    public User getUser() {
-        return user;
     }
 
     @JsonProperty
@@ -68,11 +59,6 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
     @JsonProperty
     public String getPassword() {
         return password;
-    }
-
-    @JsonProperty
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @JsonProperty

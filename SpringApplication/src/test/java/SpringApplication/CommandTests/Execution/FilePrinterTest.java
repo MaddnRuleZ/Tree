@@ -22,7 +22,7 @@ class FilePrinterTest {
     void setUp() throws ParseException, UnknownElementException, IOException, FileInvalidException {
         LoadFromFolderCommand command = new LoadFromFolderCommand();
         User user = new User();
-        Printer printer = new FilePrinter(path, user.getRoot());
+        Printer printer = new FilePrinter(path, user);
         Parser parser = new Parser(path);
         boolean success = command.load(user, printer, path);
 

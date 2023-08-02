@@ -12,17 +12,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Factory to create an MoveElementEditorCommand
  */
 public class MoveElementEditorCommandFactory implements CommandFactory {
-    /**
-     * root of the LaTeX-Project
-     */
-    private final Root root;
-
+    private User user;
     /**
      * Constructor
      * @param user user that holds information of LaTeX-Project
      */
     public MoveElementEditorCommandFactory(User user) {
-        this.root = user.getRoot();
+        this.user = user;
     }
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
@@ -38,7 +34,7 @@ public class MoveElementEditorCommandFactory implements CommandFactory {
             throw new NumParamsException("MoveElementEditor - parameter not set");
         }
 
-        command.setRoot(this.root);
+        command.setUser(this.user);
         return command;
     }
 }

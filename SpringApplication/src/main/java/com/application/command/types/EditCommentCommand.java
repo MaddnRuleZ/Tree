@@ -27,7 +27,7 @@ public class EditCommentCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element elementFound = this.getRoot().searchForID(this.element);
+            Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {
                 throw new ElementNotFoundException();
             } else {

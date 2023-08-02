@@ -37,7 +37,7 @@ public class AddCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element foundParentElement = this.getRoot().searchForID(this.parent);
+            Element foundParentElement = this.getUser().getRoot().searchForID(this.parent);
 
             if(foundParentElement == null ) {
                 throw new ElementNotFoundException();
@@ -50,11 +50,11 @@ public class AddCommand extends Command {
             Roots foundRoot = parser.startParsing();
 
             if (foundRoot instanceof Root) {
-                if (this.getRoot().getChildren().size() == 0) {
+                if (this.getUser().getRoot().getChildren().size() == 0) {
                     throw new ParseException(this.content);
                 }
 
-                List<Element> children = this.getRoot().getChildren();
+                List<Element> children = this.getUser().getRoot().getChildren();
                 int index = parentElement.getIndexOfChild(this.previousChild);
                 for (Element child : children) {
                     child.setParent(parentElement);

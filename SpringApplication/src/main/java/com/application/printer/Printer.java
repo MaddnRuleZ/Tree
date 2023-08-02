@@ -1,5 +1,6 @@
 package com.application.printer;
 
+import com.application.User;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.elements.roots.Root;
 
@@ -11,22 +12,20 @@ public abstract class Printer {
 
     private String path;
 
-
-    private Root root;
+    private User user;
 
     public static Map<String, StringBuilder> map = new HashMap<>();
 
-    public Printer (Root root) {
-        this.root = root;
+    public Printer (User user) {
+        this.user = user;
     }
 
     /**
      * @param path file to export to
-     * @param root tree structure to be exported
      */
-    public Printer(String path, Root root) {
+    public Printer(String path, User user) {
         this.path = path;
-        this.root = root;
+        this.user = user;
     }
 
 
@@ -34,13 +33,12 @@ public abstract class Printer {
      * exports the tree
      */
     public abstract void export() throws IOException, UnknownElementException;
-
     public String getPath() {
         return path;
     }
 
-    public Root getRoot() {
-        return root;
-    }
 
+    protected User getUser() {
+        return user;
+    }
 }

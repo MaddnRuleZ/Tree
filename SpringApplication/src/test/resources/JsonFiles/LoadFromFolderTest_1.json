@@ -1,5 +1,5 @@
 {
   "LoadFromFolder": {
-    "path": "src/TestDocuments/PSE_TEST_1.txt"
+    "path": "src/test/resources/TestDocuments/PSE_TEST_1.txt"
   }
 }

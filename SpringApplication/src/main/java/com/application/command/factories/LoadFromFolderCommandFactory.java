@@ -16,10 +16,7 @@ import java.util.NoSuchElementException;
  * Factory to create an LoadFromFolderCommand
  */
 public class LoadFromFolderCommandFactory implements CommandFactory {
-    /**
-     * user that holds information of LaTeX-Project
-     */
-    private final User user;
+    private User user;
 
     /**
      * Constructor
@@ -50,7 +47,6 @@ public class LoadFromFolderCommandFactory implements CommandFactory {
         }
 
         command.setUser(this.user);
-        command.setRoot(this.user.getRoot());
         return command;
     }
 }

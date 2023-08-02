@@ -31,8 +31,8 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
-            Element newParent = this.getRoot().searchForID(this.newParent);
-            Element element = this.getRoot().searchForID(this.element);
+            Element newParent = this.getUser().getRoot().searchForID(this.newParent);
+            Element element = this.getUser().getRoot().searchForID(this.element);
 
             if (newParent == null || element == null) {
                 throw new ElementNotFoundException();
