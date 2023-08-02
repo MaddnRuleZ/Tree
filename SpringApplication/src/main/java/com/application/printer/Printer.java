@@ -24,8 +24,7 @@ public abstract class Printer {
      * @param path file to export to
      */
     public Printer(String path, User user) {
-        //this.path = path;
-        this.path = Path.of(path).getParent().getParent().toString() + "/PrinterTestOutput/exportFile.tex"; //TODO <-- remove defaultPath
+        this.path = path;
         this.user = user;
     }
 
