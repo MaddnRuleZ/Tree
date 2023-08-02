@@ -31,6 +31,7 @@ public class User {
         this.root = Root.getInstance();
     }
 
+
     /**
      * sets the printer and starts the clock for updating the tree structure
      * @param Printer printer to set

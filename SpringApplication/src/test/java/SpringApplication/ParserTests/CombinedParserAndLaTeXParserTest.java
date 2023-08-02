@@ -39,7 +39,6 @@ public class CombinedParserAndLaTeXParserTest {
 
     @Test
     public void toJsonEditorInputTest() throws FileInvalidException {
-
         String formattedJsonString = formatJsonString(root.toJsonEditor().toString());
         System.out.println(formattedJsonString);
     }
