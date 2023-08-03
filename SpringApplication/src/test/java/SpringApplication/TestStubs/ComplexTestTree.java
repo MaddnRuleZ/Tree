@@ -70,11 +70,11 @@ public class ComplexTestTree extends TestTree{
             UUID.fromString("77a0e52e-9e0c-41d0-8dc3-4d4803b0fb4c")};
     public int uuidCounter = 0;
 
-    public ComplexTestTree() throws ParseException {
+    private ComplexTestTree() {
         super();
     }
 
-    public Sectioning createSectioning(Parent parent) throws ParseException {
+    public Sectioning createSectioning(Parent parent) {
         Sectioning sectioning = new Sectioning("sectioning", 0);
         sectioning.setId(uuids[uuidCounter]);
         uuidCounter++;
@@ -90,15 +90,19 @@ public class ComplexTestTree extends TestTree{
         sectioning.setContent("\\section*{"+"sec"+ sectioningCounter+ "}");
         sectioningCounter++;
 
-        sectioning.setComment("%comment1");
-        sectioning.setSummary("summaryText");
-        sectioning.setChooseManualSummary(true);
+        try {
+            sectioning.setComment("%comment1");
+            sectioning.setSummary("summaryText");
+            sectioning.setChooseManualSummary(true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         sectioningList.add(sectioning);
         return sectioning;
     }
 
-    public Figure createFigure(Parent parent) throws ParseException {
+    public Figure createFigure(Parent parent) {
         Figure figure = new Figure("figure", "figure",0);
         figure.setId(uuids[uuidCounter]);
         uuidCounter++;
@@ -113,9 +117,13 @@ public class ComplexTestTree extends TestTree{
         figure.setContent("\\begin{figure}");
         figureCounter++;
 
-        figure.setComment("%comment1");
-        figure.setSummary("summaryText");
-        figure.setChooseManualSummary(true);
+        try {
+            figure.setComment("%comment1");
+            figure.setSummary("summaryText");
+            figure.setChooseManualSummary(true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         figure.addCaption("caption1");
         figure.addCaption("caption2");
@@ -124,7 +132,7 @@ public class ComplexTestTree extends TestTree{
         return figure;
     }
 
-    public Environment createEnvironment(Parent parent) throws ParseException {
+    public Environment createEnvironment(Parent parent) {
         Environment environment = new Environment("\\begin", "\\end", 0);
         environment.setId(uuids[uuidCounter]);
         uuidCounter++;
@@ -140,15 +148,19 @@ public class ComplexTestTree extends TestTree{
         environment.setContent("\\begin{environment"+ envCounter +"}");
         envCounter++;
 
-        environment.setComment("%comment1");
-        environment.setSummary("summaryText");
-        environment.setChooseManualSummary(true);
+        try {
+            environment.setComment("%comment1");
+            environment.setSummary("summaryText");
+            environment.setChooseManualSummary(true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         environmentList.add(environment);
         return environment;
     }
 
-    public Child createChild(Parent parent) throws ParseException {
+    public Child createChild(Parent parent) {
         Child child = new Child("child", null, 0);
         child.setId(uuids[uuidCounter]);
         uuidCounter++;
@@ -159,15 +171,19 @@ public class ComplexTestTree extends TestTree{
         child.setContent("\\label{child"+ childCounter +"}");
         childCounter++;
 
-        child.setComment("%comment1");
-        child.setSummary("summaryText");
-        child.setChooseManualSummary(true);
+        try {
+            child.setComment("%comment1");
+            child.setSummary("summaryText");
+            child.setChooseManualSummary(true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         childrenList.add(child);
         return child;
     }
 
-    public Child createLabel(Parent parent) throws ParseException {
+    public Child createLabel(Parent parent) {
         Child child = new Child("\\label", null, 0);
         child.setId(uuids[uuidCounter]);
         uuidCounter++;
@@ -178,15 +194,19 @@ public class ComplexTestTree extends TestTree{
         child.setContent("\\label{label"+ childCounter +"}");
         childCounter++;
 
-        child.setComment("%comment1");
-        child.setSummary("summaryText");
-        child.setChooseManualSummary(true);
+        try {
+            child.setComment("%comment1");
+            child.setSummary("summaryText");
+            child.setChooseManualSummary(true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         childrenList.add(child);
         return child;
     }
 
-    public BlockElement createBlockelement(Parent parent) throws ParseException {
+    public BlockElement createBlockelement(Parent parent) {
         BlockElement blockElement = new BlockElement();
         blockElement.setId(uuids[uuidCounter]);
         uuidCounter++;
@@ -200,15 +220,19 @@ public class ComplexTestTree extends TestTree{
         blockElement.addTextBlockToElem("blockElement blablablablalbslvgbjwegbvqeujigjdieuweda"+ childCounter);
         childCounter++;
 
-        blockElement.setComment("%comment1");
-        blockElement.setSummary("summaryText");
-        blockElement.setChooseManualSummary(true);
+        try {
+            blockElement.setComment("%comment1");
+            blockElement.setSummary("summaryText");
+            blockElement.setChooseManualSummary(true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         childrenList.add(blockElement);
         return blockElement;
     }
 
-    public BlockElement createInlineEquation(Parent parent) throws ParseException {
+    public BlockElement createInlineEquation(Parent parent) {
         BlockElement blockElement = new BlockElement();
         blockElement.setId(uuids[uuidCounter]);
         uuidCounter++;
@@ -219,15 +243,18 @@ public class ComplexTestTree extends TestTree{
         blockElement.addTextBlockToElem("inlineEquation $\sqrt{1+2}$");
         childCounter++;
 
-        blockElement.setComment("%comment1");
-        blockElement.setSummary("summaryText");
-        blockElement.setChooseManualSummary(true);
-
+        try {
+            blockElement.setComment("%comment1");
+            blockElement.setSummary("summaryText");
+            blockElement.setChooseManualSummary(true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         childrenList.add(blockElement);
         return blockElement;
     }
 
-    public static TestTree createTestTree() throws ParseException {
+    public static TestTree createTestTree() {
         ComplexTestTree testTree = new ComplexTestTree();
 
         testTree.uuidCounter = 0;

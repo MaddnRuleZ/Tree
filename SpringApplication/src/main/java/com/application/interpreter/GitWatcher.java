@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class GitWatcher implements ILocks {
 
+    /**
+     * user that holds information of LaTeX-Project
+     */
     private final User user;
 
     /**
@@ -52,7 +55,7 @@ public class GitWatcher implements ILocks {
 
 
                     changes = true;
-                } catch (Exception e) {
+                } catch (ProcessingException e) {
                     failureMessage = e.getMessage();
                     failure = true;
                 } finally {

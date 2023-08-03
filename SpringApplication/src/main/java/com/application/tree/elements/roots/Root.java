@@ -1,5 +1,6 @@
 package com.application.tree.elements.roots;
 
+import com.application.User;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.interfaces.LaTeXTranslator;
@@ -51,7 +52,9 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     /**
-     * Reset the Singleton Root instance.
+     * Reset the Singleton Root instance
+     * Only called by {@link User} otherwise user will lose all data
+     * @return new Root instance
      */
     public static Root resetInstance() {
         instance = null;

@@ -3,6 +3,7 @@ package SpringApplication.CommandTests.Execution;
 import com.application.command.CommandHandler;
 import com.application.exceptions.ProcessingException;
 import com.application.User;
+import com.application.printer.Printer;
 import com.application.tree.elements.roots.Root;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,31 +18,32 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class LoadTest {
     CommandHandler commandHandler;
+    User user;
+    String path = "src/test/resources/JsonFiles/LoadFromFolderTest_1.json";
 
     @BeforeEach
     void setUp() {
-        commandHandler = new CommandHandler(new User());
-    }
-
-    @Test
-    void LoadFromFolderTest() throws ProcessingException {
-        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/Execution/LoadFromFolder");
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        this.user = new User();
+        commandHandler = new CommandHandler(user);
     }
 
     @Test
     void DoubleLoadTest() throws ProcessingException {
-        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/Execution/LoadFromFolder");
+        JsonNode jsonContent = loadJsonFile(path);
         assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
 
-        Root firstRoot = Root.getInstance();
+        Root firstRoot = user.getRoot();
+        Printer firstPrinter = user.getPrinter();
 
-        JsonNode neWJsonContent = loadJsonFile("src/test/resources/JsonFiles/Execution/LoadFromFolder");
-        assertNotNull(commandHandler.processCommand(neWJsonContent), "Response should not be null");
+        JsonNode newJsonContent = loadJsonFile(path);
+        assertNotNull(commandHandler.processCommand(newJsonContent), "Response should not be null");
 
-        Root sndRoot = Root.getInstance();
+        Root sndRoot = user.getRoot();
+        Printer sndPrinter = user.getPrinter();
 
         assertNotEquals(firstRoot, sndRoot, "Roots should not be equal");
+        assertNotEquals(firstPrinter, sndPrinter, "Printers should not be equal");
+
     }
 
     private JsonNode loadJsonFile(String filePath) {
