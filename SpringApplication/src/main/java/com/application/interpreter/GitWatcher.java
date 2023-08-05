@@ -1,6 +1,7 @@
 package com.application.interpreter;
 
 import com.application.command.types.interfaces.ILocks;
+import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
 import com.application.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +48,10 @@ public class GitWatcher implements ILocks {
     public void check() {
         if(user.getPrinter() != null && user.getPrinter() instanceof GitPrinter) {
             GitPrinter printer = (GitPrinter) user.getPrinter();
-            /* TODO
-            if(printer.isRemoteRepositoryChanged()) {
+            /*if(printer.isRemoteRepositoryChanged()) {
                 try {
                     acquireStructureReadLock();
                     printer.pullRepository();
-
-
                     changes = true;
                 } catch (ProcessingException e) {
                     failureMessage = e.getMessage();
