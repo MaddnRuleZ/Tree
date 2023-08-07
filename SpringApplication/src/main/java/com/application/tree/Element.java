@@ -286,4 +286,25 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     public void setId(UUID id) {
         this.id = id;
     }
+
+
+    public Summary getSummary() {
+        return summary;
+    }
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public NewLine getNewLine() {
+        return newLine;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getType() {
+        return type;
+    }
 }

@@ -19,7 +19,7 @@ public class CombinedParserAndLaTeXParserTest {
     Root root;
     @BeforeEach
     public void setUp() throws FileInvalidException {
-        Parser parser = new Parser("src/test/resources/TestDocuments/DemoFileText.tex");
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
         root = (Root) parser.startParsing();
     }
 

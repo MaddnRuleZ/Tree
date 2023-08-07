@@ -254,7 +254,7 @@ public class ComplexTestTree extends TestTree{
         return blockElement;
     }
 
-    public static TestTree createTestTree() {
+    public static ComplexTestTree createTestTree() {
         ComplexTestTree testTree = new ComplexTestTree();
 
         testTree.uuidCounter = 0;
@@ -305,6 +305,14 @@ public class ComplexTestTree extends TestTree{
         BlockElement inlineEquation1 = testTree.createInlineEquation(sectioning5);
 
         return testTree;
+    }
+
+    /**
+     * Returns a random UUID that is used in the tree
+     * @return UUID
+     */
+    public UUID getRandomUsedUUID() {
+        return uuids[uuidCounter*2/3];
     }
 
 }

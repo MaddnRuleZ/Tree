@@ -30,6 +30,9 @@ public class EditSummaryCommand extends Command {
             if(elementFound == null) {
                 throw new ElementNotFoundException();
             } else {
+                if(this.summary.equals("")){
+                    elementFound.setChooseManualSummary(false);
+                }
                 elementFound.setSummary(this.summary);
                 elementFound.setChooseManualSummary(true);
                 this.setSuccess(true);

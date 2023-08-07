@@ -3,7 +3,9 @@
 \usepackage{graphicx}
 \usepackage{algorithm}
 
-
+%\start{summary}
+    % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+%\finish{summary}
 \begin{document}
 \part{options_text}[content_test]
     X1

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class TestTree {
     public Root root;
     public ArrayList<Child> childrenList = new ArrayList<>();
-    public ArrayList<Parent> sectioningList = new ArrayList<>();
+    public ArrayList<Sectioning> sectioningList = new ArrayList<>();
     public ArrayList<Environment> environmentList = new ArrayList<>();
 
     // tree structure:
