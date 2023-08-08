@@ -15,9 +15,9 @@
     X
     X
     %\start{summary}
-        X
-        X
-        X
+        %X
+        %X
+        %X
     %\finish{summary}
     X
     X

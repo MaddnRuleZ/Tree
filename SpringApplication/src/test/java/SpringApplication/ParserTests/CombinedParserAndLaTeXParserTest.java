@@ -43,6 +43,8 @@ public class CombinedParserAndLaTeXParserTest {
         System.out.println(formattedJsonString);
     }
 
+
+
     private static String formatJsonString(String jsonString) {
         try {
             ObjectMapper mapper = new ObjectMapper();

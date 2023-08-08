@@ -25,6 +25,9 @@ public class EditContentCommand extends Command {
     @Override
     public JsonNode execute() {
         try {
+            if(this.content.equals("")) {
+                throw new ProcessingException("Content cannot be empty");
+            }
             acquireStructureWriteLock();
             Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {

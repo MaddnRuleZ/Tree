@@ -6,6 +6,8 @@ import com.application.tree.interfaces.LaTeXTranslator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A class representing an Element's Summary.
@@ -15,6 +17,7 @@ import java.util.Map;
 public class Summary implements LaTeXTranslator {
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
+    private static final String START_SUMMARY_REGEX = "(%)([ ]*[a-zA-Z0-9]*)";
     /**
      * Line by Line the Text of the Summary
      */
@@ -43,17 +46,19 @@ public class Summary implements LaTeXTranslator {
      * @return true if line was added to summary, else false
      */
     public boolean extractContent(String currentLine) {
+
         if (listeningOnDocument && currentLine.contains(END_SUMMARY)) {
-            summaryText.add(currentLine);
             listeningOnDocument = false;
             return true;
 
         } else if (!listeningOnDocument && currentLine.contains(START_SUMMARY)) {
             listeningOnDocument = true;
-            summaryText.add(currentLine);
             return true;
 
         } else if (listeningOnDocument) {
+            Pattern pattern = Pattern.compile(START_SUMMARY_REGEX);
+            Matcher matcher = pattern.matcher(currentLine);
+
             summaryText.add(currentLine);
             return true;
         }
@@ -69,7 +74,7 @@ public class Summary implements LaTeXTranslator {
         if(summaryText.isEmpty()){
             return null;
         }
-        return String.join(".", summaryText);
+        return String.join("\n", summaryText);
     }
 
     @Override
@@ -116,6 +121,8 @@ public class Summary implements LaTeXTranslator {
 
     public void setSummary(String text) {
         this.summaryText.clear();
-        this.summaryText.add(text);
+        for(String line: text.split("\n")){
+            this.summaryText.add(line);
+        }
     }
 }
