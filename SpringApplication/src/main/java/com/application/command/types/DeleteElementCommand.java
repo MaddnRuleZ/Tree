@@ -33,7 +33,7 @@ public class DeleteElementCommand extends Command {
             if(elementFound == null) {
                 throw new ElementNotFoundException();
             } else {
-                delete(elementFound);
+                delete(elementFound, this.getUser().getRoot());
             }
         } catch (ProcessingException e) {
             this.setSuccess(false);
@@ -50,19 +50,35 @@ public class DeleteElementCommand extends Command {
      * Deletes an element from the tree
      * @param element the element to be deleted
      */
-    public void delete(Element element) {
+    public void delete(Element element, Root root) {
         Parent parent = element.getParentElement();
+
         if(!this.cascading) {
-            int index = parent.getChildElements().indexOf(element);
+            int index;
+            if(parent == null) {
+                index = root.getChildren().indexOf(element);
+            } else {
+                index = parent.getChildElements().indexOf(element);
+            }
             // cascading only false if element is of type parent
             List<Element> children = ((Parent) element).getChildElements();
             for(Element child : children) {
                 child.setParent(parent);
-                parent.addChildOnIndex(index, child);
-                index++;
+                if(parent == null) {
+                    root.addChildOnIndex(index, child);
+                    index++;
+                } else {
+                    parent.addChildOnIndex(index, child);
+                    index++;
+                }
             }
         }
-        parent.removeChild(element);
+        if(parent == null) {
+            root.removeChild(element);
+        } else {
+            parent.removeChild(element);
+        }
+
         this.setSuccess(true);
 
     }

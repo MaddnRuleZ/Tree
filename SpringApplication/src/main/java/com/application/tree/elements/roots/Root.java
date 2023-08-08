@@ -183,6 +183,19 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         text.append(END_DOCUMENT);
     }
 
+    /**
+     * adds a child on the given index
+     * @param index
+     * @param newChild
+     */
+    public void addChildOnIndex(int index, Element newChild) {
+        this.childElements.add(index, newChild);
+    }
+
+    public boolean removeChild(Element element) {
+        return this.childElements.remove(element);
+    }
+
     public List<Element> getChildren() {
         return this.childElements;
     }
