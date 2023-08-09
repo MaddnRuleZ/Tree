@@ -20,15 +20,15 @@ public class ExportCommand extends Command {
 
     @Override
     public JsonNode execute() {
+        this.getLockManager().acquireStructureReadLock();
         try {
-            acquireStructureReadLock();
             this.printer.export();
             this.setSuccess(true);
         } catch (Exception e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
-            releaseStructureReadLock();
+            this.getLockManager().releaseStructureReadLock();
 
         }
         return generateSuccessResponse();

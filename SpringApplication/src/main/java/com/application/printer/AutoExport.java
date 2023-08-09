@@ -1,6 +1,6 @@
 package com.application.printer;
 
-import com.application.command.types.interfaces.ILocks;
+import com.application.command.LockManager;
 import com.application.RequestInterceptor;
 import com.application.exceptions.PrintException;
 import com.application.exceptions.ProcessingException;
@@ -17,7 +17,9 @@ import java.io.IOException;
  * {@link RequestInterceptor}
  */
 @Component
-public class AutoExport implements ILocks {
+public class AutoExport {
+
+    private final LockManager lockManager;
     /**
      * Interceptor to check for recent requests
      */
@@ -46,6 +48,7 @@ public class AutoExport implements ILocks {
     public AutoExport(RequestInterceptor requestInterceptor, User user) {
         this.requestInterceptor = requestInterceptor;
         this.user = user;
+        this.lockManager = LockManager.getInstance();
     }
 
 
@@ -55,12 +58,13 @@ public class AutoExport implements ILocks {
         if(user.getPrinter() != null) { //<---remove false statement
             System.out.println("checking");
             boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
+
             if (!noRecentRequests && requestInterceptor.hasChanges()) {
                 try {
-                    acquireStructureReadLock();
+                    this.lockManager.acquireStructureReadLock();
                     user.getPrinter().export();
 
-                }  catch (ProcessingException e) {
+                } catch (ProcessingException e) {
                     failureMessage = e.getMessage();
                     failure = true;
                 } catch (IOException e) {
@@ -68,7 +72,7 @@ public class AutoExport implements ILocks {
                     failure = true;
                 } finally {
                     requestInterceptor.resetChanges();
-                    releaseStructureReadLock();
+                    this.lockManager.releaseStructureReadLock();
                 }
             }
         }

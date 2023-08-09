@@ -1,10 +1,8 @@
 package com.application.command.types;
 
-import com.application.command.types.interfaces.IEditCommand;
 import com.application.exceptions.ElementNotFoundException;
 import com.application.exceptions.ProcessingException;
 import com.application.tree.Element;
-import com.application.tree.elements.roots.Root;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -13,7 +11,7 @@ import java.util.UUID;
 /**
  * command to edit the summary of an element
  */
-public class EditSummaryCommand extends Command implements IEditCommand {
+public class EditSummaryCommand extends Command {
     /**
      * The element to be edited
      */
@@ -25,9 +23,8 @@ public class EditSummaryCommand extends Command implements IEditCommand {
 
     @Override
     public JsonNode execute() {
+        this.getLockManager().acquireStructureWriteLock();
         try {
-            acquireStructureWriteLock();
-
             Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {
                 throw new ElementNotFoundException();
@@ -43,7 +40,7 @@ public class EditSummaryCommand extends Command implements IEditCommand {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
-            releaseStructureWriteLock();
+            this.getLockManager().releaseStructureWriteLock();
         }
 
         return this.generateResponse(true);

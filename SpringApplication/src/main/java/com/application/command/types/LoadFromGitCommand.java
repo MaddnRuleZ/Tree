@@ -1,6 +1,5 @@
 package com.application.command.types;
 
-import com.application.User;
 import com.application.command.types.interfaces.ILoadCommand;
 import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
@@ -32,8 +31,8 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
 
     @Override
     public JsonNode execute() {
+        this.getLockManager().acquireStructureWriteLock();
         try {
-            acquireStructureWriteLock();
             this.getUser().resetUser();
             Printer printer = new GitPrinter(url, username, password, path, this.getUser());
             this.setSuccess(load(this.getUser(), printer, path));
@@ -41,7 +40,7 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
-            releaseStructureWriteLock();
+            this.getLockManager().releaseStructureWriteLock();
         }
         return generateResponse(true);
     }

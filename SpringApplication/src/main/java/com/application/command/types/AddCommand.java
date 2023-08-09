@@ -35,8 +35,8 @@ public class AddCommand extends Command {
 
     @Override
     public JsonNode execute() {
+        this.getLockManager().acquireStructureWriteLock();
         try {
-            acquireStructureWriteLock();
             Element foundParentElement = this.getUser().getRoot().searchForID(this.parent);
 
             if(foundParentElement == null ) {
@@ -69,7 +69,7 @@ public class AddCommand extends Command {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
-            releaseStructureWriteLock();
+            this.getLockManager().releaseStructureWriteLock();
         }
         return generateResponse(true);
     }

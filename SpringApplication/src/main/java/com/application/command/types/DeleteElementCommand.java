@@ -27,8 +27,8 @@ public class DeleteElementCommand extends Command {
 
     @Override
     public JsonNode execute() {
+        this.getLockManager().acquireStructureWriteLock();
         try {
-            acquireStructureWriteLock();
             Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {
                 throw new ElementNotFoundException();
@@ -39,7 +39,7 @@ public class DeleteElementCommand extends Command {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
-            releaseStructureWriteLock();
+            this.getLockManager().releaseStructureWriteLock();
         }
         return generateResponse(true);
     }

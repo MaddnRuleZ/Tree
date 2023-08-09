@@ -1,9 +1,9 @@
 package com.application.command.types.interfaces;
 
+import com.application.exceptions.ParseException;
 import com.application.interpreter.Parser;
 import com.application.tree.elements.childs.BlockElement;
 import com.application.tree.elements.roots.Roots;
-import com.application.exceptions.ParseException;
 
 public interface IEditCommand {
 

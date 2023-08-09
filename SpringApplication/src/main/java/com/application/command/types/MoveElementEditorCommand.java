@@ -1,7 +1,9 @@
 package com.application.command.types;
 
 import com.application.command.types.interfaces.IMoveElementCommand;
-import com.application.exceptions.*;
+import com.application.exceptions.ElementNotFoundException;
+import com.application.exceptions.ProcessingException;
+import com.application.exceptions.TypeException;
 import com.application.tree.Element;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
@@ -29,8 +31,8 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
 
     @Override
     public JsonNode execute() {
+        this.getLockManager().acquireStructureWriteLock();
         try {
-            acquireStructureWriteLock();
             Element newParent = this.getUser().getRoot().searchForID(this.newParent);
             Element element = this.getUser().getRoot().searchForID(this.element);
 
@@ -47,7 +49,7 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
-            releaseStructureWriteLock();
+            this.getLockManager().releaseStructureWriteLock();
         }
         return generateResponse(true);
     }

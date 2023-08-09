@@ -1,10 +1,9 @@
 package com.application.command.types;
 
 import com.application.User;
-import com.application.command.types.interfaces.ILocks;
+import com.application.command.LockManager;
 import com.application.exceptions.FailureResponse;
 import com.application.exceptions.GeneratingResponseException;
-import com.application.tree.elements.roots.Root;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -14,7 +13,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * provides success and failure message
  * provides execute and generateResponse
  */
-public abstract class Command implements ILocks {
+public abstract class Command {
+
+    private LockManager lockManager = LockManager.getInstance();
     /**
      * indicates success of processing the command
      */
@@ -41,8 +42,8 @@ public abstract class Command implements ILocks {
     public JsonNode generateResponse(boolean isEditorResponse) {
         JsonNode response;
         if (this.isSuccess()) {
+            lockManager.acquireStructureReadLock();
             try {
-                acquireStructureReadLock();
                 if(isEditorResponse) {
                     response = this.user.getRoot().toJsonEditor();
                 } else {
@@ -52,7 +53,7 @@ public abstract class Command implements ILocks {
                 response = FailureResponse.generateFailureResponse(new GeneratingResponseException().getMessage());
                 this.setSuccess(false);
             } finally {
-                releaseStructureReadLock();
+                lockManager.releaseStructureReadLock();
             }
         } else {
             response = FailureResponse.generateFailureResponse(this.getFailureMessage());
@@ -93,5 +94,9 @@ public abstract class Command implements ILocks {
     }
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LockManager getLockManager() {
+        return lockManager;
     }
 }

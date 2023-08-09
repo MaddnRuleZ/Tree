@@ -1,7 +1,6 @@
 package com.application.interpreter;
 
-import com.application.command.types.interfaces.ILocks;
-import com.application.exceptions.ProcessingException;
+import com.application.command.LockManager;
 import com.application.printer.GitPrinter;
 import com.application.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,11 @@ import org.springframework.stereotype.Component;
  * if changes were found, the structure will be updated
  */
 @Component
-public class GitWatcher implements ILocks {
+public class GitWatcher {
+    /**
+     * lockManager for locking the structure Lock
+     */
+    private LockManager lockManager;
 
     /**
      * user that holds information of LaTeX-Project
@@ -38,6 +41,7 @@ public class GitWatcher implements ILocks {
     @Autowired
     public GitWatcher(User user) {
         this.user = user;
+        this.lockManager = LockManager.getInstance();
     }
 
     /**
@@ -50,14 +54,14 @@ public class GitWatcher implements ILocks {
             GitPrinter printer = (GitPrinter) user.getPrinter();
             /*if(printer.isRemoteRepositoryChanged()) {
                 try {
-                    acquireStructureReadLock();
+                    this.lockManager.acquireStructureWriteLock();
                     printer.pullRepository();
                     changes = true;
                 } catch (ProcessingException e) {
                     failureMessage = e.getMessage();
                     failure = true;
                 } finally {
-                    releaseStructureReadLock();
+                    this.lockManager.releaseStructureWriteLock();
                 }
             }*/
         }

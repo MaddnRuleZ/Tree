@@ -29,8 +29,8 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
 
     @Override
     public JsonNode execute() {
+        this.getLockManager().acquireStructureWriteLock();
         try {
-            acquireStructureWriteLock();
             Element newParent = this.getUser().getRoot().searchForID(this.newParent);
             Element element = this.getUser().getRoot().searchForID(this.element);
 
@@ -46,7 +46,7 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
         } finally {
-            releaseStructureWriteLock();
+            this.getLockManager().releaseStructureWriteLock();
         }
         return generateResponse(false);
     }
