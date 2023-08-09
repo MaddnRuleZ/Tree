@@ -162,10 +162,11 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
-
-        for(String line : this.startHeaderText){
-            text.append(line);
-            text.append("\n");
+        if(this.startHeaderText != null) {
+            for(String line : this.startHeaderText){
+                text.append(line);
+                text.append("\n");
+            }
         }
     }
 

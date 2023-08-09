@@ -226,9 +226,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
         StringBuilder text = map.get(key);
 
-        if (hasSummary()) {
-            this.summary.toLaTeX(map, key, level);
-        }
         if (hasComment()) {
             this.comment.toLaTeX(map, key, level);
         }
@@ -236,6 +233,10 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+        if (hasSummary()) {
+            this.summary.toLaTeX(map, key, level);
+        }
+
         if(hasNewLine()) {
             this.newLine.toLaTeX(map, key, level);
         }

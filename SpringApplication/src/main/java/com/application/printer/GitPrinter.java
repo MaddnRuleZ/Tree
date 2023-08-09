@@ -31,6 +31,7 @@ public class GitPrinter extends Printer {
     private final String overleafUrl;
     private final String working_directory;
     private final CredentialsProvider credentialsProvider;
+    private static final String MAIN_ENDING = "main.tex";
 
     /**
      * Constructs a new instance of the GitPrinter class with the specified parameters.
@@ -41,7 +42,7 @@ public class GitPrinter extends Printer {
      * @param workingDir    The working directory where Git operations will be performed.
      */
     public GitPrinter(String overleafUrl, String username, String password, String workingDir, User user) {
-        super(user);// TODO path to main file
+        super("workingDir/" + MAIN_ENDING, user); //TODO path testen
         credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
         this.overleafUrl = overleafUrl;
         this.working_directory = workingDir;

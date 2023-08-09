@@ -38,7 +38,7 @@ public class DeleteTest {
     public void deleteSectioningCascading() {
         Parent sec2 = tree.sectioningList.get(1);
         command.setCascading(true);
-        command.delete(sec2);
+        command.delete(sec2, tree.root);
 
         assertFalse(tree.sectioningList.get(0).getChildElements().contains(sec2), "Sectioning 2 should be deleted");
 
@@ -49,14 +49,13 @@ public class DeleteTest {
         Parent sec1 = tree.sectioningList.get(0);
         Parent sec2 = tree.sectioningList.get(1);
         command.setCascading(false);
-        command.delete(sec2);
+        command.delete(sec2, tree.root);
 
         assertEquals(tree.sectioningList.get(4), sec1.getChildElements().get(0), "Sectioning 5 should be first child of Sectioning 1");
         assertEquals(tree.environmentList.get(0), sec1.getChildElements().get(1), "Environment 1 should be second child of Sectioning 1");
         assertEquals(tree.childrenList.get(1), sec1.getChildElements().get(2), "Child 2 should be third child of Sectioning 1");
         assertEquals(tree.childrenList.get(2), sec1.getChildElements().get(3), "Child 3 should be child of Sectioning 1");
         assertEquals(tree.childrenList.get(3), sec1.getChildElements().get(4), "Child 4 should be child of Sectioning 1");
-
     }
 
 }

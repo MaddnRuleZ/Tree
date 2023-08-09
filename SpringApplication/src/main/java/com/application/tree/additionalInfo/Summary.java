@@ -66,7 +66,7 @@ public class Summary implements LaTeXTranslator {
     }
 
     /**
-     * returns the summary as a string with . as delimiter, if there is no summary it returns null
+     * returns the summary as a string with \n as delimiter, if there is no summary it returns null
      * @return summary as string
      */
     @Override
@@ -92,7 +92,7 @@ public class Summary implements LaTeXTranslator {
     }
 
     /**
-     * never to be executed because the summary is the start
+     * never to be executed because the summary is the end
      * @param map   map of the LaTeX-Code
      * @param key   key of the map
      * @param level level of the element
@@ -104,7 +104,7 @@ public class Summary implements LaTeXTranslator {
     }
 
     /**
-     * never to be executed because the summary is the start
+     * never to be executed because the summary is the end
      * @param map   map of the LaTeX-Code
      * @param key   key of the map
      * @param level level of the element
