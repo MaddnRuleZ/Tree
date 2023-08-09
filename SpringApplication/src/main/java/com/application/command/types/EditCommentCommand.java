@@ -1,5 +1,6 @@
 package com.application.command.types;
 
+import com.application.command.types.interfaces.IEditCommand;
 import com.application.exceptions.ElementNotFoundException;
 import com.application.exceptions.ProcessingException;
 import com.application.tree.Element;
@@ -12,7 +13,7 @@ import java.util.UUID;
 /**
  * command to edit the comment of an element
  */
-public class EditCommentCommand extends Command {
+public class EditCommentCommand extends Command implements IEditCommand {
     /**
      * The element to be edited
      */
@@ -27,6 +28,7 @@ public class EditCommentCommand extends Command {
     public JsonNode execute() {
         try {
             acquireStructureWriteLock();
+
             Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {
                 throw new ElementNotFoundException();

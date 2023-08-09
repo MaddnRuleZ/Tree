@@ -3,6 +3,10 @@ package com.application.exceptions;
 @SuppressWarnings("SpellCheckingInspection")
 public class ParseException extends ProcessingException {
 
+    public ParseException() {
+        super("Die Eingabe hat beim Parsen einen Baum erzeugt. \n LaTeX-Code ist an dieser Stelle jedoch nicht erlaubt." +
+                " Bitte vermeiden Sie die Nutzung von Syntax wie bspw. \\section{} oder \\begin{}, \\end{}");
+    }
 
     /**
      * thrown if no element could be parsed

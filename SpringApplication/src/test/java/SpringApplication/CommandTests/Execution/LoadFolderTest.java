@@ -16,7 +16,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class LoadTest {
+public class LoadFolderTest {
     CommandHandler commandHandler;
     User user;
     String path = "src/test/resources/JsonFiles/LoadFromFolderTest_1.json";

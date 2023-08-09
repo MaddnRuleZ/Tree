@@ -87,5 +87,9 @@ public class Comment implements LaTeXTranslator {
     public List<String> getComments() {
         return comments;
     }
+
+    public void addComment(String comment) {
+        this.comments.add(comment);
+    }
 }
 

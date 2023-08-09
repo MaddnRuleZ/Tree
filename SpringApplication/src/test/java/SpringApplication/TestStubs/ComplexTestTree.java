@@ -8,6 +8,7 @@ import com.application.tree.elements.parent.Figure;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Root;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

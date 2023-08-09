@@ -58,10 +58,10 @@ public class DeleteElementCommand extends Command {
             if(parent == null) {
                 index = root.getChildren().indexOf(element);
             } else {
-                index = parent.getChildElements().indexOf(element);
+                index = parent.getChildren().indexOf(element);
             }
             // cascading only false if element is of type parent
-            List<Element> children = ((Parent) element).getChildElements();
+            List<Element> children = ((Parent) element).getChildren();
             for(Element child : children) {
                 child.setParent(parent);
                 if(parent == null) {

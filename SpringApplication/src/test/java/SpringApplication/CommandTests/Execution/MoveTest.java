@@ -51,9 +51,9 @@ public class MoveTest {
 
         command.execute();
 
-        assertEquals(sec3.getChildElements().get(0), child5, "Child 5 should be first child of Sectioning 3");
-        assertEquals(sec3.getChildElements().get(1), child4, "Child 4 should be second child of Sectioning 3");
-        assertFalse(oldParent.getChildElements().contains(child4), "Old parent should not contain child 4");
+        assertEquals(sec3.getChildren().get(0), child5, "Child 5 should be first child of Sectioning 3");
+        assertEquals(sec3.getChildren().get(1), child4, "Child 4 should be second child of Sectioning 3");
+        assertFalse(oldParent.getChildren().contains(child4), "Old parent should not contain child 4");
     }
     @Test
     public void moveElementWithoutPreviousElementTest() {
@@ -68,9 +68,9 @@ public class MoveTest {
 
         command.execute();
 
-        assertEquals(sec3.getChildElements().get(0), child4, "Child 4 should be first child of Sectioning 3");
-        assertEquals(sec3.getChildElements().get(1), child5, "Child 5 should be second child of Sectioning 3");
-        assertFalse(oldParent.getChildElements().contains(child4), "Old parent should not contain child 4");
+        assertEquals(sec3.getChildren().get(0), child4, "Child 4 should be first child of Sectioning 3");
+        assertEquals(sec3.getChildren().get(1), child5, "Child 5 should be second child of Sectioning 3");
+        assertFalse(oldParent.getChildren().contains(child4), "Old parent should not contain child 4");
     }
 
     @Test
@@ -81,7 +81,7 @@ public class MoveTest {
         assertThrows(OwnChildException.class, () -> {
             command.moveElement(sec2, env1, null, 0);
         });
-        assertFalse(env1.getChildElements().contains(sec2), "Environment 1 should not contain Sectioning 2");
+        assertFalse(env1.getChildren().contains(sec2), "Environment 1 should not contain Sectioning 2");
         assertEquals(tree.sectioningList.get(0), sec2.getParentElement(), "Sectioning 1 should be parent of Sectioning 2");
     }
 }

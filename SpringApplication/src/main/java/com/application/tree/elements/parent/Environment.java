@@ -43,7 +43,7 @@ public class Environment extends Parent {
      */
     @Override
     public Element addTextBlockToElem(String line) {
-        if (this.childElements.size() == 0) {
+        if (this.children.size() == 0) {
             BlockElement block = generateTextBlockAsChild();
             block.addTextBlockToElem(line);
             return block;
@@ -59,7 +59,7 @@ public class Environment extends Parent {
         if (this.getId().equals(id)) {
             return this;
         } else {
-            for (Element child: this.getChildElements()) {
+            for (Element child: this.getChildren()) {
                 Element foundElement = child.searchForID(id);
                 if (foundElement != null) {
                     return foundElement;
@@ -77,8 +77,8 @@ public class Environment extends Parent {
         StringBuilder text = map.get(key);
 
         // children
-        if (this.childElements != null && !this.childElements.isEmpty()) {
-            for (Element child : this.childElements) {
+        if (this.children != null && !this.children.isEmpty()) {
+            for (Element child : this.children) {
                 child.toLaTeX(map, key, level + 1);
             }
         }

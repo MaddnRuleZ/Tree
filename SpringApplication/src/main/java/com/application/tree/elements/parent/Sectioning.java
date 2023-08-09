@@ -6,7 +6,6 @@ import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.roots.Root;
 
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Sectioning Class
@@ -31,7 +30,7 @@ public class Sectioning extends Parent {
     @Override
     public int levelOfDeepestSectioningChild() {
         int deepestChildLevel = 0;
-        for (Element child : this.childElements) {
+        for (Element child : this.children) {
             int childLevel = child.levelOfDeepestSectioningChild();
             deepestChildLevel = Math.max(deepestChildLevel, childLevel);
         }
@@ -67,8 +66,8 @@ public class Sectioning extends Parent {
         text.append("\n");
 
         //children
-        if (this.childElements != null && !this.childElements.isEmpty()) {
-            for (Element child : this.childElements) {
+        if (this.children != null && !this.children.isEmpty()) {
+            for (Element child : this.children) {
                 child.toLaTeX(map, key, level + 1);
             }
         }

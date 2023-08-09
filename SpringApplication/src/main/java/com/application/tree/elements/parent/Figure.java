@@ -2,7 +2,6 @@ package com.application.tree.elements.parent;
 
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
-import com.application.tree.elements.ElementConfig;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -105,8 +104,8 @@ public class Figure extends Environment {
         text.append("\n");
 
         // children
-        if (this.childElements != null && !this.childElements.isEmpty()) {
-            for (Element child : this.childElements) {
+        if (this.children != null && !this.children.isEmpty()) {
+            for (Element child : this.children) {
                 child.toLaTeX(map, key, level + 1);
             }
         }

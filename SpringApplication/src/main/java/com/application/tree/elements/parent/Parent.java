@@ -22,7 +22,7 @@ import java.util.UUID;
  * parent element in relation to other elements.
  */
 public abstract class Parent extends Element {
-    protected final List<Element> childElements;
+    protected final List<Element> children;
 
     /**
      * Constructor for creating a new Parent object with the specified startPart, endPart, and level.
@@ -33,7 +33,7 @@ public abstract class Parent extends Element {
      */
     public Parent(String startPart, String endPart, int level) {
         super(startPart, endPart, level);
-        childElements = new ArrayList<>();
+        children = new ArrayList<>();
         this.type = this.getClass().getSimpleName();
     }
 
@@ -65,27 +65,27 @@ public abstract class Parent extends Element {
 
 
     public void addChild(Element element) {
-        this.childElements.add(element);
+        this.children.add(element);
     }
 
     public void addChildOnIndex(int index, Element newChild) {
-        this.childElements.add(index, newChild);
+        this.children.add(index, newChild);
     }
 
     public void addChildAfter(Element previousElement, Element newChild) throws ElementNotFoundException {
-        int index = this.childElements.indexOf(previousElement);
+        int index = this.children.indexOf(previousElement);
         if (index == -1) {
             throw new ElementNotFoundException();
         }
-        this.childElements.add(index + 1, newChild);
+        this.children.add(index + 1, newChild);
     }
 
     public boolean removeChild(Element element) {
-        return this.childElements.remove(element);
+        return this.children.remove(element);
     }
 
-    public List<Element> getChildElements() {
-        return this.childElements;
+    public List<Element> getChildren() {
+        return this.children;
     }
 
     @Override
@@ -93,7 +93,7 @@ public abstract class Parent extends Element {
         if (this.getId().equals(id)) {
             return this;
         } else {
-            for (Element child: this.getChildElements()) {
+            for (Element child: this.getChildren()) {
                 Element foundElement = child.searchForID(id);
                 if (foundElement != null) {
                     return foundElement;
@@ -107,7 +107,7 @@ public abstract class Parent extends Element {
     public int levelOfDeepestSectioningChild() {
         int deepestChildLevel = 0;
 
-        for (Element child : this.childElements) {
+        for (Element child : this.children) {
             int childLevel = child.levelOfDeepestSectioningChild();
             deepestChildLevel = Math.max(deepestChildLevel, childLevel);
         }
@@ -118,9 +118,9 @@ public abstract class Parent extends Element {
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectNode node = super.toJsonEditor();
-        if (this.childElements != null && !this.childElements.isEmpty()) {
+        if (this.children != null && !this.children.isEmpty()) {
             ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
-            for (Element child : this.childElements) {
+            for (Element child : this.children) {
                 childrenNode.add(child.toJsonEditor());
             }
             node.set("children", childrenNode);
@@ -131,8 +131,8 @@ public abstract class Parent extends Element {
     @Override
     public JsonNode toJsonTree() throws NullPointerException {
         ArrayNode node = (ArrayNode) super.toJsonTree();
-        if (this.childElements != null && !this.childElements.isEmpty()) {
-            for (Element child : this.childElements) {
+        if (this.children != null && !this.children.isEmpty()) {
+            for (Element child : this.children) {
                 node.addAll((ArrayNode) child.toJsonTree());
             }
         }
@@ -149,8 +149,8 @@ public abstract class Parent extends Element {
         if(id == null) {
             return -1;
         }
-        for (int i = 0; i < this.childElements.size(); i++) {
-            if (this.childElements.get(i).getId().equals(id)) {
+        for (int i = 0; i < this.children.size(); i++) {
+            if (this.children.get(i).getId().equals(id)) {
                 return i;
             }
         }

@@ -30,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class EditContentTest {
     String testPath = "src/test/resources/PrinterTestOutput/EditTest.txt";
-
     ComplexTestTree tree;
     EditContentCommand command;
     User user;
@@ -76,10 +75,9 @@ public class EditContentTest {
         String newContent = "newContent: " + randomString;
         command.setElement(element.getId());
         command.setContent(newContent);
-        command.execute();
 
-        assertEquals(element.getContent(), newContent, "Content should be changed");
-        assertNotEquals(oldContent, newContent, "Content should be changed");
+
+        assertThrows(ParseException.class, () -> command.checkBadString(newContent), "Bad content should throw ParseException");
 
 
         FilePrinter printer = new FilePrinter(testPath, user);

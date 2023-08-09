@@ -67,8 +67,8 @@ public class Input extends Parent implements Roots {
 
         String newKey = this.content;
         map.put(newKey, new StringBuilder());
-        if (this.childElements != null && !this.childElements.isEmpty()) {
-            for (Element child : this.childElements) {
+        if (this.children != null && !this.children.isEmpty()) {
+            for (Element child : this.children) {
                 child.toLaTeX(map, newKey, INIT_INDENTATION_LEVEL);
             }
         }
