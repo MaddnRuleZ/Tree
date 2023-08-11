@@ -49,14 +49,6 @@ public abstract class Parent extends Element {
             return this;
         }
 
-        List<String> list = summary.getSummary();
-
-
-        if (summary.getSummary().size() == 0) {
-            System.out.println("haw haw");
-        }
-
-
         if (getComment().extractContent(line) && summary.getSummary().size() == 0) {
             return this;
         }
@@ -64,14 +56,6 @@ public abstract class Parent extends Element {
         BlockElement block = generateTextBlockAsChild();
         block.addTextBlockToElem(line);
         return block;
-        /*
-        if ((!summary.extractContent(line) && !comment.extractContent(line)) || summary.getSummary() != null) { //
-            BlockElement block = generateTextBlockAsChild();
-            block.addTextBlockToElem(line);
-            return block;
-        }
-        return this;
-         */
     }
 
     /**
