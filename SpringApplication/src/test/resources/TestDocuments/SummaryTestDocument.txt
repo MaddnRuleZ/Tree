@@ -1,0 +1,88 @@
+Start of Document
+-> Bedutet assinged to
+
+\begin{document}
+\part{options_text}[content_test]
+    % comment1 -> Part
+    %\start{summary}
+        % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+    %\finish{summary}
+    % comment2 -> TextBlock underneath
+    X
+    X
+    X
+\part{options_text}[content_test]
+    % comment -> Part
+    %\start{summary}
+        % Summary -> Part
+        %
+        %
+    %\finish{summary}
+    X TextBlock Start
+    X
+    X
+    % comment -> BlockElement
+    X
+\part{options_text}[content_test]
+    X
+    X
+    % comment -> BlockElement
+    X
+    %\start{summary}
+        % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+    %\finish{summary}
+    X
+    X
+    X
+    \chapter{options_text}[content_test]
+        %\start{summary}
+                % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+        %\finish{summary}
+        \section{options_text}[content_test]
+            % comment -> Section
+\part{options_text}[content_test]
+    X
+    X
+    X
+    \begin{algorithmic}
+        %\start{summary}
+            % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+        %\finish{summary}
+    X
+    X
+    X
+    \end{algorithmic}
+    X
+    X
+    X
+\part{options_text}[content_test]
+    X
+    %\start{summary}
+                % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+    %\finish{summary}
+    X
+    X
+    X
+    \begin{algorithmic}
+        %\start{summary}
+            % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+        %\finish{summary}
+        X
+        X
+        X
+    \end{algorithmic}
+    X
+    X
+    X
+\part{options_text}[content_test]
+    %\start{summary}
+                % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+    %\finish{summary}
+    \begin{algorithmic}
+        %\start{summary}
+            % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+        %\finish{summary}
+        X
+        X
+        X
+    \end{algorithmic}

@@ -144,7 +144,6 @@ public enum ElementConfig {
     };
 
     public static final int BLOCK_ELEMENT_LEVEL = 99999;
-    public static final int INPUT_DOCUMENT_LEVEL = 99999;
     private static final int ENVIRONMENT_DEFAULT_LEVEL = 9;
     private final String startPart;
     private final String endPart;

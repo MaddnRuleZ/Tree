@@ -24,7 +24,7 @@ public class Input extends Parent implements Roots {
      * Input Constructor, call Constructor of Parent
      */
     public Input() {
-        super(START_PART, null, ElementConfig.INPUT_DOCUMENT_LEVEL);
+        super(START_PART, null, ElementConfig.BLOCK_ELEMENT_LEVEL);
     }
 
     /**

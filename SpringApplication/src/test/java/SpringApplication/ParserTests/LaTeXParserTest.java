@@ -60,6 +60,4 @@ public class LaTeXParserTest {
         System.out.println(map.get("root").toString());
 
     }
-
-
 }

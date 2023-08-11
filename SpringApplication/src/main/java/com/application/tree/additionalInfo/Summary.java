@@ -46,7 +46,6 @@ public class Summary implements LaTeXTranslator {
      * @return true if line was added to summary, else false
      */
     public boolean extractContent(String currentLine) {
-
         if (listeningOnDocument && currentLine.contains(END_SUMMARY)) {
             listeningOnDocument = false;
             return true;

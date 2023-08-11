@@ -3,6 +3,7 @@ package com.application.tree.elements.roots;
 import com.application.User;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
+import com.application.tree.elements.ElementConfig;
 import com.application.tree.interfaces.LaTeXTranslator;
 import com.application.tree.interfaces.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,7 +26,7 @@ import java.util.UUID;
 public class Root implements JsonParser, LaTeXTranslator, Roots {
     public static final String START_DOCUMENT = "\\begin{document}";
     public static final String END_DOCUMENT = "\\end{document}";
-    public static int MIN_LEVEL;
+    public static int MIN_LEVEL = ElementConfig.BLOCK_ELEMENT_LEVEL;
     private final List<Element> childElements;
     private static Root instance;
     private List<String> startHeaderText;
