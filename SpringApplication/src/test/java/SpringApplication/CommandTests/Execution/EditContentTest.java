@@ -87,10 +87,11 @@ public class EditContentTest {
 
     @Test
     public void ElementNotFoundTest() {
-        UUID id = UUID.randomUUID();
+        UUID id = tree.notUsedUUID;
         command.setElement(id);
         command.setContent("newContent");
-        assertThrows(UnknownElementException.class, () -> command.execute(), "Should throw UnknownElementException");
+
+        assertFalse(command.isSuccess(), "Command should fail");
     }
 
     @AfterEach

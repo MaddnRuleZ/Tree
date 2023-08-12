@@ -31,9 +31,11 @@ public class EditSummaryCommand extends Command {
             } else {
                 if(this.summary.equals("")){
                     elementFound.setChooseManualSummary(false);
+                } else {
+                    elementFound.setSummary(this.summary);
+                    elementFound.setChooseManualSummary(true);
                 }
-                elementFound.setSummary(this.summary);
-                elementFound.setChooseManualSummary(true);
+
                 this.setSuccess(true);
             }
         } catch (ProcessingException e) {

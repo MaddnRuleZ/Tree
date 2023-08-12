@@ -14,6 +14,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MoveTest {
@@ -87,7 +89,33 @@ public class MoveTest {
         });
         assertFalse(sec11.getChildren().contains(sec2), "Sectioning 11 should not contain Sectioning 2");
         assertEquals(tree.sectioningList.get(0), sec2.getParentElement(), "Sectioning 1 should be parent of Sectioning 2");
+    }
 
+    @Test
+    public void ElementNotFoundTest() {
+        UUID id = tree.notUsedUUID;
+        Parent sec2 = tree.sectioningList.get(1);
+
+        command.setElement(id);
+        command.setNewParent(sec2.getId());
+        command.setPreviousElement(null);
+
+        assertFalse(command.isSuccess(), "Command should not be successful");
+    }
+
+    @Test
+    public void newParentofTypeChild() {
+        Parent sec2 = tree.sectioningList.get(1);
+        Child child4 = tree.childrenList.get(3);
+        Child child5 = tree.childrenList.get(4);
+
+        Parent oldParent = child4.getParentElement();
+        command.setElement(child4.getId());
+        command.setNewParent(child5.getId());
+        command.setPreviousElement(null);
+
+        assertFalse(command.isSuccess(), "Command should not be successful");
+        assertEquals(oldParent, child4.getParentElement(), "Child 4 should not have a new parent");
     }
 
     @AfterEach

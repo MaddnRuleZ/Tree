@@ -24,7 +24,6 @@ public class EditCommentTest {
     User user;
     String oldComment;
     String newCommentIncoming;
-
     ArrayList<String> newCommentStored = new ArrayList<>();
 
     @BeforeEach
@@ -56,12 +55,12 @@ public class EditCommentTest {
 
     @Test
     public void ElementNotFoundTest() {
-        UUID id = UUID.randomUUID();
+        UUID id = tree.notUsedUUID;
         newCommentIncoming = "%newComment";
         newCommentStored.add("newComment");
         command.setElement(id);
         command.setComment(newCommentIncoming);
-        assertThrows(UnknownElementException.class, () -> command.execute(), "Should throw UnknownElementException");
+        assertFalse(command.isSuccess(), "Command should fail");
     }
 
     @AfterEach

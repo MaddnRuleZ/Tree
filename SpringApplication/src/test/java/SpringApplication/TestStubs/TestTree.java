@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 /**
@@ -18,8 +19,7 @@ import java.util.ArrayList;
  * Don't change
  */
 public class TestTree {
-
-    @Mock
+    public final UUID notUsedUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
     public Root root;
     public ArrayList<Child> childrenList = new ArrayList<>();
     public ArrayList<Sectioning> sectioningList = new ArrayList<>();
