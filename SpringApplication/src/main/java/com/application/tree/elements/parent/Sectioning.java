@@ -83,7 +83,7 @@ public class Sectioning extends Parent {
      */
     @Override
     public String getStartPart() throws UnknownElementException{
-        int level = Root.MIN_LEVEL + this.calculateLevelFromElement();
+        int level = Root.getInstance().getMinLevel() + this.calculateLevelFromElement() - 1;
         ElementConfig type = ElementConfig.getSectioningType(level);
         if (type == null) {
             throw new UnknownElementException(this.getClass().getSimpleName());

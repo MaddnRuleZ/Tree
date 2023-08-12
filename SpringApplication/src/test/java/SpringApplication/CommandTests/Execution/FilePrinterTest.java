@@ -9,6 +9,7 @@ import com.application.printer.FilePrinter;
 import com.application.printer.Printer;
 import com.application.command.types.LoadFromFolderCommand;
 import com.application.tree.elements.roots.Root;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class FilePrinterTest {
     Printer printer;
 
     @BeforeEach
-    void setUp() throws ParseException, UnknownElementException, IOException, FileInvalidException {
+    void setUp() throws FileInvalidException {
         Parser parser = new Parser(pathOfTestDocument);
         User user = new User();
         Root root = (Root) parser.startParsing();
@@ -33,6 +34,11 @@ class FilePrinterTest {
     @Test
     void exportTest() throws UnknownElementException, IOException {
         printer.export();
+    }
+
+    @AfterEach
+    void tearDown() {
+        printer = null;
     }
 
 

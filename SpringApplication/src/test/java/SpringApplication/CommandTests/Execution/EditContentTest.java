@@ -15,6 +15,8 @@ import com.application.interpreter.Parser;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +38,7 @@ public class EditContentTest {
 
     @BeforeEach
     public void setUp() throws ParseException {
-        tree = ComplexTestTree.createTestTree();
+        tree = new ComplexTestTree();
         command = new EditContentCommand();
         user = new User();
         user.setRoot(tree.root);
@@ -68,8 +70,7 @@ public class EditContentTest {
      */
     @Test
     public void editWithBadContent() throws UnknownElementException, IOException {
-        UUID random = tree.getRandomUsedUUID();
-        Element element = tree.root.searchForID(random);
+        Element element = tree.childrenList.get(6);
         String oldContent = element.getContent();
 
         String newContent = "newContent: " + randomString;
@@ -82,6 +83,21 @@ public class EditContentTest {
 
         FilePrinter printer = new FilePrinter(testPath, user);
         printer.export();
+    }
+
+    @Test
+    public void ElementNotFoundTest() {
+        UUID id = UUID.randomUUID();
+        command.setElement(id);
+        command.setContent("newContent");
+        assertThrows(UnknownElementException.class, () -> command.execute(), "Should throw UnknownElementException");
+    }
+
+    @AfterEach
+    public void cleanUp() {
+        tree = null;
+        command = null;
+        user = null;
     }
 
 

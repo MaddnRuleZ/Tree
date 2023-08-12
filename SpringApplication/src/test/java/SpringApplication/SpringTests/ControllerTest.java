@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,11 @@ public class ControllerTest {
         JsonNode jsonNode = objectMapper.readTree(responseBody);
         boolean hasUpdates = jsonNode.get("hasUpdates").asBoolean();
         assertFalse(hasUpdates);
+    }
+
+    @AfterEach
+    void tearDown() {
+        mvc = null;
     }
 
 

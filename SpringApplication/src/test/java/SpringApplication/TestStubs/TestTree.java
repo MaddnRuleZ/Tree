@@ -6,6 +6,8 @@ import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Root;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,8 @@ import java.util.ArrayList;
  * Don't change
  */
 public class TestTree {
+
+    @Mock
     public Root root;
     public ArrayList<Child> childrenList = new ArrayList<>();
     public ArrayList<Sectioning> sectioningList = new ArrayList<>();
@@ -24,16 +28,22 @@ public class TestTree {
     // tree structure:
     //                        root
     //                          |
-    //      --------------Sectioning1---------------
-    //               /                    |    |    \
-    //    -------Sec2-----------        Sec3   Sec4   Child1
-    //   /  |     |       |    \          |      |
-    // Sec5 Env1 Child2 Child3 Child4   Child5  Env2
-    //        |
-    //       Sec6
+    //      --------------Sectioning1------------------------
+    //               /                    |    |    \         \
+    //    -------Sec2-----------        Sec3   Sec4   Child1   Sec7
+    //   /  |     |       |    \          |      |              |
+    // Sec5 Env1 Child2 Child3 Child4   Child5  Env2           Sec8
+    //        |                                                 |
+    //       Sec6                                              Sec9
+    //                                                          |
+    //                                                         Sec10
+    //                                                          |
+    //                                                         Sec11
+    //                                                          |
+    //                                                         Sec12
 
     TestTree() {
-
+        this.root = Root.resetInstance();
     }
 
 
@@ -55,6 +65,13 @@ public class TestTree {
 
         Sectioning sectioning5 = new Sectioning("sectioning5",2);
         Sectioning sectioning6 = new Sectioning("sectioning6",2);
+        Sectioning sectioning7 = new Sectioning("sectioning7",2);
+
+        Sectioning sectioning8 = new Sectioning("sectioning8",3);
+        Sectioning sectioning9 = new Sectioning("sectioning9",4);
+        Sectioning sectioning10 = new Sectioning("sectioning10",5);
+        Sectioning sectioning11 = new Sectioning("sectioning11",6);
+        Sectioning sectioning12 = new Sectioning("sectioning12",7);
 
         //create environment
         Environment environment1 = new Environment("environment1", "environment1",2);
@@ -76,6 +93,7 @@ public class TestTree {
         sectioning1.addChild(sectioning2);
         sectioning1.addChild(sectioning3);
         sectioning1.addChild(sectioning4);
+        sectioning1.addChild(sectioning7);
 
         sectioning2.addChild(sectioning5);
         sectioning2.addChild(environment1);
@@ -90,12 +108,20 @@ public class TestTree {
 
         environment1.addChild(sectioning6);
 
+        sectioning7.addChild(sectioning8);
+        sectioning8.addChild(sectioning9);
+        sectioning9.addChild(sectioning10);
+        sectioning10.addChild(sectioning11);
+        sectioning11.addChild(sectioning12);
+
+
         //set parents
         sectioning2.setParent(sectioning1);
         sectioning3.setParent(sectioning1);
         sectioning4.setParent(sectioning1);
         sectioning5.setParent(sectioning2);
         sectioning6.setParent(environment1);
+        sectioning7.setParent(sectioning1);
 
         environment1.setParent(sectioning2);
         environment2.setParent(sectioning4);
@@ -106,7 +132,15 @@ public class TestTree {
         child4.setParent(sectioning2);
         child5.setParent(sectioning3);
 
+        sectioning8.setParent(sectioning7);
+        sectioning9.setParent(sectioning8);
+        sectioning10.setParent(sectioning9);
+        sectioning11.setParent(sectioning10);
+        sectioning12.setParent(sectioning11);
+
         sectioning1.setParent(null);
+
+
 
 
         //add Elements to TestTree
@@ -124,6 +158,12 @@ public class TestTree {
         testTree.sectioningList.add(sectioning4);
         testTree.sectioningList.add(sectioning5);
         testTree.sectioningList.add(sectioning6);
+        testTree.sectioningList.add(sectioning7);
+        testTree.sectioningList.add(sectioning8);
+        testTree.sectioningList.add(sectioning9);
+        testTree.sectioningList.add(sectioning10);
+        testTree.sectioningList.add(sectioning11);
+        testTree.sectioningList.add(sectioning12);
 
         testTree.environmentList.add(environment1);
 

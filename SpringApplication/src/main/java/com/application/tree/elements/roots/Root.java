@@ -26,14 +26,15 @@ import java.util.UUID;
 public class Root implements JsonParser, LaTeXTranslator, Roots {
     public static final String START_DOCUMENT = "\\begin{document}";
     public static final String END_DOCUMENT = "\\end{document}";
-    public static int MIN_LEVEL = ElementConfig.BLOCK_ELEMENT_LEVEL;
+    private int minLevel;
     private final List<Element> childElements;
     private static Root instance;
     private List<String> startHeaderText;
 
     private Root() {
         // Private constructor to prevent instantiation from outside the class
-        childElements = new ArrayList<>();
+        this.childElements = new ArrayList<>();
+        this.minLevel = ElementConfig.BLOCK_ELEMENT_LEVEL;
     }
 
     /**
@@ -69,8 +70,8 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
      * @param newLevelCap level of new Created Element
      */
     public static void updateLevelCap(int newLevelCap) {
-        if (newLevelCap < MIN_LEVEL) {
-            MIN_LEVEL = newLevelCap;
+        if (newLevelCap < Root.getInstance().getMinLevel()) {
+            Root.getInstance().setMinLevel(newLevelCap);
         }
     }
 
@@ -200,5 +201,13 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
 
     public List<Element> getChildren() {
         return this.childElements;
+    }
+
+    public int getMinLevel() {
+        return minLevel;
+    }
+
+    public void setMinLevel(int minLevel) {
+        this.minLevel = minLevel;
     }
 }

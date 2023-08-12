@@ -9,6 +9,7 @@ import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Ignore;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,7 +32,7 @@ public class CommandTest {
 
     @BeforeEach
     public void setUp() {
-        TestTree testTree = ComplexTestTree.createTestTree();
+        TestTree testTree = new ComplexTestTree();
         User user = new User();
         user.setRoot(testTree.root);
         this.commandHandler = new MockCommandHandler(user);
@@ -56,6 +57,11 @@ public class CommandTest {
         } catch (ProcessingException e) {
             fail(e.getMessage());
         }
+    }
+
+    @AfterEach
+    public void tearDown() {
+        commandHandler = null;
     }
 
     private JsonNode loadJsonFile(String filePath) {

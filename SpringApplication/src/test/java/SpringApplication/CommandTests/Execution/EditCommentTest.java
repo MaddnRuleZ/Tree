@@ -5,6 +5,7 @@ import com.application.User;
 import com.application.command.types.EditCommentCommand;
 import com.application.command.types.EditContentCommand;
 import com.application.exceptions.ParseException;
+import com.application.exceptions.UnknownElementException;
 import com.application.tree.additionalInfo.Comment;
 import com.application.tree.elements.parent.Sectioning;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +22,6 @@ public class EditCommentTest {
     ComplexTestTree tree;
     EditCommentCommand command;
     User user;
-
     String oldComment;
     String newCommentIncoming;
 
@@ -28,7 +29,7 @@ public class EditCommentTest {
 
     @BeforeEach
     public void setUp() throws ParseException {
-        tree = ComplexTestTree.createTestTree();
+        tree = new ComplexTestTree();
         command = new EditCommentCommand();
         user = new User();
         user.setRoot(tree.root);
@@ -46,12 +47,21 @@ public class EditCommentTest {
         newCommentIncoming = "%newComment";
         newCommentStored.add("newComment");
 
-
         command.setElement(sec.getId());
         command.setComment(newCommentIncoming);
         command.execute();
 
         assertEquals(newCommentStored, sec.getComment().getComments(), "Comment should be changed");
+    }
+
+    @Test
+    public void ElementNotFoundTest() {
+        UUID id = UUID.randomUUID();
+        newCommentIncoming = "%newComment";
+        newCommentStored.add("newComment");
+        command.setElement(id);
+        command.setComment(newCommentIncoming);
+        assertThrows(UnknownElementException.class, () -> command.execute(), "Should throw UnknownElementException");
     }
 
     @AfterEach
@@ -63,4 +73,5 @@ public class EditCommentTest {
         newCommentIncoming = null;
         newCommentStored.clear();
     }
+
 }

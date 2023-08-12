@@ -7,6 +7,8 @@ import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +43,11 @@ public class CombinedParserAndLaTeXParserTest {
     public void toJsonEditorInputTest() throws FileInvalidException {
         String formattedJsonString = formatJsonString(root.toJsonEditor().toString());
         System.out.println(formattedJsonString);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        Root.resetInstance();
     }
 
 

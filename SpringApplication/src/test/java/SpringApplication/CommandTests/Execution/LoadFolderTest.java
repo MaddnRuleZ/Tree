@@ -7,6 +7,7 @@ import com.application.printer.Printer;
 import com.application.tree.elements.roots.Root;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +45,12 @@ public class LoadFolderTest {
         assertNotEquals(firstRoot, sndRoot, "Roots should not be equal");
         assertNotEquals(firstPrinter, sndPrinter, "Printers should not be equal");
 
+    }
+
+    @AfterEach
+    void tearDown() {
+        commandHandler = null;
+        user = null;
     }
 
     private JsonNode loadJsonFile(String filePath) {

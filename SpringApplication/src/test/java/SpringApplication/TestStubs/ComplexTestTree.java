@@ -71,8 +71,54 @@ public class ComplexTestTree extends TestTree{
             UUID.fromString("77a0e52e-9e0c-41d0-8dc3-4d4803b0fb4c")};
     public int uuidCounter = 0;
 
-    private ComplexTestTree() {
+    public ComplexTestTree() {
         super();
+        this.uuidCounter = 0;
+        this.sectioningCounter = 0;
+        this.figureCounter = 0;
+        this.childCounter = 0;
+        this.envCounter = 0;
+        this.root.addStartHeader(new ArrayList<String>() {
+            {
+                add("\\documentclass[12pt]{article}");
+                add("\\usepackage{amsmath}");
+                add("\\begin{document}"); }
+        });
+
+        //create sectioning
+        Sectioning sectioning1 = this.createSectioning(null);
+        Sectioning sectioning2 = this.createSectioning(null);
+        Sectioning sectioning3 = this.createSectioning(sectioning1);
+        Sectioning sectioning4 = this.createSectioning(sectioning1);
+
+        Sectioning sectioning5 = this.createSectioning(sectioning2);
+        Sectioning sectioning6 = this.createSectioning(sectioning2);
+
+        //create environment
+        Environment environment1 = this.createEnvironment(sectioning1);
+        Environment environment2 = this.createEnvironment(sectioning3);
+
+        //create figure
+        Figure figure1 = this.createFigure(sectioning1);
+        Figure figure2 = this.createFigure(sectioning3);
+
+        //create children
+        Child child1 = this.createChild(sectioning1);
+        Child child2 = this.createChild(sectioning2);
+        Child child3 = this.createChild(sectioning2);
+        Child label4 = this.createLabel(sectioning3);
+        Child label5 = this.createLabel(sectioning5);
+
+        //create blockelement
+        BlockElement blockElement1 = this.createBlockelement(sectioning1);
+        BlockElement blockElement2 = this.createBlockelement(sectioning3);
+        BlockElement blockElement3 = this.createBlockelement(sectioning5);
+        BlockElement blockElement4 = this.createBlockelement(sectioning6);
+
+        //create inline equation
+        BlockElement inlineEquation1 = this.createInlineEquation(sectioning5);
+
+        this.root.setMinLevel(1);
     }
 
     public Sectioning createSectioning(Parent parent) {
@@ -254,66 +300,4 @@ public class ComplexTestTree extends TestTree{
         childrenList.add(blockElement);
         return blockElement;
     }
-
-    public static ComplexTestTree createTestTree() {
-        ComplexTestTree testTree = new ComplexTestTree();
-
-        testTree.uuidCounter = 0;
-        testTree.sectioningCounter = 0;
-        testTree.figureCounter = 0;
-        testTree.childCounter = 0;
-        testTree.envCounter = 0;
-
-        testTree.root = Root.getInstance();
-        testTree.root.addStartHeader(new ArrayList<String>() {
-            {
-                add("\\documentclass[12pt]{article}");
-                add("\\usepackage{amsmath}");
-                add("\\begin{document}"); }
-        });
-
-        //create sectioning
-        Sectioning sectioning1 = testTree.createSectioning(null);
-        Sectioning sectioning2 = testTree.createSectioning(null);
-        Sectioning sectioning3 = testTree.createSectioning(sectioning1);
-        Sectioning sectioning4 = testTree.createSectioning(sectioning1);
-
-        Sectioning sectioning5 = testTree.createSectioning(sectioning2);
-        Sectioning sectioning6 = testTree.createSectioning(sectioning2);
-
-        //create environment
-        Environment environment1 = testTree.createEnvironment(sectioning1);
-        Environment environment2 = testTree.createEnvironment(sectioning3);
-
-        //create figure
-        Figure figure1 = testTree.createFigure(sectioning1);
-        Figure figure2 = testTree.createFigure(sectioning3);
-
-        //create children
-        Child child1 = testTree.createChild(sectioning1);
-        Child child2 = testTree.createChild(sectioning2);
-        Child child3 = testTree.createChild(sectioning2);
-        Child label4 = testTree.createLabel(sectioning3);
-        Child label5 = testTree.createLabel(sectioning5);
-
-        //create blockelement
-        BlockElement blockElement1 = testTree.createBlockelement(sectioning1);
-        BlockElement blockElement2 = testTree.createBlockelement(sectioning3);
-        BlockElement blockElement3 = testTree.createBlockelement(sectioning5);
-        BlockElement blockElement4 = testTree.createBlockelement(sectioning6);
-
-        //create inline equation
-        BlockElement inlineEquation1 = testTree.createInlineEquation(sectioning5);
-
-        return testTree;
-    }
-
-    /**
-     * Returns a random UUID that is used in the tree
-     * @return UUID
-     */
-    public UUID getRandomUsedUUID() {
-        return uuids[uuidCounter*2/3];
-    }
-
 }

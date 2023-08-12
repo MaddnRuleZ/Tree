@@ -39,7 +39,7 @@ public class MoveElementTreeCommand extends Command implements IMoveElementComma
             } else if (!(newParent instanceof  Parent)) {
                 throw new TypeException(Parent.class.getSimpleName(), newParent.getClass().getSimpleName());
             } else {
-                moveElement(element, (Parent) newParent, previousElement, Root.MIN_LEVEL);
+                moveElement(element, (Parent) newParent, previousElement, Root.getInstance().getMinLevel());
                 this.setSuccess(true);
             }
         } catch (IndexOutOfBoundsException | ProcessingException e) {

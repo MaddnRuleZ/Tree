@@ -3,28 +3,20 @@ package SpringApplication.CommandTests.Execution;
 import SpringApplication.TestStubs.TestTree;
 import com.application.User;
 import com.application.command.types.MoveElementEditorCommand;
+import com.application.exceptions.LevelException;
 import com.application.exceptions.OwnChildException;
 import com.application.exceptions.ParseException;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Parent;
+import com.application.tree.elements.parent.Sectioning;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// tree structure:
-//                        root
-//                          |
-//      --------------Sectioning1---------------
-//               /                    |    |    \
-//    -------Sec2-----------        Sec3   Sec4   Child1
-//   /  |     |       |    \          |      |
-// Sec5 Env1 Child2 Child3 Child4   Child5  Env2
-//        |
-//       Sec6
 public class MoveTest {
-
 
     TestTree tree;
     MoveElementEditorCommand command;
@@ -79,9 +71,28 @@ public class MoveTest {
         Environment env1 = tree.environmentList.get(0);
 
         assertThrows(OwnChildException.class, () -> {
-            command.moveElement(sec2, env1, null, 0);
+            command.moveElement(sec2, env1, null, 1);
         });
         assertFalse(env1.getChildren().contains(sec2), "Environment 1 should not contain Sectioning 2");
         assertEquals(tree.sectioningList.get(0), sec2.getParentElement(), "Sectioning 1 should be parent of Sectioning 2");
+    }
+
+    @Test
+    public void moveTooDeep() {
+        Sectioning sec2 = tree.sectioningList.get(1);
+        Sectioning sec11 = tree.sectioningList.get(10);
+
+        assertThrows(LevelException.class, () -> {
+            command.moveElement(sec2, sec11, null, 1);
+        });
+        assertFalse(sec11.getChildren().contains(sec2), "Sectioning 11 should not contain Sectioning 2");
+        assertEquals(tree.sectioningList.get(0), sec2.getParentElement(), "Sectioning 1 should be parent of Sectioning 2");
+
+    }
+
+    @AfterEach
+    public void tearDown() {
+        tree = null;
+        command = null;
     }
 }

@@ -41,7 +41,7 @@ public class MoveElementEditorCommand extends Command implements IMoveElementCom
             } else if (!(newParent instanceof  Parent)) {
                 throw new TypeException(Parent.class.getSimpleName(), newParent.getClass().getSimpleName());
             } else {
-                moveElement(element, (Parent) newParent, previousElement, Root.MIN_LEVEL);
+                moveElement(element, (Parent) newParent, previousElement, Root.getInstance().getMinLevel());
                 this.setSuccess(true);
             }
 

@@ -18,11 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CorrectGenerationTest {
 
-    @BeforeEach
-    void setUp() {
-
-    }
-
     @Test
     void AddElementTest() throws ProcessingException {
         CommandFactory factory = new AddCommandFactory(new User());

@@ -5,6 +5,7 @@ import com.application.exceptions.NumParamsException;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -73,6 +74,11 @@ public class NotEnoughParamsTest {
     void MoveElementTreeTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/NotEnoughParamsCommands/MoveElementTree.json");
         assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
+    }
+
+    @AfterEach
+    void tearDown() {
+        commandHandler = null;
     }
 
     private JsonNode loadJsonFile(String filePath) {

@@ -5,6 +5,7 @@ import com.application.exceptions.UnrecognizedCommandException;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,9 +30,14 @@ public class CommandHandlerTest {
     @Test
     void UnrecognizedCommandExceptionTest() {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/UnknownCommandJson.json");
-        boolean success = false;
         Throwable exception = assertThrows(UnrecognizedCommandException.class, () -> commandHandler.processCommand(jsonContent));
         assertEquals("Element", exception.getMessage());
+    }
+
+    @AfterEach
+    void tearDown() {
+        commandHandler = null;
+        response = null;
     }
 
     private JsonNode loadJsonFile(String filePath) {
