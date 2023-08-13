@@ -21,11 +21,12 @@ class FilePrinterTest {
     String pathOfTestDocument = "src/test/resources/TestDocuments/PSE_TEST_1.txt";
     String pathOfPrinter = "src/test/resources/PrinterTestOutput/PSE_TEST_1_FilePrinter.txt";
     Printer printer;
+    User user;
 
     @BeforeEach
     void setUp() throws FileInvalidException {
         Parser parser = new Parser(pathOfTestDocument);
-        User user = new User();
+        user = new User();
         Root root = (Root) parser.startParsing();
         user.setRoot(root);
         this.printer = new FilePrinter(pathOfPrinter, user);
@@ -39,6 +40,7 @@ class FilePrinterTest {
     @AfterEach
     void tearDown() {
         printer = null;
+        user = null;
     }
 
 

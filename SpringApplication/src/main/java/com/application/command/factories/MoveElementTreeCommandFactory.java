@@ -1,9 +1,8 @@
 package com.application.command.factories;
 
 import com.application.command.types.Command;
-import com.application.command.types.MoveElementTreeCommand;
+import com.application.command.types.MoveElementCommand;
 import com.application.exceptions.NumParamsException;
-import com.application.tree.elements.roots.Root;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,9 +23,9 @@ public class MoveElementTreeCommandFactory implements CommandFactory {
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
-        MoveElementTreeCommand command;
+        MoveElementCommand command;
         try {
-            command = mapper.convertValue(attributes, MoveElementTreeCommand.class);
+            command = mapper.convertValue(attributes, MoveElementCommand.class);
         } catch (IllegalArgumentException e) {
             throw new NumParamsException("MoveElementTree - mapping failed");
         }
@@ -36,6 +35,7 @@ public class MoveElementTreeCommandFactory implements CommandFactory {
         }
 
         command.setUser(this.user);
+        command.setEditor(false);
         return command;
     }
 }

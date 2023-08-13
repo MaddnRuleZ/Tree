@@ -1,7 +1,7 @@
 package com.application.command.factories;
 
 import com.application.command.types.Command;
-import com.application.command.types.MoveElementEditorCommand;
+import com.application.command.types.MoveElementCommand;
 import com.application.exceptions.NumParamsException;
 import com.application.tree.elements.roots.Root;
 import com.application.User;
@@ -23,9 +23,9 @@ public class MoveElementEditorCommandFactory implements CommandFactory {
     @Override
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
-        MoveElementEditorCommand command;
+        MoveElementCommand command;
         try {
-            command = mapper.convertValue(attributes, MoveElementEditorCommand.class);
+            command = mapper.convertValue(attributes, MoveElementCommand.class);
         } catch (IllegalArgumentException e) {
             throw new NumParamsException("MoveElementEditor - mapping failed");
         }
@@ -35,6 +35,7 @@ public class MoveElementEditorCommandFactory implements CommandFactory {
         }
 
         command.setUser(this.user);
+        command.setEditor(true);
         return command;
     }
 }

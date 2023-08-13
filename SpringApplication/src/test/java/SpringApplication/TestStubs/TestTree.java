@@ -54,7 +54,6 @@ public class TestTree {
      */
     public static TestTree createTestTree() throws ParseException {
         TestTree testTree = new TestTree();
-        testTree.root = Root.getInstance();
 
         //create sectioning
         Sectioning sectioning1 = new Sectioning("sectioning1", 0);

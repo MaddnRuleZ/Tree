@@ -4,9 +4,6 @@ import SpringApplication.TestStubs.ComplexTestTree;
 import SpringApplication.TestStubs.TestTree;
 import com.application.User;
 import com.application.command.types.EditContentCommand;
-import com.application.command.types.MoveElementEditorCommand;
-import com.application.exceptions.FileInvalidException;
-import com.application.exceptions.NumParamsException;
 import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
@@ -92,6 +89,20 @@ public class EditContentTest {
         command.setContent("newContent");
 
         assertFalse(command.isSuccess(), "Command should fail");
+    }
+
+    @Test
+    public void emptyContentTest() {
+        Sectioning sec = tree.sectioningList.get(3);
+        String oldContent = sec.getContent();
+        String newContent = "";
+
+        command.setElement(sec.getId());
+        command.setContent(newContent);
+        command.execute();
+
+        assertNotEquals(newContent, sec.getContent(), "Content should not be changed");
+        assertEquals(oldContent, sec.getContent(), "Content should not be changed");
     }
 
     @AfterEach

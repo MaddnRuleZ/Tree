@@ -2,7 +2,8 @@ package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
 import com.application.User;
-import com.application.command.types.MoveElementEditorCommand;
+import com.application.command.types.Command;
+import com.application.command.types.MoveElementCommand;
 import com.application.exceptions.LevelException;
 import com.application.exceptions.OwnChildException;
 import com.application.exceptions.ParseException;
@@ -13,6 +14,9 @@ import com.application.tree.elements.parent.Sectioning;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.UUID;
 
@@ -21,19 +25,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MoveTest {
 
     TestTree tree;
-    MoveElementEditorCommand command;
+    MoveElementCommand command;
 
     @BeforeEach
     public void setUp() throws ParseException {
         tree = TestTree.createTestTree();
-        command = new MoveElementEditorCommand();
+        command = new MoveElementCommand();
         User user = new User();
         user.setRoot(tree.root);
         command.setUser(user);
     }
 
-    @Test
-    public void moveElementWithPreviousElementTest() {
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void moveElementWithPreviousElementTest(boolean isEditor) {
         Parent sec3 = tree.sectioningList.get(2);
         Child child4 = tree.childrenList.get(3);
         Child child5 = tree.childrenList.get(4);
@@ -42,6 +47,7 @@ public class MoveTest {
         command.setElement(child4.getId());
         command.setNewParent(sec3.getId());
         command.setPreviousElement(child5.getId());
+        command.setEditor(isEditor);
 
         command.execute();
 
@@ -49,8 +55,9 @@ public class MoveTest {
         assertEquals(sec3.getChildren().get(1), child4, "Child 4 should be second child of Sectioning 3");
         assertFalse(oldParent.getChildren().contains(child4), "Old parent should not contain child 4");
     }
-    @Test
-    public void moveElementWithoutPreviousElementTest() {
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void moveElementWithoutPreviousElementTest(boolean isEditor) {
         Parent sec3 = tree.sectioningList.get(2);
         Child child4 = tree.childrenList.get(3);
         Child child5 = tree.childrenList.get(4);
@@ -59,6 +66,7 @@ public class MoveTest {
         command.setElement(child4.getId());
         command.setNewParent(sec3.getId());
         command.setPreviousElement(null);
+        command.setEditor(isEditor);
 
         command.execute();
 
@@ -91,20 +99,23 @@ public class MoveTest {
         assertEquals(tree.sectioningList.get(0), sec2.getParentElement(), "Sectioning 1 should be parent of Sectioning 2");
     }
 
-    @Test
-    public void ElementNotFoundTest() {
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void ElementNotFoundTest(boolean isEditor) {
         UUID id = tree.notUsedUUID;
         Parent sec2 = tree.sectioningList.get(1);
 
         command.setElement(id);
         command.setNewParent(sec2.getId());
         command.setPreviousElement(null);
+        command.setEditor(isEditor);
 
         assertFalse(command.isSuccess(), "Command should not be successful");
     }
 
-    @Test
-    public void newParentofTypeChild() {
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void newParentTypeChild(boolean isEditor) {
         Parent sec2 = tree.sectioningList.get(1);
         Child child4 = tree.childrenList.get(3);
         Child child5 = tree.childrenList.get(4);
@@ -113,6 +124,7 @@ public class MoveTest {
         command.setElement(child4.getId());
         command.setNewParent(child5.getId());
         command.setPreviousElement(null);
+        command.setEditor(isEditor);
 
         assertFalse(command.isSuccess(), "Command should not be successful");
         assertEquals(oldParent, child4.getParentElement(), "Child 4 should not have a new parent");

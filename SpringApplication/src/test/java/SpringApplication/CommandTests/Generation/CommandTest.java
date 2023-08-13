@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * tests the creation of commands with a correct formatted jsonFile
  */
 public class CommandTest {
-    private String path;
     private MockCommandHandler commandHandler;
 
     @BeforeEach

@@ -1,6 +1,7 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.TestTree;
+import com.application.User;
 import com.application.command.types.DeleteElementCommand;
 import com.application.exceptions.ParseException;
 import com.application.tree.elements.parent.Parent;
@@ -11,27 +12,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-
-// tree structure:
-//                        root
-//                          |
-//      --------------Sectioning1---------------
-//               /                    |    |    \
-//    -------Sec2-----------        Sec3   Sec4   Child1
-//   /  |     |       |    \          |      |
-// Sec5 Env1 Child2 Child3 Child4   Child5  Env2
-//        |
-//       Sec6
-
 public class DeleteTest {
 
     TestTree tree;
     DeleteElementCommand command;
+    User user;
 
     @BeforeEach
     public void setUp() throws ParseException {
         tree = TestTree.createTestTree();
         command = new DeleteElementCommand();
+        user = new User();
+        user.setRoot(tree.root);
+        command.setUser(user);
     }
 
 
@@ -72,10 +65,20 @@ public class DeleteTest {
 
     }
 
+    @Test
+    public void ElementNotFound() {
+        command.setCascading(true);
+        command.setElement(tree.notUsedUUID);
+        command.execute();
+
+        assertFalse(command.isSuccess(), "Command should not execute successfully");
+    }
+
     @AfterEach
     public void tearDown() {
         tree = null;
         command = null;
+        user = null;
     }
 
 }

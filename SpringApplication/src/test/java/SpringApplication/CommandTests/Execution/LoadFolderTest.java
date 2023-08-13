@@ -1,6 +1,7 @@
 package SpringApplication.CommandTests.Execution;
 
 import com.application.command.CommandHandler;
+import com.application.command.types.LoadFromFolderCommand;
 import com.application.exceptions.ProcessingException;
 import com.application.User;
 import com.application.printer.Printer;
@@ -10,55 +11,57 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LoadFolderTest {
-    CommandHandler commandHandler;
+    LoadFromFolderCommand command;
     User user;
-    String path = "src/test/resources/JsonFiles/LoadFromFolderTest_1.json";
+    String path = "src/test/resources/TestDocuments/PSE_TEST_1.txt";
 
     @BeforeEach
     void setUp() {
         this.user = new User();
-        commandHandler = new CommandHandler(user);
+        this.command = new LoadFromFolderCommand();
+        this.command.setUser(user);
     }
 
     @Test
     void DoubleLoadTest() throws ProcessingException {
-        JsonNode jsonContent = loadJsonFile(path);
-        assertNotNull(commandHandler.processCommand(jsonContent), "Response should not be null");
+        this.command.setPath(path);
+        command.execute();
+        assertTrue(command.isSuccess(), "Command should execute successfully");
 
         Root firstRoot = user.getRoot();
         Printer firstPrinter = user.getPrinter();
 
-        JsonNode newJsonContent = loadJsonFile(path);
-        assertNotNull(commandHandler.processCommand(newJsonContent), "Response should not be null");
+        this.command.setPath(path);
+        command.execute();
+        assertTrue(command.isSuccess(), "Command should execute successfully");
 
         Root sndRoot = user.getRoot();
         Printer sndPrinter = user.getPrinter();
 
         assertNotEquals(firstRoot, sndRoot, "Roots should not be equal");
         assertNotEquals(firstPrinter, sndPrinter, "Printers should not be equal");
+    }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"src/test/resources/LoadTestPaths/WrongType.jpg",
+                            "src/test/resources/LoadTestPaths",
+                            "src/test/resources/LoadTestPaths/NotExistingFile.tex"})
+    public void wrongFilePath(String path) {
+        this.command.setPath(path);
+        assertFalse(command.isSuccess(), "Command should not execute successfully");
     }
 
     @AfterEach
     void tearDown() {
-        commandHandler = null;
         user = null;
-    }
-
-    private JsonNode loadJsonFile(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readTree(new File(filePath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
