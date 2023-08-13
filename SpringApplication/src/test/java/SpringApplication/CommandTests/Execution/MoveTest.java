@@ -126,6 +126,7 @@ public class MoveTest {
         command.setNewParent(child5.getId());
         command.setPreviousElement(null);
         command.setEditor(isEditor);
+        command.execute();
 
         assertFalse(command.isSuccess(), "Command should not be successful");
         assertEquals(oldParent, child4.getParentElement(), "Child 4 should not have a new parent");

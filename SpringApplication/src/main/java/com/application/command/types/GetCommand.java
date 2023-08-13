@@ -3,6 +3,8 @@ package com.application.command.types;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.Collection;
+
 /**
  * command for generating Response
  */
@@ -23,4 +25,5 @@ public class GetCommand extends Command {
         this.setSuccess(true);
         return generateResponse(isEditorGet);
     }
+
 }

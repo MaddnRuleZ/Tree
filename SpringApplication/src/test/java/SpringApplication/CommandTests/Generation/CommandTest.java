@@ -3,6 +3,9 @@ package SpringApplication.CommandTests.Generation;
 import SpringApplication.TestStubs.ComplexTestTree;
 import SpringApplication.TestStubs.MockCommandHandler;
 import SpringApplication.TestStubs.TestTree;
+import com.application.command.factories.*;
+
+import com.application.exceptions.NumParamsException;
 import com.application.exceptions.ParseException;
 import com.application.exceptions.ProcessingException;
 import com.application.User;
@@ -57,6 +60,28 @@ public class CommandTest {
             fail(e.getMessage());
         }
     }
+
+    @ParameterizedTest
+    @MethodSource("wrongJsonFileTestData")
+    void testWrongCommand(CommandFactory factory) {
+        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/WrongParams.json");
+        assertThrows(NumParamsException.class, () -> factory.createCommand(jsonContent));
+    }
+
+    static Stream<Arguments> wrongJsonFileTestData() {
+        return Stream.of(
+                Arguments.of(new LoadFromFolderCommandFactory(new User())),
+                Arguments.of(new LoadFromGitCommandFactory(new User())),
+                Arguments.of(new AddCommandFactory(new User())),
+                Arguments.of(new DeleteCommandFactory(new User())),
+                Arguments.of(new EditCommentCommandFactory(new User())),
+                Arguments.of(new EditContentCommandFactory(new User())),
+                Arguments.of(new EditSummaryCommandFactory(new User()))
+        );
+    }
+
+
+
 
     @AfterEach
     public void tearDown() {

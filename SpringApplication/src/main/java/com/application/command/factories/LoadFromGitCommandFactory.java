@@ -30,6 +30,7 @@ public class LoadFromGitCommandFactory implements CommandFactory {
     public Command createCommand(JsonNode attributes) throws NumParamsException, IllegalArgumentException {
         LoadFromGitCommand command = new LoadFromGitCommand();
         Iterator<Map.Entry<String, JsonNode>> fieldsIterator = attributes.fields();
+
         while (fieldsIterator.hasNext()) {
             Map.Entry<String, JsonNode> field = fieldsIterator.next();
             String value = field.getValue().asText();
@@ -37,7 +38,7 @@ public class LoadFromGitCommandFactory implements CommandFactory {
                 case "url" -> command.setUrl(value);
                 case "username" -> command.setUsername(value);
                 case "password" -> command.setPassword(value);
-                default -> throw new IllegalArgumentException("LoadFromGit - unknown parameter");
+                default -> throw new NumParamsException("LoadFromGit - unknown parameter");
             }
         }
 

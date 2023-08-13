@@ -36,7 +36,6 @@ public class ExportTest {
     @Test
     public void exportTest() {
         command.execute();
-
         assertTrue(fileToDelete.exists(), "File should exist");
 
     }

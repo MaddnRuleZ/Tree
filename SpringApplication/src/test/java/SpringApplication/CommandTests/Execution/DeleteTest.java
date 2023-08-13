@@ -8,6 +8,8 @@ import com.application.tree.elements.parent.Parent;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -54,10 +56,11 @@ public class DeleteTest {
         assertEquals(tree.childrenList.get(3), sec1.getChildren().get(4), "Child 4 should be child of Sectioning 1");
     }
 
-    @Test
-    public void deleteElementFromFirstLevel() {
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void deleteElementFromFirstLevel(boolean isCascading) {
         Parent sec1 = tree.sectioningList.get(0);
-        command.setCascading(true);
+        command.setCascading(isCascading);
         command.setElement(sec1.getId());
         command.execute();
 
