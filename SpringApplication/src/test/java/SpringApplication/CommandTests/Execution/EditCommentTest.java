@@ -60,6 +60,8 @@ public class EditCommentTest {
         newCommentStored.add("newComment");
         command.setElement(id);
         command.setComment(newCommentIncoming);
+        command.execute();
+
         assertFalse(command.isSuccess(), "Command should fail");
     }
 

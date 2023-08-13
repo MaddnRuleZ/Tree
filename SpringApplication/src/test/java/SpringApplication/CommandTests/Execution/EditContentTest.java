@@ -84,9 +84,9 @@ public class EditContentTest {
 
     @Test
     public void ElementNotFoundTest() {
-        UUID id = tree.notUsedUUID;
-        command.setElement(id);
+        command.setElement(tree.notUsedUUID);
         command.setContent("newContent");
+        command.execute();
 
         assertFalse(command.isSuccess(), "Command should fail");
     }
@@ -103,6 +103,20 @@ public class EditContentTest {
 
         assertNotEquals(newContent, sec.getContent(), "Content should not be changed");
         assertEquals(oldContent, sec.getContent(), "Content should not be changed");
+    }
+
+    @Test
+    public void firstLevelTest() {
+        Sectioning sec = tree.sectioningList.get(0);
+        String newContent = "newContent";
+        String oldContent = sec.getContent();
+
+        command.setElement(sec.getId());
+        command.setContent(newContent);
+        command.execute();
+
+        assertEquals(newContent, sec.getContent(), "Content should be changed");
+        assertNotEquals(oldContent, sec.getContent(), "Content should be changed");
     }
 
     @AfterEach

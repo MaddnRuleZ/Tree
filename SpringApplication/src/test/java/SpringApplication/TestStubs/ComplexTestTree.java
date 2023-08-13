@@ -137,13 +137,9 @@ public class ComplexTestTree extends TestTree{
         sectioning.setContent("\\section*{"+"sec"+ sectioningCounter+ "}");
         sectioningCounter++;
 
-        try {
-            sectioning.setComment("%comment1");
-            sectioning.setSummary("summaryText");
-            sectioning.setChooseManualSummary(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        sectioning.setComment("%comment1");
+        sectioning.setSummary("summaryText");
+        sectioning.setChooseManualSummary(true);
 
         sectioningList.add(sectioning);
         return sectioning;
@@ -164,13 +160,9 @@ public class ComplexTestTree extends TestTree{
         figure.setContent("\\begin{figure}");
         figureCounter++;
 
-        try {
-            figure.setComment("%comment1");
-            figure.setSummary("summaryText");
-            figure.setChooseManualSummary(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        figure.setComment("%comment1");
+        figure.setSummary("summaryText");
+        figure.setChooseManualSummary(true);
 
         figure.addCaption("caption1");
         figure.addCaption("caption2");
@@ -195,13 +187,9 @@ public class ComplexTestTree extends TestTree{
         environment.setContent("\\begin{environment"+ envCounter +"}");
         envCounter++;
 
-        try {
-            environment.setComment("%comment1");
-            environment.setSummary("summaryText");
-            environment.setChooseManualSummary(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        environment.setComment("%comment1");
+        environment.setSummary("summaryText");
+        environment.setChooseManualSummary(true);
 
         environmentList.add(environment);
         return environment;
@@ -218,13 +206,9 @@ public class ComplexTestTree extends TestTree{
         child.setContent("\\label{child"+ childCounter +"}");
         childCounter++;
 
-        try {
-            child.setComment("%comment1");
-            child.setSummary("summaryText");
-            child.setChooseManualSummary(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        child.setComment("%comment1");
+        child.setSummary("summaryText");
+        child.setChooseManualSummary(true);
 
         childrenList.add(child);
         return child;
@@ -241,13 +225,9 @@ public class ComplexTestTree extends TestTree{
         child.setContent("\\label{label"+ childCounter +"}");
         childCounter++;
 
-        try {
-            child.setComment("%comment1");
-            child.setSummary("summaryText");
-            child.setChooseManualSummary(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        child.setComment("%comment1");
+        child.setSummary("summaryText");
+        child.setChooseManualSummary(true);
 
         childrenList.add(child);
         return child;
@@ -267,13 +247,9 @@ public class ComplexTestTree extends TestTree{
         blockElement.addTextBlockToElem("blockElement blablablablalbslvgbjwegbvqeujigjdieuweda"+ childCounter);
         childCounter++;
 
-        try {
-            blockElement.setComment("%comment1");
-            blockElement.setSummary("summaryText");
-            blockElement.setChooseManualSummary(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        blockElement.setComment("%comment1");
+        blockElement.setSummary("summaryText");
+        blockElement.setChooseManualSummary(true);
 
         childrenList.add(blockElement);
         return blockElement;
@@ -290,13 +266,9 @@ public class ComplexTestTree extends TestTree{
         blockElement.addTextBlockToElem("inlineEquation $\sqrt{1+2}$");
         childCounter++;
 
-        try {
-            blockElement.setComment("%comment1");
-            blockElement.setSummary("summaryText");
-            blockElement.setChooseManualSummary(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        blockElement.setComment("%comment1");
+        blockElement.setSummary("summaryText");
+        blockElement.setChooseManualSummary(true);
         childrenList.add(blockElement);
         return blockElement;
     }

@@ -46,25 +46,20 @@ public class AddCommand extends Command {
             }
 
             Parent parentElement = (Parent) foundParentElement;
-            Parser parser = new Parser(this.content);
-            Roots foundRoot = parser.startParsing();
+            Parser parser = new Parser();
+            Roots foundRoot = parser.startParsing(this.content);
 
-            if (foundRoot instanceof Root) {
-                if (this.getUser().getRoot().getChildren().size() == 0) {
-                    throw new ParseException(this.content);
-                }
-
-                List<Element> children = this.getUser().getRoot().getChildren();
-                int index = parentElement.getIndexOfChild(this.previousChild);
-                for (Element child : children) {
-                    child.setParent(parentElement);
-                    parentElement.addChildOnIndex(index, child);
-                    index++;
-                }
-                this.setSuccess(true);
-            } else {
-                throw new ParseException(this.getClass().getSimpleName(), foundRoot.getClass().getSimpleName(), Root.class.getSimpleName());
+            if (foundRoot.getChildren().size() == 0) {
+                throw new ParseException(this.content);
             }
+
+            int index = parentElement.getIndexOfChild(this.previousChild);
+            for (Element child : foundRoot.getChildren()) {
+                child.setParent(parentElement);
+                parentElement.addChildOnIndex(index, child);
+                index++;
+            }
+            this.setSuccess(true);
         } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
@@ -82,11 +77,6 @@ public class AddCommand extends Command {
     @JsonProperty
     public UUID getParent() {
         return parent;
-    }
-
-    @JsonProperty
-    public UUID getPreviousChild() {
-        return previousChild;
     }
 
     @JsonProperty

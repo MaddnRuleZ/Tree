@@ -71,7 +71,7 @@ public class EditSummaryTest {
         newSummaryStored.add("newSummary");
         command.setElement(id);
         command.setSummary(newSummaryIncoming);
-
+        command.execute();
         assertFalse(command.isSuccess(), "Command should fail");
     }
 

@@ -57,6 +57,7 @@ public class LoadFolderTest {
                             "src/test/resources/LoadTestPaths/NotExistingFile.tex"})
     public void wrongFilePath(String path) {
         this.command.setPath(path);
+        command.execute();
         assertFalse(command.isSuccess(), "Command should not execute successfully");
     }
 

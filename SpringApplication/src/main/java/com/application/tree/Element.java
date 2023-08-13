@@ -128,9 +128,8 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
      * sets the comment of the calling Element
      *
      * @param comment to parse
-     * @throws ParseException if the comment is not valid
      */
-    public void setComment(String comment) throws ParseException{
+    public void setComment(String comment) {
         this.comment.getComments().clear();
         for(String line: comment.split("%")) {
             if(!line.isBlank()) {
