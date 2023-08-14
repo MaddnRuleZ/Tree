@@ -76,7 +76,9 @@ public class CommandTest {
                 Arguments.of(new DeleteCommandFactory(new User())),
                 Arguments.of(new EditCommentCommandFactory(new User())),
                 Arguments.of(new EditContentCommandFactory(new User())),
-                Arguments.of(new EditSummaryCommandFactory(new User()))
+                Arguments.of(new EditSummaryCommandFactory(new User())),
+                Arguments.of(new MoveElementEditorCommandFactory(new User())),
+                Arguments.of(new MoveElementTreeCommandFactory(new User()))
         );
     }
 

@@ -1,6 +1,7 @@
 package SpringApplication.SpringTests;
 
 import com.application.command.CommandHandler;
+import com.application.exceptions.NumParamsException;
 import com.application.exceptions.UnrecognizedCommandException;
 import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,6 +33,13 @@ public class CommandHandlerTest {
         JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/UnknownCommandJson.json");
         Throwable exception = assertThrows(UnrecognizedCommandException.class, () -> commandHandler.processCommand(jsonContent));
         assertEquals("Element", exception.getMessage());
+    }
+
+    @Test
+    void EmptyFileTest() {
+        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/EmptyFile.json");
+        Throwable exception = assertThrows(NumParamsException.class, () -> commandHandler.processCommand(jsonContent));
+        assertEquals("Missing Parameter in JsonFile: jsonFile", exception.getMessage());
     }
 
     @AfterEach

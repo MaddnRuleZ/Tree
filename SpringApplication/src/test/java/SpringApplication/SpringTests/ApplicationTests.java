@@ -7,15 +7,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(
-		webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-		classes = Application.class)
-@AutoConfigureMockMvc
-class ApplicationTests {
+import static com.jayway.jsonpath.internal.path.PathCompiler.fail;
+
+
+public class ApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void testMainMethod() {
+		String[] args = {};
+
+		try {
+			Application.main(args);
+		} catch (Exception e) {
+			fail("An exception occurred: " + e.getMessage());
+		}
 	}
 
 }

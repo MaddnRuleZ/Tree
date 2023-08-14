@@ -70,6 +70,7 @@ public class AutoExportTest {
         assertFalse(interceptor.hasNoRecentRequests());
 
         change();
+        change();
 
         Thread.sleep(interceptor.getTimeThresholdInMilliseconds()* 2);
 

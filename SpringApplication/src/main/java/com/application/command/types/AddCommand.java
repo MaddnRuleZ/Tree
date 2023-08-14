@@ -93,4 +93,9 @@ public class AddCommand extends Command {
     public void setPreviousChild(UUID previousChild) {
         this.previousChild = previousChild;
     }
+
+    @JsonProperty
+    public UUID getPreviousChild() {
+        return this.previousChild;
+    }
 }

@@ -8,6 +8,7 @@ import com.application.interpreter.Parser;
 import com.application.printer.FilePrinter;
 import com.application.printer.Printer;
 import com.application.command.types.LoadFromFolderCommand;
+import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Root;
 import org.junit.jupiter.api.AfterEach;
@@ -29,25 +30,35 @@ class FilePrinterTest {
     void setUp() throws FileInvalidException, ParseException {
         this.user = new User();
         this.tree = TestTree.createTestTree();
+        this.user.setRoot(tree.root);
         this.printer = new FilePrinter(pathOfPrinter, user);
-    }
-
-    @Test
-    void exportTest() throws UnknownElementException, IOException {
-        printer.export();
     }
 
     @Test
     void UnknownElement() {
         Sectioning sec = tree.sectioningList.get(tree.sectioningList.size()-1);
         Sectioning newSec = new Sectioning("UnknownElement", sec.getLevel() + 1);
+
         sec.getChildren().add(newSec);
         newSec.setParent(sec);
 
         assertThrows(UnknownElementException.class, () -> {
             printer.export();
         });
+    }
 
+    @Test
+    public void wrongInputPath() {
+        Sectioning sec = tree.sectioningList.get(0);
+        Child input = new Child("\\input", null, 1);
+        input.setContentManually(null);
+
+        sec.getChildren().add(input);
+        input.setParent(sec);
+
+        assertThrows(UnknownElementException.class, () ->{
+            printer.export();
+        });
     }
 
     @AfterEach
