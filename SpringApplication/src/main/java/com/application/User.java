@@ -1,6 +1,7 @@
 package com.application;
 
 import com.application.interpreter.Parser;
+import com.application.printer.AutoExport;
 import com.application.printer.Printer;
 import com.application.tree.elements.roots.Root;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,8 @@ public class User {
      * tree structure to LaTeX-Code printer
      */
     private Printer printer;
+
+    private AutoExport autoExport;
 
     public User() {
         this.root = Root.getInstance();

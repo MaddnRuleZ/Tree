@@ -7,6 +7,8 @@ import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.Parser;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -15,6 +17,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LaTeXParserTest {
+
     @Test
     public void parseTest() throws UnknownElementException {
         ComplexTestTree tree = new ComplexTestTree();
@@ -58,5 +61,10 @@ public class LaTeXParserTest {
         map.put("root", new StringBuilder());
         user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
         System.out.println(map.get("root").toString());
+    }
+
+    @AfterEach
+    public void tearDown() {
+        Root.resetInstance();
     }
 }

@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
 public class Controller {
     private final CommandHandler commandHandler;
     private final User user;
+    private final AutoExport autoExport;
+
+
 
     /**
      * Constructor using reflection
@@ -31,9 +34,11 @@ public class Controller {
      * @param user user that holds information of LaTeX-Project
      */
     @Autowired
-    public Controller(CommandHandler commandHandler, User user) {
+    public Controller(CommandHandler commandHandler, User user, AutoExport autoExport) {
         this.commandHandler = commandHandler;
         this.user = user;
+        this.autoExport = autoExport;
+
     }
 
     /**
@@ -86,11 +91,10 @@ public class Controller {
     /**
      * Processes a GET-request for changes
      * @param gitWatcher watcher to check for errors on download
-     * @param autoExport autoExport to check for errors on upload
      * @return if changes happened and if an error occurred
      */
     @GetMapping("/checkForUpdates")
-    public ResponseEntity<JsonNode> processCheckForUpdates(GitWatcher gitWatcher, AutoExport autoExport) {
+    public ResponseEntity<JsonNode> processCheckForUpdates(GitWatcher gitWatcher) {
         ObjectNode response = new ObjectMapper().createObjectNode();
         HttpStatus status;
         response.put("hasUpdates", gitWatcher.hasChanges());
@@ -157,7 +161,7 @@ public class Controller {
             String jsonString = response.toString();
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(jsonString);
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode));
+            //System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode));
             System.out.println("\n \n \n \n \n");
         } catch (Exception e) {
             e.printStackTrace();

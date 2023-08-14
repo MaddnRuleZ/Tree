@@ -54,6 +54,7 @@ class FilePrinterTest {
     void tearDown() {
         printer = null;
         user = null;
+        tree = null;
     }
 
 

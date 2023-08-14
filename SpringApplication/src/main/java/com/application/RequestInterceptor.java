@@ -4,6 +4,7 @@ import com.application.ApplicationConfig;
 import com.application.printer.AutoExport;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -26,9 +27,10 @@ public class RequestInterceptor implements HandlerInterceptor {
     /**
      * time threshold in milliseconds after which a request is considered old
      * and is removed from the queue
-     * At the moment, the threshold is set to 2 minutes
+     * By Default the threshold is set to 1 minute
+     * {@link AutoExport} sets the threshold if initialized
      */
-    private final long timeThresholdInMilliseconds = 1 * 60 * 1000;
+    private long timeThresholdInMilliseconds = 1 * 60 * 1000;
 
     /**
      * shows if a request came in since the last time it was resetted {@link AutoExport}
@@ -68,15 +70,21 @@ public class RequestInterceptor implements HandlerInterceptor {
     public boolean hasNoRecentRequests() {
         return requestTimestamps.isEmpty();
     }
-
     public boolean hasChanges() {
         return changes;
     }
-
     /**
      * resets changes to false
      */
     public void resetChanges() {
         this.changes = false;
+    }
+
+    public long getTimeThresholdInMilliseconds() {
+        return timeThresholdInMilliseconds;
+    }
+
+    public void setTimeThresholdInMilliseconds(long timeThresholdInMilliseconds) {
+        this.timeThresholdInMilliseconds = timeThresholdInMilliseconds;
     }
 }

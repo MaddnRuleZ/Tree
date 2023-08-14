@@ -23,6 +23,7 @@ public class AutoExport {
     /**
      * Interceptor to check for recent requests
      */
+
     private final RequestInterceptor requestInterceptor;
     /**
      * user containing printer and root
@@ -49,13 +50,13 @@ public class AutoExport {
         this.requestInterceptor = requestInterceptor;
         this.user = user;
         this.lockManager = LockManager.getInstance();
+        this.requestInterceptor.setTimeThresholdInMilliseconds(timeThresholdInMilliseconds);
     }
 
 
-    //TODO currently not executed --> remove false statement
     @Scheduled(fixedRate = timeThresholdInMilliseconds)
     public void check() {
-        if(user.getPrinter() != null) { //<---remove false statement
+        if(user.getPrinter() != null) {
             System.out.println("checking");
             boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
 
