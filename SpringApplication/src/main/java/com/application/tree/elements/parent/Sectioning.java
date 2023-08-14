@@ -27,6 +27,7 @@ public class Sectioning extends Parent {
         super(startPart, null, level);
     }
 
+
     @Override
     public int levelOfDeepestSectioningChild() {
         int deepestChildLevel = 0;

@@ -33,6 +33,7 @@ public enum ElementConfig {
     PART("\\part", null, 1) {
         @Override
         Element getElement(String currentLine) {
+            // check Point *, make function in element that sets (Bolean) und fuc hier die extrahier, dannn .uncount(checkUnCount(currentLine))
             return new Sectioning(getStartPart(), getLevel());
         }
     },

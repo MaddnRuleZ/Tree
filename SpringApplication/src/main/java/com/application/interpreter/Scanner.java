@@ -3,6 +3,7 @@ package com.application.interpreter;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.elements.*;
+import com.application.tree.elements.childs.BlockElement;
 import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
@@ -32,13 +33,13 @@ public class Scanner {
     }
 
     /**
-     * Parse the Document by scanning the document line by line
+     * Parse the Document by scanning the document line by line ACTUAL
      * if the line contains a new Element, created it or
      * Add the text to the current last TextBlockElement
      *
      * @return root Element of tree with rest of tree as Children
      */
-    public Roots parseDocument() {
+    public Roots parseDocument2() {
         Element lastElement = null;
         Element newElement = null;
 
@@ -58,6 +59,50 @@ public class Scanner {
         }
         return root;
     }
+
+
+
+    /**
+     * Parse the Document by scanning the document line by line Testing PPS only
+     * if the line contains a new Element, created it or
+     * Add the text to the current last TextBlockElement
+     *
+     * @return root Element of tree with rest of tree as Children
+     */
+    public Roots parseDocument() {
+
+
+
+        Element lastElement = null;
+        Element newElement = null;
+
+        for (int i = 0; i < text.length; i++) {
+            String line = text[i];
+            if (line.contains(Root.START_DOCUMENT)) {
+                Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
+                continue;
+            }
+            newElement = scanCurrentLine(lastElement, line);
+
+            if (newElement != null) {
+                lastElement = newElement;
+            } else if (lastElement != null) {
+                lastElement = lastElement.addTextBlockToElem(text[i]);
+
+            } else if (!Root.getInstance().startHeaderExists()) {
+                BlockElement blockElement = new BlockElement();
+                blockElement.addTextBlockToElem(line);
+                root.addChild(blockElement);
+                lastElement =  blockElement;
+            }
+        }
+        return root;
+    }
+
+
+
+
+
 
     /**
      * Scan the line for new Structure Element

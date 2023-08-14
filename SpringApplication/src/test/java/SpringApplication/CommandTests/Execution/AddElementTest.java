@@ -87,8 +87,6 @@ public class AddElementTest {
     }
 
 
-
-
     @AfterEach
     public void tearDown() {
         command = null;

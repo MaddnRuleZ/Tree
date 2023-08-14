@@ -5,7 +5,7 @@ Start of Document
 \part{options_text}[content_test]
     % comment1 -> Part
     %\start{summary}
-        % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
+        % Summary Text
     %\finish{summary}
     % comment2 -> TextBlock underneath
     X
@@ -24,14 +24,14 @@ Start of Document
     % comment -> BlockElement
     X
 \part{options_text}[content_test]
-    X
+    X Starting Block
     X
     % comment -> BlockElement
     X
     %\start{summary}
         % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
     %\finish{summary}
-    X
+    X Continueing Block
     X
     X
     \chapter{options_text}[content_test]
@@ -41,16 +41,16 @@ Start of Document
         \section{options_text}[content_test]
             % comment -> Section
 \part{options_text}[content_test]
-    X
+    X Block 1
     X
     X
     \begin{algorithmic}
-        %\start{summary}
-            % Dies ist ein Testdokument, das das Schnabeltier beschreibt.
-        %\finish{summary}
-    X
-    X
-    X
+            %\start{summary}
+                %
+            %\finish{summary}
+        X Block 2
+        X
+        X
     \end{algorithmic}
     X
     X

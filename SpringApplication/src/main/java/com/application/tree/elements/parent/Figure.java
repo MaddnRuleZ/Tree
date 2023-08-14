@@ -25,8 +25,8 @@ import java.util.regex.Pattern;
  */
 public class Figure extends Environment {
     private final List<String> captions;
-    public static final String CAPTION_IDENT = "\\caption";
-    public static final String GRAPHICS_IDENT = "\\includegraphics";
+    public static final String CAPTION_IDENTIFIER = "\\caption";
+    public static final String GRAPHICS_IDENTIFIER = "\\includegraphics";
     private String graphic;
 
 
@@ -49,7 +49,7 @@ public class Figure extends Environment {
      * @param graphicsString raw graphic string to parse
      */
     public boolean setGraphics(String graphicsString) {
-        if (!graphicsString.contains(GRAPHICS_IDENT)) {
+        if (!graphicsString.contains(GRAPHICS_IDENTIFIER)) {
             return false;
         }
 
@@ -72,7 +72,7 @@ public class Figure extends Environment {
      * @return true if caption was added
      */
     public boolean addCaption(String caption) {
-        if (!caption.contains(CAPTION_IDENT)) {
+        if (!caption.contains(CAPTION_IDENTIFIER)) {
             return false;
         }
 
@@ -93,14 +93,14 @@ public class Figure extends Environment {
 
         // \caption{caption_content}
         for (String caption : captions) {
-            text.append(indentationBody).append(CAPTION_IDENT).append("{").append(caption).append("}");
+            text.append(indentationBody).append(CAPTION_IDENTIFIER).append("{").append(caption).append("}");
             text.append("\n");
         }
 
         //TODO graphic options???
 
         // \includegraphics{graphic}
-        text.append(indentationBody).append(GRAPHICS_IDENT).append("{").append(this.graphic).append("}");
+        text.append(indentationBody).append(GRAPHICS_IDENTIFIER).append("{").append(this.graphic).append("}");
         text.append("\n");
 
         // children
@@ -130,9 +130,4 @@ public class Figure extends Environment {
         }
         return node;
     }
-
-
-
-
-
 }

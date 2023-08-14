@@ -111,6 +111,9 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     public void addStartHeader(List<String> startHeaderText) {
         this.startHeaderText = startHeaderText;
     }
+    public boolean startHeaderExists() {
+        return this.startHeaderText == null;
+    }
 
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException {
