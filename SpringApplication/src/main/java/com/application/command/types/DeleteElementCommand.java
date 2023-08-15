@@ -53,7 +53,7 @@ public class DeleteElementCommand extends Command {
     public void delete(Element element, Root root) {
         Parent parent = element.getParentElement();
 
-        if(!this.isCascading()) {
+        if(!this.isCascading() && element instanceof Parent) {
             int index;
             if(parent == null) {
                 index = root.getChildren().indexOf(element);

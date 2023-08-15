@@ -30,7 +30,7 @@ public class MoveElementTreeCommandFactory implements CommandFactory {
             throw new NumParamsException("MoveElementTree - mapping failed");
         }
 
-        if (command.getElement() == null || command.getNewParent() == null || command.getPreviousElement() == null ){
+        if (command.getElement() == null){
             throw new NumParamsException("MoveElementTree - parameter not set");
         }
 
