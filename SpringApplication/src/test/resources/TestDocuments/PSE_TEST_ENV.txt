@@ -6,7 +6,7 @@ Start of Document
     X
     X
     \begin{algorithmic}
-        X
+        X1
         X
         X
     \end{algorithmic}
