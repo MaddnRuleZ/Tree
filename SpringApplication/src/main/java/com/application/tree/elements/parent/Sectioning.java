@@ -90,5 +90,4 @@ public class Sectioning extends Parent {
         }
         return type.getStartPart();
     }
-
 }

@@ -33,6 +33,13 @@ public class Environment extends Parent {
         super(startPart, endPart, level);
     }
 
+    public Element addTextBlockToElem2(String line) {
+        // todo add comment und summary?
+        this.textBuilder.append(line).append("\n");
+        this.content = textBuilder.toString();
+        return this;
+    }
+
     /**
      * Add a new TextBlock to the Environment.
      * If there are already child elements in the Environment, the new TextBlock will be added at the same level.
@@ -127,7 +134,4 @@ public class Environment extends Parent {
 
         super.toLaTeXEnd(map, key, level);
     }
-
-
-
 }

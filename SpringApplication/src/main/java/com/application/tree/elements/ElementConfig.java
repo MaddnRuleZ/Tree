@@ -33,6 +33,7 @@ public enum ElementConfig {
     PART("\\part", null, 1) {
         @Override
         Element getElement(String currentLine) {
+            // check Point *, make function in element that sets (Bolean) und fuc hier die extrahier, dannn .uncount(checkUnCount(currentLine))
             return new Sectioning(getStartPart(), getLevel());
         }
     },
@@ -134,9 +135,6 @@ public enum ElementConfig {
 
             try {
                 return (Input) parser.startParsing();
-            } catch (ClassCastException e) {
-                System.out.println("Input Document couldn't be detected");
-                return null;
             } catch (FileInvalidException e) {
                 return null;
             }

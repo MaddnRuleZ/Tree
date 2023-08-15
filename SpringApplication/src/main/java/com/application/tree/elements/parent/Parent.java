@@ -49,7 +49,7 @@ public abstract class Parent extends Element {
             return this;
         }
 
-        if (getComment().extractContent(line) && summary.getSummary().size() == 0) {
+        if (summary.getSummary().size() == 0 && getComment().extractContent(line)) {
             return this;
         }
 
@@ -57,28 +57,6 @@ public abstract class Parent extends Element {
         block.addTextBlockToElem(line);
         return block;
     }
-
-    /**
-     * Add an TextBlock to the Element, SAVE COPY RN!!!!!
-     * if the Parent does already have an TextBlock, add the Text to the Element
-     *
-     * @param line current Line in the Text
-     * @return the TextBlock if added or this
-     */
-
-    public Element addTextBlockToElem2(String line) {
-        System.out.println(summary.getSummary());
-
-
-        if ((!summary.extractContent(line) && !comment.extractContent(line)) || summary.getSummary() != null) { //
-            BlockElement block = generateTextBlockAsChild();
-            block.addTextBlockToElem(line);
-            return block;
-        }
-        return this;
-    }
-
-
 
     /**
      * Add a new TextBlock as Child of the currentElement and add first Line

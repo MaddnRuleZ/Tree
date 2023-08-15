@@ -63,7 +63,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         return getInstance();
     }
 
-
     /**
      * Update the Minimum Level Cap from the Complete file
      *
@@ -128,6 +127,9 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
      */
     public void addStartHeader(List<String> startHeaderText) {
         this.startHeaderText = startHeaderText;
+    }
+    public boolean startHeaderExists() {
+        return this.startHeaderText == null;
     }
 
     @Override

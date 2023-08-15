@@ -2,6 +2,7 @@ package com.application.tree.elements.parent;
 
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
+import com.application.tree.elements.childs.BlockElement;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,10 +26,9 @@ import java.util.regex.Pattern;
  */
 public class Figure extends Environment {
     private final List<String> captions;
-    public static final String CAPTION_IDENT = "\\caption";
-    public static final String GRAPHICS_IDENT = "\\includegraphics";
+    public static final String CAPTION_IDENTIFIER = "\\caption";
+    public static final String GRAPHICS_IDENTIFIER = "\\includegraphics";
     private String graphic;
-
 
     /**
      * Constructor for creating a new Figure object with the specified startPart, endPart, and level.
@@ -42,6 +42,31 @@ public class Figure extends Environment {
         captions = new ArrayList<>();
     }
 
+    // todo enter Env Function to Parse
+    /*
+    /**
+     * Add a new TextBlock to the Environment.
+     * If there are already child elements in the Environment, the new TextBlock will be added at the same level.
+     * Otherwise, it will be added as a child of the Environment.
+     *
+     * @param line The line to scan for Summary Comment or NewLine to be added to the TextBlock.
+     * @return The newly created or existing TextBlockElement where the line is added.
+     *
+    @Override
+    public Element addTextBlockToElem(String line) {
+        if (this.children.size() == 0) {
+            BlockElement block = generateTextBlockAsChild();
+            block.addTextBlockToElem(line);
+            return block;
+        } else {
+            BlockElement block = generateTextSameLevel();
+            block.addTextBlockToElem(line);
+            return block;
+        }
+    }
+    */
+
+
     /**
      * if the String Contains a Part of the Graphic-string extract it,
      * get everything in between "[" and "}"
@@ -49,7 +74,7 @@ public class Figure extends Environment {
      * @param graphicsString raw graphic string to parse
      */
     public boolean setGraphics(String graphicsString) {
-        if (!graphicsString.contains(GRAPHICS_IDENT)) {
+        if (!graphicsString.contains(GRAPHICS_IDENTIFIER)) {
             return false;
         }
 
@@ -72,7 +97,7 @@ public class Figure extends Environment {
      * @return true if caption was added
      */
     public boolean addCaption(String caption) {
-        if (!caption.contains(CAPTION_IDENT)) {
+        if (!caption.contains(CAPTION_IDENTIFIER)) {
             return false;
         }
 
@@ -93,14 +118,14 @@ public class Figure extends Environment {
 
         // \caption{caption_content}
         for (String caption : captions) {
-            text.append(indentationBody).append(CAPTION_IDENT).append("{").append(caption).append("}");
+            text.append(indentationBody).append(CAPTION_IDENTIFIER).append("{").append(caption).append("}");
             text.append("\n");
         }
 
         //TODO graphic options???
 
         // \includegraphics{graphic}
-        text.append(indentationBody).append(GRAPHICS_IDENT).append("{").append(this.graphic).append("}");
+        text.append(indentationBody).append(GRAPHICS_IDENTIFIER).append("{").append(this.graphic).append("}");
         text.append("\n");
 
         // children
@@ -130,9 +155,4 @@ public class Figure extends Environment {
         }
         return node;
     }
-
-
-
-
-
 }

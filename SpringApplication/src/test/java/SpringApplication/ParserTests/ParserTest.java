@@ -135,7 +135,29 @@ public class ParserTest {
         System.out.println(map.get("root").toString());
     }
 
+    @Test
+    public void startBlockTest() throws UnknownElementException {
+        /*
+         * test the Parser and check if the file in sys.out is like the input_file below >>>
+         */
+        Parser parser = new Parser("src/test/resources/TestDocuments/StartBlockText.tex");
+        Root root = null;
 
+        try {
+            root = (Root) parser.startParsing();
+        } catch (FileInvalidException e) {
+            System.out.println("Invalid File Used");
+        }
+        if (root == null) {
+            System.out.println("Root null, document not correctly loaded");
+            return;
+        }
+
+        Map<String, StringBuilder> map = new HashMap<>();
+        map.put("root", new StringBuilder());
+        root.toLaTeX(map, "root", 0);
+        System.out.println(map.get("root").toString());
+    }
 
 
     @Test

@@ -3,6 +3,7 @@ package com.application.interpreter;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.elements.*;
+import com.application.tree.elements.childs.BlockElement;
 import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
@@ -32,7 +33,7 @@ public class Scanner {
     }
 
     /**
-     * Parse the Document by scanning the document line by line
+     * Parse the Document by scanning the document line by line Testing PPS only
      * if the line contains a new Element, created it or
      * Add the text to the current last TextBlockElement
      *
@@ -54,6 +55,12 @@ public class Scanner {
                 lastElement = newElement;
             } else if (lastElement != null) {
                 lastElement = lastElement.addTextBlockToElem(text[i]);
+
+            } else if (!Root.getInstance().startHeaderExists()) {
+                BlockElement blockElement = new BlockElement();
+                blockElement.addTextBlockToElem(line);
+                root.addChild(blockElement);
+                lastElement =  blockElement;
             }
         }
         return root;

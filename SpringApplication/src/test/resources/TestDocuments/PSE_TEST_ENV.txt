@@ -1,7 +1,19 @@
 Start of Document
 
 \begin{document}
-\part
+\part*{p1}
+    X
+    X
+    X
+    \begin{algorithmic}
+        X1
+        X
+        X
+    \end{algorithmic}
+    X
+    X
+    X
+\part{sec}
     \begin{enumerate}
         \item \label{1} X
         \item \label{2} X
