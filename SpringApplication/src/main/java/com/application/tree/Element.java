@@ -1,6 +1,5 @@
 package com.application.tree;
 
-import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.additionalInfo.Comment;
 import com.application.tree.additionalInfo.NewLine;
@@ -30,6 +29,7 @@ import java.util.regex.Pattern;
 public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     protected static final String CONTENT_REGEX = "\\{([^}]+)\\}";
     private static final String OPTIONS_REGEX = "\\[([^\\]]+)\\]";
+
     /**
      * '*' check for * for uncounted sectioning types
      */

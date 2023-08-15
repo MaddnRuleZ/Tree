@@ -30,7 +30,6 @@ public class Figure extends Environment {
     public static final String GRAPHICS_IDENTIFIER = "\\includegraphics";
     private String graphic;
 
-
     /**
      * Constructor for creating a new Figure object with the specified startPart, endPart, and level.
      *
@@ -66,6 +65,7 @@ public class Figure extends Environment {
         }
     }
     */
+
 
     /**
      * if the String Contains a Part of the Graphic-string extract it,

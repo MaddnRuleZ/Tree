@@ -135,9 +135,6 @@ public enum ElementConfig {
 
             try {
                 return (Input) parser.startParsing();
-            } catch (ClassCastException e) {
-                System.out.println("Input Document couldn't be detected");
-                return null;
             } catch (FileInvalidException e) {
                 return null;
             }
