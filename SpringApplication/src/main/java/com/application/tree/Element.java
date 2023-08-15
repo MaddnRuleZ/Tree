@@ -33,7 +33,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     /**
      * '*' check for * for uncounted sectioning types
      */
-    private static final String UNCOUNTED_REGEX = "\\\\[^{]*\\*?\\{([^{}]*\\*)?[^{}]*\\}";
+    private static final String UNCOUNTED_REGEX = ".*\\*\\{.*";
     private UUID id;
     private final int level;
     protected Parent parentElement;
@@ -106,10 +106,8 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         if (matcher.find()) {
             this.options = matcher.group(1);
         } else {
-            Pattern unCountPattern = Pattern.compile(UNCOUNTED_REGEX);
-            Matcher unCountMatcher = unCountPattern.matcher(options);
 
-            if (unCountMatcher.find()) {
+            if (Pattern.matches(UNCOUNTED_REGEX, options)) {
                 this.options = "*";
             } else {
                 this.options = null;
