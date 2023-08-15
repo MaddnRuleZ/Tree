@@ -58,7 +58,6 @@ public class EditContentCommand extends Command implements IEditCommand {
         return content;
     }
 
-
     @JsonProperty
     public void setElement(UUID element) {
         this.element = element;

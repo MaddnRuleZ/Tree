@@ -26,9 +26,9 @@ public class TestTree {
     public ArrayList<Environment> environmentList = new ArrayList<>();
 
     // tree structure:
-    //                        root
-    //                          |
-    //      --------------Sectioning1------------------------
+    //         ----------------root---------------------------------
+    //                          |                                 \
+    //      --------------Sectioning1------------------------          Sec13
     //               /                    |    |    \         \
     //    -------Sec2-----------        Sec3   Sec4   Child1   Sec7
     //   /  |     |       |    \          |      |              |
@@ -57,6 +57,7 @@ public class TestTree {
 
         //create sectioning
         Sectioning sectioning1 = new Sectioning("sectioning1", 0);
+        Sectioning sectioning13 = new Sectioning("sectioning13",0);
 
         Sectioning sectioning2 = new Sectioning("sectioning2",1);
         Sectioning sectioning3 = new Sectioning("sectioning3",1);
@@ -138,12 +139,12 @@ public class TestTree {
         sectioning12.setParent(sectioning11);
 
         sectioning1.setParent(null);
-
-
+        sectioning13.setParent(null);
 
 
         //add Elements to TestTree
         testTree.root.addChild(sectioning1);
+        testTree.root.addChild(sectioning13);
 
         testTree.childrenList.add(child1);
         testTree.childrenList.add(child2);

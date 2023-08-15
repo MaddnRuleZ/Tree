@@ -7,6 +7,7 @@ import com.application.command.types.MoveElementCommand;
 import com.application.exceptions.LevelException;
 import com.application.exceptions.OwnChildException;
 import com.application.exceptions.ParseException;
+import com.application.tree.Element;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Parent;
@@ -132,6 +133,73 @@ public class MoveTest {
         assertEquals(oldParent, child4.getParentElement(), "Child 4 should not have a new parent");
     }
 
+
+    @Test
+    public void newParentNull() {
+        Element previous = tree.root.getChildren().get(0);
+        Child child4 = tree.childrenList.get(3);
+
+        Parent oldParent = child4.getParentElement();
+        command.setElement(child4.getId());
+        command.setNewParent(null);
+        command.setPreviousElement(previous.getId());
+        command.setEditor(true);
+
+        command.execute();
+
+        assertEquals(tree.root.getChildren().get(1), child4, "Child 4 should be second child of Sectioning 2");
+        assertFalse(oldParent.getChildren().contains(child4), "Old parent should not contain child 4");
+    }
+
+    @Test
+    public void oldParentNull() {
+        Element sec = tree.root.getChildren().get(1);
+        Parent newParent = tree.sectioningList.get(2);
+        Element previous = newParent.getChildren().get(0);
+
+        command.setElement(sec.getId());
+        command.setNewParent(newParent.getId());
+        command.setPreviousElement(previous.getId());
+        command.setEditor(true);
+
+        command.execute();
+
+        assertTrue(command.isSuccess(), "Command should be successful");
+        assertEquals(newParent.getChildren().get(1), sec, "Sectioning should be second child of new Parent");
+    }
+
+    @Test
+    public void previousElementNull() {
+        Parent newParent = tree.sectioningList.get(1);
+        Child element = tree.childrenList.get(0);
+
+        Parent oldParent = element.getParentElement();
+        command.setElement(element.getId());
+        command.setNewParent(newParent.getId());
+        command.setPreviousElement(null);
+        command.setEditor(true);
+
+        command.execute();
+
+        assertTrue(command.isSuccess(), "Command should be successful");
+
+        assertEquals(newParent.getChildren().get(0), element, "element should be first child of new Parent");
+        assertFalse(oldParent.getChildren().contains(element), "Old parent should not contain child 4");
+    }
+
+    @Test
+    public void MoveWithinParent() {
+        Parent newParent = tree.sectioningList.get(1);
+        Child element = tree.childrenList.get(4);
+
+        Parent oldParent = element.getParentElement();
+        command.setElement(element.getId());
+        command.setNewParent(newParent.getId());
+        command.setPreviousElement(null);
+        command.setEditor(true);
+
+        assertEquals(element.getParentElement(), oldParent, "Element should have old parent");
+    }
 
     @AfterEach
     public void tearDown() {

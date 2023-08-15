@@ -88,6 +88,7 @@ public class ComplexTestTree extends TestTree{
         //create sectioning
         Sectioning sectioning1 = this.createSectioning(null);
         Sectioning sectioning2 = this.createSectioning(null);
+
         Sectioning sectioning3 = this.createSectioning(sectioning1);
         Sectioning sectioning4 = this.createSectioning(sectioning1);
 

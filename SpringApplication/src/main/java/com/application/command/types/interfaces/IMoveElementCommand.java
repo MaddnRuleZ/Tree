@@ -5,6 +5,7 @@ import com.application.exceptions.OwnChildException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.parent.Parent;
+import com.application.tree.elements.roots.Root;
 
 import java.util.UUID;
 
@@ -16,13 +17,36 @@ public interface IMoveElementCommand {
      * moves an element in the treeStructure
      */
     default void moveElement(Element element, Parent newParent, UUID previousElement, int minLevel) throws OwnChildException, LevelException {
-      if(checkPossibleLevel(element, newParent, minLevel)){
+        if(newParent == null) {
+            Parent oldParent = element.getParentElement();
+            element.setParent(null);
+
+            if(oldParent == null) {
+                Root.getInstance().removeChild(element);
+            } else {
+                oldParent.removeChild(element);
+            }
+
+
+            int indexPreviousElement = Root.getInstance().getIndexOfChild(previousElement);
+            Root.getInstance().addChildOnIndex(indexPreviousElement + 1, element);
+
+            return;
+        }
+
+        if(checkPossibleLevel(element, newParent, minLevel)){
             if(checkPossibleParent(element, newParent)) {
                 Parent oldParent = element.getParentElement();
+                if(oldParent == null) {
+                    Root.getInstance().removeChild(element);
+                } else {
+                    oldParent.removeChild(element);
+                }
                 element.setParent(newParent);
                 int indexPreviousElement = newParent.getIndexOfChild(previousElement);
                 newParent.addChildOnIndex(indexPreviousElement + 1, element);
-                oldParent.removeChild(element);
+
+
             } else {
                 throw new OwnChildException();
             }

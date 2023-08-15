@@ -30,7 +30,7 @@ public class MoveElementEditorCommandFactory implements CommandFactory {
             throw new NumParamsException("MoveElementEditor - mapping failed");
         }
 
-        if (command.getElement() == null || command.getNewParent() == null || command.getPreviousElement() == null ){
+        if (command.getElement() == null){
             throw new NumParamsException("MoveElementEditor - parameter not set");
         }
 

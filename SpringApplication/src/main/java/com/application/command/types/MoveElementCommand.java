@@ -37,17 +37,31 @@ public class MoveElementCommand extends Command implements IMoveElementCommand {
     public JsonNode execute() {
         this.getLockManager().acquireStructureWriteLock();
         try {
-            Element newParent = this.getUser().getRoot().searchForID(this.newParent);
-            Element element = this.getUser().getRoot().searchForID(this.element);
+            Element newParentElement = null;
 
-            if (newParent == null || element == null) {
-                throw new ElementNotFoundException();
-            } else if (!(newParent instanceof  Parent)) {
-                throw new TypeException(Parent.class.getSimpleName(), newParent.getClass().getSimpleName());
-            } else {
-                moveElement(element, (Parent) newParent, previousElement, Root.getInstance().getMinLevel());
-                this.setSuccess(true);
+            if(this.newParent != null) {
+                newParentElement = this.getUser().getRoot().searchForID(this.newParent);
+                if(newParentElement == null) {
+                    throw new ElementNotFoundException();
+                }
+                if(!(newParentElement instanceof Parent)) {
+                    throw new TypeException(newParent.getClass().getSimpleName(), Parent.class.getSimpleName());
+                }
             }
+            if(this.previousElement != null) {
+                Element previousElement = this.getUser().getRoot().searchForID(this.previousElement);
+                if(previousElement == null) {
+                    throw new ElementNotFoundException();
+                }
+            }
+
+            Element element = this.getUser().getRoot().searchForID(this.element);
+            if(element == null) {
+                throw new ElementNotFoundException();
+            }
+
+            moveElement(element, (Parent) newParentElement, previousElement, Root.getInstance().getMinLevel());
+            this.setSuccess(true);
 
         } catch (IndexOutOfBoundsException | ProcessingException e) {
             this.setSuccess(false);

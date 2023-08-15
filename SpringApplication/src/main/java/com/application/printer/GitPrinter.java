@@ -42,7 +42,7 @@ public class GitPrinter extends Printer {
      * @param workingDir    The working directory where Git operations will be performed.
      */
     public GitPrinter(String overleafUrl, String username, String password, String workingDir, User user) {
-        super("workingDir/" + MAIN_ENDING, user); //TODO path testen
+        super(workingDir + "/" + MAIN_ENDING, user);
         credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
         this.overleafUrl = overleafUrl;
         this.working_directory = workingDir;
