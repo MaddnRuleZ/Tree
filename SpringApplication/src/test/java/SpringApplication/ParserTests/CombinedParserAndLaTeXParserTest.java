@@ -7,7 +7,6 @@ import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ public class CombinedParserAndLaTeXParserTest {
     public void testLaTeXParser() throws UnknownElementException {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        root.toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        root.toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL, true, true);
         for (String key : map.keySet()) {
             assert key != null;
             if (key.equals("root")) {

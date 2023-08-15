@@ -78,31 +78,34 @@ public class Environment extends Parent {
 
     @Override
     //TODO environment end und start part
-    public void toLaTeX(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
-        this.toLaTeXStart(map, key, level);
+    public void toLaTeX(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+        this.toLaTeXStart(map, key, level, exportComment, exportSummary);
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
         // children
         if (this.children != null && !this.children.isEmpty()) {
             for (Element child : this.children) {
-                child.toLaTeX(map, key, level + 1);
+                child.toLaTeX(map, key, level + 1, exportComment, exportSummary);
             }
         }
-        this.toLaTeXEnd(map, key, level);
+        this.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 
     /**
      * add the LaTeX-Code of summary and comments;
      * adds the LaTeX-Code of \begin{content}[options] e.g. \begin{figure}[htbp]
-     * @param map   map of the LaTeX-Code
-     * @param key   key of the map
+     *
+     * @param map           map of the LaTeX-Code
+     * @param key           key of the map
      * @param level
+     * @param exportComment
+     * @param exportSummary
      * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
-        super.toLaTeXStart(map, key, level);
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level, exportComment, exportSummary);
 
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
@@ -118,13 +121,16 @@ public class Environment extends Parent {
     /**
      * add the LaTeX-Code of the newLine;
      * adds the LaTeX-Code of \end{content} e.g. \end{figure}
-     * @param map   map of the LaTeX-Code
-     * @param key   key of the map
+     *
+     * @param map           map of the LaTeX-Code
+     * @param key           key of the map
      * @param level
+     * @param exportComment
+     * @param exportSummary
      * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
@@ -132,6 +138,6 @@ public class Environment extends Parent {
         text.append("{").append(this.content).append("}");
         text.append("\n");
 
-        super.toLaTeXEnd(map, key, level);
+        super.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 }

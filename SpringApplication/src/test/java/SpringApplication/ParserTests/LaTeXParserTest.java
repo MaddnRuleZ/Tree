@@ -8,7 +8,6 @@ import com.application.interpreter.Parser;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -23,7 +22,7 @@ public class LaTeXParserTest {
         ComplexTestTree tree = new ComplexTestTree();
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        tree.root.toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        tree.root.toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL, true, true);
         System.out.println(map.get("root").toString());
     }
 
@@ -40,7 +39,7 @@ public class LaTeXParserTest {
         }
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL, true, true);
         System.out.println(map.get("root").toString());
 
         assertEquals("\\section", user.getRoot().getChildren().get(0).getStartPart(), "Should be section");
@@ -59,7 +58,7 @@ public class LaTeXParserTest {
         }
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL, true, true);
         System.out.println(map.get("root").toString());
     }
 

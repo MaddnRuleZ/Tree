@@ -21,7 +21,7 @@ public class ParserTestAdvanced {
 
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
-        root.toLaTeX(map, "root", 0);
+        root.toLaTeX(map, "root", 0, true, true);
         System.out.println(map.get("root").toString());
     }
 }

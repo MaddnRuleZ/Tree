@@ -112,23 +112,6 @@ public class Controller {
         return new ResponseEntity<>(response, status);
     }
 
-    /**
-     * Processes a GET-request for the export
-     * @return if export was successful
-     */
-    @GetMapping("/Export")
-    public ResponseEntity<JsonNode> processExportRequest() {
-        Command command = new ExportCommand(user.getPrinter());
-        HttpStatus status;
-
-        JsonNode response = command.execute();
-        if(command.isSuccess()) {
-            status = HttpStatus.OK;
-        } else {
-            status = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(response, status);
-    }
 
     /**
      * creates a ResponseEntity for getData requests

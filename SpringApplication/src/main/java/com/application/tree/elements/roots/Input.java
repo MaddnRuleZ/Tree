@@ -54,25 +54,21 @@ public class Input extends Parent implements Roots {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
-        super.toLaTeXStart(map, key, level);
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level, exportComment, exportSummary);
         StringBuilder text = map.get(key);
         String indentation = getIndentation(level);
 
         text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}");
 
-        if(this.newLine != null) {
-            this.newLine.toLaTeX(map, key, level);
-        }
-
         String newKey = this.content;
         map.put(newKey, new StringBuilder());
         if (this.children != null && !this.children.isEmpty()) {
             for (Element child : this.children) {
-                child.toLaTeX(map, newKey, INIT_INDENTATION_LEVEL);
+                child.toLaTeX(map, newKey, INIT_INDENTATION_LEVEL, exportComment, exportSummary);
             }
         }
-        super.toLaTeXEnd(map, key, level);
+        super.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 
     public String getStartPart() {

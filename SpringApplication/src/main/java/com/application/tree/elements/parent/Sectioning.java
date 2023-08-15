@@ -49,8 +49,8 @@ public class Sectioning extends Parent {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
-        super.toLaTeXStart(map, key, level);
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level, exportComment, exportSummary);
         String indentation = getIndentation(level);
 
         StringBuilder text = map.get(key);
@@ -68,11 +68,11 @@ public class Sectioning extends Parent {
         //children
         if (this.children != null && !this.children.isEmpty()) {
             for (Element child : this.children) {
-                child.toLaTeX(map, key, level + 1);
+                child.toLaTeX(map, key, level + 1, exportComment, exportSummary);
             }
         }
 
-        super.toLaTeXEnd(map, key, level+1);
+        super.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 
     /**

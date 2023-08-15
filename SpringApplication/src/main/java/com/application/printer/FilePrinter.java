@@ -21,6 +21,7 @@ public class FilePrinter extends Printer {
      */
     public FilePrinter(String path, User user) {
         super(path, user);
+        setFigurePath(Path.of(path).getParent().toString());
     }
 
     /**
@@ -31,7 +32,7 @@ public class FilePrinter extends Printer {
     public void export() throws IOException, UnknownElementException {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put(this.getPath(), new StringBuilder());
-        this.getUser().getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        this.getUser().getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL, this.isExportSummary(), this.isExportComments());
         for (String key : map.keySet()) {
             if (key == null) {
                 throw new UnknownElementException(null, "File Path");

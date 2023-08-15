@@ -77,7 +77,11 @@ public class Summary implements LaTeXTranslator {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+        if(!exportSummary){
+            return;
+        }
+
         String indentationHead = getIndentation(level);
         String indentationBody = getIndentation(level+1);
         StringBuilder text = map.get(key);
@@ -92,25 +96,31 @@ public class Summary implements LaTeXTranslator {
 
     /**
      * never to be executed because the summary is the end
-     * @param map   map of the LaTeX-Code
-     * @param key   key of the map
-     * @param level level of the element
+     *
+     * @param map           map of the LaTeX-Code
+     * @param key           key of the map
+     * @param level         level of the element
+     * @param exportComment
+     * @param exportSummary
      * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         assert false;
     }
 
     /**
      * never to be executed because the summary is the end
-     * @param map   map of the LaTeX-Code
-     * @param key   key of the map
-     * @param level level of the element
+     *
+     * @param map           map of the LaTeX-Code
+     * @param key           key of the map
+     * @param level         level of the element
+     * @param exportComment
+     * @param exportSummary
      * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         assert false;
     }
 

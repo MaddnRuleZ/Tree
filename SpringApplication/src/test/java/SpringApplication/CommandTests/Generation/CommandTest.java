@@ -50,7 +50,8 @@ public class CommandTest {
             "src/test/resources/JsonFiles/CorrectCommands/EditContent.json",
             "src/test/resources/JsonFiles/CorrectCommands/EditSummary.json",
             "src/test/resources/JsonFiles/CorrectCommands/LoadFromFolder.json",
-            "src/test/resources/JsonFiles/CorrectCommands/LoadFromGit.json"
+            "src/test/resources/JsonFiles/CorrectCommands/LoadFromGit.json",
+            "src/test/resources/JsonFiles/CorrectCommands/ExportCommand.json",
     })
     void testCorrectCommand(String path) {
         JsonNode jsonContent = loadJsonFile(path);
@@ -78,7 +79,8 @@ public class CommandTest {
                 Arguments.of(new EditContentCommandFactory(new User())),
                 Arguments.of(new EditSummaryCommandFactory(new User())),
                 Arguments.of(new MoveElementEditorCommandFactory(new User())),
-                Arguments.of(new MoveElementTreeCommandFactory(new User()))
+                Arguments.of(new MoveElementTreeCommandFactory(new User())),
+                Arguments.of(new ExportCommandFactory(new User()))
         );
     }
 

@@ -81,6 +81,7 @@ public class CommandHandler {
         commandFactories.put("LoadFromFolder", new LoadFromFolderCommandFactory(user));
         commandFactories.put("MoveElementTree", new MoveElementTreeCommandFactory(user));
         commandFactories.put("MoveElementEditor", new MoveElementEditorCommandFactory(user));
+        commandFactories.put("Export", new ExportCommandFactory(user));
 
 
         return commandFactories;

@@ -49,8 +49,8 @@ public class Child extends Element {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
-        super.toLaTeXStart(map, key, level);
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+        super.toLaTeXStart(map, key, level, exportComment, exportSummary);
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
@@ -58,6 +58,6 @@ public class Child extends Element {
         text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}");
         text.append("\n");
 
-        super.toLaTeXEnd(map, key, level);
+        super.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 }

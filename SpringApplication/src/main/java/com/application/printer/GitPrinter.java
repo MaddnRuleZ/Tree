@@ -2,8 +2,6 @@ package com.application.printer;
 
 import com.application.User;
 import com.application.exceptions.UnknownElementException;
-import com.application.tree.elements.roots.Input;
-import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullResult;
@@ -42,10 +40,11 @@ public class GitPrinter extends Printer {
      * @param workingDir    The working directory where Git operations will be performed.
      */
     public GitPrinter(String overleafUrl, String username, String password, String workingDir, User user) {
-        super(workingDir + "/" + MAIN_ENDING, user);
+        super(workingDir, user);
         credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
         this.overleafUrl = overleafUrl;
         this.working_directory = workingDir;
+        setFigurePath(this.working_directory);
         System.out.println(workingDir);
     }
 
@@ -207,11 +206,13 @@ public class GitPrinter extends Printer {
         directory.delete();
     }
 
+
+
     @Override
     public void export() throws IOException, UnknownElementException {
         Map<String, StringBuilder> map = new HashMap<>();
-        map.put(this.getPath(), new StringBuilder());
-        this.getUser().getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL);
+        map.put(this.getPath() + "/" + MAIN_ENDING, new StringBuilder());
+        this.getUser().getRoot().toLaTeX(map, this.getPath()+ "/" + MAIN_ENDING, LaTeXTranslator.INIT_INDENTATION_LEVEL, this.isExportSummary(), this.isExportComments());
         for(String key : map.keySet()) {
             if (key == null) {
                 throw new UnknownElementException(null, "File Path");

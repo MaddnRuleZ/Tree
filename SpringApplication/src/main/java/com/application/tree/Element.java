@@ -233,22 +233,22 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         StringBuilder text = map.get(key);
 
         if (hasComment()) {
-            this.comment.toLaTeX(map, key, level);
+            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
         }
     }
 
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         if (hasSummary()) {
-            this.summary.toLaTeX(map, key, level);
+            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
         }
 
         if(hasNewLine()) {
-            this.newLine.toLaTeX(map, key, level);
+            this.newLine.toLaTeX(map, key, level, exportComment, exportSummary);
         }
     }
 
@@ -282,7 +282,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     /**
      * @return true, if the Element has a Summary and chooses the manual Summary
      */
-    private boolean hasSummary() {
+    protected boolean hasSummary() {
         return this.chooseManualSummary && !(this.summary == null)  && !this.summary.getSummary().isEmpty();
     }
 

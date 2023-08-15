@@ -1,7 +1,6 @@
 package SpringApplication.CommandTests.Execution;
 
 import SpringApplication.TestStubs.ComplexTestTree;
-import SpringApplication.TestStubs.TestTree;
 import com.application.User;
 import com.application.command.types.AddCommand;
 import com.application.tree.Element;
@@ -12,9 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -99,7 +96,7 @@ public class AddElementTest {
         try {
             Map<String, StringBuilder> map = new HashMap<>();
             map.put("root", new StringBuilder());
-            user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL);
+            user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL, true, true);
             Files.writeString(file.toPath(), map.get("root").toString());
         } catch (Exception e) {
             e.printStackTrace();

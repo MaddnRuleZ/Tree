@@ -77,6 +77,13 @@ public class CorrectGenerationTest {
         assertNotNull(factory.createCommand(jsonContent), "Response should not be null");
     }
 
+    @Test
+    void ExportTest() throws ProcessingException {
+        CommandFactory factory = new ExportCommandFactory(new User());
+        JsonNode jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectAttributes/ExportCommand.json");
+        assertNotNull(factory.createCommand(jsonContent), "Response should not be null");
+    }
+
     private JsonNode loadJsonFile(String filePath) {
         ObjectMapper mapper = new ObjectMapper();
         try {
