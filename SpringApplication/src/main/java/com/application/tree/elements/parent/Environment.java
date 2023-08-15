@@ -127,7 +127,4 @@ public class Environment extends Parent {
 
         super.toLaTeXEnd(map, key, level);
     }
-
-
-
 }

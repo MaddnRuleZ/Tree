@@ -33,36 +33,6 @@ public class Scanner {
     }
 
     /**
-     * Parse the Document by scanning the document line by line ACTUAL
-     * if the line contains a new Element, created it or
-     * Add the text to the current last TextBlockElement
-     *
-     * @return root Element of tree with rest of tree as Children
-     */
-    public Roots parseDocument2() {
-        Element lastElement = null;
-        Element newElement = null;
-
-        for (int i = 0; i < text.length; i++) {
-            String line = text[i];
-            if (line.contains(Root.START_DOCUMENT)) {
-                Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
-                continue;
-            }
-            newElement = scanCurrentLine(lastElement, line);
-
-            if (newElement != null) {
-                lastElement = newElement;
-            } else if (lastElement != null) {
-                lastElement = lastElement.addTextBlockToElem(text[i]);
-            }
-        }
-        return root;
-    }
-
-
-
-    /**
      * Parse the Document by scanning the document line by line Testing PPS only
      * if the line contains a new Element, created it or
      * Add the text to the current last TextBlockElement
@@ -70,9 +40,6 @@ public class Scanner {
      * @return root Element of tree with rest of tree as Children
      */
     public Roots parseDocument() {
-
-
-
         Element lastElement = null;
         Element newElement = null;
 

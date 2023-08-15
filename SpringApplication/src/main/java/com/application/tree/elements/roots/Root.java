@@ -63,7 +63,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         return getInstance();
     }
 
-
     /**
      * Update the Minimum Level Cap from the Complete file
      *

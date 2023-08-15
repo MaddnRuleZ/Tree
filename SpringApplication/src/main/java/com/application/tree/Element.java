@@ -30,6 +30,10 @@ import java.util.regex.Pattern;
 public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     protected static final String CONTENT_REGEX = "\\{([^}]+)\\}";
     private static final String OPTIONS_REGEX = "\\[([^\\]]+)\\]";
+    /**
+     * '*' check for * for uncounted sectioning types
+     */
+    private static final String UNCOUNTED_REGEX = "\\\\[^{]*\\*?\\{([^{}]*\\*)?[^{}]*\\}";
     private UUID id;
     private final int level;
     protected Parent parentElement;
@@ -99,11 +103,17 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     public void setOptions(String options) {
         Pattern pattern = Pattern.compile(OPTIONS_REGEX);
         Matcher matcher = pattern.matcher(options);
-
         if (matcher.find()) {
             this.options = matcher.group(1);
         } else {
-            this.options = null;
+            Pattern unCountPattern = Pattern.compile(UNCOUNTED_REGEX);
+            Matcher unCountMatcher = unCountPattern.matcher(options);
+
+            if (unCountMatcher.find()) {
+                this.options = "*";
+            } else {
+                this.options = null;
+            }
         }
     }
 

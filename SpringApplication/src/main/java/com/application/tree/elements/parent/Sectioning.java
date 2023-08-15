@@ -27,7 +27,6 @@ public class Sectioning extends Parent {
         super(startPart, null, level);
     }
 
-
     @Override
     public int levelOfDeepestSectioningChild() {
         int deepestChildLevel = 0;
@@ -91,5 +90,4 @@ public class Sectioning extends Parent {
         }
         return type.getStartPart();
     }
-
 }
