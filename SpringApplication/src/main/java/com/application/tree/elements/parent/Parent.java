@@ -161,6 +161,6 @@ public abstract class Parent extends Element {
                 return i;
             }
         }
-        return -1;
+        return -2;
     }
 }

@@ -42,22 +42,16 @@ public class MoveElementCommand extends Command implements IMoveElementCommand {
             if(this.newParent != null) {
                 newParentElement = this.getUser().getRoot().searchForID(this.newParent);
                 if(newParentElement == null) {
-                    throw new ElementNotFoundException();
+                    throw new ElementNotFoundException("Parent");
                 }
                 if(!(newParentElement instanceof Parent)) {
                     throw new TypeException(newParent.getClass().getSimpleName(), Parent.class.getSimpleName());
                 }
             }
-            if(this.previousElement != null) {
-                Element previousElement = this.getUser().getRoot().searchForID(this.previousElement);
-                if(previousElement == null) {
-                    throw new ElementNotFoundException();
-                }
-            }
 
             Element element = this.getUser().getRoot().searchForID(this.element);
             if(element == null) {
-                throw new ElementNotFoundException();
+                throw new ElementNotFoundException("Element");
             }
 
             moveElement(element, (Parent) newParentElement, previousElement, Root.getInstance().getMinLevel());

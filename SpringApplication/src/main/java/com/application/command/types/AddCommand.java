@@ -54,6 +54,9 @@ public class AddCommand extends Command {
             }
 
             int index = parentElement.getIndexOfChild(this.previousChild);
+            if(index == -2) {
+                throw new ElementNotFoundException();
+            }
             for (Element child : foundRoot.getChildren()) {
                 child.setParent(parentElement);
                 parentElement.addChildOnIndex(index, child);
