@@ -118,6 +118,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
      */
     public int calculateLevelFromElement() {
         assert false;
+        return -1;
     }
 
     /**
