@@ -3,6 +3,7 @@ package SpringApplication.CommandTests.Execution;
 import com.application.User;
 import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.ParseException;
+import com.application.exceptions.PrintException;
 import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.Parser;
 import com.application.printer.FilePrinter;
@@ -10,6 +11,7 @@ import com.application.printer.Printer;
 import com.application.command.types.LoadFromFolderCommand;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Sectioning;
+import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.roots.Root;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +32,7 @@ class FilePrinterTest {
     void setUp() throws FileInvalidException, ParseException {
         this.user = new User();
         this.tree = TestTree.createTestTree();
+        tree.root.setMinLevel(1);
         this.user.setRoot(tree.root);
         this.printer = new FilePrinter(pathOfPrinter, user);
     }
@@ -49,14 +52,13 @@ class FilePrinterTest {
 
     @Test
     public void wrongInputPath() {
-        Sectioning sec = tree.sectioningList.get(0);
-        Child input = new Child("\\input", null, 1);
+        Input input = new Input();
         input.setContentManually(null);
 
-        sec.getChildren().add(input);
-        input.setParent(sec);
+        tree.root.addChildOnIndex(0, input);
+        input.setParent(null);
 
-        assertThrows(UnknownElementException.class, () ->{
+        assertThrows(UnknownElementException.class, () -> {
             printer.export();
         });
     }

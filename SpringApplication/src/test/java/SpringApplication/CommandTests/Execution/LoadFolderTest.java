@@ -61,6 +61,13 @@ public class LoadFolderTest {
         assertFalse(command.isSuccess(), "Command should not execute successfully");
     }
 
+    @Test
+    public void parseExceptionTest() {
+        this.command.setPath("src/test/resources/LoadTestPaths/NotParsableTest.txt");
+        command.execute();
+        assertFalse(command.isSuccess(), "Command should not execute successfully");
+    }
+
     @AfterEach
     void tearDown() {
         user = null;

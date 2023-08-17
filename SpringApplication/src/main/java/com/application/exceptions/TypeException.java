@@ -11,8 +11,4 @@ public class TypeException extends ProcessingException {
     public TypeException(String required, String found) {
         super("Das gesuchte Element hat den falschen Typ. Gesucht: " + required + " Gefunden: " + found);
     }
-
-    public TypeException(String content) {
-        super("Dieser Typ kann diesen Wert nicht annehemn. Wert:" + content);
-    }
 }
