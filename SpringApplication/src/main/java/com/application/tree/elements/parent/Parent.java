@@ -79,14 +79,6 @@ public abstract class Parent extends Element {
         this.children.add(index, newChild);
     }
 
-    public void addChildAfter(Element previousElement, Element newChild) throws ElementNotFoundException {
-        int index = this.children.indexOf(previousElement);
-        if (index == -1) {
-            throw new ElementNotFoundException();
-        }
-        this.children.add(index + 1, newChild);
-    }
-
     public boolean removeChild(Element element) {
         return this.children.remove(element);
     }

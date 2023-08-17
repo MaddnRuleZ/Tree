@@ -1,9 +1,9 @@
 package com.application.command.factories;
 
+import com.application.User;
 import com.application.command.types.Command;
 import com.application.command.types.LoadFromGitCommand;
 import com.application.exceptions.NumParamsException;
-import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Iterator;
@@ -17,7 +17,7 @@ import java.util.Map;
  *  Factory to create an LoadFromGitCommand
  */
 public class LoadFromGitCommandFactory implements CommandFactory {
-    private User user;
+    private final User user;
 
     /**
      * Constructor

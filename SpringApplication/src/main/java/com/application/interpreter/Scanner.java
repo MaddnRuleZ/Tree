@@ -2,10 +2,10 @@ package com.application.interpreter;
 
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
-import com.application.tree.elements.*;
+import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.childs.BlockElement;
-import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.parent.Parent;
+import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
 

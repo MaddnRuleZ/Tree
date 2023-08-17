@@ -5,13 +5,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * Manager that holds the lock for the treeStructure
  */
+@SuppressWarnings("CanBeFinal")
 public class LockManager {
     /**
      * ReadWriteLock on the treeStructure, always locks whole tree
      */
     ReentrantReadWriteLock structureLock;
 
-    private static LockManager instance = new LockManager();
+    private static final LockManager instance = new LockManager();
 
     private LockManager() {
         structureLock = new ReentrantReadWriteLock();

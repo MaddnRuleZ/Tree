@@ -7,15 +7,16 @@ import com.application.tree.additionalInfo.Summary;
 import com.application.tree.elements.childs.BlockElement;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
-import com.application.tree.interfaces.LaTeXTranslator;
 import com.application.tree.interfaces.JsonParser;
+import com.application.tree.interfaces.LaTeXTranslator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,8 +149,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     /**
      * parses the incoming String into summary
-     *
-     * @param summary
+     * @param summary to parse
      */
     public void setSummary(String summary) {
        this.summary.setSummary(summary);
@@ -234,8 +234,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
-        StringBuilder text = map.get(key);
-
         if (hasComment()) {
             this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
         }
@@ -305,10 +303,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     public Comment getComment() {
         return comment;
-    }
-
-    public NewLine getNewLine() {
-        return newLine;
     }
 
     public String getContent() {

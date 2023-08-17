@@ -7,12 +7,10 @@ import com.application.exceptions.TypeException;
 import com.application.interpreter.Parser;
 import com.application.tree.Element;
 import com.application.tree.elements.parent.Parent;
-import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.util.List;
 import java.util.UUID;
 
 /**

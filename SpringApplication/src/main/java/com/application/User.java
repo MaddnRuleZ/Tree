@@ -1,6 +1,5 @@
 package com.application;
 
-import com.application.interpreter.Parser;
 import com.application.printer.AutoExport;
 import com.application.printer.Printer;
 import com.application.tree.elements.roots.Root;
@@ -28,9 +27,14 @@ public class User {
         this.root = Root.getInstance();
     }
 
+    /**
+     * resets the tree structure and the printer
+     * to the initial state
+     */
     public void resetUser(){
         this.printer = null;
         Root.resetInstance();
+        this.autoExport = null;
     }
 
     public void setPrinter(Printer Printer) {

@@ -6,8 +6,8 @@ import com.application.tree.Element;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Figure;
-import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.parent.Sectioning;
+import com.application.tree.elements.roots.Input;
 
 /**
  * Class Containing the Configuration of ALL the Structural Elements that wil be detected by the Scan -Algorithm
@@ -33,6 +33,7 @@ public enum ElementConfig {
     PART("\\part", null, 1) {
         @Override
         Element getElement(String currentLine) {
+            // todo entfernen
             // check Point *, make function in element that sets (Bolean) und fuc hier die extrahier, dannn .uncount(checkUnCount(currentLine))
             return new Sectioning(getStartPart(), getLevel());
         }

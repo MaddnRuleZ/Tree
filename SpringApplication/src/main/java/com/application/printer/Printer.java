@@ -2,17 +2,13 @@ package com.application.printer;
 
 import com.application.User;
 import com.application.exceptions.UnknownElementException;
-import com.application.tree.elements.roots.Root;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class Printer {
     private String path;
 
-    private User user;
+    private final User user;
 
     private static String FIGURE_PATH = "";
 

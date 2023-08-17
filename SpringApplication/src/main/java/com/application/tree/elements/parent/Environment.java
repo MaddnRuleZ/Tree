@@ -5,7 +5,6 @@ import com.application.tree.Element;
 import com.application.tree.elements.childs.BlockElement;
 
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Environment Class
@@ -62,26 +61,8 @@ public class Environment extends Parent {
     }
 
     @Override
-    public Element searchForID(UUID id) {
-        if (this.getId().equals(id)) {
-            return this;
-        } else {
-            for (Element child: this.getChildren()) {
-                Element foundElement = child.searchForID(id);
-                if (foundElement != null) {
-                    return foundElement;
-                }
-            }
-        }
-        return null;
-    }
-
-    @Override
-    //TODO environment end und start part
     public void toLaTeX(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         this.toLaTeXStart(map, key, level, exportComment, exportSummary);
-        String indentation = getIndentation(level);
-        StringBuilder text = map.get(key);
 
         // children
         if (this.children != null && !this.children.isEmpty()) {

@@ -1,6 +1,5 @@
 package com.application.tree.additionalInfo;
 
-import com.application.exceptions.UnknownElementException;
 import com.application.tree.interfaces.LaTeXTranslator;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class Comment implements LaTeXTranslator {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) {
         if(!exportComment){
             return;
         }
@@ -65,31 +64,17 @@ public class Comment implements LaTeXTranslator {
 
     /**
      * never to be executed because comments are the start
-     *
-     * @param map           map of the LaTeX-Code
-     * @param key           key of the map
-     * @param level
-     * @param exportComment
-     * @param exportSummary
-     * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) {
         assert false;
     }
 
     /**
      * never to be executed because comments are the start
-     *
-     * @param map           map of the LaTeX-Code
-     * @param key           key of the map
-     * @param level         level of indentation
-     * @param exportComment
-     * @param exportSummary
-     * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) {
         assert false;
     }
 

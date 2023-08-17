@@ -1,11 +1,11 @@
 package com.application.command;
 
-import com.application.command.types.Command;
+import com.application.User;
 import com.application.command.factories.*;
+import com.application.command.types.Command;
 import com.application.exceptions.NumParamsException;
 import com.application.exceptions.ProcessingException;
 import com.application.exceptions.UnrecognizedCommandException;
-import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 

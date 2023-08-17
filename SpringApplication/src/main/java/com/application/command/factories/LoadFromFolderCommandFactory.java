@@ -1,14 +1,13 @@
 package com.application.command.factories;
 
+import com.application.User;
 import com.application.command.types.Command;
 import com.application.command.types.LoadFromFolderCommand;
 import com.application.exceptions.NumParamsException;
-import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 /*
     command has to be read manually due to problems with spring and using reflection
  */
@@ -16,7 +15,7 @@ import java.util.NoSuchElementException;
  * Factory to create an LoadFromFolderCommand
  */
 public class LoadFromFolderCommandFactory implements CommandFactory {
-    private User user;
+    private final User user;
 
     /**
      * Constructor

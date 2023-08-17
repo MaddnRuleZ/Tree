@@ -1,10 +1,10 @@
 package com.application.printer;
 
-import com.application.command.LockManager;
 import com.application.RequestInterceptor;
+import com.application.User;
+import com.application.command.LockManager;
 import com.application.exceptions.PrintException;
 import com.application.exceptions.ProcessingException;
-import com.application.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -45,6 +45,11 @@ public class AutoExport {
      */
     private final long timeThresholdInMilliseconds = 1 * 60 * 1000;
 
+    /**
+     * Constructor for AutoExport
+     * @param requestInterceptor Interceptor to check for recent requests
+     * @param user user containing printer and root
+     */
     @Autowired
     public AutoExport(RequestInterceptor requestInterceptor, User user) {
         this.requestInterceptor = requestInterceptor;
@@ -53,7 +58,10 @@ public class AutoExport {
         this.requestInterceptor.setTimeThresholdInMilliseconds(timeThresholdInMilliseconds);
     }
 
-
+    /**
+     * checks if there are recent requests
+     * if there are no recent requests, the structure will be exported
+     */
     @Scheduled(fixedRate = timeThresholdInMilliseconds)
     public void check() {
         if(user.getPrinter() != null) {

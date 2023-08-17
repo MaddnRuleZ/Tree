@@ -1,10 +1,9 @@
 package com.application.command.factories;
 
+import com.application.User;
 import com.application.command.types.Command;
 import com.application.command.types.MoveElementCommand;
 import com.application.exceptions.NumParamsException;
-import com.application.tree.elements.roots.Root;
-import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -12,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Factory to create an MoveElementEditorCommand
  */
 public class MoveElementEditorCommandFactory implements CommandFactory {
-    private User user;
+    private final User user;
     /**
      * Constructor
      * @param user user that holds information of LaTeX-Project

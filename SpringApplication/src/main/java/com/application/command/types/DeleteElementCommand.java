@@ -66,11 +66,10 @@ public class DeleteElementCommand extends Command {
                 child.setParent(parent);
                 if(parent == null) {
                     root.addChildOnIndex(index, child);
-                    index++;
                 } else {
                     parent.addChildOnIndex(index, child);
-                    index++;
                 }
+                index++;
             }
         }
         if(parent == null) {

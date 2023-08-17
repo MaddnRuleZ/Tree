@@ -16,10 +16,9 @@ public interface ILoadCommand {
      * @param user user that holds information of LaTeX-Project
      * @param printer printer to export the tree structure
      * @param path path to the folder
-     * @return true if successful
-     * @throws ParseException
+     * @throws ParseException if something went wrong while parsing
      */
-    default boolean load(User user, Printer printer, String path) throws ParseException, FileInvalidException {
+    default void load(User user, Printer printer, String path) throws ParseException, FileInvalidException {
         Parser parser = new Parser(path);
         user.resetUser();
         Roots root = parser.startParsing();
@@ -29,7 +28,6 @@ public interface ILoadCommand {
         } else {
             throw new ParseException(this.getClass().getSimpleName(), root.getClass().getSimpleName(), Root.class.getSimpleName());
         }
-        return true;
     }
 
 

@@ -13,9 +13,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * provides success and failure message
  * provides execute and generateResponse
  */
+@SuppressWarnings("CanBeFinal")
 public abstract class Command {
 
-    private LockManager lockManager = LockManager.getInstance();
+    private final LockManager lockManager = LockManager.getInstance();
     /**
      * indicates success of processing the command
      */

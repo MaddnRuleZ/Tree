@@ -21,7 +21,8 @@ public class LoadFromFolderCommand extends Command implements ILoadCommand {
         this.getLockManager().acquireStructureWriteLock();
         try {
             Printer printer = new FilePrinter(path, this.getUser());
-            this.setSuccess(load(this.getUser(), printer, path));
+            load(this.getUser(), printer, path);
+            this.setSuccess(true);
         } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());

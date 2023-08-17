@@ -1,6 +1,5 @@
 package com.application.command.factories;
 
-import com.application.User;
 import com.application.command.types.Command;
 import com.application.exceptions.NumParamsException;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -1,6 +1,5 @@
 package com.application.tree.additionalInfo;
 
-import com.application.exceptions.UnknownElementException;
 import com.application.tree.interfaces.LaTeXTranslator;
 
 import java.util.Map;
@@ -8,7 +7,7 @@ import java.util.Map;
 /**
  * A class representing an Element's NewLine Parts.
  *
- * NewLines Seper two TextBLockElements from each other. And will be stored in this Additional Container
+ * NewLines Seperate two TextBLockElements from each other. And will be stored in this Additional Container
  * Each TextBLockElement can only have one NewLineCharacter and multiple in one line will all be stored in one line too.
  */
 public class NewLine implements LaTeXTranslator {
@@ -54,7 +53,7 @@ public class NewLine implements LaTeXTranslator {
     }
 
     @Override
-    public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+    public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) {
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
@@ -66,31 +65,17 @@ public class NewLine implements LaTeXTranslator {
 
     /**
      * never to be executed because NewLine is the End
-     *
-     * @param map           map of the LaTeX-Code
-     * @param key           key of the map
-     * @param level         level of the Element
-     * @param exportComment
-     * @param exportSummary
-     * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+    public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) {
         assert false;
     }
 
     /**
      * never to be executed because NewLine is the End
-     *
-     * @param map           map of the LaTeX-Code
-     * @param key           key of the map
-     * @param level         level of the Element
-     * @param exportComment
-     * @param exportSummary
-     * @throws UnknownElementException
      */
     @Override
-    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+    public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) {
         assert false;
     }
 

@@ -1,13 +1,12 @@
 package com.application.command;
 
+import com.application.User;
 import com.application.command.types.Command;
-import com.application.command.types.ExportCommand;
 import com.application.command.types.GetCommand;
 import com.application.exceptions.FailureResponse;
 import com.application.exceptions.ProcessingException;
 import com.application.interpreter.GitWatcher;
 import com.application.printer.AutoExport;
-import com.application.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;

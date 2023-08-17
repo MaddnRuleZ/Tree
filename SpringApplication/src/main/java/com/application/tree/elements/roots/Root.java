@@ -4,8 +4,8 @@ import com.application.User;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
-import com.application.tree.interfaces.LaTeXTranslator;
 import com.application.tree.interfaces.JsonParser;
+import com.application.tree.interfaces.LaTeXTranslator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -97,7 +96,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     /**
      * Returns the index of the child with the specified id
      * if no child with the specified id exists or the id is null, -1 is returned
-     * @param id
+     * @param id id of child to search for
      * @return index of child with specified id
      */
     public int getIndexOfChild(UUID id) {
@@ -114,14 +113,15 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
 
     /**
      * calculates the level of the calling Element from bottom to top
+     * should not be called
      * @return level of the calling Element
      */
     public int calculateLevelFromElement() {
-        return -1;
+        assert false;
     }
 
     /**
-     * add the startHeader e.g the text before \begin{document} to the Root
+     * add the startHeader e.g. the text before \begin{document} to the Root
      *
      * @param startHeaderText List of Strings that represent the StartHeader
      */
@@ -137,7 +137,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
-        if (this.childElements != null && !this.childElements.isEmpty()) {
+        if (!this.childElements.isEmpty()) {
             ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
             for (Element child : this.childElements) {
                 childrenNode.add(child.toJsonEditor());
@@ -152,7 +152,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode treeNode = mapper.createObjectNode();
         ArrayNode node = JsonNodeFactory.instance.arrayNode();
-        if (this.childElements != null && !this.childElements.isEmpty()) {
+        if (!this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
                 node.addAll((ArrayNode) child.toJsonTree());
             }
@@ -164,8 +164,8 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     @Override
     public void toLaTeX(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         toLaTeXStart(map, key, level, exportComment, exportSummary);
-        StringBuilder text = map.get(key);
-        if (this.childElements != null && !this.childElements.isEmpty()) {
+
+        if (!this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
                 child.toLaTeX(map, key, level, exportComment, exportSummary);
             }
@@ -175,13 +175,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
 
     /**
      * adds the startHeader and the text before \begin{document}
-     *
-     * @param map           of the LaTeX Code
-     * @param key           of the LaTeX Code
-     * @param level
-     * @param exportComment
-     * @param exportSummary
-     * @throws UnknownElementException
      */
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
@@ -196,30 +189,23 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
 
     /**
      * adds the endHeader
-     *
-     * @param map           of the LaTeX Code
-     * @param key           of the LaTeX Code
-     * @param level
-     * @param exportComment
-     * @param exportSummary
-     * @throws UnknownElementException
      */
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
-
+        assert false;
     }
 
     /**
      * adds a child on the given index
-     * @param index
-     * @param newChild
+     * @param index index to add the child
+     * @param newChild child to add
      */
     public void addChildOnIndex(int index, Element newChild) {
         this.childElements.add(index, newChild);
     }
 
-    public boolean removeChild(Element element) {
-        return this.childElements.remove(element);
+    public void removeChild(Element element) {
+        this.childElements.remove(element);
     }
 
     public List<Element> getChildren() {
