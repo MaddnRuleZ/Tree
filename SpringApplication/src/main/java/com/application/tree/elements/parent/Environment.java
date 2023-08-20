@@ -121,7 +121,6 @@ public class Environment extends Parent {
         // TODO @S hier wurde conent 2x hinzugefügt
         // text.append("{").append(this.content).append("}");
         text.append("\n");
-
         super.toLaTeXEnd(map, key, level);
     }
 }
