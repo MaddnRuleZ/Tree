@@ -25,10 +25,12 @@ import java.util.regex.Pattern;
  * The captions are stored in the "captions" list, which can contain multiple captions associated with the figure.
  */
 public class Figure extends Environment {
-    private final List<String> captions;
     public static final String CAPTION_IDENTIFIER = "\\caption";
     public static final String GRAPHICS_IDENTIFIER = "\\includegraphics";
-    private static final String graphic_options = null;
+    public static final String GRAPHICS_CONTENT_REGEX = "\\{(.*?)\\}";
+    public static final String GRAPHICS_OPTIONS_REGEX = "\\[(.*?)\\]";
+    private final List<String> captions;
+    private String graphic_options = null;
     private String graphic;
 
     /**
@@ -79,16 +81,17 @@ public class Figure extends Environment {
             return false;
         }
 
-        String regex = "\\[(.*?)\\]";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(graphicsString);
+        Matcher matcherContent = Pattern.compile(GRAPHICS_CONTENT_REGEX).matcher(graphicsString);
+        if (matcherContent.find()) {
+            graphic = matcherContent.group(1);
 
-        if (matcher.find()) {
-            this.graphic = matcher.group(1);
+            Matcher matcherOptions = Pattern.compile(GRAPHICS_OPTIONS_REGEX).matcher(graphicsString);
+            if (matcherOptions.find()) {
+                this.graphic_options = matcherOptions.group(1);
+            }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

@@ -184,9 +184,6 @@ public class ParserTest {
         System.out.println(map.get("root").toString());
     }
 
-
-
-
     @Test
     public void doubleParserTest() throws FileInvalidException {
         /*
