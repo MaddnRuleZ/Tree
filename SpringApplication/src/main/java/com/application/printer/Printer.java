@@ -36,8 +36,6 @@ public abstract class Printer {
     public String getPath() {
         return path;
     }
-
-
     protected User getUser() {
         return user;
     }
