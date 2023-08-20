@@ -110,7 +110,7 @@
                             X12_2
                             X
                             X
-\part{fuck}
+\part{partN}
     \chapter{newChapter}
         X13
         X
@@ -153,11 +153,8 @@
                 \centering
                 X
                 X
-                \includegraphics[insertName]{insertName}
+                \includegraphics[insertName1]{insertName2}
                 \caption{content}
                 \label{labelName}
             \end{figure}
 \end{document}
-
-
-Haw Haw
