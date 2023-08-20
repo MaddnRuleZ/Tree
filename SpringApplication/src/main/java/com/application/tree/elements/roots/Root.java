@@ -29,10 +29,10 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     private int minLevel;
     private final List<Element> childElements;
     private static Root instance;
+
     private List<String> startHeaderText;
 
     private Root() {
-        // Private constructor to prevent instantiation from outside the class
         this.childElements = new ArrayList<>();
         this.minLevel = ElementConfig.BLOCK_ELEMENT_LEVEL;
     }
@@ -212,4 +212,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     public void setMinLevel(int minLevel) {
         this.minLevel = minLevel;
     }
+
+
 }

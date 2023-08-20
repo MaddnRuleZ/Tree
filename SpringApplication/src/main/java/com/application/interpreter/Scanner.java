@@ -41,14 +41,18 @@ public class Scanner {
      */
     public Roots parseDocument() {
         Element lastElement = null;
-        Element newElement = null;
+        Element newElement;
 
         for (int i = 0; i < text.length; i++) {
             String line = text[i];
             if (line.contains(Root.START_DOCUMENT)) {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
                 continue;
+
+            } else if (line.contains(Root.END_DOCUMENT)) {
+                break;
             }
+
             newElement = scanCurrentLine(lastElement, line);
 
             if (newElement != null) {

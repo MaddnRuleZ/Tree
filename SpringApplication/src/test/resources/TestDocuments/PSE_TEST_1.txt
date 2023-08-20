@@ -5,12 +5,10 @@
 
 \begin{document}
 
-
-
-\part*{options_text}[content_test]
+\part*{options_text}
     X1
     X
-    % comment1
+    % comment1 sub more text
     % comment2
     X
     X
@@ -159,3 +157,7 @@
                 \caption{content}
                 \label{labelName}
             \end{figure}
+\end{document}
+
+
+Haw Haw

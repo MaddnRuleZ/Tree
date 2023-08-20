@@ -1,6 +1,7 @@
 package com.application.tree.additionalInfo;
 
 import com.application.exceptions.UnknownElementException;
+import com.application.interpreter.TextFileReader;
 import com.application.tree.interfaces.LaTeXTranslator;
 
 import java.util.ArrayList;
@@ -31,7 +32,9 @@ public class Comment implements LaTeXTranslator {
      */
     public boolean extractContent(String currentLine) {
         if (currentLine.contains(START_CHARACTER)) {
-            comments.add(currentLine.replace(START_CHARACTER, ""));
+            String line = currentLine.replace(START_CHARACTER, "");
+            line = TextFileReader.removeSpacesFromStart(line);
+            comments.add(line);
             return true;
         }
         return false;

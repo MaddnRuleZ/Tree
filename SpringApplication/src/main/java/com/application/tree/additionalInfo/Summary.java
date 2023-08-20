@@ -1,6 +1,7 @@
 package com.application.tree.additionalInfo;
 
 import com.application.exceptions.UnknownElementException;
+import com.application.interpreter.TextFileReader;
 import com.application.tree.interfaces.LaTeXTranslator;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class Summary implements LaTeXTranslator {
             Pattern pattern = Pattern.compile(START_SUMMARY_REGEX);
             Matcher matcher = pattern.matcher(currentLine);
 
-            summaryText.add(currentLine);
+            summaryText.add(TextFileReader.removeSpacesFromStart(currentLine));
             return true;
         }
         return false;

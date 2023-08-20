@@ -1,6 +1,7 @@
 package com.application.tree.elements.childs;
 
 import com.application.exceptions.UnknownElementException;
+import com.application.interpreter.TextFileReader;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.parent.Figure;
@@ -50,9 +51,10 @@ public class BlockElement extends Child {
     }
 
     private void addText(String line) {
-        this.textBuilder.append(line).append("\n");
+        this.textBuilder.append(TextFileReader.removeSpacesFromStart(line)).append("\n");
         this.content = textBuilder.toString();
     }
+
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level) throws UnknownElementException {
@@ -60,7 +62,7 @@ public class BlockElement extends Child {
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
-        if(this.content != null){
+        if (this.content != null){
             for(String line : this.content.split("\n")){
                 text.append(indentation).append(line).append("\n");
             }

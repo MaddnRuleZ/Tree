@@ -1,6 +1,7 @@
 package com.application.tree.additionalInfo;
 
 import com.application.exceptions.UnknownElementException;
+import com.application.interpreter.TextFileReader;
 import com.application.tree.interfaces.LaTeXTranslator;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ public class NewLine implements LaTeXTranslator {
      */
     public boolean extractContent(String currentLine) {
         if (checkLineForNewLineCharacters(currentLine)) {
-            this.newLine = currentLine;
+            this.newLine = TextFileReader.removeSpacesFromStart(currentLine);
             return true;
         }
         return false;
