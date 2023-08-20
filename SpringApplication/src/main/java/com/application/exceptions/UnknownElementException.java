@@ -20,6 +20,6 @@ public class UnknownElementException extends ProcessingException{
      * @param requested type of the element that was requested
      */
     public UnknownElementException(String found, String requested) {
-        super("Beim Ausführen des Befehls ist ein unbekanntes Element aufgetreten: " + found + " Requested: " + requested);
+        super("Beim Ausführen des Befehls ist ein unbekanntes Element aufgetreten: " + found + " Gesucht: " + requested);
     }
 }

@@ -83,6 +83,17 @@ public class AddElementTest {
         assertFalse(command.isSuccess(), "Command should not execute successfully");
     }
 
+    @Test
+    public void ParseException() {
+        command.setParent(tree.childrenList.get(0).getId());
+        command.setContent("%no content to create an Element");
+        command.setPreviousChild(null);
+        command.execute();
+
+        assertFalse(command.isSuccess(), "Command should not execute successfully");
+    }
+
+
 
     @AfterEach
     public void tearDown() {

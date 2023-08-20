@@ -31,7 +31,7 @@ public class DeleteElementCommand extends Command {
         try {
             Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {
-                throw new ElementNotFoundException();
+                throw new ElementNotFoundException("Element");
             } else {
                 delete(elementFound, this.getUser().getRoot());
             }
