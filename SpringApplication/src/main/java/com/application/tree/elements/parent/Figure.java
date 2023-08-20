@@ -3,6 +3,7 @@ package com.application.tree.elements.parent;
 import com.application.exceptions.UnknownElementException;
 import com.application.printer.Printer;
 import com.application.tree.Element;
+import com.application.tree.elements.childs.BlockElement;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -27,12 +28,13 @@ import java.util.regex.Pattern;
  * The captions are stored in the "captions" list, which can contain multiple captions associated with the figure.
  */
 public class Figure extends Environment {
-    private final List<String> captions;
     public static final String CAPTION_IDENTIFIER = "\\caption";
     public static final String GRAPHICS_IDENTIFIER = "\\includegraphics";
+    public static final String GRAPHICS_CONTENT_REGEX = "\\{(.*?)\\}";
+    public static final String GRAPHICS_OPTIONS_REGEX = "\\[(.*?)\\]";
+    private final List<String> captions;
+    private String graphicOptions = "";
     private String graphic;
-
-    private final String graphicOptions = "";
 
     /**
      * Constructor for creating a new Figure object with the specified startPart, endPart, and level.
@@ -46,16 +48,14 @@ public class Figure extends Environment {
         captions = new ArrayList<>();
     }
 
-    // todo enter Env Function to Parse
-    /*
     /**
-     * Add a new TextBlock to the Environment.
+     * Add a new TextBlock to the Figure.
      * If there are already child elements in the Environment, the new TextBlock will be added at the same level.
      * Otherwise, it will be added as a child of the Environment.
      *
      * @param line The line to scan for Summary Comment or NewLine to be added to the TextBlock.
      * @return The newly created or existing TextBlockElement where the line is added.
-     *
+     */
     @Override
     public Element addTextBlockToElem(String line) {
         if (this.children.size() == 0) {
@@ -68,8 +68,6 @@ public class Figure extends Environment {
             return block;
         }
     }
-    */
-
 
     /**
      * if the String Contains a Part of the Graphic-string extract it,
@@ -82,16 +80,17 @@ public class Figure extends Environment {
             return false;
         }
 
-        String regex = "\\[(.*?)\\]";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(graphicsString);
+        Matcher matcherContent = Pattern.compile(GRAPHICS_CONTENT_REGEX).matcher(graphicsString);
+        if (matcherContent.find()) {
+            graphic = matcherContent.group(1);
 
-        if (matcher.find()) {
-            this.graphic = matcher.group(1);
+            Matcher matcherOptions = Pattern.compile(GRAPHICS_OPTIONS_REGEX).matcher(graphicsString);
+            if (matcherOptions.find()) {
+                this.graphicOptions = matcherOptions.group(1);
+            }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

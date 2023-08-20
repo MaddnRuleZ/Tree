@@ -4,6 +4,7 @@ import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.childs.BlockElement;
+import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Input;
 import com.application.tree.elements.roots.Root;
@@ -41,14 +42,18 @@ public class Scanner {
      */
     public Roots parseDocument() {
         Element lastElement = null;
-        Element newElement = null;
+        Element newElement;
 
         for (int i = 0; i < text.length; i++) {
             String line = text[i];
             if (line.contains(Root.START_DOCUMENT)) {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
                 continue;
+
+            } else if (line.contains(Root.END_DOCUMENT)) {
+                break;
             }
+
             newElement = scanCurrentLine(lastElement, line);
 
             if (newElement != null) {
@@ -76,9 +81,14 @@ public class Scanner {
      * @return the New Created Text Element with parent and child hierarchy
      */
     private Element scanCurrentLine(Element lastElement, String currentLine) {
-        if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
-                && currentLine.contains(lastElement.getParentElement().getEndPart())) {
+        if (lastElement != null && lastElement.getEndPart() != null && currentLine.contains(lastElement.getEndPart())) {
+            return lastElement.getParentElement();
 
+        } else if (lastElement != null && lastElement.getEndPart() != null && lastElement.getEndPart().equals(Environment.DEFAULT_ENDING)) {
+            return null;
+
+        } else  if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
+                && currentLine.contains(lastElement.getParentElement().getEndPart())) {
             return lastElement.getParentElement();
         } else {
             Element newElement = ElementConfig.createElement(currentLine);

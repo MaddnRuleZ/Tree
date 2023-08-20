@@ -1,6 +1,7 @@
 package com.application.tree.elements.childs;
 
 import com.application.exceptions.UnknownElementException;
+import com.application.interpreter.TextFileReader;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.parent.Figure;
@@ -49,8 +50,14 @@ public class BlockElement extends Child {
         }
     }
 
+    /**
+     * Add text as Content to the BlockElement,
+     * remove all leading space characters
+     *
+     * @param line text to add to the BlockElement
+     */
     private void addText(String line) {
-        this.textBuilder.append(line).append("\n");
+        this.textBuilder.append(TextFileReader.removeSpacesFromStart(line)).append("\n");
         this.content = textBuilder.toString();
     }
 
