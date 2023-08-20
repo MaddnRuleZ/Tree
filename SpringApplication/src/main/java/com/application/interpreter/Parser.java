@@ -29,8 +29,6 @@ public class Parser {
         this.textFileReader = new TextFileReader(filePath);
     }
 
-
-
     /**
      * Call this function when starting the Parsing of a full new Directory
      */

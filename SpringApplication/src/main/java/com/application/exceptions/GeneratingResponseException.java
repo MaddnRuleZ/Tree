@@ -4,7 +4,7 @@ package com.application.exceptions;
  * thrown if an error occurs while generating the response
  */
 @SuppressWarnings("SpellCheckingInspection")
-public class GeneratingResponseException extends ProcessingException{
+public class GeneratingResponseException extends ProcessingException {
 
     /**
      * thrown if an error occurs while generating the response

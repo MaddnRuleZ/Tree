@@ -1,6 +1,7 @@
 package com.application.printer;
 
 import com.application.User;
+import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.eclipse.jgit.api.Git;
@@ -118,7 +119,7 @@ public class GitPrinter extends Printer {
     /**
      * Pull changes from the remote repository and update the local version.
      */
-    public boolean pullRepository() {
+    public boolean pullRepository() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
 
         if (repositoryPath.exists() && repositoryPath.isDirectory()) {
@@ -128,24 +129,21 @@ public class GitPrinter extends Printer {
                         .setCredentialsProvider(credentialsProvider).call();
 
                 if (!pullResult.isSuccessful()) {
-                    System.out.println("Unable to update the repository.");
-                    return false;
+                    throw new OverleafGitException("Pull Fehlgeschlagen");
 
                 } else if (pullResult.getMergeResult() != null && pullResult.getMergeResult().getConflicts() != null) {
-                    System.out.println("There are merge conflicts that need to be resolved.");
-                    return false;
+                    throw new OverleafGitException("Merge Fehler müssen behoben werden!");
 
                 } else {
-                    System.out.println("Repository updated successfully.");
                     return true;
-
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+
+            } catch (IOException ex) {
+                return false;
             }
+
         } else {
-            System.out.println("Local repository does not exist or is not a valid repository.");
-            return false;
+            throw new OverleafGitException("Das lokale Repository existiert nicht oder ist kein gültiges Repository.");
         }
         return false;
     }
