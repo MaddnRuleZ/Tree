@@ -32,11 +32,11 @@ public class GitWatcher {
      * true if an error occurs
      */
     boolean failure = false;
+
     /**
      * true if changes were found
      */
     private boolean changes = false;
-
 
     @Autowired
     public GitWatcher(User user) {

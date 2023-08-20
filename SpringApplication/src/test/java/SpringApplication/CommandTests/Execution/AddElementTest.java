@@ -28,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class AddElementTest {
-
     AddCommand command;
     User user;
     ComplexTestTree tree;
@@ -41,7 +40,6 @@ public class AddElementTest {
         user.setRoot(tree.root);
         command.setUser(user);
     }
-
 
     @ParameterizedTest
     @MethodSource("elementTestCases")
@@ -161,8 +159,6 @@ public class AddElementTest {
         ).map(Arguments::of);
     }
 
-
-
     public static class ElementTestCase {
         private String input;
         private String expectedContent;
@@ -191,6 +187,5 @@ public class AddElementTest {
         public List<String> getExpectedComment() {
             return expectedComment;
         }
-
     }
 }

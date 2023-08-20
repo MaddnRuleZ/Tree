@@ -28,6 +28,7 @@ public class Figure extends Environment {
     private final List<String> captions;
     public static final String CAPTION_IDENTIFIER = "\\caption";
     public static final String GRAPHICS_IDENTIFIER = "\\includegraphics";
+    private static final String graphic_options = null;
     private String graphic;
 
     /**

@@ -74,5 +74,4 @@ public class EditCommentTest {
         newCommentIncoming = null;
         newCommentStored.clear();
     }
-
 }
