@@ -64,6 +64,20 @@ public class TextFileReader {
     }
 
     /**
+     * Remove all leading Space -Characters for later correct indentation
+     *
+     * @param textLine line to remove Spaces from
+     * @return Space cleared Line
+     */
+    public static String removeSpacesFromStart(String textLine) {
+        int index = 0;
+        while (index < textLine.length() && (textLine.charAt(index) == ' ')) {
+            index++;
+        }
+        return textLine.substring(index);
+    }
+
+    /**
      * Extracts a portion of an array of strings.
      *
      * @param inputArray   the input array of strings
