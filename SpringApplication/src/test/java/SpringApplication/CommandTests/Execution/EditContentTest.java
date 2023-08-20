@@ -28,11 +28,27 @@ import static org.junit.jupiter.api.Assertions.*;
  * tests the execution of editContent commands
  */
 public class EditContentTest {
+    /**
+     * path to the test file
+     */
     String testPath = "src/test/resources/PrinterTestOutput/EditTest.txt";
+    /**
+     * TestTree on which the test is executed on
+     */
     ComplexTestTree tree;
+    /**
+     * Command to test
+     */
     EditContentCommand command;
+    /**
+     * User on which the test is executed on
+     */
     User user;
 
+    /**
+     * Sets up the test environment before each test
+     * @throws ParseException if the testTree could not be created
+     */
     @BeforeEach
     public void setUp() throws ParseException {
         tree = new ComplexTestTree();
@@ -82,6 +98,9 @@ public class EditContentTest {
         printer.export();
     }
 
+    /**
+     * tests if an exception is thrown if the element is not found
+     */
     @Test
     public void ElementNotFoundTest() {
         command.setElement(tree.notUsedUUID);
@@ -91,6 +110,9 @@ public class EditContentTest {
         assertFalse(command.isSuccess(), "Command should fail");
     }
 
+    /**
+     * tests if an exception is thrown if the content is null
+     */
     @Test
     public void emptyContentTest() {
         Sectioning sec = tree.sectioningList.get(3);
@@ -105,6 +127,9 @@ public class EditContentTest {
         assertEquals(oldContent, sec.getContent(), "Content should not be changed");
     }
 
+    /**
+     * tests the execution if the element is on the first level
+     */
     @Test
     public void firstLevelTest() {
         Sectioning sec = tree.sectioningList.get(0);
@@ -119,6 +144,9 @@ public class EditContentTest {
         assertNotEquals(oldContent, sec.getContent(), "Content should be changed");
     }
 
+    /**
+     * resets the test environment after each test
+     */
     @AfterEach
     public void cleanUp() {
         tree = null;

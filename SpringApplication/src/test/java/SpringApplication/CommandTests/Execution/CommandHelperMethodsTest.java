@@ -14,9 +14,16 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * Tests the execution of the commandHelperMethods
+ */
 public class CommandHelperMethodsTest {
     TestTree tree;
 
+    /**
+     * Sets up the test environment before each test
+     * @throws ParseException if the testTree could not be created
+     */
     @BeforeEach
     public void setUp() throws ParseException {
         tree = TestTree.createTestTree();
@@ -58,6 +65,9 @@ public class CommandHelperMethodsTest {
         assertEquals(1, sec3.levelOfDeepestSectioningChild(), "Deepest Child of sec3 should be on level 1");
     }
 
+    /**
+     * tests the method checkOwnChild
+     */
     @Test
     public void checkOwnChild() {
         Parent sec2 = tree.sectioningList.get(1);

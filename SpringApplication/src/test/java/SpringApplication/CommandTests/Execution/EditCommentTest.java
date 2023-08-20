@@ -17,15 +17,41 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests the execution of an EditCommentCommand
+ */
 public class EditCommentTest {
 
+    /**
+     * TestTree on which the test is executed on
+     */
     ComplexTestTree tree;
+    /**
+     * Command to test
+     */
     EditCommentCommand command;
+    /**
+     * User on which the test is executed on
+     */
     User user;
+    /**
+     * old comment of the element
+     */
     String oldComment;
+    /**
+     * new comment of the element that is received
+     */
     String newCommentIncoming;
+    /**
+     * new comment of the element that is stored in the element
+     * equals newCommentIncoming without the %
+     */
     ArrayList<String> newCommentStored = new ArrayList<>();
 
+    /**
+     * Sets up the test environment before each test
+     * @throws ParseException
+     */
     @BeforeEach
     public void setUp() throws ParseException {
         tree = new ComplexTestTree();
@@ -53,6 +79,9 @@ public class EditCommentTest {
         assertEquals(newCommentStored, sec.getComment().getComments(), "Comment should be changed");
     }
 
+    /**
+     * tests if an exception is thrown if the element is not found
+     */
     @Test
     public void ElementNotFoundTest() {
         UUID id = tree.notUsedUUID;
@@ -65,6 +94,9 @@ public class EditCommentTest {
         assertFalse(command.isSuccess(), "Command should fail");
     }
 
+    /**
+     * resets the test environment after each test
+     */
     @AfterEach
     public void tearDown() {
         tree = null;

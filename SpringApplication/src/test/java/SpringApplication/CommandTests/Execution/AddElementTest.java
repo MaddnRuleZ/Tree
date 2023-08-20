@@ -24,12 +24,27 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * Tests the execution of an AddCommand
+ */
 public class AddElementTest {
 
+    /**
+     * Command to test
+     */
     AddCommand command;
+    /**
+     * User on which the test is executed on
+     */
     User user;
+    /**
+     * TestTree on which the test is executed on
+     */
     ComplexTestTree tree;
 
+    /**
+     * Sets up the test environment before each test
+     */
     @BeforeEach
     public void setUp() {
         command = new AddCommand();
@@ -40,6 +55,11 @@ public class AddElementTest {
     }
 
 
+    /**
+     * Tests the execution of an AddCommand
+     * Tests if the content is added correctly
+     * @param testCase TestCase to test
+     */
     @ParameterizedTest
     @MethodSource("elementTestCases")
     public void addElementTest(ElementTestCase testCase) {
@@ -63,6 +83,9 @@ public class AddElementTest {
         print(expectedContent);
     }
 
+    /**
+     * Tests the correct failure Recognition if the parent is not a parentType
+     */
     @Test
     public void newParentTypeChild() {
         command.setParent(tree.childrenList.get(0).getId());
@@ -73,6 +96,9 @@ public class AddElementTest {
         assertFalse(command.isSuccess(), "Command should not execute successfully");
     }
 
+    /**
+     * Tests the correct failure Recognition if the parent is not found
+     */
     @Test
     public void ElementNotFound() {
         command.setParent(tree.notUsedUUID);
@@ -83,6 +109,9 @@ public class AddElementTest {
         assertFalse(command.isSuccess(), "Command should not execute successfully");
     }
 
+    /**
+     * Tests the correct failure Recognition if there is no content to be added
+     */
     @Test
     public void ParseException() {
         command.setParent(tree.childrenList.get(0).getId());
@@ -94,7 +123,9 @@ public class AddElementTest {
     }
 
 
-
+    /**
+     * resets the test environment after each test
+     */
     @AfterEach
     public void tearDown() {
         command = null;
@@ -114,6 +145,11 @@ public class AddElementTest {
         }
     }
 
+    /**
+     * TestCases for the addElementTest
+     * @return Stream of TestCases each one contains the input, expectedContent, expectedOptions and expectedComment
+     * for an structureElement recognised by the parser
+     */
     static Stream<Arguments> elementTestCases() {
         return Stream.of(
                 new ElementTestCase(
