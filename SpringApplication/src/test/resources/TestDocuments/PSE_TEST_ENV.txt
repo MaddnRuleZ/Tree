@@ -1,11 +1,28 @@
 Start of Document
 
 \begin{document}
-\part*{p1}
+\part{p1}
+    X
+    X
+    \begin{enumerate}
+        % commentTest 1
+        \item \label{1} X11
+        \item \label{2} X22
+        \item \label{3} X33
+    \end{enumerate}
     X
     X
     X
     \begin{algorithmic}
+        % commentTest1
+        X
+        X
+        %\start{summary}
+            %X
+            %X
+            %X
+        %\finish{summary}
+        % commentTest2
         X1
         X
         X
@@ -13,9 +30,25 @@ Start of Document
     X
     X
     X
-\part{sec}
+    \begin{equation}
+        X
+        X
+        X
+    \end{equation}
+    X
+    X
+    X
+    \begin{figure}[htp]
+        \centering
+        X
+        X
+        \includegraphics[insertName1]{insertName2}
+        \caption{captionContent}
+        \label{labelName}
+    \end{figure}
+\part{sec Problem}
     \begin{enumerate}
-        \item \label{1} X
-        \item \label{2} X
-        \item \label{3} X
+        \item \label{1} X11
+        \item \label{2} X22
+        \item \label{3} X33
     \end{enumerate}

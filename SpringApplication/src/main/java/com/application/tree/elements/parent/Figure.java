@@ -46,7 +46,7 @@ public class Figure extends Environment {
     }
 
     // todo enter Env Function to Parse
-    /*
+
     /**
      * Add a new TextBlock to the Environment.
      * If there are already child elements in the Environment, the new TextBlock will be added at the same level.
@@ -54,7 +54,7 @@ public class Figure extends Environment {
      *
      * @param line The line to scan for Summary Comment or NewLine to be added to the TextBlock.
      * @return The newly created or existing TextBlockElement where the line is added.
-     *
+     */
     @Override
     public Element addTextBlockToElem(String line) {
         if (this.children.size() == 0) {
@@ -67,8 +67,6 @@ public class Figure extends Environment {
             return block;
         }
     }
-    */
-
 
     /**
      * if the String Contains a Part of the Graphic-string extract it,

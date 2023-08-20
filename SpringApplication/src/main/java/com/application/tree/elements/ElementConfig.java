@@ -87,6 +87,13 @@ public enum ElementConfig {
         }
     },
 
+    VERBATIM("\\begin{verbatim}", "\\end{verbatim}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
+        @Override
+        Element getElement(String currentLine) {
+            return new Environment(getStartPart(), getEndPart(), getLevel());
+        }
+    },
+
     LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
@@ -94,7 +101,7 @@ public enum ElementConfig {
         }
     },
 
-    VERBATIM("\\begin{verbatim}", "\\end{verbatim}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
+    EQUATION("\\begin{equation}", "\\end{equation}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(getStartPart(), getEndPart(), getLevel());
@@ -105,13 +112,6 @@ public enum ElementConfig {
         @Override
         Element getElement(String currentLine) {
             return new Figure(getStartPart(), getEndPart(), getLevel());
-        }
-    },
-
-    EQUATION("\\begin{equation}", "\\end{equation}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
-        @Override
-        Element getElement(String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), getLevel());
         }
     },
 

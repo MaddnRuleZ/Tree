@@ -1,6 +1,7 @@
 package com.application.tree.elements.parent;
 
 import com.application.exceptions.UnknownElementException;
+import com.application.interpreter.TextFileReader;
 import com.application.tree.Element;
 import com.application.tree.elements.childs.BlockElement;
 
@@ -33,32 +34,20 @@ public class Environment extends Parent {
         super(startPart, endPart, level);
     }
 
-    public Element addTextBlockToElem2(String line) {
-        // todo add comment und summary?
-        this.textBuilder.append(line).append("\n");
-        this.content = textBuilder.toString();
-        return this;
-    }
-
     /**
-     * Add a new TextBlock to the Environment.
-     * If there are already child elements in the Environment, the new TextBlock will be added at the same level.
-     * Otherwise, it will be added as a child of the Environment.
+     * Add the Text of the Environment as content to the Element,
+     * remove all leading Space Characters
      *
-     * @param line The line to scan for Summary Comment or NewLine to be added to the TextBlock.
-     * @return The newly created or existing TextBlockElement where the line is added.
+     * @param line current Line in the Text
+     * @return the current Environment
      */
-    @Override
     public Element addTextBlockToElem(String line) {
-        if (this.children.size() == 0) {
-            BlockElement block = generateTextBlockAsChild();
-            block.addTextBlockToElem(line);
-            return block;
-        } else {
-            BlockElement block = generateTextSameLevel();
-            block.addTextBlockToElem(line);
-            return block;
+        if (!summary.extractContent(line) && !comment.extractContent(line)) {
+            line = TextFileReader.removeSpacesFromStart(line);
+            this.textBuilder.append(line).append("\n");
+            this.content = textBuilder.toString();
         }
+        return this;
     }
 
     @Override
@@ -109,7 +98,7 @@ public class Environment extends Parent {
 
         text.append(indentation).append("\\begin");
         text.append("{").append(this.content).append("}");
-        if(this.options != null) {
+        if (this.options != null) {
             text.append("[").append(this.options).append("]");
         }
         text.append("\n");
@@ -129,7 +118,8 @@ public class Environment extends Parent {
         StringBuilder text = map.get(key);
 
         text.append(indentation).append("\\end");
-        text.append("{").append(this.content).append("}");
+        // TODO @S hier wurde conent 2x hinzugefügt
+        // text.append("{").append(this.content).append("}");
         text.append("\n");
 
         super.toLaTeXEnd(map, key, level);
