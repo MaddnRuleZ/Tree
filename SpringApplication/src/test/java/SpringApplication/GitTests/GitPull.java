@@ -1,5 +1,6 @@
 package SpringApplication.GitTests;
 
+import com.application.exceptions.OverleafGitException;
 import com.application.printer.GitPrinter;
 import com.application.User;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,11 @@ public class GitPull {
     public void gitPullTest() {
         GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
                 "ueteb@student.kit.edu", "WhatWasMyPass??",wokringDirectory, user);
-        gitPrinter.pullRepository();
+        try {
+            gitPrinter.pullRepository();
+        } catch (OverleafGitException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

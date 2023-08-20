@@ -137,15 +137,12 @@ public class GitPrinter extends Printer {
                 } else {
                     return true;
                 }
-
-            } catch (IOException ex) {
+            } catch (IOException | GitAPIException ex) {
                 return false;
             }
-
         } else {
             throw new OverleafGitException("Das lokale Repository existiert nicht oder ist kein gültiges Repository.");
         }
-        return false;
     }
 
     /**
