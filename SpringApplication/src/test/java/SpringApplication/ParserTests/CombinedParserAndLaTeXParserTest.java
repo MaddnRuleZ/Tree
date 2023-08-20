@@ -46,6 +46,7 @@ public class CombinedParserAndLaTeXParserTest {
 
     @AfterEach
     public void tearDown() {
+        root = null;
         Root.resetInstance();
     }
 

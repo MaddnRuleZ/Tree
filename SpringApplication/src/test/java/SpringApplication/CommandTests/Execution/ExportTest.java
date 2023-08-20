@@ -21,13 +21,32 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tests the execution of an ExportCommand
+ */
 public class ExportTest {
+    /**
+     * TestTree on which the test is executed on
+     */
     TestTree tree;
+    /**
+     * Command to test
+     */
     ExportCommand command;
+    /**
+     * User on which the test is executed on
+     */
     User user;
+    /**
+     * Printer to print the tree
+     */
     FilePrinter printer;
-    File fileToDelete = new File("src/test/resources/PrinterTestOutput/ExportTest.txt");
 
+
+    /**
+     * Sets up the test environment before each test
+     * @throws ParseException if the testTree could not be created
+     */
     @BeforeEach
     public void setUp() throws ParseException {
         tree = new ComplexTestTree();
@@ -44,6 +63,9 @@ public class ExportTest {
 
     }
 
+    /**
+     * Tests the execution of an ExportCommand
+     */
     @Test
     public void exportTest() {
         command.setExportComment(true);
@@ -52,6 +74,10 @@ public class ExportTest {
         assertTrue(command.isSuccess(), "Command should be successful");
     }
 
+
+    /**
+     * Tests the execution of an ExportCommand wih different parameters for comment and summary
+     */
     @ParameterizedTest
     @CsvSource({"true, false", "false, false", "true, true"})
     public void exportTestWithoutCommentSummary(boolean comment, boolean summary) throws UnknownElementException {
@@ -76,6 +102,9 @@ public class ExportTest {
     }
 
 
+    /**
+     * resets the test environment after each test
+     */
     @AfterEach
     public void tearDown() {
         tree = null;

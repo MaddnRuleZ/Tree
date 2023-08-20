@@ -23,12 +23,28 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tests the execution of an ExportCommand
+ */
 public class GetCommandTest {
 
+    /**
+     * TestTree on which the test is executed on
+     */
     TestTree tree;
+    /**
+     * Command to test
+     */
     GetCommand command;
+    /**
+     * User on which the test is executed on
+     */
     User user;
 
+    /**
+     * Sets up the test environment before each test
+     * @throws ParseException if the testTree could not be created
+     */
     @BeforeEach
     public void setUp() throws ParseException {
         tree = new ComplexTestTree();
@@ -36,6 +52,10 @@ public class GetCommandTest {
         user.setRoot(tree.root);
     }
 
+    /**
+     * Tests the execution of an ExportCommand
+     * Tests if the content is added correctly
+     */
     @ParameterizedTest
     @CsvSource({
             "true, editor",
@@ -48,6 +68,9 @@ public class GetCommandTest {
         assertEquals(expected, fieldNames.next() , "Should be equal");
     }
 
+    /**
+     * Tests if an exception is thrown if the root is null
+     */
     @Test
     public void failureResponseTest() {
         command = new GetCommand(user, true);

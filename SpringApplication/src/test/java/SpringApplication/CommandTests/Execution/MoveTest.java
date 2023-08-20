@@ -23,11 +23,23 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests the execution of an MoveElementCommand
+ */
 public class MoveTest {
-
+    /**
+     * TestTree on which the test is executed on
+     */
     TestTree tree;
+    /**
+     * Command to test
+     */
     MoveElementCommand command;
 
+    /**
+     * Sets up the test environment before each test
+     * @throws ParseException
+     */
     @BeforeEach
     public void setUp() throws ParseException {
         tree = TestTree.createTestTree();
@@ -37,6 +49,10 @@ public class MoveTest {
         command.setUser(user);
     }
 
+    /**
+     * Tests the execution of an MoveElementCommand with a previous element
+     * @param isEditor if the editor or the tree view is the caller
+     */
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     public void moveElementWithPreviousElementTest(boolean isEditor) {
@@ -56,6 +72,11 @@ public class MoveTest {
         assertEquals(sec3.getChildren().get(1), child4, "Child 4 should be second child of Sectioning 3");
         assertFalse(oldParent.getChildren().contains(child4), "Old parent should not contain child 4");
     }
+
+    /**
+     * Tests the execution of an MoveElementCommand without a previous element
+     * @param isEditor if the editor or the tree view is the caller
+     */
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     public void moveElementWithoutPreviousElementTest(boolean isEditor) {
@@ -76,6 +97,9 @@ public class MoveTest {
         assertFalse(oldParent.getChildren().contains(child4), "Old parent should not contain child 4");
     }
 
+    /**
+     * Tests if the command throws an exception if the new parent is a child of the element
+     */
     @Test
     public void OwnChildException() {
         Parent sec2 = tree.sectioningList.get(1);
@@ -88,6 +112,9 @@ public class MoveTest {
         assertEquals(tree.sectioningList.get(0), sec2.getParentElement(), "Sectioning 1 should be parent of Sectioning 2");
     }
 
+    /**
+     * Tests if the command throws an exception if the deepest Sectioning child is moved too deep
+     */
     @Test
     public void moveTooDeep() {
         Sectioning sec2 = tree.sectioningList.get(1);
@@ -100,6 +127,10 @@ public class MoveTest {
         assertEquals(tree.sectioningList.get(0), sec2.getParentElement(), "Sectioning 1 should be parent of Sectioning 2");
     }
 
+    /**
+     * Tests if the command throws an exception if the element is not found
+     * @param isEditor if the editor or the tree view is the caller
+     */
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     public void ElementNotFoundTest(boolean isEditor) {
@@ -115,6 +146,10 @@ public class MoveTest {
         assertFalse(command.isSuccess(), "Command should not be successful");
     }
 
+    /**
+     * Tests if the command throws an exception if the new parent is a child
+     * @param isEditor if the editor or the tree view is the caller
+     */
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     public void newParentTypeChild(boolean isEditor) {
@@ -134,6 +169,9 @@ public class MoveTest {
     }
 
 
+    /**
+     * Tests if the command executes successful if the new parent is null
+     */
     @Test
     public void newParentNull() {
         Element previous = tree.root.getChildren().get(0);
@@ -151,6 +189,9 @@ public class MoveTest {
         assertFalse(oldParent.getChildren().contains(child4), "Old parent should not contain child 4");
     }
 
+    /**
+     * Tests if the command executes successful if the old parent is null
+     */
     @Test
     public void oldParentNull() {
         Element sec = tree.root.getChildren().get(1);
@@ -168,6 +209,9 @@ public class MoveTest {
         assertEquals(newParent.getChildren().get(1), sec, "Sectioning should be second child of new Parent");
     }
 
+    /**
+     * Tests if the command executes successful if the previous element is null
+     */
     @Test
     public void previousElementNull() {
         Parent newParent = tree.sectioningList.get(1);
@@ -187,6 +231,9 @@ public class MoveTest {
         assertFalse(oldParent.getChildren().contains(element), "Old parent should not contain child 4");
     }
 
+    /**
+     * Tests if the command executes successful if the element is moved within the same parent
+     */
     @Test
     public void MoveWithinParent() {
         Parent newParent = tree.sectioningList.get(1);
@@ -201,6 +248,9 @@ public class MoveTest {
         assertEquals(element.getParentElement(), oldParent, "Element should have old parent");
     }
 
+    /**
+     * Resets the test environment after each test
+     */
     @AfterEach
     public void tearDown() {
         tree = null;

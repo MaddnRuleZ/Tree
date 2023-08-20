@@ -17,15 +17,41 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests the execution of an EditSummaryCommand
+ */
 public class EditSummaryTest {
 
+    /**
+     * TestTree on which the test is executed on
+     */
     ComplexTestTree tree;
+    /**
+     * Command to test
+     */
     EditSummaryCommand command;
+    /**
+     * User on which the test is executed on
+     */
     User user;
+    /**
+     * old summary of the element
+     */
     String oldSummary;
+    /**
+     * new summary of the element that is received
+     */
     String newSummaryIncoming;
+    /**
+     * new summary of the element that is stored in the element
+     * equals newSummaryIncoming without the %\start{summary] and %\end{summary}
+     */
     ArrayList<String> newSummaryStored = new ArrayList<>();
 
+    /**
+     * Sets up the test environment before each test
+     * @throws ParseException if the testTree could not be created
+     */
     @BeforeEach
     public void setUp() throws ParseException {
         tree = new ComplexTestTree();
@@ -35,6 +61,9 @@ public class EditSummaryTest {
         command.setUser(user);
     }
 
+    /**
+     * Tests the execution of an EditSummaryCommand
+     */
     @Test
     public void editSummaryTest() {
         Element elem = tree.childrenList.get(0);
@@ -50,6 +79,10 @@ public class EditSummaryTest {
         assertEquals(newSummaryStored, elem.getSummary().getSummary(), "Summary should be changed");
     }
 
+    /**
+     * tests the execution of a editSummary command
+     * with a bad summary
+     */
     @Test
     public void emptySummaryTest() {
         Element elem = tree.childrenList.get(0);
@@ -64,6 +97,9 @@ public class EditSummaryTest {
         assertFalse(elem.isChooseManualSummary());
     }
 
+    /**
+     * tests if an exception is thrown if the element is not found
+     */
     @Test
     public void ElementNotFoundTest() {
         UUID id = tree.notUsedUUID;
@@ -75,6 +111,9 @@ public class EditSummaryTest {
         assertFalse(command.isSuccess(), "Command should fail");
     }
 
+    /**
+     * resets the test environment after each test
+     */
     @AfterEach
     public void tearDown() {
         tree = null;

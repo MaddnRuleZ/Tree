@@ -1,29 +1,38 @@
 package SpringApplication.CommandTests.Execution;
 
-import com.application.command.CommandHandler;
+import com.application.User;
 import com.application.command.types.LoadFromFolderCommand;
 import com.application.exceptions.ProcessingException;
-import com.application.User;
 import com.application.printer.Printer;
 import com.application.tree.elements.roots.Root;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.File;
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests the execution of an LoadFromFolderCommand
+ */
 public class LoadFolderTest {
+    /**
+     * Command to test
+     */
     LoadFromFolderCommand command;
+    /**
+     * User on which the test is executed on
+     */
     User user;
+    /**
+     * Path to the test file
+     */
     String path = "src/test/resources/TestDocuments/PSE_TEST_1.txt";
 
+    /**
+     * Sets up the test environment before each test
+     */
     @BeforeEach
     void setUp() {
         this.user = new User();
@@ -31,6 +40,10 @@ public class LoadFolderTest {
         this.command.setUser(user);
     }
 
+    /**
+     * Tests the execution of an LoadFromFolderCommand
+     * Tests if the content is added correctly
+     */
     @Test
     void DoubleLoadTest() throws ProcessingException {
         this.command.setPath(path);
@@ -51,6 +64,10 @@ public class LoadFolderTest {
         assertNotEquals(firstPrinter, sndPrinter, "Printers should not be equal");
     }
 
+    /**
+     * Tests the execution of an LoadFromFolderCommand
+     * Tests if the content is added correctly
+     */
     @ParameterizedTest
     @ValueSource(strings = {"src/test/resources/LoadTestPaths/WrongType.jpg",
                             "src/test/resources/LoadTestPaths",
@@ -61,6 +78,10 @@ public class LoadFolderTest {
         assertFalse(command.isSuccess(), "Command should not execute successfully");
     }
 
+    /**
+     * Tests the execution of an LoadFromFolderCommand
+     * Tests if the content is added correctly
+     */
     @Test
     public void parseExceptionTest() {
         this.command.setPath("src/test/resources/LoadTestPaths/NotParsableTest.txt");
