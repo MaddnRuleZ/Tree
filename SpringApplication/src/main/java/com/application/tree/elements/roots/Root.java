@@ -193,7 +193,8 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
      */
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
-        assert false;
+        StringBuilder text = map.get(key);
+        text.append(END_DOCUMENT);
     }
 
     /**

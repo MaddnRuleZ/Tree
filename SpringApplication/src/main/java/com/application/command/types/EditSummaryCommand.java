@@ -27,7 +27,7 @@ public class EditSummaryCommand extends Command {
         try {
             Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {
-                throw new ElementNotFoundException();
+                throw new ElementNotFoundException("Element");
             } else {
                 if(this.summary.equals("")){
                     elementFound.setChooseManualSummary(false);

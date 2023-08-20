@@ -18,12 +18,12 @@ public interface IMoveElementCommand {
      * moves an element in the treeStructure
      */
     default void moveElement(Element element, Parent newParent, UUID previousElement, int minLevel) throws OwnChildException, LevelException, ElementNotFoundException {
-        int indexPreviousElement = Root.getInstance().getIndexOfChild(previousElement);
-        if(indexPreviousElement == -2) {
-            throw new ElementNotFoundException("PreviousElement");
-        }
-
         if(newParent == null) {
+            int indexPreviousElement = Root.getInstance().getIndexOfChild(previousElement);
+            if(indexPreviousElement == -2) {
+                throw new ElementNotFoundException("PreviousElement");
+            }
+
             Parent oldParent = element.getParentElement();
             element.setParent(null);
             if(oldParent == null) {
@@ -38,6 +38,11 @@ public interface IMoveElementCommand {
 
         if(checkPossibleLevel(element, newParent, minLevel)){
             if(checkPossibleParent(element, newParent)) {
+                int indexPreviousElement = newParent.getIndexOfChild(previousElement);
+                if(indexPreviousElement == -2) {
+                    throw new ElementNotFoundException("PreviousElement");
+                }
+
                 Parent oldParent = element.getParentElement();
                 if(oldParent == null) {
                     Root.getInstance().removeChild(element);

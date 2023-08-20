@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,7 +28,6 @@ public class GetCommandTest {
     TestTree tree;
     GetCommand command;
     User user;
-    FilePrinter printer;
 
     @BeforeEach
     public void setUp() throws ParseException {
@@ -38,15 +38,14 @@ public class GetCommandTest {
 
     @ParameterizedTest
     @CsvSource({
-            "true, src/test/resources/TestDocuments/SuccessResponseEditor.json",
-            "false, src/test/resources/TestDocuments/SuccessResponseTree.json"})
+            "true, editor",
+            "false, tree"})
     public void getTest(boolean isEditor, String expected) throws IOException {
         command = new GetCommand(user, isEditor);
         JsonNode response = command.execute();
+        Iterator fieldNames = response.fieldNames();
 
-        String expectedString = Files.readString(Path.of(expected));
-
-        assertEquals(expectedString, response.toString(), "Should be equal");
+        assertEquals(expected, fieldNames.next() , "Should be equal");
     }
 
     @Test

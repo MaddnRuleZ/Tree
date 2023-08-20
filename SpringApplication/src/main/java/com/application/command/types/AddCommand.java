@@ -38,7 +38,7 @@ public class AddCommand extends Command {
             Element foundParentElement = this.getUser().getRoot().searchForID(this.parent);
 
             if(foundParentElement == null ) {
-                throw new ElementNotFoundException();
+                throw new ElementNotFoundException("Parent");
             } else if (!(foundParentElement instanceof Parent)) {
                 throw new TypeException(Parent.class.getSimpleName(), foundParentElement.getClass().getSimpleName());
             }
@@ -53,7 +53,7 @@ public class AddCommand extends Command {
 
             int index = parentElement.getIndexOfChild(this.previousChild);
             if(index == -2) {
-                throw new ElementNotFoundException();
+                throw new ElementNotFoundException("PreviousChild");
             }
             for (Element child : foundRoot.getChildren()) {
                 child.setParent(parentElement);

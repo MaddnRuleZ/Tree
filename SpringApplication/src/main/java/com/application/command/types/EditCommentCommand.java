@@ -28,7 +28,7 @@ public class EditCommentCommand extends Command {
         try {
             Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {
-                throw new ElementNotFoundException();
+                throw new ElementNotFoundException("Element");
             } else {
                 elementFound.setComment(this.comment);
                 this.setSuccess(true);

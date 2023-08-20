@@ -32,7 +32,7 @@ public class EditContentCommand extends Command implements IEditCommand {
             checkBadString(this.content);
             Element elementFound = this.getUser().getRoot().searchForID(this.element);
             if(elementFound == null) {
-                throw new ElementNotFoundException();
+                throw new ElementNotFoundException("Element");
             } else {
                 elementFound.setContentManually(content);
                 this.setSuccess(true);
