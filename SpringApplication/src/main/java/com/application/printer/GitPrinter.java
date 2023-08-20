@@ -46,27 +46,24 @@ public class GitPrinter extends Printer {
         this.working_directory = workingDir;
         setFigurePath(this.working_directory);
         System.out.println(workingDir);
+
     }
 
     /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.
      */
-    public boolean cloneRepository() {
+    public boolean cloneRepository() throws GitAPIException {
         File repositoryPath = new File(this.working_directory);
         if (repositoryPath.exists() && repositoryPath.isDirectory()) {
             deleteDirectory(repositoryPath);
         }
 
-        try {
-            Git.cloneRepository()
+        Git.cloneRepository()
                     .setURI(this.overleafUrl)
                     .setDirectory(repositoryPath)
                     .setCredentialsProvider(this.credentialsProvider)
                     .call();
             return true;
-        } catch (GitAPIException e) {
-            return false;
-        }
     }
 
     /**
@@ -99,7 +96,7 @@ public class GitPrinter extends Printer {
      *
      * @return True if the push operation was successful, false otherwise.
      */
-    public boolean pushChanges() {
+    public boolean pushChanges() throws OverleafGitException {
         String refSpec = "refs/heads/master:refs/heads/master";
 
         try {
@@ -110,14 +107,14 @@ public class GitPrinter extends Printer {
                     .setRefSpecs(new RefSpec(refSpec))
                     .call();
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        } catch (IOException | GitAPIException ex) {
+            throw new OverleafGitException("Unbekannter Error" + ex);
         }
     }
 
     /**
      * Pull changes from the remote repository and update the local version.
+     *
      */
     public boolean pullRepository() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
@@ -130,10 +127,8 @@ public class GitPrinter extends Printer {
 
                 if (!pullResult.isSuccessful()) {
                     throw new OverleafGitException("Pull Fehlgeschlagen");
-
                 } else if (pullResult.getMergeResult() != null && pullResult.getMergeResult().getConflicts() != null) {
                     throw new OverleafGitException("Merge Fehler müssen behoben werden!");
-
                 } else {
                     return true;
                 }
@@ -200,10 +195,8 @@ public class GitPrinter extends Printer {
         directory.delete();
     }
 
-
-
     @Override
-    public void export() throws IOException, UnknownElementException {
+    public void export() throws IOException, UnknownElementException, OverleafGitException {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put(this.getPath() + "/" + MAIN_ENDING, new StringBuilder());
         this.getUser().getRoot().toLaTeX(map, this.getPath()+ "/" + MAIN_ENDING, LaTeXTranslator.INIT_INDENTATION_LEVEL, this.isExportSummary(), this.isExportComments());

@@ -1,6 +1,7 @@
 package com.application.printer;
 
 import com.application.User;
+import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.UnknownElementException;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public abstract class Printer {
     /**
      * exports the tree
      */
-    public abstract void export() throws IOException, UnknownElementException;
+    public abstract void export() throws IOException, UnknownElementException, OverleafGitException;
     public String getPath() {
         return path;
     }

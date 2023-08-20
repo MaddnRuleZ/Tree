@@ -3,6 +3,7 @@ package SpringApplication.GitTests;
 import com.application.exceptions.OverleafGitException;
 import com.application.printer.GitPrinter;
 import com.application.User;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.Test;
 
 public class GitPull {
@@ -12,7 +13,7 @@ public class GitPull {
     private User user;
 
     @Test
-    public void gitPushTest() {
+    public void gitPushTest() throws OverleafGitException {
         GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
                 "ueteb@student.kit.edu", "WhatWasMyPass??", wokringDirectory, user);
         gitPrinter.pushChanges();
@@ -30,7 +31,7 @@ public class GitPull {
     }
 
     @Test
-    public void gitCloneTest() {
+    public void gitCloneTest() throws GitAPIException {
         GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
                 "ueteb@student.kit.edu", "WhatWasMyPass??", wokringDirectory, user);
         gitPrinter.cloneRepository();

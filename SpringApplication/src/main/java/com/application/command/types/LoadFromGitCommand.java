@@ -1,6 +1,7 @@
 package com.application.command.types;
 
 import com.application.command.types.interfaces.ILoadCommand;
+import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
 import com.application.printer.Printer;
@@ -35,8 +36,14 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
         try {
             this.getUser().resetUser();
             Printer printer = new GitPrinter(url, username, password, path, this.getUser());
+            // printer.executeCurl(); -> 1
+
             load(this.getUser(), printer, path);
             this.setSuccess(true);
+
+        // } catch (OverleafGitException overleafGitException) {
+
+
         } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
