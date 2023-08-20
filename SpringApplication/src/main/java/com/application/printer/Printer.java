@@ -11,7 +11,6 @@ import java.util.Map;
 
 public abstract class Printer {
     private String path;
-
     private User user;
 
     public static Map<String, StringBuilder> map = new HashMap<>();
@@ -28,7 +27,6 @@ public abstract class Printer {
         this.user = user;
     }
 
-
     /**
      * exports the tree
      */
@@ -36,8 +34,6 @@ public abstract class Printer {
     public String getPath() {
         return path;
     }
-
-
     protected User getUser() {
         return user;
     }
