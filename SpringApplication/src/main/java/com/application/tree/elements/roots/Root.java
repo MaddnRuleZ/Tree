@@ -168,7 +168,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
 
         if (!this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                child.toLaTeX(map, key, level, exportComment, exportSummary);
+                child.toLaTeX(map, key, level + 1, exportComment, exportSummary);
             }
         }
         toLaTeXEnd(map, key, level, exportComment, exportSummary);

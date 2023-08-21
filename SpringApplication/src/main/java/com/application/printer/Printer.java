@@ -4,6 +4,7 @@ import com.application.User;
 import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.UnknownElementException;
 
+import java.io.File;
 import java.io.IOException;
 
 public abstract class Printer {
@@ -46,7 +47,7 @@ public abstract class Printer {
     }
 
     public static void setFigurePath(String path) {
-        FIGURE_PATH = path;
+        FIGURE_PATH = path.replace("\\", "/");
     }
 
     public boolean isExportComments() {
