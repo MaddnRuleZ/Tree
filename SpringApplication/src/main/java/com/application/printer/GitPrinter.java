@@ -49,6 +49,16 @@ public class GitPrinter extends Printer {
 
     }
 
+
+    public void executeCurl() throws OverleafGitException, GitAPIException {
+        if (!pullRepository()) {
+            cloneRepository();
+        }
+
+
+
+    }
+
     /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.
      */
@@ -64,6 +74,34 @@ public class GitPrinter extends Printer {
                     .setCredentialsProvider(this.credentialsProvider)
                     .call();
             return true;
+    }
+
+    /**
+     * Pull changes from the remote repository and update the local version.
+     *
+     */
+    public boolean pullRepository() throws OverleafGitException {
+        File repositoryPath = new File(this.working_directory);
+
+        if (!repositoryPath.exists() || !repositoryPath.isDirectory()) {
+            throw new OverleafGitException("Das lokale Repository existiert nicht oder ist kein gültiges Repository.");
+        }
+
+        try {
+            Git git = Git.open(repositoryPath);
+            PullResult pullResult = git.pull()
+                    .setCredentialsProvider(credentialsProvider).call();
+
+            if (!pullResult.isSuccessful()) {
+                throw new OverleafGitException("Pull Fehlgeschlagen");
+            } else if (pullResult.getMergeResult() != null && pullResult.getMergeResult().getConflicts() != null) {
+                throw new OverleafGitException("Merge Fehler müssen behoben werden!");
+            } else {
+                return true;
+            }
+        } catch (IOException | GitAPIException ex) {
+            return false;
+        }
     }
 
     /**
@@ -112,33 +150,7 @@ public class GitPrinter extends Printer {
         }
     }
 
-    /**
-     * Pull changes from the remote repository and update the local version.
-     *
-     */
-    public boolean pullRepository() throws OverleafGitException {
-        File repositoryPath = new File(this.working_directory);
 
-        if (repositoryPath.exists() && repositoryPath.isDirectory()) {
-            try {
-                Git git = Git.open(repositoryPath);
-                PullResult pullResult = git.pull()
-                        .setCredentialsProvider(credentialsProvider).call();
-
-                if (!pullResult.isSuccessful()) {
-                    throw new OverleafGitException("Pull Fehlgeschlagen");
-                } else if (pullResult.getMergeResult() != null && pullResult.getMergeResult().getConflicts() != null) {
-                    throw new OverleafGitException("Merge Fehler müssen behoben werden!");
-                } else {
-                    return true;
-                }
-            } catch (IOException | GitAPIException ex) {
-                return false;
-            }
-        } else {
-            throw new OverleafGitException("Das lokale Repository existiert nicht oder ist kein gültiges Repository.");
-        }
-    }
 
     /**
      * Checks if the remote repository was changed compared to the local repository.

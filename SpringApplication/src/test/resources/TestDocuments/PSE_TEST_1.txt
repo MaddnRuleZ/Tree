@@ -5,8 +5,6 @@
 
 \begin{document}
 
-
-
 \part*{options_text}[content_test]
     X1
     X

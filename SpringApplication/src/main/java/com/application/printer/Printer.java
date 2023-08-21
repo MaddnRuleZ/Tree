@@ -16,7 +16,6 @@ public abstract class Printer {
     private boolean exportComments = true;
     private boolean exportSummary = true;
 
-
     public Printer (User user) {
         this.user = user;
     }
@@ -28,7 +27,6 @@ public abstract class Printer {
         this.path = path;
         this.user = user;
     }
-
 
     /**
      * exports the tree
@@ -66,4 +64,6 @@ public abstract class Printer {
     public void setExportSummary(boolean exportSummary) {
         this.exportSummary = exportSummary;
     }
+
+
 }

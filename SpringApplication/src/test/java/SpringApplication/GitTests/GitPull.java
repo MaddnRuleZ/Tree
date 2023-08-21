@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 public class GitPull {
     private String wokringDirectory = "src/TestDocuments/gitTesting/";
     private String overleafConnectionString = "https://git.overleaf.com/64b430167d4b3be6afb4389c";
-
     private User user;
 
     @Test

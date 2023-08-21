@@ -60,14 +60,12 @@ public class ParserTest {
         System.out.println(map.get("root").toString());
     }
 
-
-
     @Test
     public void testParserAdvanced() throws UnknownElementException {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_2.txt");
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
         Root root = null;
 
         try {
