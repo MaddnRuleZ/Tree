@@ -12,20 +12,21 @@ import com.application.tree.elements.roots.Input;
 /**
  * Class Containing the Configuration of ALL the Structural Elements that wil be detected by the Scan -Algorithm
  *
- * Elements are Sorted in the Tree in an SEMI-ORDER identified by the Elements Level
- * When comparing two Elements, how they are Related to Each other the Level decides which should be Parent and which Child.
- * So the Tree gets Balanced
+ * Elements are Sorted in the Tree in an SEMI-ORDER identified by the Element's Level
+ * When comparing two Elements, how they are Related to Each other the Level decides which is Parent and which Child.
+ * So the Tree gets Balanced:
  *
- * \Part                                \Part               [indentation represent who is parent and child]
- * \Section [will be sorted to ->]          \Section
- * \Label                                       \Label
- *
+ * [will be sorted to ->]
+ * \Part         \Part{}              [indentation represents here who is parent and child]
+ * \Section          \Section{}
+ * \Label                \Label{}
+ * \Par          \Part{}
  */
 public enum ElementConfig {
 
     /**
      * to add a new Structure Element form LaTeX to the Parser:
-     * - Copy one of the following, add the Start- and EndPart
+     * - Copy one of the following Enums, add the Start- and EndPart
      * - Rename it
      * - set Level so Elements will get correctly sorted in Parent/Child Hierarchy
      * - change the returned Class type, see each Class for determining the correct functionality for your new Element
@@ -33,8 +34,6 @@ public enum ElementConfig {
     PART("\\part", null, 1) {
         @Override
         Element getElement(String currentLine) {
-            // todo entfernen
-            // check Point *, make function in element that sets (Bolean) und fuc hier die extrahier, dannn .uncount(checkUnCount(currentLine))
             return new Sectioning(getStartPart(), getLevel());
         }
     },

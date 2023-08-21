@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Git Class for updating a Git -Overleaf repository with the Credentials
+ * Git Class for updating a Git -Overleaf repository with JGIT
  */
 public class GitPrinter extends Printer {
     private final String overleafUrl;
@@ -31,7 +31,7 @@ public class GitPrinter extends Printer {
      *
      * @param overleafUrl   The URL of the Overleaf repository used for Git operations.
      * @param username      The username associated with the Git repository.
-     * @param password      The password (or authentication token) used for accessing the Git repository.
+     * @param password      The password used for accessing the Git repository.
      * @param workingDir    The working directory where Git operations will be performed.
      */
     public GitPrinter(String overleafUrl, String username, String password, String workingDir, User user) {
@@ -43,13 +43,13 @@ public class GitPrinter extends Printer {
     }
 
     /**
-     * Clone or Pull the Repository, based on if it already exists or not
+     * Pull Repo if already exists, else clone the Repo from Overleaf-Git
+     * working_directory will be deleted in 'clone' scenario
      *
      * @return true in case of success, else false
      * @throws OverleafGitException
-     * @throws GitAPIException
      */
-    public boolean pullOrCloneRepository() throws OverleafGitException, GitAPIException {
+    public boolean pullOrCloneRepository() throws OverleafGitException {
         if (pullRepository()) {
             return true;
         } else {
@@ -58,10 +58,12 @@ public class GitPrinter extends Printer {
     }
 
     /**
-     * Fetch, Merge, Add Commit and then Push the new Changes
+     * Push the Changes to the Remote Repository,
+     * do in Order:
+     * Fetch, Merge, Add Commit and then Push the new Changes to given Repository
      *
-     * @return
-     * @throws OverleafGitException
+     * @return true in case successful
+     * @throws OverleafGitException throws Exception on Upload Error
      */
     public boolean commitAndPush() throws OverleafGitException {
         try {
@@ -71,35 +73,14 @@ public class GitPrinter extends Printer {
             add(git);
             commit(git);
             push(git);
-
             return true;
+
         } catch (IOException ex) {
             throw new OverleafGitException("Fehler beim Öffnen des Repos (IO), pull zuerst" + ex.getMessage());
         } catch (GitAPIException ex) {
             throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + ex.getMessage());
         }
     }
-
-    private void fetch(Git git) throws GitAPIException {
-        git.fetch().setCredentialsProvider(this.credentialsProvider).call();
-    }
-
-    private void merge(Git git) throws GitAPIException, IOException {
-        git.merge().include(git.getRepository().resolve("origin/master")).call();
-    }
-
-    private void add(Git git) throws GitAPIException {
-        git.add().addFilepattern(".").call();
-    }
-
-    private void commit(Git git) throws GitAPIException {
-        git.commit().setMessage("Extern Overleaf Commit TreeX").call();
-    }
-
-    private void push(Git git) throws GitAPIException {
-        git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
-    }
-
 
     /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.
@@ -122,13 +103,17 @@ public class GitPrinter extends Printer {
         }
     }
 
-    private boolean pullRepository() throws OverleafGitException {
+    /**
+     * git pull the Repository from the Overleaf -GitRepo
+     * resolve merge conflicts
+     *
+     * @return true in case of success, on Error return false
+     */
+    private boolean pullRepository() {
         File repositoryPath = new File(this.working_directory);
 
         try (Git git = Git.open(repositoryPath)) {
-            PullCommand pullCommand = git.pull()
-                    .setCredentialsProvider(credentialsProvider);
-
+            PullCommand pullCommand = git.pull().setCredentialsProvider(credentialsProvider);
             pullCommand.setStrategy(MergeStrategy.RESOLVE);
             pullCommand.call();
 
@@ -138,9 +123,14 @@ public class GitPrinter extends Printer {
         return true;
     }
 
-    private static boolean deleteDirectoryRecursively(File directory) {
+    /**
+     * Delete the Directory and every file in it.
+     *
+     * @param directory Directory to Delete
+     */
+    private void deleteDirectoryRecursively(File directory) {
         if (!directory.exists()) {
-            return true;
+            return;
         }
 
         File[] contents = directory.listFiles();
@@ -153,7 +143,27 @@ public class GitPrinter extends Printer {
                 }
             }
         }
-        return directory.delete();
+        directory.delete();
+    }
+
+    private void fetch(Git git) throws GitAPIException {
+        git.fetch().setCredentialsProvider(this.credentialsProvider).call();
+    }
+
+    private void merge(Git git) throws GitAPIException, IOException {
+        git.merge().include(git.getRepository().resolve("origin/master")).call();
+    }
+
+    private void add(Git git) throws GitAPIException {
+        git.add().addFilepattern(".").call();
+    }
+
+    private void commit(Git git) throws GitAPIException {
+        git.commit().setMessage("Extern Overleaf Commit TreeX").call();
+    }
+
+    private void push(Git git) throws GitAPIException {
+        git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
     }
 
     @Override

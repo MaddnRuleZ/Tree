@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * A class representing an Element's Comments.
  *
- * Store each Comment in the Comment List
+ * Store each Comment separately in the Comment List
  */
 public class Comment implements LaTeXTranslator {
     public final static String COMMENT_START_CHARACTER = "%";
@@ -24,16 +24,17 @@ public class Comment implements LaTeXTranslator {
     }
 
     /**
-     * Extracts content from the provided currentLine and stores it in the comment list.
+     * if found, Extracts Comment from the provided currentLine,
+     * and stores it in the comment list.
+     * remove all Leading Space Characters
      *
      * @param currentLine The current line of code to be checked for comments.
-     * @return true if a comment is found and added to the list, false otherwise.
+     * @return true if a comment is found, false otherwise.
      */
-    public boolean extractContent(String currentLine) {
+    public boolean extractComment(final String currentLine) {
         if (currentLine.contains(COMMENT_START_CHARACTER)) {
             String line = currentLine.replace(COMMENT_START_CHARACTER, "");
-            line = TextFileReader.removeSpacesFromStart(line);
-            comments.add(line);
+            this.comments.add(TextFileReader.removeSpacesFromStart(line));
             return true;
         }
         return false;

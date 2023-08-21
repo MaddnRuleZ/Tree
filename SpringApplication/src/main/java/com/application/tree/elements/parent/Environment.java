@@ -42,7 +42,7 @@ public class Environment extends Parent {
      * @return the current Environment
      */
     public Element addTextBlockToElem(String line) {
-        if (!summary.extractSummary(line) && !comment.extractContent(line)) {
+        if (!summary.extractSummary(line) && !comment.extractComment(line)) {
             line = TextFileReader.removeSpacesFromStart(line);
             this.textBuilder.append(line).append("\n");
             this.content = textBuilder.toString();

@@ -48,7 +48,7 @@ public abstract class Parent extends Element {
             return this;
         }
 
-        if (summary.getSummary().size() == 0 && getComment().extractContent(line)) {
+        if (summary.getSummary().size() == 0 && getComment().extractComment(line)) {
             return this;
         }
 

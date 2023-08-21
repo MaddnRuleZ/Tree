@@ -12,16 +12,13 @@ import java.util.regex.Pattern;
 
 /**
  * A class representing an Element's Summary.
+ * Elements hold exact one or none Summary, the summaryText Represent the Text Line by Line
  *
  * This class holds a List of Strings which represent the Summary of a Structure Element
  */
 public class Summary implements LaTeXTranslator {
     private static final String START_SUMMARY = "%\\start{summary}";
     private static final String END_SUMMARY = "%\\finish{summary}";
-    private static final String START_SUMMARY_REGEX = "(%)([ ]*[a-zA-Z0-9]*)";
-    /**
-     * Line by Line the Text of the Summary
-     */
     private final List<String> summaryText;
 
     /**
@@ -41,7 +38,9 @@ public class Summary implements LaTeXTranslator {
     }
 
     /**
-     * if the line starts/Ends the Summary or the Listener is active, then add the line to the Summary
+     * extract the Summary from the Text
+     * if the line starts/Ends set the Listener active
+     * when Listener is active, then add the line to the Summary
      *
      * @param currentLine line to check for start/ end hints
      * @return true if line was added to summary, else false
@@ -61,6 +60,7 @@ public class Summary implements LaTeXTranslator {
         }
         return false;
     }
+
     /**
      * returns the summary as a string with \n as delimiter, if there is no summary it returns null
      * @return summary as string

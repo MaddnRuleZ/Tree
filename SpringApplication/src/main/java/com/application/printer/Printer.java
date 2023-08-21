@@ -9,11 +9,8 @@ import java.io.IOException;
 
 public abstract class Printer {
     private String path;
-
     private final User user;
-
     private static String FIGURE_PATH = "";
-
     private boolean exportComments = true;
     private boolean exportSummary = true;
 

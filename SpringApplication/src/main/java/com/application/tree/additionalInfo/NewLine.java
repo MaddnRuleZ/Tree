@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * A class representing an Element's NewLine Parts.
  *
- * NewLines Seperate two TextBLockElements from each other. And will be stored in this Additional Container
+ * NewLines Separate two TextBLockElements from each other. And will be stored in this Additional Container
  * Each TextBLockElement can only have one NewLineCharacter and multiple in one line will all be stored in one line too.
  */
 public class NewLine implements LaTeXTranslator {
@@ -24,13 +24,13 @@ public class NewLine implements LaTeXTranslator {
     private String newLine;
 
     /**
-     * Extracts content from the provided currentLine and stores it as the new line content if any
-     * new line character is found.
+     * if found, extracts the newline Character from the provided currentLine and stores it
+     * as the new line content if any
      *
-     * @param currentLine The current line of code to be checked for new line characters.
-     * @return true if a new line character is found and set as the new line content, false otherwise.
+     * @param currentLine The current line of code, to be checked for new line characters.
+     * @return true if newLine character found, false otherwise.
      */
-    public boolean extractContent(String currentLine) {
+    public boolean extractNlChar(String currentLine) {
         if (checkLineForNewLineCharacters(currentLine)) {
             this.newLine = TextFileReader.removeSpacesFromStart(currentLine);
             return true;
@@ -39,10 +39,10 @@ public class NewLine implements LaTeXTranslator {
     }
 
     /**
-     * Checks the provided currentLine for the presence of any new line characters.
+     * Checks the provided currentLine for presence of any new line characters.
      *
-     * @param currentLine The current line of code to be checked for new line characters.
-     * @return true if any new line character is found in the current line, false otherwise.
+     * @param currentLine The current line to be checked for new line characters.
+     * @return true if  NL -Character is found, false otherwise
      */
     public boolean checkLineForNewLineCharacters(String currentLine) {
         for (String nlChar: NEW_LN_CHARACTERS) {
@@ -60,8 +60,6 @@ public class NewLine implements LaTeXTranslator {
 
         // e.g. \newline, \\, \par
         text.append(indentation).append(newLine).append("\n");
-
-
     }
 
     /**

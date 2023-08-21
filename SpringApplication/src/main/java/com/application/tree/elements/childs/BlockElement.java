@@ -35,10 +35,10 @@ public class BlockElement extends Child {
     @Override
     public Element addTextBlockToElem(String line) {
         if (newLine.checkLineForNewLineCharacters(line)) {
-            newLine.extractContent(line);
+            newLine.extractNlChar(line);
             return generateTextSameLevel();
         } else {
-            if (!summary.extractSummary(line) && !comment.extractContent(line)) {
+            if (!summary.extractSummary(line) && !comment.extractComment(line)) {
                 if (parentElement instanceof Figure figure) {
                     if (!figure.setGraphics(line) && !figure.addCaption(line)) {
                         addText(line);
