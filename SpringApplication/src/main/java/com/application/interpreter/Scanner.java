@@ -95,7 +95,7 @@ public class Scanner {
 
             if (newElement != null) {
                 newElement.setOptions(currentLine);
-                newElement.setContent(currentLine);
+                newElement.extractContent(currentLine);
 
                 if (lastElement == null) {
                     root.addChild(newElement);

@@ -135,7 +135,7 @@ public class ComplexTestTree extends TestTree{
 
         sectioning.setParent(parent);
 
-        sectioning.setContent("\\section*{"+"sec"+ sectioningCounter+ "}");
+        sectioning.extractContent("\\section*{"+"sec"+ sectioningCounter+ "}");
         sectioningCounter++;
 
         sectioning.setComment("%comment1");
@@ -158,7 +158,7 @@ public class ComplexTestTree extends TestTree{
 
         figure.setParent(parent);
 
-        figure.setContent("\\begin{figure}");
+        figure.extractContent("\\begin{figure}");
         figureCounter++;
 
         figure.setComment("%comment1");
@@ -185,7 +185,7 @@ public class ComplexTestTree extends TestTree{
 
         environment.setParent(parent);
 
-        environment.setContent("\\begin{environment"+ envCounter +"}");
+        environment.extractContent("\\begin{environment"+ envCounter +"}");
         envCounter++;
 
         environment.setComment("%comment1");
@@ -204,7 +204,7 @@ public class ComplexTestTree extends TestTree{
         parent.addChild(child);
         child.setParent(parent);
 
-        child.setContent("\\label{child"+ childCounter +"}");
+        child.extractContent("\\label{child"+ childCounter +"}");
         childCounter++;
 
         child.setComment("%comment1");
@@ -223,7 +223,7 @@ public class ComplexTestTree extends TestTree{
         parent.addChild(child);
         child.setParent(parent);
 
-        child.setContent("\\label{label"+ childCounter +"}");
+        child.extractContent("\\label{label"+ childCounter +"}");
         childCounter++;
 
         child.setComment("%comment1");

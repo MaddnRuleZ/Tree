@@ -127,7 +127,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
      * @param rawLine Input raw line.
      * @return Extracted content, or null if no match is found.
      */
-    protected String extractContent(String rawLine) {
+    public String extractContent(String rawLine) {
         Matcher matcher = Pattern.compile(CONTENT_REGEX).matcher(rawLine);
         if (matcher.find()) {
             return matcher.group(1);
