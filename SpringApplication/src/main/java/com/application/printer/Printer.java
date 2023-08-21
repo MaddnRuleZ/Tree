@@ -36,8 +36,6 @@ public abstract class Printer {
     public String getPath() {
         return path;
     }
-
-
     protected User getUser() {
         return user;
     }
@@ -65,6 +63,4 @@ public abstract class Printer {
     public void setExportSummary(boolean exportSummary) {
         this.exportSummary = exportSummary;
     }
-
-
 }

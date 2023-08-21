@@ -4,9 +4,9 @@ import com.application.command.types.interfaces.ILoadCommand;
 import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
-import com.application.printer.Printer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.eclipse.jgit.api.errors.GitAPIException;
 
 /**
  * command to load a tree from a git repository
@@ -36,17 +36,19 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
         try {
             this.getUser().resetUser();
             GitPrinter printer = new GitPrinter(url, username, password, path, this.getUser());
-            printer.executeCurl();
-
+            printer.pullOrCloneRepository();
             load(this.getUser(), printer, path);
             this.setSuccess(true);
 
          } catch (OverleafGitException overleafGitException) {
-
+            // todo @S
 
         } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
+        } catch (GitAPIException e) {
+            // todo @S
+
         } finally {
             this.getLockManager().releaseStructureWriteLock();
         }

@@ -7,9 +7,16 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.Test;
 
 public class GitPull {
-    private String wokringDirectory = "src/TestDocuments/gitTesting/";
+    private String wokringDirectory = "src/test/java/SpringApplication/GitTests/GitTesting/";
     private String overleafConnectionString = "https://git.overleaf.com/64b430167d4b3be6afb4389c";
     private User user;
+    @Test
+    public void gitPullCloneTest() throws OverleafGitException, GitAPIException {
+        GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
+                "ueteb@student.kit.edu", "WhatWasMyPass??", wokringDirectory, user);
+        gitPrinter.pullOrCloneRepository();
+    }
+
 
     @Test
     public void gitPushTest() throws OverleafGitException {
@@ -30,7 +37,7 @@ public class GitPull {
     }
 
     @Test
-    public void gitCloneTest() throws GitAPIException {
+    public void gitCloneTest() throws OverleafGitException {
         GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
                 "ueteb@student.kit.edu", "WhatWasMyPass??", wokringDirectory, user);
         gitPrinter.cloneRepository();
