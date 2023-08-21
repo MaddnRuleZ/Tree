@@ -32,7 +32,7 @@ public class AddCommandFactory implements CommandFactory {
             throw new NumParamsException("AddElement");
         }
 
-        if (command.getContent() == null || command.getParent() == null){
+        if (command.getContent() == null){
             throw new NumParamsException("AddElement");
         }
 
