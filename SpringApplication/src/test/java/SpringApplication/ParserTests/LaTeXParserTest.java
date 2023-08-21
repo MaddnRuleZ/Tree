@@ -12,9 +12,12 @@ import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,9 +33,18 @@ public class LaTeXParserTest {
         System.out.println(map.get("root").toString());
     }
 
-    @Test
-    public void BeginOnSection() throws UnknownElementException {
-        Parser parser = new Parser("src/test/resources/TestDocuments/BeginOnSection.tex");
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "src/test/resources/TestDocuments/BeginOnSection.tex",
+            "src/test/resources/TestDocuments/PSE_TEST_ENV.txt",
+            "src/test/resources/TestDocuments/PSE_TEST_1.txt",
+            "src/test/resources/TestDocuments/PSE_TEST_2.txt",
+            "src/test/resources/TestDocuments/PSE_TEST_InputTest.txt",
+            "src/test/resources/TestDocuments/StartBlockText.tex",
+    })
+    public void testLaTeXFiles(String path) throws UnknownElementException, IOException {
+        Parser parser = new Parser(path);
         User user = new User();
 
         try {
@@ -44,27 +56,14 @@ public class LaTeXParserTest {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());
         user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL, true, true);
-        System.out.println(map.get("root").toString());
 
-        Sectioning sectioning = (Sectioning) user.getRoot().getChildren().get(0);
+        List<String> originalLines = readLinesFromFile(path);
+        List<String> modifiedLines = map.get("root").toString().lines().toList();
 
-        assertEquals("\\section", sectioning.getStartPart(), "Should be section");
-    }
+        List<String> normalizedOriginal = normalizeContent(originalLines);
+        List<String> normalizedModified = normalizeContent(modifiedLines);
 
-    @Test
-    public void EnvTest() throws UnknownElementException {
-        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_ENV.txt");
-        User user = new User();
-        try {
-            Root root = (Root) parser.startParsing();
-            user.setRoot(root);
-        } catch (FileInvalidException e) {
-            e.printStackTrace();
-        }
-        Map<String, StringBuilder> map = new HashMap<>();
-        map.put("root", new StringBuilder());
-        user.getRoot().toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL, true, true);
-        System.out.println(map.get("root").toString());
+        assertEquals(normalizedOriginal, normalizedModified);
     }
 
     @Test
@@ -89,5 +88,27 @@ public class LaTeXParserTest {
     @AfterEach
     public void tearDown() {
         Root.resetInstance();
+    }
+
+    private static List<String> readLinesFromFile(String filename) throws IOException {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        }
+        return lines;
+    }
+
+    private static List<String> normalizeContent(List<String> lines) {
+        List<String> normalized = new ArrayList<>();
+        for (String line : lines) {
+            String trimmedLine = line.trim();
+            if (!trimmedLine.isEmpty()) {
+                normalized.add(trimmedLine);
+            }
+        }
+        return normalized;
     }
 }
