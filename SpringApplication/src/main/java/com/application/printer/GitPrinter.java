@@ -4,10 +4,7 @@ import com.application.User;
 import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.interfaces.LaTeXTranslator;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.PullCommand;
-import org.eclipse.jgit.api.PullResult;
-import org.eclipse.jgit.api.RebaseCommand;
+import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
@@ -47,8 +44,6 @@ public class GitPrinter extends Printer {
         this.overleafUrl = overleafUrl;
         this.working_directory = workingDir;
         setFigurePath(this.working_directory);
-        System.out.println(workingDir);
-
     }
 
     /**
@@ -68,9 +63,43 @@ public class GitPrinter extends Printer {
     }
 
     /**
+     * Fetch, Merge, Add Commit and then Push the new Changes
+     *
+     * @return
+     * @throws OverleafGitException
+     */
+    public boolean commitAndPush() throws OverleafGitException {
+        try {
+            Git git = Git.open(new File(this.working_directory));
+
+            git.fetch()
+                    .setCredentialsProvider(this.credentialsProvider)
+                    .call();
+
+            git.merge()
+                    .include(git.getRepository().resolve("origin/master"))
+                    .call();
+
+            git.add().addFilepattern(".").call();
+            git.commit().setMessage("Extern Overleaf Commit TreeX").call();
+
+            git.push()
+                    .setCredentialsProvider(this.credentialsProvider)
+                    .setRemote(overleafUrl)
+                    .call();
+
+            return true;
+        } catch (IOException ex) {
+            throw new OverleafGitException("Fehler beim Öffnen des Repos (IO), pull zuerst" + ex.getMessage());
+        } catch (GitAPIException ex) {
+            throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + ex.getMessage());
+        }
+    }
+
+    /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.
      */
-    public boolean cloneRepository() throws OverleafGitException {
+    private boolean cloneRepository() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
         if (repositoryPath.exists() && repositoryPath.isDirectory()) {
             deleteDirectoryRecursively(repositoryPath);
@@ -88,7 +117,7 @@ public class GitPrinter extends Printer {
         }
     }
 
-    public boolean pullRepository() throws OverleafGitException {
+    private boolean pullRepository() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
 
         try (Git git = Git.open(repositoryPath)) {
@@ -98,164 +127,10 @@ public class GitPrinter extends Printer {
             pullCommand.setStrategy(MergeStrategy.RESOLVE);
             pullCommand.call();
 
-        } catch (IOException ex) {
-            throw new OverleafGitException("Fehler beim Öffnen des Repos (IO)" + ex.getMessage());
-        } catch (GitAPIException ex) {
-            throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + ex.getMessage());
+        } catch (IOException | GitAPIException ex) {
+            return false;
         }
         return true;
-    }
-
-    /**
-     * Pull changes from the remote repository and update the local version.
-     *
-     */
-    public boolean pullRepository2() throws OverleafGitException {
-        File repositoryPath = new File(this.working_directory);
-
-        if (!repositoryPath.exists() || !repositoryPath.isDirectory()) {
-            throw new OverleafGitException("Das lokale Repository existiert nicht oder ist kein gültiges Repository.");
-        }
-
-        try {
-            Git git = Git.open(repositoryPath);
-            PullResult pullResult = git.pull()
-                    .setCredentialsProvider(credentialsProvider).call();
-
-            if (!pullResult.isSuccessful()) {
-                throw new OverleafGitException("Pull Fehlgeschlagen");
-            } else if (pullResult.getMergeResult() != null && pullResult.getMergeResult().getConflicts() != null) {
-                throw new OverleafGitException("Merge Fehler müssen behoben werden!");
-            } else {
-                return true;
-            }
-
-        } catch (IOException ex) {
-            return false;
-            //throw new OverleafGitException("Fehler beim Öffnen des Repos (IO)" + ex.getMessage());
-        } catch (GitAPIException ex) {
-            return false;
-        }
-    }
-
-    /**
-     * Pushes the local changes to the remote Git repository.
-     *
-     * @return True if the push operation was successful, false otherwise.
-     */
-    public boolean pushChanges() throws OverleafGitException {
-        String refSpec = "refs/heads/master:refs/heads/master";
-
-        try {
-            Git git = Git.open(new File(this.working_directory));
-            git.push()
-                    .setCredentialsProvider(this.credentialsProvider)
-                    .setRemote(overleafUrl)
-                    .setRefSpecs(new RefSpec(refSpec))
-                    .call();
-            return true;
-        } catch (IOException ex) {
-            throw new OverleafGitException("Fehler beim Öffnen des Repos (IO)" + ex.getMessage());
-        } catch (GitAPIException ex) {
-            throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + ex.getMessage());
-        }
-    }
-
-
-    /**
-     * Rebase the changes from the specified remote branch onto the current working branch.
-     *
-     * @param remoteBranch The name of the remote branch to rebase onto the current working branch.
-     * @return True if the rebase operation was successful, false otherwise.
-     */
-    public boolean rebaseChanges(String remoteBranch) {
-        try {
-            Git git = Git.open(new File(this.working_directory));
-            git.fetch()
-                    .setCredentialsProvider(this.credentialsProvider)
-                    .setRemote(overleafUrl)
-                    .call();
-
-            RebaseCommand rebaseCommand = git.rebase();
-            rebaseCommand.setUpstream(remoteBranch);
-            rebaseCommand.call();
-
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-
-
-
-    /**
-     * Checks if the remote repository was changed compared to the local repository.
-     *
-     * @param remoteBranch The name of the remote branch to compare against the local branch.
-     * @return True if the remote repository was changed, false otherwise.
-     * @throws IOException  If an I/O error occurs while accessing the repository.
-     * @throws GitAPIException If an error occurs during Git operations.
-     */
-    public boolean isRemoteRepositoryChanged(String remoteBranch) throws IOException, GitAPIException {
-        Repository repository = new FileRepositoryBuilder()
-                .setGitDir(new File(this.working_directory, ".git"))
-                .build();
-
-        Git git = new Git(repository);
-
-        FetchResult fetchResult = git.fetch()
-                .setCredentialsProvider(this.credentialsProvider)
-                .setRemote(overleafUrl)
-                .call();
-
-        boolean hasChanges = !fetchResult.getTrackingRefUpdates().isEmpty();
-
-        if (!hasChanges) {
-            return false;
-        } else {
-            String localCommitId = repository.resolve("HEAD").getName();
-
-            try {
-                String remoteCommitId = repository.resolve("refs/remotes/origin/" + remoteBranch).getName();
-                return !localCommitId.equals(remoteCommitId);
-            } catch (Exception e) {
-                return true;
-            }
-        }
-    }
-
-    /*
-     * Helper method to recursively delete a directory and its contents.
-     *
-     * @param directory        The directory to be deleted.
-     *
-    private void deleteDirectory(File directory) {
-        File[] contents = directory.listFiles();
-        if (contents != null) {
-            for (File file : contents) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    file.delete();
-                }
-            }
-        }
-        directory.delete();
-    }
-    */
-
-    /**
-     * Deletes a directory and its contents.
-     *
-     * @param directoryPath The path of the directory to be deleted.
-     * @return True if the deletion was successful, false otherwise.
-     */
-    public static boolean deleteDirectory(String directoryPath) {
-        File directory = new File(directoryPath);
-        return deleteDirectoryRecursively(directory);
     }
 
     private static boolean deleteDirectoryRecursively(File directory) {
@@ -273,8 +148,7 @@ public class GitPrinter extends Printer {
                 }
             }
         }
-
-        return directory.delete(); // Delete the main directory
+        return directory.delete();
     }
 
     @Override
@@ -288,6 +162,6 @@ public class GitPrinter extends Printer {
             }
             Files.writeString(Path.of(key), map.get(key));
         }
-        this.pushChanges();
+        this.commitAndPush();
     }
 }
