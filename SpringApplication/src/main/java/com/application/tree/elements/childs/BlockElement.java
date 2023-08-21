@@ -12,7 +12,8 @@ import java.util.Map;
  * BlockElement Class
  *
  * The BlockElement class represents a child element within the LaTeX Code.
- * BlockElements are undetected Blocks of Text which represent no detected Structure Element
+ * BlockElements are undetected Blocks of Text which represent no detected Structure Element and
+ * still hold the Text in Between Structure Elements
  */
 public class BlockElement extends Child {
 

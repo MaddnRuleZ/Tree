@@ -49,7 +49,6 @@ public class Scanner {
             if (line.contains(Root.START_DOCUMENT)) {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
                 continue;
-
             } else if (line.contains(Root.END_DOCUMENT)) {
                 break;
             }
@@ -59,16 +58,28 @@ public class Scanner {
             if (newElement != null) {
                 lastElement = newElement;
             } else if (lastElement != null) {
-                lastElement = lastElement.addTextBlockToElem(text[i]);
-
+                lastElement = lastElement.addTextBlockToElem(line);
             } else if (!Root.getInstance().startHeaderExists()) {
-                BlockElement blockElement = new BlockElement();
-                blockElement.addTextBlockToElem(line);
-                root.addChild(blockElement);
-                lastElement =  blockElement;
+                lastElement = addStartTextBlock(line);
             }
         }
         return root;
+    }
+
+    /**
+     * Add a TextBlock to the DocumentRoot
+     * In case Document starts with an TextBlock, add one to the Document Root
+     *
+     * @param line textLine to add
+     * @return return added TextBlock
+     */
+    private Element addStartTextBlock(String line) {
+        Element lastElement;
+        BlockElement blockElement = new BlockElement();
+        blockElement.addTextBlockToElem(line);
+        root.addChild(blockElement);
+        lastElement =  blockElement;
+        return lastElement;
     }
 
     /**
@@ -91,25 +102,24 @@ public class Scanner {
 
         } else {
             Element newElement = ElementConfig.createElement(currentLine);
-
-            if (newElement != null) {
-                newElement.setOptions(currentLine);
-                newElement.setContent(currentLine);
-
-                if (lastElement == null) {
-                    root.addChild(newElement);
-                    setInputRootParentChildHierarchy(newElement);
-                } else if (newElement.getLevel() > lastElement.getLevel()) {
-                    setParentChild(lastElement, newElement);
-                } else if (newElement.getLevel() == lastElement.getLevel()) {
-                    sameLevel(lastElement, newElement);
-                } else {
-                    higherLevel(lastElement, newElement);
-                }
-                return newElement;
-            } else {
+            if (newElement == null) {
                 return null;
             }
+
+            newElement.setOptions(currentLine);
+            newElement.setContent(currentLine);
+
+            if (lastElement == null) {
+                root.addChild(newElement);
+                setInputRootParentChildHierarchy(newElement);
+            } else if (newElement.getLevel() > lastElement.getLevel()) {
+                setParentChild(lastElement, newElement);
+            } else if (newElement.getLevel() == lastElement.getLevel()) {
+                sameLevel(lastElement, newElement);
+            } else {
+                higherLevel(lastElement, newElement);
+            }
+            return newElement;
         }
     }
 

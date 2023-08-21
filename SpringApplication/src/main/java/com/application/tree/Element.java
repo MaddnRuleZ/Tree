@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Element representing a LaTeX Command
+ * Element representing a LaTeX Command starting with the character "\"
  *
  * This class serves as the base abstract class for different LaTeX elements
  * that can be part of a document structure. It contains common functionality
@@ -40,7 +40,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
      * '*' check for * for uncounted sectioning types
      */
     private static final String UNCOUNTED_REGEX = ".*\\*\\{.*";
-
     private UUID id;
     private final int level;
     protected Parent parentElement;
@@ -167,7 +166,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
      */
     public void setComment(String comment) {
         this.comment.getComments().clear();
-        for(String line: comment.split("%")) {
+        for (String line: comment.split(Comment.COMMENT_START_CHARACTER)) {
             if(!line.isBlank()) {
                 this.comment.addComment(line);
             }

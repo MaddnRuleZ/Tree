@@ -13,7 +13,7 @@ import java.util.Map;
  * Store each Comment in the Comment List
  */
 public class Comment implements LaTeXTranslator {
-    private final static String COMMENT_START_CHARACTER = "%";
+    public final static String COMMENT_START_CHARACTER = "%";
     private final List<String> comments;
 
     /**
