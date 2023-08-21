@@ -81,14 +81,59 @@ public class Scanner {
      * @return the New Created Text Element with parent and child hierarchy
      */
     private Element scanCurrentLine(Element lastElement, String currentLine) {
-        if (lastElement != null && lastElement.getEndPart() != null && currentLine.contains(lastElement.getEndPart())) {
+        if (checkLineEndsEnvironment(lastElement, currentLine)) {
+            // End current Environment
             return lastElement.getParentElement();
 
         } else if (lastElement != null && lastElement.getEndPart() != null && lastElement.getEndPart().equals(Environment.DEFAULT_ENDING)) {
+            // Don't Parse Custom Environments
+            return null;
+
+        } else {
+            Element newElement = ElementConfig.createElement(currentLine);
+
+            if (newElement != null) {
+                newElement.setOptions(currentLine);
+                newElement.setContent(currentLine);
+
+                if (lastElement == null) {
+                    root.addChild(newElement);
+                    setInputRootParentChildHierarchy(newElement);
+                } else if (newElement.getLevel() > lastElement.getLevel()) {
+                    setParentChild(lastElement, newElement);
+                } else if (newElement.getLevel() == lastElement.getLevel()) {
+                    sameLevel(lastElement, newElement);
+                } else {
+                    higherLevel(lastElement, newElement);
+                }
+                return newElement;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Scan the line for new Structure Element
+     * or end the current LastElement (Environment only)
+     * if found, create it add it relative to the last Element and return it; else return null
+     *
+     * @param lastElement last Element that was used
+     * @param currentLine current Line to scan in the Text
+     * @return the New Created Text Element with parent and child hierarchy
+     */
+    private Element scanCurrentLine2(Element lastElement, String currentLine) {
+        if (lastElement != null && lastElement.getEndPart() != null && currentLine.contains(lastElement.getEndPart())) {
+            // End current Environment
+            return lastElement.getParentElement();
+
+        } else if (lastElement != null && lastElement.getEndPart() != null && lastElement.getEndPart().equals(Environment.DEFAULT_ENDING)) {
+            // Don't Parse Custom Environments
             return null;
 
         } else  if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart())) {
+            // in Figure
             return lastElement.getParentElement();
         } else {
             Element newElement = ElementConfig.createElement(currentLine);
@@ -113,6 +158,7 @@ public class Scanner {
             }
         }
     }
+
 
     /**
      * add the newElement to the same Parent as the lastElement
@@ -168,6 +214,22 @@ public class Scanner {
             child.setParent(parent);
             parent.addChild(child);
         }
+    }
+
+    /**
+     * Check if the currentLine ends the lastElement or the currentLine ends the lastElement's Parent
+     * check if the line ends the current Environment,
+     * in case Figure the parent.Element will match the Endpart,
+     * any other the lastElement will match the Endpart
+     *
+     * @param lastElement
+     * @param currentLine
+     * @return
+     */
+    private boolean checkLineEndsEnvironment(Element lastElement, String currentLine) {
+        return (lastElement != null && lastElement.getEndPart() != null && currentLine.contains(lastElement.getEndPart())
+                || lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
+                && currentLine.contains(lastElement.getParentElement().getEndPart()));
     }
 
     /**

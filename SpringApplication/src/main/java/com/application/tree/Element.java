@@ -149,22 +149,14 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         return null;
     }
 
-
-
-    /** todo
-     * Extract and set the Content String of the Element
+    /**
+     * Extracts And Assign the content to the Element
      *
-     * @param content whole String to extract Content from
+     * @param rawLine Input raw line.
+     * @return Extracted content, or null if no match is found.
      */
-    public void setContent(String content) {
-        Pattern pattern = Pattern.compile(CONTENT_REGEX);
-        Matcher matcher = pattern.matcher(content);
-
-        if (matcher.find()) {
-            this.content = matcher.group(1);
-        } else {
-            this.content = null;
-        }
+    public void setContent(String rawLine) {
+        this.content = extractContent(rawLine);
     }
 
     /**

@@ -45,6 +45,11 @@ Start of Document
         \includegraphics[insertName1]{insertName2}
         \caption
         \label{labelName}
+        \par
+        X
+        X
+        X
+        X
     \end{figure}
 \part{sec Problem}
     \begin{enumerate}
