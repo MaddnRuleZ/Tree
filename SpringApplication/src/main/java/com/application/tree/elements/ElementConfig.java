@@ -137,6 +137,7 @@ public enum ElementConfig {
             try {
                 return (Input) parser.startParsing();
             } catch (FileInvalidException e) {
+                System.out.println("Not recognized Input");
                 return null;
             }
         }

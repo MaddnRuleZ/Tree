@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * Figure Class
  *
@@ -30,8 +29,7 @@ import java.util.regex.Pattern;
 public class Figure extends Environment {
     public static final String CAPTION_IDENTIFIER = "\\caption";
     public static final String GRAPHICS_IDENTIFIER = "\\includegraphics";
-    public static final String GRAPHICS_CONTENT_REGEX = "\\{(.*?)\\}";
-    public static final String GRAPHICS_OPTIONS_REGEX = "\\[(.*?)\\]";
+
     private final List<String> captions;
     private String graphicOptions = "";
     private String graphic;
@@ -58,15 +56,14 @@ public class Figure extends Environment {
      */
     @Override
     public Element addTextBlockToElem(String line) {
+        BlockElement block;
         if (this.children.size() == 0) {
-            BlockElement block = generateTextBlockAsChild();
-            block.addTextBlockToElem(line);
-            return block;
+            block = generateTextBlockAsChild();
         } else {
-            BlockElement block = generateTextSameLevel();
-            block.addTextBlockToElem(line);
-            return block;
+            block = generateTextSameLevel();
         }
+        block.addTextBlockToElem(line);
+        return block;
     }
 
     /**
@@ -80,17 +77,10 @@ public class Figure extends Environment {
             return false;
         }
 
-        Matcher matcherContent = Pattern.compile(GRAPHICS_CONTENT_REGEX).matcher(graphicsString);
-        if (matcherContent.find()) {
-            graphic = matcherContent.group(1);
+        graphic = extractContent(graphicsString);
+        graphicOptions = extractOptions(graphicsString);
 
-            Matcher matcherOptions = Pattern.compile(GRAPHICS_OPTIONS_REGEX).matcher(graphicsString);
-            if (matcherOptions.find()) {
-                this.graphicOptions = matcherOptions.group(1);
-            }
-            return true;
-        }
-        return false;
+        return graphic == null && graphicOptions == null;
     }
 
     /**
@@ -103,10 +93,9 @@ public class Figure extends Environment {
         if (!caption.contains(CAPTION_IDENTIFIER)) {
             return false;
         }
-
-        Matcher matcher = Pattern.compile(CONTENT_REGEX).matcher(caption);
-        if (matcher.find()) {
-            this.captions.add(matcher.group(1));
+        caption = extractContent(caption);
+        if (caption != null) {
+            captions.add(caption);
             return true;
         }
         return false;

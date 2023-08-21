@@ -77,6 +77,7 @@
         X
         X
         X
+        \input{src/test/resources/TestDocuments/InputTest.txt}
 \part{Part_2}
     \chapter{haw haw}
         X7

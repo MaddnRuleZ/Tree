@@ -37,7 +37,7 @@ public class BlockElement extends Child {
             newLine.extractContent(line);
             return generateTextSameLevel();
         } else {
-            if (!summary.extractContent(line) && !comment.extractContent(line)) {
+            if (!summary.extractSummary(line) && !comment.extractContent(line)) {
                 if (parentElement instanceof Figure figure) {
                     if (!figure.setGraphics(line) && !figure.addCaption(line)) {
                         addText(line);

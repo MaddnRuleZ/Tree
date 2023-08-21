@@ -28,13 +28,19 @@ import java.util.regex.Pattern;
  * and attributes that are shared among its subclasses.
  */
 public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
-    protected static final String CONTENT_REGEX = "\\{([^}]+)\\}";
-    private static final String OPTIONS_REGEX = "\\[([^\\]]+)\\]";
-
+    /**
+     * Elements in curly Brackets : {<any>}
+     */
+    public static final String CONTENT_REGEX = "\\{(.*?)\\}";
+    /**
+     * Elements in Brackets : [<any>]
+     */
+    public static final String OPTIONS_REGEX = "\\[(.*?)\\]";
     /**
      * '*' check for * for uncounted sectioning types
      */
     private static final String UNCOUNTED_REGEX = ".*\\*\\{.*";
+
     private UUID id;
     private final int level;
     protected Parent parentElement;
@@ -108,21 +114,44 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
      * @param options whole String to extract Options from
      */
     public void setOptions(String options) {
-        Pattern pattern = Pattern.compile(OPTIONS_REGEX);
-        Matcher matcher = pattern.matcher(options);
-        if (matcher.find()) {
-            this.options = matcher.group(1);
-        } else {
-
-            if (Pattern.matches(UNCOUNTED_REGEX, options)) {
-                this.options = "*";
-            } else {
-                this.options = null;
-            }
+        this.options = extractOptions(options);
+        if (this.options == null && Pattern.matches(UNCOUNTED_REGEX, options)) {
+            this.options = "*";
         }
     }
 
+
     /**
+     * Extracts content from a raw line using a specified regex pattern.
+     *
+     * @param rawLine Input raw line.
+     * @return Extracted content, or null if no match is found.
+     */
+    protected String extractContent(String rawLine) {
+        Matcher matcher = Pattern.compile(CONTENT_REGEX).matcher(rawLine);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
+    }
+
+    /**
+     * Extracts Options from a raw line using a specified regex pattern.
+     *
+     * @param rawLine Input raw line.
+     * @return Extracted content, or null if no match is found.
+     */
+    protected String extractOptions(String rawLine) {
+        Matcher matcher = Pattern.compile(OPTIONS_REGEX).matcher(rawLine);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
+    }
+
+
+
+    /** todo
      * Extract and set the Content String of the Element
      *
      * @param content whole String to extract Content from

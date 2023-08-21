@@ -5,8 +5,6 @@ import com.application.interpreter.TextFileReader;
 import com.application.tree.Element;
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Environment Class
@@ -33,17 +31,7 @@ public class Environment extends Parent {
      */
     public Environment(String inputLine, String startPart, String endPart, int level) {
         super(startPart, endPart, level);
-        setHeader(inputLine);
-    }
-
-    private void setHeader(String inputLine) {
-        String regex = "\\{(.*?)\\}";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(inputLine);
-
-        if (matcher.find()) {
-            this.header = matcher.group(1);
-        }
+        this.header = extractContent(inputLine);
     }
 
     /**
@@ -54,7 +42,7 @@ public class Environment extends Parent {
      * @return the current Environment
      */
     public Element addTextBlockToElem(String line) {
-        if (!summary.extractContent(line) && !comment.extractContent(line)) {
+        if (!summary.extractSummary(line) && !comment.extractContent(line)) {
             line = TextFileReader.removeSpacesFromStart(line);
             this.textBuilder.append(line).append("\n");
             this.content = textBuilder.toString();

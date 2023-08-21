@@ -1,6 +1,5 @@
 package com.application.tree.elements.parent;
 
-import com.application.exceptions.ElementNotFoundException;
 import com.application.tree.Element;
 import com.application.tree.elements.childs.BlockElement;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -45,7 +44,7 @@ public abstract class Parent extends Element {
      */
     @Override
     public Element addTextBlockToElem(String line) {
-        if (summary.extractContent(line)) {
+        if (summary.extractSummary(line)) {
             return this;
         }
 

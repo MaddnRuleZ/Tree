@@ -1,7 +1,7 @@
 Start of Document
 
 \begin{document}
-\part{p1}
+\part*{p1}
     X
     X
     \begin{enumerate}
@@ -43,7 +43,7 @@ Start of Document
         X
         X
         \includegraphics[insertName1]{insertName2}
-        \caption{captionContent}
+        \caption
         \label{labelName}
     \end{figure}
 \part{sec Problem}

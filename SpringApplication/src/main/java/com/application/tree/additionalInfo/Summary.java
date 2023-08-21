@@ -46,7 +46,7 @@ public class Summary implements LaTeXTranslator {
      * @param currentLine line to check for start/ end hints
      * @return true if line was added to summary, else false
      */
-    public boolean extractContent(String currentLine) {
+    public boolean extractSummary(String currentLine) {
         if (listeningOnDocument && currentLine.contains(END_SUMMARY)) {
             listeningOnDocument = false;
             return true;
@@ -56,9 +56,6 @@ public class Summary implements LaTeXTranslator {
             return true;
 
         } else if (listeningOnDocument) {
-            Pattern pattern = Pattern.compile(START_SUMMARY_REGEX);
-            Matcher matcher = pattern.matcher(currentLine);
-
             summaryText.add(TextFileReader.removeSpacesFromStart(currentLine));
             return true;
         }

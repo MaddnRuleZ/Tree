@@ -13,7 +13,7 @@ import java.util.Map;
  * Store each Comment in the Comment List
  */
 public class Comment implements LaTeXTranslator {
-    private final static String START_CHARACTER = "%";
+    private final static String COMMENT_START_CHARACTER = "%";
     private final List<String> comments;
 
     /**
@@ -30,8 +30,8 @@ public class Comment implements LaTeXTranslator {
      * @return true if a comment is found and added to the list, false otherwise.
      */
     public boolean extractContent(String currentLine) {
-        if (currentLine.contains(START_CHARACTER)) {
-            String line = currentLine.replace(START_CHARACTER, "");
+        if (currentLine.contains(COMMENT_START_CHARACTER)) {
+            String line = currentLine.replace(COMMENT_START_CHARACTER, "");
             line = TextFileReader.removeSpacesFromStart(line);
             comments.add(line);
             return true;
@@ -52,7 +52,7 @@ public class Comment implements LaTeXTranslator {
 
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) {
-        if(!exportComment){
+        if (!exportComment){
             return;
         }
 
@@ -60,7 +60,7 @@ public class Comment implements LaTeXTranslator {
         String indentation = getIndentation(level);
 
         // % line
-        for(String line : comments){
+        for (String line : comments){
             text.append(indentation).append("% ").append(line).append("\n");
         }
     }
