@@ -17,7 +17,6 @@ public abstract class Printer {
     private boolean exportComments = true;
     private boolean exportSummary = true;
 
-
     public Printer (User user) {
         this.user = user;
     }
@@ -30,7 +29,6 @@ public abstract class Printer {
         this.user = user;
     }
 
-
     /**
      * exports the tree
      */
@@ -38,8 +36,6 @@ public abstract class Printer {
     public String getPath() {
         return path;
     }
-
-
     protected User getUser() {
         return user;
     }
