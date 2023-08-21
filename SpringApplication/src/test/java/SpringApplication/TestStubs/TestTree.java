@@ -74,8 +74,8 @@ public class TestTree {
         Sectioning sectioning12 = new Sectioning("sectioning12",7);
 
         //create environment
-        Environment environment1 = new Environment("environment1", "environment1",2);
-        Environment environment2 = new Environment("environment2", "environment2",2);
+        Environment environment1 = new Environment("idk","environment1", "environment1",2);
+        Environment environment2 = new Environment("idk", "environment2", "environment2",2);
 
 
         //create children

@@ -6,12 +6,8 @@ import com.application.exceptions.UnknownElementException;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.FetchResult;
-import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
@@ -49,7 +45,6 @@ public class GitPrinter extends Printer {
     /**
      * Clone or Pull the Repository, based on if it already exists or not
      *
-     *
      * @return true in case of success, else false
      * @throws OverleafGitException
      * @throws GitAPIException
@@ -71,22 +66,11 @@ public class GitPrinter extends Printer {
     public boolean commitAndPush() throws OverleafGitException {
         try {
             Git git = Git.open(new File(this.working_directory));
-
-            git.fetch()
-                    .setCredentialsProvider(this.credentialsProvider)
-                    .call();
-
-            git.merge()
-                    .include(git.getRepository().resolve("origin/master"))
-                    .call();
-
-            git.add().addFilepattern(".").call();
-            git.commit().setMessage("Extern Overleaf Commit TreeX").call();
-
-            git.push()
-                    .setCredentialsProvider(this.credentialsProvider)
-                    .setRemote(overleafUrl)
-                    .call();
+            fetch(git);
+            merge(git);
+            add(git);
+            commit(git);
+            push(git);
 
             return true;
         } catch (IOException ex) {
@@ -95,6 +79,27 @@ public class GitPrinter extends Printer {
             throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + ex.getMessage());
         }
     }
+
+    private void fetch(Git git) throws GitAPIException {
+        git.fetch().setCredentialsProvider(this.credentialsProvider).call();
+    }
+
+    private void merge(Git git) throws GitAPIException, IOException {
+        git.merge().include(git.getRepository().resolve("origin/master")).call();
+    }
+
+    private void add(Git git) throws GitAPIException {
+        git.add().addFilepattern(".").call();
+    }
+
+    private void commit(Git git) throws GitAPIException {
+        git.commit().setMessage("Extern Overleaf Commit TreeX").call();
+    }
+
+    private void push(Git git) throws GitAPIException {
+        git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
+    }
+
 
     /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.

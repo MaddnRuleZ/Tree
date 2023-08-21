@@ -44,7 +44,7 @@ public class Figure extends Environment {
      * @param level     The hierarchical level of the figure environment.
      */
     public Figure(String startPart, String endPart, int level) {
-        super(startPart, endPart, level);
+        super(startPart, startPart, endPart, level);
         captions = new ArrayList<>();
     }
 

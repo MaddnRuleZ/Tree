@@ -173,7 +173,7 @@ public class ComplexTestTree extends TestTree{
     }
 
     public Environment createEnvironment(Parent parent) {
-        Environment environment = new Environment("\\begin", "\\end", 0);
+        Environment environment = new Environment("unknown", "\\begin", "\\end", 0);
         environment.setId(uuids[uuidCounter]);
         uuidCounter++;
 

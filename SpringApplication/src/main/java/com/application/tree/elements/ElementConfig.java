@@ -84,21 +84,21 @@ public enum ElementConfig {
     ALGORITHM("\\begin{algorithmic}", "\\end{algorithmic}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), getLevel());
+            return new Environment(currentLine, getStartPart(), getEndPart(), getLevel());
         }
     },
 
     LSLISTINGS("\\begin{lstlistings}", "\\end{lstlistings}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), getLevel());
+            return new Environment(currentLine,getStartPart(), getEndPart(), getLevel());
         }
     },
 
     VERBATIM("\\begin{verbatim}", "\\end{verbatim}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), getLevel());
+            return new Environment(currentLine,getStartPart(), getEndPart(), getLevel());
         }
     },
 
@@ -112,7 +112,7 @@ public enum ElementConfig {
     EQUATION("\\begin{equation}", "\\end{equation}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
-            return new Environment(getStartPart(), getEndPart(), getLevel());
+            return new Environment(currentLine, getStartPart(), getEndPart(), getLevel());
         }
     },
 
@@ -186,7 +186,7 @@ public enum ElementConfig {
         }
 
         if (startPartLine.contains(Environment.DEFAULT_OPENING)) {
-            return new Environment(Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, Environment.DEFAULT_LEVEL);
+            return new Environment(startPartLine, Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, Environment.DEFAULT_LEVEL);
         }
         return null;
     }
