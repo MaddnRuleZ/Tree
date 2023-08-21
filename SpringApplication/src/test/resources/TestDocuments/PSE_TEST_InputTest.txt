@@ -1,4 +1,4 @@
-\part{options_text}[content_test]
+\chapter[options_text]{content_test}
     X1
     X
     X
@@ -8,7 +8,7 @@
     X
     \section{section1}
         \input{src/test/java/SpringApplication/TestDocuments/InputTest2.txt}
-        \paragraph{para1}
+        \subsection{sub1}
             X_1
             X
             X
@@ -24,4 +24,4 @@
             X
             \input{src/test/java/SpringApplication/TestDocuments/InputTest2.txt}
             X
-        \end{endEnvironment}
+        \end{customEnvironment}

@@ -65,36 +65,62 @@ public class Environment extends Parent {
     @Override
     public void toLaTeX(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         this.toLaTeXStart(map, key, level, exportComment, exportSummary);
-
-        String indentationHeader = getIndentation(level);
         String indentationBody = getIndentation(level + 1);
         StringBuilder text = map.get(key);
 
-        text.append(indentationHeader).append("\\begin");
-        text.append("{").append(this.header).append("}").append("\n");
-        if(this.options != null) {
-            text.append("[").append(this.options).append("]");
-        }
         for(String line: this.content.split("\n")) {
             text.append(indentationBody).append(line);
             text.append("\n");
         }
 
-        text.append(indentationHeader).append("\\end");
-        text.append("{").append(this.header).append("}");
-        text.append("\n");
-
         this.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 
+    /**
+     * Export the comment of the Environment;
+     * adds the \begin{header} and the options
+     * @param map           map of the LaTeX-Code
+     * @param key           key of the map
+     * @param level         level of indentation
+     * @param exportComment if comments should be exported
+     * @param exportSummary if summary should be exported
+     * @throws UnknownElementException
+     */
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         super.toLaTeXStart(map, key, level, exportComment, exportSummary);
+        String indentation = getIndentation(level);
+        StringBuilder text = map.get(key);
+
+        text.append(indentation).append("\\begin");
+        text.append("{").append(this.header).append("}").append("\n");
+        if(this.options != null) {
+            text.append("[").append(this.options).append("]");
+        }
+
+
     }
 
 
+    /**
+     * Export the newline and summary of the Environment;
+     * adds the \end{header}
+     * @param map           map of the LaTeX-Code
+     * @param key           key of the map
+     * @param level         level of indentation
+     * @param exportComment if comments should be exported
+     * @param exportSummary if summary should be exported
+     * @throws UnknownElementException
+     */
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+        String indentation = getIndentation(level);
+        StringBuilder text = map.get(key);
+
+        text.append(indentation).append("\\end");
+        text.append("{").append(this.header).append("}");
+        text.append("\n");
+
         super.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 }

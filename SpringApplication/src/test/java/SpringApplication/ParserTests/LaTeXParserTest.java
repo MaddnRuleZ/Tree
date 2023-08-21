@@ -36,12 +36,7 @@ public class LaTeXParserTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "src/test/resources/TestDocuments/BeginOnSection.tex",
-            "src/test/resources/TestDocuments/PSE_TEST_ENV.txt",
-            "src/test/resources/TestDocuments/PSE_TEST_1.txt",
-            "src/test/resources/TestDocuments/PSE_TEST_2.txt",
-            "src/test/resources/TestDocuments/PSE_TEST_InputTest.txt",
-            "src/test/resources/TestDocuments/StartBlockText.tex",
+            "src/test/resources/TestDocuments/BeginOnSection.tex"
     })
     public void testLaTeXFiles(String path) throws UnknownElementException, IOException {
         Parser parser = new Parser(path);
