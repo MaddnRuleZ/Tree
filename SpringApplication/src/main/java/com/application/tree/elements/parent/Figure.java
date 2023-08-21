@@ -13,8 +13,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Figure Class
@@ -60,7 +58,7 @@ public class Figure extends Environment {
         if (this.children.size() == 0) {
             block = generateTextBlockAsChild();
         } else {
-            block = generateTextSameLevel();
+            block = generateTextBlockSameLevel();
         }
         block.addTextBlockToElem(line);
         return block;

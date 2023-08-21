@@ -44,11 +44,7 @@ public abstract class Parent extends Element {
      */
     @Override
     public Element addTextBlockToElem(String line) {
-        if (summary.extractSummary(line)) {
-            return this;
-        }
-
-        if (summary.getSummary().size() == 0 && getComment().extractComment(line)) {
+        if (summary.extractSummary(line) || (summary.getSummary().isEmpty() && getComment().extractComment(line))) {
             return this;
         }
 

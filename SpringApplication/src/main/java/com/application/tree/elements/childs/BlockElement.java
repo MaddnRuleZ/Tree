@@ -18,7 +18,7 @@ import java.util.Map;
 public class BlockElement extends Child {
 
     /**
-     * Call the constructor of the parent class (Child) with null startPart and endPart and the block element level.
+     * Creates a new instance of BlockElement being a Child with default values.
      */
     public BlockElement() {
         super(null, null, ElementConfig.BLOCK_ELEMENT_LEVEL);
@@ -26,9 +26,7 @@ public class BlockElement extends Child {
     }
 
     /**
-     * add a TextBlock to the Element and generate it on the same Level
-     * Check if Parent is Figure -> this BlockElement inside Figure
-     * add Caption / GraphicString to the Figure when in current Line
+     * Add a new TextBlock or add Text to the Block
      *
      * @param line line to Scan for Summary Comment or NewLine
      */
@@ -36,7 +34,7 @@ public class BlockElement extends Child {
     public Element addTextBlockToElem(String line) {
         if (newLine.checkLineForNewLineCharacters(line)) {
             newLine.extractNlChar(line);
-            return generateTextSameLevel();
+            return generateTextBlockSameLevel();
         } else {
             if (!summary.extractSummary(line) && !comment.extractComment(line)) {
                 if (parentElement instanceof Figure figure) {
@@ -53,7 +51,7 @@ public class BlockElement extends Child {
 
     /**
      * Add text as Content to the BlockElement,
-     * remove all leading space characters
+     * remove all leading space characters and add a new line to each line
      *
      * @param line text to add to the BlockElement
      */

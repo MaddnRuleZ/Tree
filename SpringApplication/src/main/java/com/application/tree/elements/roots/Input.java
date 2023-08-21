@@ -48,7 +48,7 @@ public class Input extends Parent implements Roots {
 
     @Override
     public Element addTextBlockToElem(String line) {
-        BlockElement block = generateTextSameLevel();
+        BlockElement block = generateTextBlockSameLevel();
         block.addTextBlockToElem(line);
         return block;
     }

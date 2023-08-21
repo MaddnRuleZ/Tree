@@ -52,7 +52,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     protected String options;
     private final String startPart;
     private final String endPart;
-
     protected String type;
 
     /**
@@ -86,11 +85,12 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     /**
      * generate an TextBlock on the Same Level the current Element is on
-     * add the parent of this Element a TextBlock and set the TextBlocks parent as the parent
+     * set the new TextBlocks parent equal to this Elements parent
+     * and add a
      *
      * @return return the BlockElement just Created
      */
-    public BlockElement generateTextSameLevel() {
+    public BlockElement generateTextBlockSameLevel() {
         BlockElement blockElement = new BlockElement();
         blockElement.setParent(parentElement);
 
