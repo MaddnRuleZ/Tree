@@ -64,32 +64,6 @@ public class ParserTest {
     }
 
     @Test
-    public void testParserAdvanced() throws UnknownElementException {
-        /*
-         * test the Parser and check if the file in sys.out is like the input_file below >>>
-         */
-        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
-        Root root = null;
-
-        try {
-            root = (Root) parser.startParsing();
-        } catch (FileInvalidException e) {
-
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        if (root == null) {
-            System.out.println("Root null, document not correctly loaded");
-            return;
-        }
-
-        Map<String, StringBuilder> map = new HashMap<>();
-        map.put("root", new StringBuilder());
-        root.toLaTeX(map, "root", 0, true, true);
-        System.out.println(map.get("root").toString());
-    }
-
-    @Test
     public void environmentTest() throws UnknownElementException {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>

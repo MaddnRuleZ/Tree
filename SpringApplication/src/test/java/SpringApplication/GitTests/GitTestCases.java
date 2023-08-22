@@ -15,7 +15,7 @@ public class GitTestCases {
      * Don't Worry this Password is never used
      */
     @Test
-    public void gitPullCloneTest() throws OverleafGitException, GitAPIException {
+    public void gitPullCloneTest() throws OverleafGitException {
         GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
                 "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
         gitPrinter.pullOrCloneRepository();

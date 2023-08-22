@@ -84,9 +84,6 @@ public class CommandTest {
         );
     }
 
-
-
-
     @AfterEach
     public void tearDown() {
         commandHandler = null;

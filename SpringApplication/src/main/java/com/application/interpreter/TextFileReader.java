@@ -65,7 +65,6 @@ public class TextFileReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return lines.toArray(new String[0]);
     }
 
