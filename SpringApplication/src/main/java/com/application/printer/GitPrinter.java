@@ -87,7 +87,7 @@ public class GitPrinter extends Printer {
      */
     private boolean cloneRepository() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
-        if (repositoryPath.exists() && repositoryPath.isDirectory()) {
+        if (repositoryPath.exists() && repositoryPath.isDirectory() && containsGitStructure()) {
             deleteDirectoryRecursively(repositoryPath);
         }
 
@@ -101,6 +101,10 @@ public class GitPrinter extends Printer {
         } catch (GitAPIException ex) {
             throw new OverleafGitException("Fehler beim Klonen des Repositories: " + ex.getMessage());
         }
+    }
+
+    private boolean containsGitStructure() {
+        return false;
     }
 
     /**

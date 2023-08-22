@@ -37,7 +37,7 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
             this.getUser().resetUser();
             GitPrinter printer = new GitPrinter(url, username, password, path, this.getUser());
             printer.pullOrCloneRepository();
-            load(this.getUser(), printer, path);
+            load(this.getUser(), printer, printer.getPath());
             this.setSuccess(true);
 
          } catch (OverleafGitException overleafGitException) {

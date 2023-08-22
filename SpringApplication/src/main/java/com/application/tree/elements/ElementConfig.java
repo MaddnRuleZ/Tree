@@ -187,6 +187,7 @@ public enum ElementConfig {
      * @return return the new Created Element, null in case no found
      */
     public static Element createElement(String startPartLine) throws ParseException {
+
         for (final ElementConfig sectioning: ElementConfig.values()) {
             if (startPartLine.contains(sectioning.startPart)) {
                 return sectioning.getElement(startPartLine);
@@ -221,6 +222,26 @@ public enum ElementConfig {
             return SUBPARAGRAPH;
         } else {
             return null;
+        }
+    }
+
+    /**
+     * add \n in case the argument is in one Line
+     * in case: \part{partName} start of the Text is here
+     *
+     *
+     * @param input
+     * @return
+     */
+    public static String addNewlineAfterFirstClosingBrace(String input) {
+        int index = input.indexOf('}');
+
+        if (index != -1) {
+            StringBuilder stringBuilder = new StringBuilder(input);
+            stringBuilder.insert(index + 1, '\n');
+            return stringBuilder.toString();
+        } else {
+            return input;
         }
     }
 
