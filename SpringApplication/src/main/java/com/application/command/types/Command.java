@@ -4,6 +4,7 @@ import com.application.User;
 import com.application.command.LockManager;
 import com.application.exceptions.FailureResponse;
 import com.application.exceptions.GeneratingResponseException;
+import com.application.exceptions.ProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -50,7 +51,7 @@ public abstract class Command {
                 } else {
                     response = this.user.getRoot().toJsonTree();
                 }
-            } catch (NullPointerException e) {
+            } catch (NullPointerException | ProcessingException e) {
                 response = FailureResponse.generateFailureResponse(new GeneratingResponseException().getMessage());
                 this.setSuccess(false);
             } finally {

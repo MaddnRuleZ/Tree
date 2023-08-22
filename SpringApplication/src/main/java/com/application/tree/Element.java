@@ -1,5 +1,6 @@
 package com.application.tree;
 
+import com.application.exceptions.ProcessingException;
 import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.TextFileReader;
 import com.application.tree.additionalInfo.Comment;
@@ -202,7 +203,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     @Override
-    public ObjectNode toJsonEditor() throws NullPointerException {
+    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
@@ -228,7 +229,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     @Override
-    public JsonNode toJsonTree() throws NullPointerException {
+    public JsonNode toJsonTree() throws NullPointerException, ProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();

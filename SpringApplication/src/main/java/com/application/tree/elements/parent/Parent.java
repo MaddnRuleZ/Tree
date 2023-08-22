@@ -1,5 +1,6 @@
 package com.application.tree.elements.parent;
 
+import com.application.exceptions.ProcessingException;
 import com.application.tree.Element;
 import com.application.tree.elements.childs.BlockElement;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -111,7 +112,7 @@ public abstract class Parent extends Element {
     }
 
     @Override
-    public ObjectNode toJsonEditor() throws NullPointerException {
+    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException {
         ObjectNode node = super.toJsonEditor();
         if (this.children != null && !this.children.isEmpty()) {
             ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
@@ -124,7 +125,7 @@ public abstract class Parent extends Element {
     }
 
     @Override
-    public JsonNode toJsonTree() throws NullPointerException {
+    public JsonNode toJsonTree() throws NullPointerException, ProcessingException {
         ArrayNode node = (ArrayNode) super.toJsonTree();
         if (this.children != null && !this.children.isEmpty()) {
             for (Element child : this.children) {

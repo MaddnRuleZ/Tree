@@ -4,6 +4,7 @@ import SpringApplication.TestStubs.ComplexTestTree;
 import SpringApplication.TestStubs.TestTree;
 import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.ParseException;
+import com.application.exceptions.ProcessingException;
 import com.application.interpreter.Parser;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
@@ -26,7 +27,7 @@ public class JsonParserTest {
     }
 
     @Test
-    public void toJsonEditorTest() {
+    public void toJsonEditorTest() throws ProcessingException {
         String json = tree.root.toJsonEditor().toString();
         String formattedJsonString = formatJsonString(json);
         System.out.println(formattedJsonString);
@@ -34,7 +35,7 @@ public class JsonParserTest {
     }
 
     @Test
-    public void toJsonTreeTest() {
+    public void toJsonTreeTest() throws ProcessingException {
         String json = tree.root.toJsonTree().toString();
         String formattedJsonString = formatJsonString(json);
         System.out.println(formattedJsonString);

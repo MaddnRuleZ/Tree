@@ -166,14 +166,14 @@ public class AddElementTest {
                 ),
                 new ElementTestCase(
                         "\\begin{enumerate} \n \\item item1 \n \\item item2 \n \\end{enumerate}",
-                        " \n \\item item1 \n \\item item2 \n ",
+                        "\\item item1 \n \\item item2",
                         null,
                         "enumerate",
                         List.of()
                 ),
                 new ElementTestCase(
                         "\\begin{equation}[someOption] \n \\frac{1}{2} \n \\end{equation}",
-                        " \n \\frac{1}{2} \n ",
+                        "\\frac{1}{2}",
                         "someOption",
                         "equation",
                         List.of()

@@ -1,6 +1,7 @@
 package com.application.tree.elements.roots;
 
 import com.application.User;
+import com.application.exceptions.ProcessingException;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
@@ -121,7 +122,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     @Override
-    public ObjectNode toJsonEditor() throws NullPointerException {
+    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
@@ -136,7 +137,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     @Override
-    public JsonNode toJsonTree() throws NullPointerException {
+    public JsonNode toJsonTree() throws NullPointerException, ProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode treeNode = mapper.createObjectNode();
         ArrayNode node = JsonNodeFactory.instance.arrayNode();
