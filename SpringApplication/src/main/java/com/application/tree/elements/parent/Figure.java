@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -130,9 +131,10 @@ public class Figure extends Environment {
 
 
     @Override
-    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException {
+    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException, IOException {
         ObjectNode node = super.toJsonEditor();
         node.put("image", convertFile(Printer.getFigurePath() + "/" + this.graphic));
+        node.put("mimeType", extractMimeType());
 
         if(this.captions != null && !this.captions.isEmpty()) {
             ArrayNode captionNode = JsonNodeFactory.instance.arrayNode();
@@ -147,13 +149,16 @@ public class Figure extends Environment {
     }
 
     @Override
-    public JsonNode toJsonTree() throws NullPointerException, ProcessingException {
+    public JsonNode toJsonTree() throws NullPointerException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
         node.put("elementID", this.getId().toString());
-        node.put("content", convertFile(Printer.getFigurePath() + "/" + this.graphic));
+        node.put("content", "");
+
+        node.put("image", convertFile(Printer.getFigurePath() + "/" + this.graphic));
+        node.put("mimeType", extractMimeType());
 
         if (this.getParentElement() == null) {
             node.put("parentID", "null");
@@ -170,7 +175,7 @@ public class Figure extends Environment {
         return arrayNode;
     }
 
-    private String convertFile(String path) throws ProcessingException {
+    private String convertFile(String path) throws IOException {
         try {
             Path location = Paths.get(path);
 
@@ -180,7 +185,16 @@ public class Figure extends Environment {
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
             return base64Image;
         } catch (IOException e) {
-            throw new ImageException(path);
+            Path location = Paths.get("SpringApplication/src/main/resources/Images/ImageNotFound.txt");
+            return Files.readString(location);
+        }
+    }
+
+    private String extractMimeType() {
+        try {
+            return "image" + Files.probeContentType(Paths.get(this.graphic));
+        } catch (IOException e) {
+            return "image/jpg";
         }
     }
 }
