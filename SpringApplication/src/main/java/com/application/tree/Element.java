@@ -85,8 +85,8 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     /**
      * generate an TextBlock on the Same Level the current Element is on
-     * set the new TextBlocks parent equal to this Elements parent
-     * and add a
+     * set the new TextBlock's parent equal to this Elements parent
+     * set this as the child of the parent
      *
      * @return return the BlockElement just Created
      */
@@ -108,7 +108,8 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     /**
-     * Extract and set the Options String of the Element
+     * Extract and set the Options String of the Element,
+     * option string can only be an '*' for an uncounted LaTeX element
      *
      * @param options whole String to extract Options from
      */
@@ -121,7 +122,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
 
     /**
-     * Extracts content from a raw line using a specified regex pattern.
+     * Extracts content from a raw line using regex
      *
      * @param rawLine Input raw line.
      * @return Extracted content, or null if no match is found.
@@ -135,7 +136,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     /**
-     * Extracts Options from a raw line using a specified regex pattern.
+     * Extracts Options from a raw line using regex
      *
      * @param rawLine Input raw line.
      * @return Extracted content, or null if no match is found.
@@ -148,12 +149,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         return null;
     }
 
-    /**
-     * Extracts And Assign the content to the Element
-     *
-     * @param rawLine Input raw line.
-     * @return Extracted content, or null if no match is found.
-     */
     public void setContent(String rawLine) {
         this.content = extractContent(rawLine);
     }

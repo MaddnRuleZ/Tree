@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * BlockElement Class
  *
- * The BlockElement class represents a child element within the LaTeX Code.
+ * The BlockElement represents a child element within the LaTeX Composite Tree.
  * BlockElements are undetected Blocks of Text which represent no detected Structure Element and
  * still hold the Text in Between Structure Elements
  */
@@ -25,13 +25,13 @@ public class BlockElement extends Child {
         this.type = this.getClass().getSuperclass().getSimpleName();
     }
 
-    /**
+    /*
      * Add a new TextBlock or add Text to the Block
+     * if there is a newLineCharacter generate a new TextBlock on the same level
      *
      * @param line line to Scan for Summary Comment or NewLine
-     */
-    @Override
-    public Element addTextBlockToElem(String line) {
+     *
+    public Element addTextBlockToElem1(String line) {
         if (newLine.checkLineForNewLineCharacters(line)) {
             newLine.extractNlChar(line);
             return generateTextBlockSameLevel();
@@ -48,6 +48,39 @@ public class BlockElement extends Child {
             return this;
         }
     }
+    */
+
+    /**
+     * Add a new TextBlock or add Text to the Block
+     * if there is a newLineCharacter generate a new TextBlock on the same level
+     * extract summary and comment if present,
+     * and check for graphic and caption command if current TextBlock is inside a Figure
+     *
+     * @param line line to Scan for Summary Comment or NewLine
+     */
+    @Override
+    public Element addTextBlockToElem(String line) {
+        if (newLine.checkLineForNewLineCharacters(line)) {
+            newLine.extractNlChar(line);
+            return generateTextBlockSameLevel();
+        }
+
+        if (summary.extractSummary(line) || comment.extractComment(line)) {
+            return this;
+        }
+
+        if (parentElement instanceof Figure figure) {
+            if (figure.setGraphics(line) || figure.addCaption(line)) {
+                return this;
+            }
+        }
+
+        addText(line);
+        return this;
+    }
+
+
+
 
     /**
      * Add text as Content to the BlockElement,
