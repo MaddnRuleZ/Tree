@@ -145,7 +145,7 @@ public class Figure extends Environment {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
         node.put("elementID", this.getId().toString());
-        node.put("content", Printer.getFigurePath() + this.graphic);
+        node.put("content", Printer.getFigurePath() + "/" + this.graphic);
         if (this.getParentElement() == null) {
             node.put("parentID", "null");
         } else {

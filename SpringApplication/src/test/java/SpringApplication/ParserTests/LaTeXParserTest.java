@@ -24,13 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LaTeXParserTest {
 
-    @Test
-    public void parseTest() throws UnknownElementException {
-        ComplexTestTree tree = new ComplexTestTree();
-        Map<String, StringBuilder> map = new HashMap<>();
-        map.put("root", new StringBuilder());
-        tree.root.toLaTeX(map, "root", LaTeXTranslator.INIT_INDENTATION_LEVEL, true, true);
-        System.out.println(map.get("root").toString());
+    public void setUp() {
+        Root.resetInstance();
     }
 
 

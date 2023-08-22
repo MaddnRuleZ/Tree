@@ -4,6 +4,7 @@ import SpringApplication.TestStubs.ComplexTestTree;
 import com.application.User;
 import com.application.command.types.AddCommand;
 import com.application.tree.Element;
+import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.junit.jupiter.api.AfterEach;
@@ -66,6 +67,7 @@ public class AddElementTest {
         String input = testCase.getInput();
         String expectedContent = testCase.getExpectedContent();
         String expectedOptions = testCase.getExpectedOptions();
+        String expectedHeader = testCase.getExpectedHeader();
         List<String> expectedComment = testCase.getExpectedComment();
 
         Sectioning sec = tree.sectioningList.get(0);
@@ -79,6 +81,9 @@ public class AddElementTest {
         assertEquals(expectedContent, newElem.getContent(), "Content should be added");
         assertEquals(expectedOptions, newElem.getOptions(), "Options should be added");
         assertEquals(expectedComment, newElem.getComment().getComments(), "Comment should be added");
+        if(newElem instanceof Environment) {
+            assertEquals(expectedHeader, ((Environment) newElem).getHeader(), "Header should be added");
+        }
 
         print(expectedContent);
     }
@@ -156,47 +161,55 @@ public class AddElementTest {
                         "\\section*{newly added section}",
                         "newly added section",
                         "*",
+                        null,
                         List.of()
                 ),
                 new ElementTestCase(
                         "\\begin{enumerate} \n \\item item1 \n \\item item2 \n \\end{enumerate}",
-                        "enumerate",
+                        " \n \\item item1 \n \\item item2 \n ",
                         null,
+                        "enumerate",
                         List.of()
                 ),
                 new ElementTestCase(
                         "\\begin{equation}[someOption] \n \\frac{1}{2} \n \\end{equation}",
-                        "equation",
+                        " \n \\frac{1}{2} \n ",
                         "someOption",
+                        "equation",
                         List.of()
                 ),
                 new ElementTestCase(
                         "\\begin{figure}[ht] \n \\includegraphics[width=\\linewidth]{test.png} \n \\caption{caption1}\\end{figure}",
-                        "figure",
+                        "\\includegraphics[width=\\linewidth]{test.png} \n \\caption{caption1}",
                         "ht",
+                        "figure",
                         List.of()
                 ),
                 new ElementTestCase(
                         "%someComment \n \\begin{algorithmic} \n \\State $i \\gets 0$ \n \\end{algorithmic}",
-                        "algorithmic",
+                        "\\State $i \\gets 0$",
                         null,
+                        "algorithmic",
                         List.of()
                 ),
                 new ElementTestCase(
                         "\\label{new label1}",
                         "new label1",
                         null,
+                        null,
                         List.of()
                 ),
                 new ElementTestCase(
                         "just newly added text",
                         "just newly added text",
                         null,
+                        null,
                         List.of()
                 ),
                 new ElementTestCase(
                         "%comment of new element \n new element just text",
                         "new element just text",
+                        null,
                         null,
                         new ArrayList<String>() {{
                             add("comment of new element");
@@ -213,10 +226,13 @@ public class AddElementTest {
         private String expectedOptions;
         private List<String> expectedComment;
 
-        public ElementTestCase(String input, String expectedContent, String expectedOptions, List<String> expectedComment) {
+        private String expectedHeader;
+
+        public ElementTestCase(String input, String expectedContent, String expectedOptions, String expectedHeader, List<String> expectedComment) {
             this.input = input;
             this.expectedContent = expectedContent;
             this.expectedOptions = expectedOptions;
+            this.expectedHeader = expectedHeader;
             this.expectedComment = expectedComment;
         }
 
@@ -234,6 +250,10 @@ public class AddElementTest {
 
         public List<String> getExpectedComment() {
             return expectedComment;
+        }
+
+        public String getExpectedHeader() {
+            return expectedHeader;
         }
 
     }
