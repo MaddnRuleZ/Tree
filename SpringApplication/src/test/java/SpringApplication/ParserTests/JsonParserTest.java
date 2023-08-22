@@ -14,6 +14,8 @@ import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Ignore("This test is better done in GetCommandTest")
@@ -27,7 +29,7 @@ public class JsonParserTest {
     }
 
     @Test
-    public void toJsonEditorTest() throws ProcessingException {
+    public void toJsonEditorTest() throws ProcessingException, IOException {
         String json = tree.root.toJsonEditor().toString();
         String formattedJsonString = formatJsonString(json);
         System.out.println(formattedJsonString);
@@ -35,7 +37,7 @@ public class JsonParserTest {
     }
 
     @Test
-    public void toJsonTreeTest() throws ProcessingException {
+    public void toJsonTreeTest() throws ProcessingException, IOException {
         String json = tree.root.toJsonTree().toString();
         String formattedJsonString = formatJsonString(json);
         System.out.println(formattedJsonString);

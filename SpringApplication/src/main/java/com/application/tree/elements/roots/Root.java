@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -122,7 +123,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     @Override
-    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException {
+    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
@@ -137,7 +138,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     }
 
     @Override
-    public JsonNode toJsonTree() throws NullPointerException, ProcessingException {
+    public JsonNode toJsonTree() throws NullPointerException, ProcessingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode treeNode = mapper.createObjectNode();
         ArrayNode node = JsonNodeFactory.instance.arrayNode();

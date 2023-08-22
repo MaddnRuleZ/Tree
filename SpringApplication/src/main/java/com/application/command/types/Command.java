@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.IOException;
+
 /**
  * abstract class for all commands
  * provides success and failure message
@@ -51,7 +53,7 @@ public abstract class Command {
                 } else {
                     response = this.user.getRoot().toJsonTree();
                 }
-            } catch (NullPointerException | ProcessingException e) {
+            } catch (NullPointerException | ProcessingException |IOException e) {
                 response = FailureResponse.generateFailureResponse(new GeneratingResponseException().getMessage());
                 this.setSuccess(false);
             } finally {
