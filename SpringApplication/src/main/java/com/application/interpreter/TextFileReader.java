@@ -20,6 +20,12 @@ public class TextFileReader {
         this.filePath = filePath;
     }
 
+    /**
+     * Validate the files existence and right Format
+     *
+     * @return true in case of success
+     * @throws FileInvalidException
+     */
     public boolean validateFile() throws FileInvalidException {
         File file = new File(filePath);
         String fileName = file.getName();

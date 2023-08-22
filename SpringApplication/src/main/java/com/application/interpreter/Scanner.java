@@ -12,7 +12,7 @@ import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
 
 /**
- * Scanner Class for Disassemble a Document into its Latex Structure Elements
+ * Scanner Class for Disassembling a Document into its Latex Structure Elements
  *
  */
 public class Scanner {
@@ -186,9 +186,9 @@ public class Scanner {
      * in case Figure the parent.Element will match the Endpart,
      * any other the lastElement will match the Endpart
      *
-     * @param lastElement
-     * @param currentLine
-     * @return
+     * @param lastElement last Element use
+     * @param currentLine current Line in the Text being scanned
+     * @return true if lastElement or LastElements parent contains the EndPart
      */
     private boolean checkLineEndsEnvironment(Element lastElement, String currentLine) {
         return (lastElement != null && lastElement.getEndPart() != null && currentLine.contains(lastElement.getEndPart())
