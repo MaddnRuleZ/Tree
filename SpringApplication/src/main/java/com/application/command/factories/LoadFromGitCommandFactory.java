@@ -38,6 +38,7 @@ public class LoadFromGitCommandFactory implements CommandFactory {
                 case "url" -> command.setUrl(value);
                 case "username" -> command.setUsername(value);
                 case "password" -> command.setPassword(value);
+                case "path" -> command.setPath(value);
                 default -> throw new NumParamsException("LoadFromGit - unknown parameter");
             }
         }
