@@ -21,7 +21,7 @@ public interface ILoadCommand {
     default void load(User user, Printer printer, String path) throws ParseException, FileInvalidException {
         Parser parser = new Parser(path);
         user.resetUser();
-        Roots root = parser.startParsing();
+        Roots root = parser.startParsingText();
         if(root instanceof Root) {
             user.setRoot((Root) root);
             user.setPrinter(printer);

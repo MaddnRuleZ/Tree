@@ -143,7 +143,7 @@ public abstract class Parent extends Element {
      * @return index of child with specified id
      */
     public int getIndexOfChild(UUID id) {
-        if(id == null) {
+        if (id == null) {
             return -1;
         }
         for (int i = 0; i < this.children.size(); i++) {

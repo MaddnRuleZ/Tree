@@ -140,7 +140,7 @@ public enum ElementConfig {
 
                 try {
                     Parser parser = new Parser(path);
-                    return (Input) parser.startParsing();
+                    return (Input) parser.startParsingText();
 
                 } catch (FileInvalidException e) {
                     throw new ParseException(currentLine);

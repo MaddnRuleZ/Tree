@@ -43,7 +43,7 @@ public class Parser {
      *
      * @return finished Root, containing the full tree as Children, null if Error occurred
      */
-    public Roots startParsing() throws FileInvalidException, ParseException {
+    public Roots startParsingText() throws FileInvalidException, ParseException {
         if (textFileReader == null || !textFileReader.validateFile()) {
             return null;
         }
@@ -59,7 +59,7 @@ public class Parser {
      * @param text the String to be parsed
      * @return finished Root, containing the full tree as Children, null if Error occurred
      */
-    public Roots startParsing(String text) throws ParseException {
+    public Roots startParsingText(String text) throws ParseException {
         String[] lines = text.split("\n");
         Scanner scanner = new Scanner(lines);
         return scanner.parseDocument();

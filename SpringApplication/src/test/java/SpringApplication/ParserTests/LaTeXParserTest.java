@@ -13,7 +13,6 @@ import com.application.tree.interfaces.LaTeXTranslator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.*;
@@ -38,7 +37,7 @@ public class LaTeXParserTest {
         User user = new User();
 
         try {
-            Root root = (Root) parser.startParsing();
+            Root root = (Root) parser.startParsingText();
             user.setRoot(root);
         } catch (FileInvalidException e) {
             e.printStackTrace();
