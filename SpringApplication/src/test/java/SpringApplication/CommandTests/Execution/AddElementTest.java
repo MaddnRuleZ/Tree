@@ -164,28 +164,28 @@ public class AddElementTest {
                         List.of()
                 ),
                 new ElementTestCase(
-                        "\\begin{enumerate} \n \\item item1 \n \\item item2 \n \\end{enumerate}",
-                        "\\item item1 \n \\item item2",
+                        "\\begin{enumerate} \n \\item item1 \n\\item item2 \n \\end{enumerate}",
+                        "\\item item1 \n\\item item2 \n",
                         null,
                         "enumerate",
                         List.of()
                 ),
                 new ElementTestCase(
                         "\\begin{equation}[someOption] \n \\frac{1}{2} \n \\end{equation}",
-                        "\\frac{1}{2}",
+                        "\\frac{1}{2} \n",
                         "someOption",
                         "equation",
                         List.of()
                 ),
                 new ElementTestCase(
                         "\\begin{figure}[ht] \n \\includegraphics[width=\\linewidth]{test.png} \n \\caption{caption1}\\end{figure}",
-                        "\\includegraphics[width=\\linewidth]{test.png} \n \\caption{caption1}",
+                        "figure",
                         "ht",
                         "figure",
                         List.of()
                 ),
                 new ElementTestCase(
-                        "%someComment \n \\begin{algorithmic} \n \\State $i \\gets 0$ \n \\end{algorithmic}",
+                        "\\begin{algorithmic} \\State $i \\gets 0$ \n \\end{algorithmic}",
                         "\\State $i \\gets 0$",
                         null,
                         "algorithmic",
@@ -200,14 +200,14 @@ public class AddElementTest {
                 ),
                 new ElementTestCase(
                         "just newly added text",
-                        "just newly added text",
+                        "just newly added text\n",
                         null,
                         null,
                         List.of()
                 ),
                 new ElementTestCase(
-                        "%comment of new element \n new element just text",
-                        "new element just text",
+                        "%comment of new element\n new element just text",
+                        "new element just text\n",
                         null,
                         null,
                         new ArrayList<String>() {{
