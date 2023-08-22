@@ -192,7 +192,7 @@ public class Figure extends Environment {
 
     private String extractMimeType() {
         try {
-            return "image/" + Files.probeContentType(Paths.get(this.graphic));
+            return Files.probeContentType(Paths.get(this.graphic));
         } catch (IOException e) {
             return "image/jpg";
         }
