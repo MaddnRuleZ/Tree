@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,9 +88,6 @@ public class GitPrinter extends Printer {
      */
     private boolean cloneRepository() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
-        if (repositoryPath.exists() && repositoryPath.isDirectory() && containsGitStructure()) {
-            deleteDirectoryRecursively(repositoryPath);
-        }
 
         try {
             Git.cloneRepository()
@@ -101,10 +99,6 @@ public class GitPrinter extends Printer {
         } catch (GitAPIException ex) {
             throw new OverleafGitException("Fehler beim Klonen des Repositories: " + ex.getMessage());
         }
-    }
-
-    private boolean containsGitStructure() {
-        return false;
     }
 
     /**
