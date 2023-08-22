@@ -184,16 +184,16 @@ public class Figure extends Environment {
             byte[] imageBytes = resource.getInputStream().readAllBytes();
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
             return base64Image;
-        } catch (IOException e) {
-            Path location = Paths.get("SpringApplication/src/main/resources/Images/ImageNotFound.txt");
+        } catch (IOException | NullPointerException e) {
+            Path location = Paths.get("src/main/resources/Images/ImageNotFound.txt");
             return Files.readString(location);
         }
     }
 
     private String extractMimeType() {
         try {
-            return Files.probeContentType(Paths.get(this.graphic));
-        } catch (IOException e) {
+            return Files.probeContentType(Path.of(this.graphic));
+        } catch (IOException | NullPointerException e) {
             return "image/jpg";
         }
     }

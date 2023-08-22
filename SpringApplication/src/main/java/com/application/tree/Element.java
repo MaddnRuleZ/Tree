@@ -205,6 +205,10 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException, IOException {
+        if( this instanceof BlockElement || this.content == null) {
+            return null;
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
@@ -231,6 +235,10 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public JsonNode toJsonTree() throws NullPointerException, ProcessingException, IOException {
+        if( this instanceof BlockElement || this.content == null) {
+            return null;
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
