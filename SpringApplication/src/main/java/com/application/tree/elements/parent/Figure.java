@@ -124,7 +124,7 @@ public class Figure extends Environment {
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException {
         ObjectNode node = super.toJsonEditor();
-        node.put("fileLocation", Printer.getFigurePath() + this.graphic);
+        node.put("fileLocation", Printer.getFigurePath() + "/" + this.graphic);
 
         if(this.captions != null && !this.captions.isEmpty()) {
             ArrayNode captionNode = JsonNodeFactory.instance.arrayNode();

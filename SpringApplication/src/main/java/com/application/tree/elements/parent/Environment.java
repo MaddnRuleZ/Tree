@@ -54,9 +54,11 @@ public class Environment extends Parent {
         String indentationBody = getIndentation(level + 1);
         StringBuilder text = map.get(key);
 
-        for(String line: this.content.split("\n")) {
-            text.append(indentationBody).append(line);
-            text.append("\n");
+        if (!this.content.isEmpty()) {
+            for (String line : this.content.split("\n")) {
+                text.append(indentationBody).append(line);
+                text.append("\n");
+            }
         }
 
         this.toLaTeXEnd(map, key, level, exportComment, exportSummary);

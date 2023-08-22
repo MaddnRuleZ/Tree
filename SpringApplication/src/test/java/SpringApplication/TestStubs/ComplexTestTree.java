@@ -185,7 +185,8 @@ public class ComplexTestTree extends TestTree{
 
         environment.setParent(parent);
 
-        environment.extractContent("\\begin{environment"+ envCounter +"}");
+        environment.extractContent("\\begin{unknown}");
+        environment.addTextBlockToElem("environment blablablablalbslvgbjwegbvqeujigjdieuweda"+ envCounter);
         envCounter++;
 
         environment.setComment("%comment1");
