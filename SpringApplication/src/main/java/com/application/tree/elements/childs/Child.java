@@ -33,7 +33,7 @@ public class Child extends Element {
      */
     @Override
     public Element addTextBlockToElem(String line) {
-        return generateTextBlockSameLevel();
+        return generateTextBlockSameLevel().addTextBlockToElem(line);
     }
 
     @Override

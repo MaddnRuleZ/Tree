@@ -18,7 +18,7 @@ public class ParserTestAdvanced {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
-        Root root = (Root) parser.startParsing();
+        Root root = (Root) parser.startParsingText();
 
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());

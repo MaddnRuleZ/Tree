@@ -9,7 +9,7 @@ public interface IEditCommand {
 
     default void checkBadString(String content) throws ParseException {
         Parser parser = new Parser();
-        Roots root = parser.startParsing(content);
+        Roots root = parser.startParsingText(content);
         if(root.getChildren().size() == 0) {
             return;
         }

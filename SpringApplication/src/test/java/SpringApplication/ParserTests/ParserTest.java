@@ -4,9 +4,14 @@ import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.Parser;
+import com.application.interpreter.Scanner;
 import com.application.tree.elements.roots.Root;
+import com.application.tree.elements.roots.Roots;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +27,7 @@ public class ParserTest {
         Root root = null;
 
         try {
-            root = (Root) parser.startParsing();
+            root = (Root) parser.startParsingText();
         } catch (FileInvalidException | ParseException e) {
 
         }
@@ -46,7 +51,7 @@ public class ParserTest {
         Root root = null;
 
         try {
-            root = (Root) parser.startParsing();
+            root = (Root) parser.startParsingText();
         } catch (FileInvalidException e) {
 
         } catch (ParseException e) {
@@ -72,7 +77,7 @@ public class ParserTest {
         Root root = null;
 
         try {
-            root = (Root) parser.startParsing();
+            root = (Root) parser.startParsingText();
         } catch (FileInvalidException e) {
             System.out.println("Invalid File Used");
         } catch (ParseException e) {
@@ -98,7 +103,7 @@ public class ParserTest {
         Root root = null;
 
         try {
-            root = (Root) parser.startParsing();
+            root = (Root) parser.startParsingText();
         } catch (FileInvalidException e) {
             System.out.println("Invalid File Used");
         } catch (ParseException e) {
@@ -125,7 +130,7 @@ public class ParserTest {
         Root root = null;
 
         try {
-            root = (Root) parser.startParsing();
+            root = (Root) parser.startParsingText();
         } catch (FileInvalidException e) {
             System.out.println("Invalid File Used");
         } catch (ParseException e) {
@@ -151,7 +156,7 @@ public class ParserTest {
         Root root = null;
 
         try {
-            root = (Root) parser.startParsing();
+            root = (Root) parser.startParsingText();
         } catch (FileInvalidException e) {
             System.out.println("Invalid File Used");
         } catch (ParseException e) {
@@ -178,7 +183,7 @@ public class ParserTest {
         parser.initStartParsing();
         Root root = null;
         try {
-            root = (Root) parser.startParsing();
+            root = (Root) parser.startParsingText();
         } catch (FileInvalidException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
@@ -188,7 +193,24 @@ public class ParserTest {
         Parser parserTwo = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
         parserTwo.initStartParsing();
 
-        root =  (Root) parserTwo.startParsing();
+        root =  (Root) parserTwo.startParsingText();
         System.out.println("spacer");
+    }
+
+    @Test
+    public void addTestExternCase() throws UnknownElementException, ParseException {
+        /*
+         * test the Parser and check if the file in sys.out is like the input_file below >>>
+         */
+        List<String> text = new ArrayList<>();
+        text.add("\\begin{equation}");
+        text.add("X");
+        text.add("X");
+        text.add("X");
+        text.add("\\end{equation}");
+        String[] strArr = text.toArray(new String[text.size()]);
+
+        Scanner scanner = new Scanner(strArr);
+        Roots elem = scanner.parseDocument();
     }
 }

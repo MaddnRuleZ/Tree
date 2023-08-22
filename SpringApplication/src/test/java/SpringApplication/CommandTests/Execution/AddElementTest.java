@@ -28,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * Tests the execution of an AddCommand
  */
 public class AddElementTest {
-
     /**
      * Command to test
      */

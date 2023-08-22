@@ -37,7 +37,7 @@ public class AddCommand extends Command {
         try {
             Element foundParentElement = this.getUser().getRoot().searchForID(this.parent);
 
-            if(foundParentElement == null ) {
+            if (foundParentElement == null ) {
                 throw new ElementNotFoundException("Parent");
             } else if (!(foundParentElement instanceof Parent)) {
                 throw new TypeException(Parent.class.getSimpleName(), foundParentElement.getClass().getSimpleName());
@@ -45,14 +45,14 @@ public class AddCommand extends Command {
 
             Parent parentElement = (Parent) foundParentElement;
             Parser parser = new Parser();
-            Roots foundRoot = parser.startParsing(this.content);
+            Roots foundRoot = parser.startParsingText(this.content);
 
             if (foundRoot.getChildren().size() == 0) {
                 throw new ParseException(this.content);
             }
 
             int index = parentElement.getIndexOfChild(this.previousChild);
-            if(index == -2) {
+            if (index == -2) {
                 throw new ElementNotFoundException("PreviousChild");
             }
             for (Element child : foundRoot.getChildren()) {

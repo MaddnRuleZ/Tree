@@ -68,22 +68,6 @@ public class Scanner {
     }
 
     /**
-     * Add a TextBlock to the DocumentRoot
-     * In case Document starts with an TextBlock, add one to the Document Root
-     *
-     * @param line textLine to add
-     * @return return added TextBlock
-     */
-    private Element addStartTextBlock(String line) {
-        Element lastElement;
-        BlockElement blockElement = new BlockElement();
-        blockElement.addTextBlockToElem(line);
-        root.addChild(blockElement);
-        lastElement =  blockElement;
-        return lastElement;
-    }
-
-    /**
      * Scan the line for new Structure Element
      * or end the current LastElement (Environment only)
      * if found, create it add it relative to the last Element and return it; else return null
@@ -122,6 +106,22 @@ public class Scanner {
             }
             return newElement;
         }
+    }
+
+    /**
+     * Add a TextBlock to the DocumentRoot
+     * In case Document starts with an TextBlock, add one to the Document Root
+     *
+     * @param line textLine to add
+     * @return return added TextBlock
+     */
+    private Element addStartTextBlock(String line) {
+        Element lastElement;
+        BlockElement blockElement = new BlockElement();
+        blockElement.addTextBlockToElem(line);
+        root.addChild(blockElement);
+        lastElement =  blockElement;
+        return lastElement;
     }
 
     /**
