@@ -1,5 +1,6 @@
 package com.application.tree;
 
+import com.application.exceptions.ProcessingException;
 import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.TextFileReader;
 import com.application.tree.additionalInfo.Comment;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -202,7 +204,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     @Override
-    public ObjectNode toJsonEditor() throws NullPointerException {
+    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
 
@@ -228,7 +230,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     @Override
-    public JsonNode toJsonTree() throws NullPointerException {
+    public JsonNode toJsonTree() throws NullPointerException, ProcessingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();

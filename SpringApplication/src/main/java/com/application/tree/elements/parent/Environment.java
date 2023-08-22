@@ -109,4 +109,8 @@ public class Environment extends Parent {
 
         super.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
+
+    public String getHeader() {
+        return header;
+    }
 }

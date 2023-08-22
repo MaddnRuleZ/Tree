@@ -179,7 +179,7 @@ public class ParserTest {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/resources/TestDocuments/ENV_TST.txt");
+        Parser parser = new Parser("src/test/resources/TestDocuments/MoveTEST.txt");
         parser.initStartParsing();
         Root root = null;
         try {

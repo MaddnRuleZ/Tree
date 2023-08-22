@@ -1,5 +1,7 @@
 package com.application.tree.elements.parent;
 
+import com.application.exceptions.ImageException;
+import com.application.exceptions.ProcessingException;
 import com.application.exceptions.UnknownElementException;
 import com.application.printer.Printer;
 import com.application.tree.Element;
@@ -9,8 +11,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -122,9 +131,10 @@ public class Figure extends Environment {
 
 
     @Override
-    public ObjectNode toJsonEditor() throws NullPointerException {
+    public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException, IOException {
         ObjectNode node = super.toJsonEditor();
-        node.put("fileLocation", Printer.getFigurePath() + "/" + this.graphic);
+        node.put("image", convertFile(Printer.getFigurePath() + "/" + this.graphic));
+        node.put("mimeType", extractMimeType());
 
         if(this.captions != null && !this.captions.isEmpty()) {
             ArrayNode captionNode = JsonNodeFactory.instance.arrayNode();
@@ -139,13 +149,17 @@ public class Figure extends Environment {
     }
 
     @Override
-    public JsonNode toJsonTree() throws NullPointerException {
+    public JsonNode toJsonTree() throws NullPointerException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
         node.put("elementID", this.getId().toString());
-        node.put("content", Printer.getFigurePath() + this.graphic);
+        node.put("content", "");
+
+        node.put("image", convertFile(Printer.getFigurePath() + "/" + this.graphic));
+        node.put("mimeType", extractMimeType());
+
         if (this.getParentElement() == null) {
             node.put("parentID", "null");
         } else {
@@ -159,5 +173,28 @@ public class Figure extends Environment {
         node.put("chooseManualSummary", this.isChooseManualSummary());
         arrayNode.add(node);
         return arrayNode;
+    }
+
+    private String convertFile(String path) throws IOException {
+        try {
+            Path location = Paths.get(path);
+
+            Resource resource = new UrlResource(location.toUri());
+
+            byte[] imageBytes = resource.getInputStream().readAllBytes();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            return base64Image;
+        } catch (IOException e) {
+            Path location = Paths.get("SpringApplication/src/main/resources/Images/ImageNotFound.txt");
+            return Files.readString(location);
+        }
+    }
+
+    private String extractMimeType() {
+        try {
+            return "image/" + Files.probeContentType(Paths.get(this.graphic));
+        } catch (IOException e) {
+            return "image/jpg";
+        }
     }
 }
