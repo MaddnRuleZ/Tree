@@ -1,5 +1,6 @@
 package com.application.interpreter;
 
+import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
@@ -40,7 +41,7 @@ public class Scanner {
      *
      * @return root Element of tree with rest of tree as Children
      */
-    public Roots parseDocument() {
+    public Roots parseDocument() throws ParseException {
         Element lastElement = null;
         Element newElement;
 
@@ -91,7 +92,7 @@ public class Scanner {
      * @param currentLine current Line to scan in the Text
      * @return the New Created Text Element with parent and child hierarchy
      */
-    private Element scanCurrentLine(Element lastElement, String currentLine) {
+    private Element scanCurrentLine(Element lastElement, String currentLine) throws ParseException {
         if (checkLineEndsEnvironment(lastElement, currentLine)) {
             // End current Environment
             return lastElement.getParentElement();
@@ -122,53 +123,6 @@ public class Scanner {
             return newElement;
         }
     }
-
-    /**
-     * Scan the line for new Structure Element
-     * or end the current LastElement (Environment only)
-     * if found, create it add it relative to the last Element and return it; else return null
-     *
-     * @param lastElement last Element that was used
-     * @param currentLine current Line to scan in the Text
-     * @return the New Created Text Element with parent and child hierarchy
-     */
-    private Element scanCurrentLine2(Element lastElement, String currentLine) {
-        if (lastElement != null && lastElement.getEndPart() != null && currentLine.contains(lastElement.getEndPart())) {
-            // End current Environment
-            return lastElement.getParentElement();
-
-        } else if (lastElement != null && lastElement.getEndPart() != null && lastElement.getEndPart().equals(Environment.DEFAULT_ENDING)) {
-            // Don't Parse Custom Environments
-            return null;
-
-        } else  if (lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
-                && currentLine.contains(lastElement.getParentElement().getEndPart())) {
-            // in Figure
-            return lastElement.getParentElement();
-        } else {
-            Element newElement = ElementConfig.createElement(currentLine);
-
-            if (newElement != null) {
-                newElement.setOptions(currentLine);
-                newElement.extractContent(currentLine);
-
-                if (lastElement == null) {
-                    root.addChild(newElement);
-                    setInputRootParentChildHierarchy(newElement);
-                } else if (newElement.getLevel() > lastElement.getLevel()) {
-                    setParentChild(lastElement, newElement);
-                } else if (newElement.getLevel() == lastElement.getLevel()) {
-                    sameLevel(lastElement, newElement);
-                } else {
-                    higherLevel(lastElement, newElement);
-                }
-                return newElement;
-            } else {
-                return null;
-            }
-        }
-    }
-
 
     /**
      * add the newElement to the same Parent as the lastElement

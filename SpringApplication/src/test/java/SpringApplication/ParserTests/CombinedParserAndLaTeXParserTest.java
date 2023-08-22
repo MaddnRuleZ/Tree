@@ -1,6 +1,7 @@
 package SpringApplication.ParserTests;
 
 import com.application.exceptions.FileInvalidException;
+import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.Parser;
 import com.application.tree.elements.roots.Root;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class CombinedParserAndLaTeXParserTest {
     Root root;
     @BeforeEach
-    public void setUp() throws FileInvalidException {
+    public void setUp() throws FileInvalidException, ParseException {
         Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
         root = (Root) parser.startParsing();
     }

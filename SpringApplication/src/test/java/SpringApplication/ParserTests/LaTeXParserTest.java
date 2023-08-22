@@ -47,6 +47,8 @@ public class LaTeXParserTest {
             user.setRoot(root);
         } catch (FileInvalidException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         Map<String, StringBuilder> map = new HashMap<>();
         map.put("root", new StringBuilder());

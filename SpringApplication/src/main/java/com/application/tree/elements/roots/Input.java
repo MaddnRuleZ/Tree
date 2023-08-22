@@ -12,13 +12,12 @@ import java.util.regex.Pattern;
 
 
 /**
- * Class Represents an Input Statement in the LateX file and is an Element
- * Represents an Input Document inside the main.tex file and Stores all Items of the Document inside it as Children
+ * Class Represents an Input Statement in the LateX file and is also an Element
  *
+ * Represents an Input Document inside the main.tex file and Stores all Items of the Document inside it as its Children
  */
 public class Input extends Parent implements Roots {
     private static final String START_PART = "\\\\input";
-    private static final String INPUT_REGEX_FORMAT = START_PART + "\\{([^}]*)\\}";
 
     /**
      * Input Constructor, call Constructor of Parent
@@ -28,24 +27,12 @@ public class Input extends Parent implements Roots {
     }
 
     /**
-     * extract the Document path from an input command in the Latex File
-     * \\input{<filePath>}
+     * Add an TextBlock to the Input Root on the same Level
+     * add the firstLine
      *
-     * @param pathLine path in the Document
-     * @return extracted Document File Path
+     * @param line current Line in the Text
+     * @return return generated TextBlock
      */
-    public static String extractPathRegex(String pathLine) {
-        String path;
-        Pattern pattern = Pattern.compile(INPUT_REGEX_FORMAT);
-        Matcher matcher = pattern.matcher(pathLine);
-        if (matcher.find()) {
-            path = matcher.group(1);
-        } else {
-            throw new IllegalArgumentException("Error, couldn't parse the path");
-        }
-        return path;
-    }
-
     @Override
     public Element addTextBlockToElem(String line) {
         BlockElement block = generateTextBlockSameLevel();

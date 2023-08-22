@@ -18,20 +18,20 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * This is the Singleton Function of the Root of the Whole LaTeX code.
+ * Root of the Composite- LaTeXTree.
  *
- *
+ * Root holds the first set of LaTeX -Element Children
+ * is implemented in a Singleton Pattern
  */
 public class Root implements JsonParser, LaTeXTranslator, Roots {
     public static final String START_DOCUMENT = "\\begin{document}";
     public static final String END_DOCUMENT = "\\end{document}";
-    private int minLevel;
-    private final List<Element> childElements;
     private static Root instance;
+    private final List<Element> childElements;
     private List<String> startHeaderText;
+    private int minLevel;
 
     private Root() {
-        // Private constructor to prevent instantiation from outside the class
         this.childElements = new ArrayList<>();
         this.minLevel = ElementConfig.BLOCK_ELEMENT_LEVEL;
     }
@@ -73,10 +73,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         }
     }
 
-    public void addChild(Element element) {
-        this.childElements.add(element);
-    }
-
     /**
      * searches for the element with the given id
      *
@@ -111,15 +107,6 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         return -1;
     }
 
-    /**
-     * calculates the level of the calling Element from bottom to top
-     * should not be called
-     * @return level of the calling Element
-     */
-    public int calculateLevelFromElement() {
-        assert false;
-        return -1;
-    }
 
     /**
      * add the startHeader e.g. the text before \begin{document} to the Root
@@ -205,19 +192,18 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
     public void addChildOnIndex(int index, Element newChild) {
         this.childElements.add(index, newChild);
     }
-
     public void removeChild(Element element) {
         this.childElements.remove(element);
     }
-
     public List<Element> getChildren() {
         return this.childElements;
     }
-
+    public void addChild(Element element) {
+        this.childElements.add(element);
+    }
     public int getMinLevel() {
         return minLevel;
     }
-
     public void setMinLevel(int minLevel) {
         this.minLevel = minLevel;
     }

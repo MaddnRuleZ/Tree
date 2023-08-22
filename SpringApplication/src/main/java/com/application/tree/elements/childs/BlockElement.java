@@ -25,31 +25,6 @@ public class BlockElement extends Child {
         this.type = this.getClass().getSuperclass().getSimpleName();
     }
 
-    /*
-     * Add a new TextBlock or add Text to the Block
-     * if there is a newLineCharacter generate a new TextBlock on the same level
-     *
-     * @param line line to Scan for Summary Comment or NewLine
-     *
-    public Element addTextBlockToElem1(String line) {
-        if (newLine.checkLineForNewLineCharacters(line)) {
-            newLine.extractNlChar(line);
-            return generateTextBlockSameLevel();
-        } else {
-            if (!summary.extractSummary(line) && !comment.extractComment(line)) {
-                if (parentElement instanceof Figure figure) {
-                    if (!figure.setGraphics(line) && !figure.addCaption(line)) {
-                        addText(line);
-                    }
-                } else {
-                    addText(line);
-                }
-            }
-            return this;
-        }
-    }
-    */
-
     /**
      * Add a new TextBlock or add Text to the Block
      * if there is a newLineCharacter generate a new TextBlock on the same level
@@ -75,22 +50,8 @@ public class BlockElement extends Child {
             }
         }
 
-        addText(line);
+        addTextToContent(line);
         return this;
-    }
-
-
-
-
-    /**
-     * Add text as Content to the BlockElement,
-     * remove all leading space characters and add a new line to each line
-     *
-     * @param line text to add to the BlockElement
-     */
-    private void addText(String line) {
-        this.textBuilder.append(TextFileReader.removeSpacesFromStart(line)).append("\n");
-        this.content = textBuilder.toString();
     }
 
     @Override

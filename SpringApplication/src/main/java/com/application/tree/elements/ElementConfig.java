@@ -1,6 +1,7 @@
 package com.application.tree.elements;
 
 import com.application.exceptions.FileInvalidException;
+import com.application.exceptions.ParseException;
 import com.application.interpreter.Parser;
 import com.application.tree.Element;
 import com.application.tree.elements.childs.Child;
@@ -8,6 +9,9 @@ import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Figure;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Input;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class Containing the Configuration of ALL the Structural Elements that wil be detected by the Scan -Algorithm
@@ -101,17 +105,17 @@ public enum ElementConfig {
         }
     },
 
-    FIGURE("\\begin{figure}", "\\end{figure}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
-        @Override
-        Element getElement(String currentLine) {
-            return new Figure(getStartPart(), getEndPart(), getLevel());
-        }
-    },
-
     EQUATION("\\begin{equation}", "\\end{equation}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
         @Override
         Element getElement(String currentLine) {
             return new Environment(currentLine, getStartPart(), getEndPart(), getLevel());
+        }
+    },
+
+    FIGURE("\\begin{figure}", "\\end{figure}", GET_ENVIRONMENT_DEFAULT_LEVEL()) {
+        @Override
+        Element getElement(String currentLine) {
+            return new Figure(getStartPart(), getEndPart(), getLevel());
         }
     },
 
@@ -123,22 +127,26 @@ public enum ElementConfig {
     },
 
     /**
-     * Document in Document detected, start a new Parser
+     * Document inside this Document detected, start a new Parser
      *
      * Level gets set to Max in Input Class
      */
-    INPUT("\\input", null, 99999) {
+    INPUT("\\input", null, GET_BLOCK_ELEMENT_LEVEL()) {
         @Override
-        Element getElement(String currentLine) {
-            String path = Input.extractPathRegex(currentLine);
-            Parser parser = new Parser(path);
+        Element getElement(String currentLine) throws ParseException {
+            Matcher matcher = Pattern.compile(Element.CONTENT_REGEX).matcher(currentLine);
+            if (matcher.find()) {
+                String path = matcher.group(1);
 
-            try {
-                return (Input) parser.startParsing();
-            } catch (FileInvalidException e) {
-                System.out.println("Not recognized Input");
-                return null;
+                try {
+                    Parser parser = new Parser(path);
+                    return (Input) parser.startParsing();
+
+                } catch (FileInvalidException e) {
+                    throw new ParseException(currentLine);
+                }
             }
+            throw new ParseException(currentLine);
         }
     };
 
@@ -168,7 +176,7 @@ public enum ElementConfig {
      * @param currentLine current Text Line from Text, containing the Elements start Part
      * @return new Generated Element already initiated
      */
-    abstract Element getElement(String currentLine);
+    abstract Element getElement(String currentLine) throws ParseException;
 
     /**
      * Create a new Element based on the line the Scanner read in the TextFile
@@ -178,7 +186,7 @@ public enum ElementConfig {
      * @param startPartLine textLine containing one of the startParts
      * @return return the new Created Element, null in case no found
      */
-    public static Element createElement(String startPartLine) {
+    public static Element createElement(String startPartLine) throws ParseException {
         for (final ElementConfig sectioning: ElementConfig.values()) {
             if (startPartLine.contains(sectioning.startPart)) {
                 return sectioning.getElement(startPartLine);
@@ -186,7 +194,7 @@ public enum ElementConfig {
         }
 
         if (startPartLine.contains(Environment.DEFAULT_OPENING)) {
-            return new Environment(startPartLine, Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, Environment.DEFAULT_LEVEL);
+            return new Environment(startPartLine, Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, ENVIRONMENT_DEFAULT_LEVEL);
         }
         return null;
     }
@@ -218,6 +226,10 @@ public enum ElementConfig {
 
     public static int GET_ENVIRONMENT_DEFAULT_LEVEL() {
         return ENVIRONMENT_DEFAULT_LEVEL;
+    }
+
+    public static int GET_BLOCK_ELEMENT_LEVEL() {
+        return BLOCK_ELEMENT_LEVEL;
     }
 
     public String getStartPart() {

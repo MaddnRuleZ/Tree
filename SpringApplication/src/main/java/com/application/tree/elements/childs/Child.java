@@ -9,12 +9,13 @@ import java.util.UUID;
 /**
  * Element -Child Class for Elements like Labels
  *
- * Child's can't have Children themselves and therefor represent a Leaf in the tree
+ * Child's can't have Children themselves and therefor represent a Leaf in the Composite Tree
  */
 public class Child extends Element {
 
     /**
-     * Create a new Child
+     * Create a new Child,
+     * call Element constructor and set general Values
      *
      * @param startPart Start String to init a Child Element
      * @param endPart String necessary to end the Child Element
@@ -26,7 +27,7 @@ public class Child extends Element {
     }
 
     /**
-     * add a TextBlock to the Child and return it
+     * add a TextBlock on the same Level
      *
      * @return the new added TextBlock
      */

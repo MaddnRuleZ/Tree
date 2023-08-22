@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\part*{options_text}[content_test]
+\part{options_text}[content_test]
     X1
     X
     % comment1
@@ -111,7 +111,7 @@
                             X12_2
                             X
                             X
-\part{fuck}
+\part{oops}
     \chapter{newChapter}
         X13
         X

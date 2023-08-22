@@ -1,6 +1,7 @@
 package com.application.tree;
 
 import com.application.exceptions.UnknownElementException;
+import com.application.interpreter.TextFileReader;
 import com.application.tree.additionalInfo.Comment;
 import com.application.tree.additionalInfo.NewLine;
 import com.application.tree.additionalInfo.Summary;
@@ -120,7 +121,6 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         }
     }
 
-
     /**
      * Extracts content from a raw line using regex
      *
@@ -166,6 +166,11 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
                 this.comment.addComment(line);
             }
         }
+    }
+
+    protected void addTextToContent(String textLine) {
+        this.textBuilder.append(TextFileReader.removeSpacesFromStart(textLine)).append("\n");
+        this.content = textBuilder.toString();
     }
 
     /**

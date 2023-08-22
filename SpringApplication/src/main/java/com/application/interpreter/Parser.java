@@ -1,6 +1,7 @@
 package com.application.interpreter;
 
 import com.application.exceptions.FileInvalidException;
+import com.application.exceptions.ParseException;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
 
@@ -42,8 +43,8 @@ public class Parser {
      *
      * @return finished Root, containing the full tree as Children, null if Error occurred
      */
-    public Roots startParsing() throws FileInvalidException {
-        if (!textFileReader.validateFile()) {
+    public Roots startParsing() throws FileInvalidException, ParseException {
+        if (textFileReader == null || !textFileReader.validateFile()) {
             return null;
         }
 
@@ -54,10 +55,11 @@ public class Parser {
 
     /**
      * starts Parsing a String
+     *
      * @param text the String to be parsed
      * @return finished Root, containing the full tree as Children, null if Error occurred
      */
-    public Roots startParsing(String text) {
+    public Roots startParsing(String text) throws ParseException {
         String[] lines = text.split("\n");
         Scanner scanner = new Scanner(lines);
         return scanner.parseDocument();

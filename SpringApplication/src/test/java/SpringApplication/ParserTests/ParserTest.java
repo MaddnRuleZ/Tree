@@ -1,6 +1,7 @@
 package SpringApplication.ParserTests;
 
 import com.application.exceptions.FileInvalidException;
+import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.Parser;
 import com.application.tree.elements.roots.Root;
@@ -22,7 +23,7 @@ public class ParserTest {
 
         try {
             root = (Root) parser.startParsing();
-        } catch (FileInvalidException e) {
+        } catch (FileInvalidException | ParseException e) {
 
         }
         if (root == null) {
@@ -48,6 +49,8 @@ public class ParserTest {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
 
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         if (root == null) {
             System.out.println("Root null, document not correctly loaded");
@@ -72,6 +75,8 @@ public class ParserTest {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
 
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         if (root == null) {
             System.out.println("Root null, document not correctly loaded");
@@ -96,6 +101,8 @@ public class ParserTest {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
             System.out.println("Invalid File Used");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         if (root == null) {
             System.out.println("Root null, document not correctly loaded");
@@ -120,6 +127,8 @@ public class ParserTest {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
             System.out.println("Invalid File Used");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         if (root == null) {
             System.out.println("Root null, document not correctly loaded");
@@ -145,6 +154,8 @@ public class ParserTest {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
             System.out.println("Invalid File Used");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         if (root == null) {
             System.out.println("Root null, document not correctly loaded");
@@ -169,6 +180,8 @@ public class ParserTest {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
             System.out.println("Invalid File Used");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         if (root == null) {
             System.out.println("Root null, document not correctly loaded");
@@ -183,7 +196,7 @@ public class ParserTest {
 
 
     @Test
-    public void doubleParserTest() throws FileInvalidException {
+    public void doubleParserTest() throws FileInvalidException, ParseException {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
@@ -193,6 +206,8 @@ public class ParserTest {
         try {
             root = (Root) parser.startParsing();
         } catch (FileInvalidException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 

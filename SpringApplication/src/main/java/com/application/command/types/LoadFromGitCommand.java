@@ -41,13 +41,10 @@ public class LoadFromGitCommand extends Command implements ILoadCommand {
             this.setSuccess(true);
 
          } catch (OverleafGitException overleafGitException) {
-            // todo @S
 
         } catch (ProcessingException e) {
             this.setSuccess(false);
             this.setFailureMessage(e.getMessage());
-        } catch (GitAPIException e) {
-            // todo @S
 
         } finally {
             this.getLockManager().releaseStructureWriteLock();

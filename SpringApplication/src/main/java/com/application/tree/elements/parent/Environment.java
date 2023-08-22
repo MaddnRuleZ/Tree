@@ -19,8 +19,7 @@ import java.util.Map;
 public class Environment extends Parent {
     public static String DEFAULT_OPENING = "\\begin";
     public static String DEFAULT_ENDING = "\\end";
-    public static int DEFAULT_LEVEL = 9;
-    private String header = "";
+    private final String header;
 
     /**
      * Constructor for creating a new Environment object with the specified startPart, endPart, and level.
@@ -35,17 +34,16 @@ public class Environment extends Parent {
     }
 
     /**
-     * Add the Text of the Environment as content to the Element,
-     * remove all leading Space Characters
+     * Add text to the Environment,
+     * check if the line is summary or comment, if so extract the line
+     * else assign the text to the Environment's content Variable
      *
      * @param line current Line in the Text
      * @return the current Environment
      */
     public Element addTextBlockToElem(String line) {
         if (!summary.extractSummary(line) && !comment.extractComment(line)) {
-            line = TextFileReader.removeSpacesFromStart(line);
-            this.textBuilder.append(line).append("\n");
-            this.content = textBuilder.toString();
+            addTextToContent(line);
         }
         return this;
     }
@@ -85,8 +83,6 @@ public class Environment extends Parent {
         if(this.options != null) {
             text.append("[").append(this.options).append("]");
         }
-
-
     }
 
 

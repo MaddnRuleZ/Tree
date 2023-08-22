@@ -27,7 +27,6 @@ import java.util.Map;
 public class Figure extends Environment {
     public static final String CAPTION_IDENTIFIER = "\\caption";
     public static final String GRAPHICS_IDENTIFIER = "\\includegraphics";
-
     private final List<String> captions;
     private String graphicOptions = "";
     private String graphic;
@@ -66,9 +65,10 @@ public class Figure extends Environment {
 
     /**
      * if the String Contains a Part of the Graphic-string extract it,
-     * get everything in between "[" and "}"
+     * extract both the options part and the content part
      *
      * @param graphicsString raw graphic string to parse
+     * @return true upon success, false otherwise
      */
     public boolean setGraphics(String graphicsString) {
         if (!graphicsString.contains(GRAPHICS_IDENTIFIER)) {
@@ -77,26 +77,20 @@ public class Figure extends Environment {
 
         graphic = extractContent(graphicsString);
         graphicOptions = extractOptions(graphicsString);
-
-        return graphic == null && graphicOptions == null;
+        return graphic != null && graphicOptions != null;
     }
 
     /**
      * check if the line is a caption, if so add it to the Figure and return true
      *
-     * @param caption current Line to check if Caption
-     * @return true if caption was added
+     * @param caption current Line to check for Caption
+     * @return true if caption was added, otherwise false
      */
     public boolean addCaption(String caption) {
         if (!caption.contains(CAPTION_IDENTIFIER)) {
             return false;
         }
-        caption = extractContent(caption);
-        if (caption != null) {
-            captions.add(caption);
-            return true;
-        }
-        return false;
+        return captions.add(extractContent(caption));
     }
 
 
