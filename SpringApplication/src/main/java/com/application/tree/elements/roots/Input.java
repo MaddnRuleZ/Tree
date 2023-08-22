@@ -46,7 +46,7 @@ public class Input extends Parent implements Roots {
         StringBuilder text = map.get(key);
         String indentation = getIndentation(level);
 
-        text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}");
+        text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}").append("\n");
 
         String newKey = this.content;
         map.put(newKey, new StringBuilder());
