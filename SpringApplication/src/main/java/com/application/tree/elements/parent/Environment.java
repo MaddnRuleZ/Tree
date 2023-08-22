@@ -43,7 +43,8 @@ public class Environment extends Parent {
      */
     public Element addTextBlockToElem(String line) {
         if (!summary.extractSummary(line) && !comment.extractComment(line) && !line.contains(DEFAULT_ENDING)) {
-            addTextToContent(line);
+            this.textBuilder.append(line).append("\n");
+            this.content = textBuilder.toString();
         }
         return this;
     }

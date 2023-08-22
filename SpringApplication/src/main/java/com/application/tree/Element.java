@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -171,8 +172,12 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
     }
 
     protected void addTextToContent(String textLine) {
-        this.textBuilder.append(TextFileReader.removeSpacesFromStart(textLine)).append("\n");
-        this.content = textBuilder.toString();
+        String line = TextFileReader.removeSpacesFromStart(textLine);
+
+        if (this.textBuilder.length() != 0 || !line.startsWith("\n")) {
+            this.textBuilder.append(line).append("\n");
+            this.content = textBuilder.toString();
+        }
     }
 
     /**

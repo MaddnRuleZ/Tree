@@ -54,14 +54,22 @@ public class BlockElement extends Child {
         return this;
     }
 
+    protected void addTextToContent(String textLine) {
+        String line = TextFileReader.removeSpacesFromStart(textLine);
+        if (this.textBuilder.length() != 0 || !line.isEmpty()) {
+            this.textBuilder.append(line).append("\n");
+            this.content = textBuilder.toString();
+        }
+    }
+
     @Override
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         super.toLaTeXStart(map, key, level, exportComment, exportSummary);
         String indentation = getIndentation(level);
         StringBuilder text = map.get(key);
 
-        if(this.content != null){
-            for(String line : this.content.split("\n")){
+        if (this.content != null) {
+            for (String line : this.content.split("\n")) {
                 text.append(indentation).append(line).append("\n");
             }
         }
