@@ -81,10 +81,11 @@ public class Environment extends Parent {
         StringBuilder text = map.get(key);
 
         text.append(indentation).append("\\begin");
-        text.append("{").append(this.header).append("}").append("\n");
-        if(this.options != null) {
+        text.append("{").append(this.header).append("}");
+        if (this.options != null) {
             text.append("[").append(this.options).append("]");
         }
+        text.append("\n");
     }
 
 
