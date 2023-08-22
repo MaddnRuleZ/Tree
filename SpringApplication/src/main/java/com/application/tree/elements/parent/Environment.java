@@ -60,7 +60,6 @@ public class Environment extends Parent {
                 text.append("\n");
             }
         }
-
         this.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 
