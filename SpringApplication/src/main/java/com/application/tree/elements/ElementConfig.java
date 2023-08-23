@@ -3,6 +3,7 @@ package com.application.tree.elements;
 import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.ParseException;
 import com.application.interpreter.Parser;
+import com.application.interpreter.TextFileReader;
 import com.application.tree.Element;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Environment;
@@ -187,15 +188,25 @@ public enum ElementConfig {
      * @return return the new Created Element, null in case no found
      */
     public static Element createElement(String startPartLine) throws ParseException {
+        String additionalText = getSubstringAfterLastClosingBraceOrBracket(startPartLine);
+        additionalText = TextFileReader.removeSpacesFromStart(additionalText);
 
         for (final ElementConfig sectioning: ElementConfig.values()) {
             if (startPartLine.contains(sectioning.startPart)) {
-                return sectioning.getElement(startPartLine);
+                Element createdElement = sectioning.getElement(startPartLine);
+                createdElement.setContent(startPartLine);
+                createdElement.setOptions(startPartLine);
+                createdElement.addTextBlockToElem(additionalText);
+                return createdElement;
             }
         }
 
         if (startPartLine.contains(Environment.DEFAULT_OPENING)) {
-            return new Environment(startPartLine, Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, ENVIRONMENT_DEFAULT_LEVEL);
+            Element createdElement = new Environment(startPartLine, Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, ENVIRONMENT_DEFAULT_LEVEL);
+            createdElement.setContent(startPartLine);
+            createdElement.setOptions(startPartLine);
+            createdElement.addTextBlockToElem(additionalText);
+            return createdElement;
         }
         return null;
     }
@@ -226,23 +237,20 @@ public enum ElementConfig {
     }
 
     /**
-     * add \n in case the argument is in one Line
-     * in case: \part{partName} start of the Text is here
+     * Returns the substring after the last '}' or ']' character, based on which comes later in the string.
+     * Adds a newline character '\n' in case the argument is on one line.
      *
-     *
-     * @param input
-     * @return
+     * @param input The input string
+     * @return The substring after the last closing brace '}' or ']', with added newline if needed
      */
-    public static String addNewlineAfterFirstClosingBrace(String input) {
-        int index = input.indexOf('}');
-
-        if (index != -1) {
-            StringBuilder stringBuilder = new StringBuilder(input);
-            stringBuilder.insert(index + 1, '\n');
-            return stringBuilder.toString();
-        } else {
-            return input;
+    public static String getSubstringAfterLastClosingBraceOrBracket(String input) {
+        int lastIndexBrace = input.lastIndexOf('}');
+        int lastIndexBracket = input.lastIndexOf(']');
+        int lastIndex = Math.max(lastIndexBrace, lastIndexBracket);
+        if (lastIndex + 1 < input.length()) {
+            return input.substring(lastIndex + 1);
         }
+        return "";
     }
 
     public static int GET_ENVIRONMENT_DEFAULT_LEVEL() {

@@ -173,7 +173,6 @@ public class ParserTest {
         System.out.println(map.get("root").toString());
     }
 
-
     @Test
     public void doubleParserTest() throws FileInvalidException, ParseException {
         /*
@@ -202,15 +201,24 @@ public class ParserTest {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        List<String> text = new ArrayList<>();
-        text.add("\\begin{equation}");
-        text.add("X");
-        text.add("X");
-        text.add("X");
-        text.add("\\end{equation}");
-        String[] strArr = text.toArray(new String[text.size()]);
+        Parser parser = new Parser("src/test/resources/TestDocuments/advancedTest.tex");
+        Root root = null;
 
-        Scanner scanner = new Scanner(strArr);
-        Roots elem = scanner.parseDocument();
+        try {
+            root = (Root) parser.startParsingText();
+        } catch (FileInvalidException e) {
+            System.out.println("Invalid File Used");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        if (root == null) {
+            System.out.println("Root null, document not correctly loaded");
+            return;
+        }
+
+        Map<String, StringBuilder> map = new HashMap<>();
+        map.put("root", new StringBuilder());
+        root.toLaTeX(map, "root", 0, true, true);
+        System.out.println(map.get("root").toString());
     }
 }

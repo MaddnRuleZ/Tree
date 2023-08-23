@@ -68,8 +68,6 @@ public class Scanner {
     }
 
 
-
-
     /**
      * Scan the line for new Structure Element
      * or end the current LastElement (Environment only)
@@ -81,6 +79,7 @@ public class Scanner {
      */
     private Element scanCurrentLine(Element lastElement, String currentLine) throws ParseException {
         if (checkLineEndsEnvironment(lastElement, currentLine)) {
+            lastElement.addTextBlockToElem(getSubstringBeforeEnd(currentLine));
             // End current Environment
             return lastElement.getParentElement();
 
@@ -93,9 +92,6 @@ public class Scanner {
             if (newElement == null) {
                 return null;
             }
-
-            newElement.setOptions(currentLine);
-            newElement.setContent(currentLine);
 
             if (lastElement == null) {
                 root.addChild(newElement);
@@ -198,6 +194,17 @@ public class Scanner {
                 || lastElement != null && lastElement.getParentElement() != null &&  lastElement.getParentElement().getEndPart() != null
                 && currentLine.contains(lastElement.getParentElement().getEndPart()));
     }
+
+
+    public String getSubstringBeforeEnd(String input) {
+        int endIndex = input.indexOf(Environment.DEFAULT_ENDING);
+        if (endIndex != -1) {
+            return TextFileReader.removeSpacesFromStart(input.substring(0, endIndex));
+        } else {
+            return input;
+        }
+    }
+
 
     /**
      * In case Root is instance of Input, also set the Elements Parent as the Root
