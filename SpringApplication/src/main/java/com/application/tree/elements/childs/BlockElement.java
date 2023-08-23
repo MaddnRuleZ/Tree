@@ -35,6 +35,11 @@ public class BlockElement extends Child {
      */
     @Override
     public Element addTextBlockToElem(String line) {
+        if (line.equals("")) {
+            return this;
+        }
+
+
         if (newLine.checkLineForNewLineCharacters(line)) {
             newLine.extractNlChar(line);
             return generateTextBlockSameLevel();

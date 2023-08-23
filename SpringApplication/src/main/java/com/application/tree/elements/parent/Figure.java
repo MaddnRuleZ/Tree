@@ -62,6 +62,10 @@ public class Figure extends Environment {
      */
     @Override
     public Element addTextBlockToElem(String line) {
+        if (line.equals("")) {
+            return this;
+        }
+
         BlockElement block;
         if (this.children.size() == 0) {
             block = generateTextBlockAsChild();
