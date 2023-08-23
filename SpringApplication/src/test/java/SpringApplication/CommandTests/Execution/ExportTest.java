@@ -63,6 +63,17 @@ public class ExportTest {
 
     }
 
+    /**
+     * Tests the execution of an ExportCommand
+     */
+    @Test
+    public void exportTest() {
+        command.setExportComment(true);
+        command.setExportSummary(true);
+        command.execute();
+        assertTrue(command.isSuccess(), "Command should be successful");
+    }
+
 
     /**
      * Tests the execution of an ExportCommand wih different parameters for comment and summary

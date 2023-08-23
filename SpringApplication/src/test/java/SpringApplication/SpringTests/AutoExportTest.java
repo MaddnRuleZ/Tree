@@ -1,4 +1,4 @@
-package SpringApplication.CommandTests.Execution.SpringTests;
+package SpringApplication.SpringTests;
 
 import SpringApplication.TestStubs.ComplexTestTree;
 import SpringApplication.TestStubs.TestTree;

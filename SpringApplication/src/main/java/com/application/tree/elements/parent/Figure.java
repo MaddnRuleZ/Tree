@@ -133,7 +133,7 @@ public class Figure extends Environment {
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException, IOException {
         ObjectNode node = super.toJsonEditor();
-        node.put("image", convertFile(Printer.getFigurePath() + "/" + this.graphic));
+        node.put("image", convertFile());
         node.put("mimeType", extractMimeType());
 
         if(this.captions != null && !this.captions.isEmpty()) {
@@ -157,7 +157,7 @@ public class Figure extends Environment {
         node.put("elementID", this.getId().toString());
         node.put("content", "");
 
-        node.put("image", convertFile(Printer.getFigurePath() + "/" + this.graphic));
+        node.put("image", convertFile());
         node.put("mimeType", extractMimeType());
 
         if (this.getParentElement() == null) {
@@ -175,9 +175,9 @@ public class Figure extends Environment {
         return arrayNode;
     }
 
-    private String convertFile(String path) throws IOException {
+    private String convertFile() throws IOException {
         try {
-            Path location = Paths.get(path);
+            Path location = Paths.get(Printer.getFigurePath() + "/" + this.graphic);
 
             Resource resource = new UrlResource(location.toUri());
 

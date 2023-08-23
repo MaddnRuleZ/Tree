@@ -210,7 +210,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException, IOException {
-        if( this instanceof BlockElement || this.content == null) {
+        if( this instanceof BlockElement && this.content == null) {
             return null;
         }
 
@@ -240,7 +240,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public JsonNode toJsonTree() throws NullPointerException, ProcessingException, IOException {
-        if( this instanceof BlockElement || this.content == null) {
+        if( this instanceof BlockElement && this.content == null) {
             return null;
         }
 

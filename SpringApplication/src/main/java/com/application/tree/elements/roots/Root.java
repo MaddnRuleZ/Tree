@@ -130,7 +130,10 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         if (!this.childElements.isEmpty()) {
             ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
             for (Element child : this.childElements) {
-                childrenNode.add(child.toJsonEditor());
+                JsonNode childNode = child.toJsonEditor();
+                if(childNode != null) {
+                    childrenNode.add(childNode);
+                }
             }
             node.set("editor", childrenNode);
         }
@@ -144,7 +147,10 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
         ArrayNode node = JsonNodeFactory.instance.arrayNode();
         if (!this.childElements.isEmpty()) {
             for (Element child : this.childElements) {
-                node.addAll((ArrayNode) child.toJsonTree());
+                ArrayNode childNode = (ArrayNode) child.toJsonTree();
+                if(childNode != null) {
+                    node.addAll(childNode);
+                }
             }
         }
         treeNode.set("tree", node);
