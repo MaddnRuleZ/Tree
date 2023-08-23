@@ -23,7 +23,7 @@ public class ParserTest {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_2.txt");
         Root root = null;
 
         try {

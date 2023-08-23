@@ -33,6 +33,10 @@ public class Child extends Element {
      */
     @Override
     public Element addTextBlockToElem(String line) {
+        if (line.equals("")) {
+            return this;
+        }
+
         return generateTextBlockSameLevel().addTextBlockToElem(line);
     }
 
