@@ -187,6 +187,30 @@ public enum ElementConfig {
      * @param startPartLine textLine containing one of the startParts
      * @return return the new Created Element, null in case no found
      */
+    public static Element createElement2(String startPartLine) throws ParseException {
+        String additionalText = getSubstringAfterLastClosingBraceOrBracket(startPartLine);
+        additionalText = TextFileReader.removeSpacesFromStart(additionalText);
+
+        for (final ElementConfig sectioning: ElementConfig.values()) {
+            if (startPartLine.contains(sectioning.startPart)) {
+                Element createdElement = sectioning.getElement(startPartLine);
+                createdElement.setContent(startPartLine);
+                createdElement.setOptions(startPartLine);
+                createdElement.addTextBlockToElem(additionalText);
+                return createdElement;
+            }
+        }
+
+        if (startPartLine.contains(Environment.DEFAULT_OPENING)) {
+            Element createdElement = new Environment(startPartLine, Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, ENVIRONMENT_DEFAULT_LEVEL);
+            createdElement.setContent(startPartLine);
+            createdElement.setOptions(startPartLine);
+            createdElement.addTextBlockToElem(additionalText);
+            return createdElement;
+        }
+        return null;
+    }
+
     public static Element createElement(String startPartLine) throws ParseException {
         String additionalText = getSubstringAfterLastClosingBraceOrBracket(startPartLine);
         additionalText = TextFileReader.removeSpacesFromStart(additionalText);
@@ -217,7 +241,7 @@ public enum ElementConfig {
      * @return ElementConfig of the Sectioning Element
      */
     public static ElementConfig getSectioningType(int level) {
-        if(level == ElementConfig.PART.level) {
+        if (level == ElementConfig.PART.level) {
             return PART;
         } else if (level == ElementConfig.CHAPTER.level) {
             return CHAPTER;
