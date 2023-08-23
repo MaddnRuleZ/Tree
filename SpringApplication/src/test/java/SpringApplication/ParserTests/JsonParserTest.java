@@ -18,7 +18,6 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Ignore("This test is better done in GetCommandTest")
 public class JsonParserTest {
 
     TestTree tree;

@@ -12,14 +12,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -103,11 +101,14 @@ public class AddElementTest {
     /**
      * Tests the correct failure Recognition if the parent is not found
      */
-    @Test
-    public void ElementNotFound() {
-        command.setParent(tree.notUsedUUID);
+    @ParameterizedTest
+    @CsvSource({"0, 1", "1, 0"})
+    public void ElementNotFound(int parent, int previousChild) {
+        UUID[] uuids = {tree.sectioningList.get(0).getId(), tree.notUsedUUID};
+
+        command.setParent(uuids[parent]);
         command.setContent("some content");
-        command.setPreviousChild(null);
+        command.setPreviousChild(uuids[previousChild]);
         command.execute();
 
         assertFalse(command.isSuccess(), "Command should not execute successfully");
@@ -165,14 +166,14 @@ public class AddElementTest {
                 ),
                 new ElementTestCase(
                         "\\begin{enumerate} \n \\item item1 \n\\item item2 \n \\end{enumerate}",
-                        "\\item item1 \n\\item item2 \n",
+                        " \\item item1 \n\\item item2 \n",
                         null,
                         "enumerate",
                         List.of()
                 ),
                 new ElementTestCase(
                         "\\begin{equation}[someOption] \n \\frac{1}{2} \n \\end{equation}",
-                        "\\frac{1}{2} \n",
+                        " \\frac{1}{2} \n",
                         "someOption",
                         "equation",
                         List.of()

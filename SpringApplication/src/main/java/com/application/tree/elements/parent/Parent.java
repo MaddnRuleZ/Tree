@@ -118,7 +118,10 @@ public abstract class Parent extends Element {
         if (this.children != null && !this.children.isEmpty()) {
             ArrayNode childrenNode = JsonNodeFactory.instance.arrayNode();
             for (Element child : this.children) {
-                childrenNode.add(child.toJsonEditor());
+                JsonNode childNode = child.toJsonEditor();
+                if(childNode != null) {
+                    childrenNode.add(childNode);
+                }
             }
             node.set("children", childrenNode);
         }
@@ -130,7 +133,10 @@ public abstract class Parent extends Element {
         ArrayNode node = (ArrayNode) super.toJsonTree();
         if (this.children != null && !this.children.isEmpty()) {
             for (Element child : this.children) {
-                node.addAll((ArrayNode) child.toJsonTree());
+                ArrayNode childNode = (ArrayNode) child.toJsonTree();
+                if(childNode != null) {
+                    node.addAll(childNode);
+                }
             }
         }
         return node;
