@@ -67,6 +67,9 @@ public class Scanner {
         return root;
     }
 
+
+
+
     /**
      * Scan the line for new Structure Element
      * or end the current LastElement (Environment only)
