@@ -133,8 +133,10 @@ public class Figure extends Environment {
     @Override
     public ObjectNode toJsonEditor() throws NullPointerException, ProcessingException, IOException {
         ObjectNode node = super.toJsonEditor();
-        node.put("image", convertFile());
-        node.put("mimeType", extractMimeType());
+
+        String[] file = convertFile();
+        node.put("image", file[0]);
+        node.put("mimeType", file[1]);
 
         if(this.captions != null && !this.captions.isEmpty()) {
             ArrayNode captionNode = JsonNodeFactory.instance.arrayNode();
@@ -157,8 +159,9 @@ public class Figure extends Environment {
         node.put("elementID", this.getId().toString());
         node.put("content", "");
 
-        node.put("image", convertFile());
-        node.put("mimeType", extractMimeType());
+        String[] file = convertFile();
+        node.put("image", file[0]);
+        node.put("mimeType", file[1]);
 
         if (this.getParentElement() == null) {
             node.put("parentID", "null");
@@ -175,26 +178,28 @@ public class Figure extends Environment {
         return arrayNode;
     }
 
-    private String convertFile() throws IOException {
+
+    /**
+     * Converts the graphic on the specified Path to a String representation and extracts the MIME-Type
+     * @return String[] with the first entry being the Base64 encoded String and the second entry being the MIME-Type
+     * @throws IOException if the file could not be read
+     */
+    private String[] convertFile() throws IOException {
+        String[] file = new String[2];
         try {
             Path location = Paths.get(Printer.getFigurePath() + "/" + this.graphic);
 
             Resource resource = new UrlResource(location.toUri());
 
             byte[] imageBytes = resource.getInputStream().readAllBytes();
-            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-            return base64Image;
+            file[0] = Base64.getEncoder().encodeToString(imageBytes);
+            file[1] = Files.probeContentType(Path.of(this.graphic));;
         } catch (IOException | NullPointerException e) {
             Path location = Paths.get("src/main/resources/Images/ImageNotFound.txt");
-            return Files.readString(location);
+            file[1] = "image/jpg";
+            file[0] = Files.readString(location);
         }
+        return file;
     }
 
-    private String extractMimeType() {
-        try {
-            return Files.probeContentType(Path.of(this.graphic));
-        } catch (IOException | NullPointerException e) {
-            return "image/jpg";
-        }
-    }
 }
