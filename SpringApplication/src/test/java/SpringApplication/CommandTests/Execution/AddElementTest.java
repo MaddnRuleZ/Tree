@@ -166,7 +166,7 @@ public class AddElementTest {
                 ),
                 new ElementTestCase(
                         "\\begin{enumerate} \n \\item item1 \n\\item item2 \n \\end{enumerate}",
-                        "\\item item1 \n\\item item2 \n",
+                        " \\item item1 \n\\item item2 \n",
                         null,
                         "enumerate",
                         List.of()

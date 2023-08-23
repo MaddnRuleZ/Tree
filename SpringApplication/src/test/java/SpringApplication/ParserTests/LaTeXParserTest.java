@@ -11,6 +11,7 @@ import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -22,8 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LaTeXParserTest {
+    private User user;
 
+    @BeforeEach
     public void setUp() {
+        user = new User();
         Root.resetInstance();
     }
 
@@ -34,8 +38,6 @@ public class LaTeXParserTest {
     })
     public void testLaTeXFiles(String path) throws UnknownElementException, IOException {
         Parser parser = new Parser(path);
-        User user = new User();
-
         try {
             Root root = (Root) parser.startParsingText();
             user.setRoot(root);
@@ -78,6 +80,7 @@ public class LaTeXParserTest {
 
     @AfterEach
     public void tearDown() {
+        user = null;
         Root.resetInstance();
     }
 
