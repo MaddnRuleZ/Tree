@@ -4,7 +4,6 @@
 \usepackage{algorithm}
 
 \begin{document}
-
 \part{content_test}[options_text]
     X1
     X
@@ -63,15 +62,8 @@
     X6
     X
     X
-    \section{wasd}
-
-
-
-
 \part{inputTesting}
     \section
-
-
         X0_1
         X0_1_1
         X
@@ -110,7 +102,7 @@
                             X12
                             X
                             X
-                            \label
+                            \label{labelName}
                             X12_1
                             X
                             X
@@ -123,7 +115,7 @@
         X13
         X
         X
-        \label
+        \label{labelName}
         X13_1
         X
         X
@@ -142,7 +134,7 @@
             \begin{algorithm}
                     X15
                     X
-                    \label
+                    \label{labelName}
                     X
             \end{algorithm}
                 X16

@@ -39,6 +39,7 @@ public class BlockElement extends Child {
             return this;
         }
 
+
         if (newLine.checkLineForNewLineCharacters(line)) {
             newLine.extractNlChar(line);
             return generateTextBlockSameLevel();

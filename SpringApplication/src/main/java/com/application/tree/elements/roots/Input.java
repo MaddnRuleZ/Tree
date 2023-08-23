@@ -35,6 +35,10 @@ public class Input extends Parent implements Roots {
      */
     @Override
     public Element addTextBlockToElem(String line) {
+        if (line.equals("")) {
+            return this;
+        }
+
         BlockElement block = generateTextBlockSameLevel();
         block.addTextBlockToElem(line);
         return block;

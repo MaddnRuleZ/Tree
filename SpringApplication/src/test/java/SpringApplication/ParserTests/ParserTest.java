@@ -19,7 +19,31 @@ import java.util.Map;
  */
 public class ParserTest {
     @Test
-    public void testParser() throws UnknownElementException {
+    public void testParserSelfmadeTestDocument() throws UnknownElementException {
+        /*
+         * test the Parser and check if the file in sys.out is like the input_file below >>>
+         */
+        Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
+        Root root = null;
+
+        try {
+            root = (Root) parser.startParsingText();
+        } catch (FileInvalidException | ParseException e) {
+
+        }
+        if (root == null) {
+            System.out.println("Root null, document not correctly loaded");
+            return;
+        }
+
+        Map<String, StringBuilder> map = new HashMap<>();
+        map.put("root", new StringBuilder());
+        root.toLaTeX(map, "root", 0, true, true);
+        System.out.println(map.get("root").toString());
+    }
+
+    @Test
+    public void testParserOurDocument() throws UnknownElementException {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
@@ -41,6 +65,8 @@ public class ParserTest {
         root.toLaTeX(map, "root", 0, true, true);
         System.out.println(map.get("root").toString());
     }
+
+
 
     @Test
     public void testParserDemo() throws UnknownElementException {
