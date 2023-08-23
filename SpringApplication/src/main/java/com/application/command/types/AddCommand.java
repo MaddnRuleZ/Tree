@@ -7,6 +7,7 @@ import com.application.exceptions.TypeException;
 import com.application.interpreter.Parser;
 import com.application.tree.Element;
 import com.application.tree.elements.parent.Parent;
+import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -35,22 +36,53 @@ public class AddCommand extends Command {
     public JsonNode execute() {
         this.getLockManager().acquireStructureWriteLock();
         try {
-            Element foundParentElement = this.getUser().getRoot().searchForID(this.parent);
+            Element foundParentElement = null;
 
-            if (foundParentElement == null ) {
-                throw new ElementNotFoundException("Parent");
-            } else if (!(foundParentElement instanceof Parent)) {
-                throw new TypeException(Parent.class.getSimpleName(), foundParentElement.getClass().getSimpleName());
+            if(this.parent != null) {
+                foundParentElement = this.getUser().getRoot().searchForID(this.parent);
+                if (foundParentElement == null) {
+                    throw new ElementNotFoundException("Parent");
+                }
+                if (!(foundParentElement instanceof Parent)) {
+                    throw new TypeException(parent.getClass().getSimpleName(), Parent.class.getSimpleName());
+                }
             }
+            this.add(foundParentElement);
 
+            this.setSuccess(true);
+        } catch (ProcessingException e) {
+            this.setSuccess(false);
+            this.setFailureMessage(e.getMessage());
+        } finally {
+            this.getLockManager().releaseStructureWriteLock();
+        }
+        return generateResponse(true);
+    }
+
+    private Roots parseContent() throws ParseException {
+        Parser parser = new Parser();
+        Roots foundRoot = parser.startParsingText(this.content);
+
+        if (foundRoot.getChildren().size() == 0) {
+            throw new ParseException(this.content);
+        }
+        return foundRoot;
+    }
+
+    private void add(Element foundParentElement) throws ParseException, ElementNotFoundException {
+        Roots foundRoot = parseContent();
+        if(foundParentElement == null) {
+            int index = Root.getInstance().getIndexOfChild(this.previousChild);
+            if (index == -2) {
+                throw new ElementNotFoundException("PreviousChild");
+            }
+            for (Element child : foundRoot.getChildren()) {
+                child.setParent(null);
+                Root.getInstance().addChildOnIndex(index, child);
+                index++;
+            }
+        } else {
             Parent parentElement = (Parent) foundParentElement;
-            Parser parser = new Parser();
-            Roots foundRoot = parser.startParsingText(this.content);
-
-            if (foundRoot.getChildren().size() == 0) {
-                throw new ParseException(this.content);
-            }
-
             int index = parentElement.getIndexOfChild(this.previousChild);
             if (index == -2) {
                 throw new ElementNotFoundException("PreviousChild");
@@ -60,14 +92,7 @@ public class AddCommand extends Command {
                 parentElement.addChildOnIndex(index, child);
                 index++;
             }
-            this.setSuccess(true);
-        } catch (ProcessingException e) {
-            this.setSuccess(false);
-            this.setFailureMessage(e.getMessage());
-        } finally {
-            this.getLockManager().releaseStructureWriteLock();
         }
-        return generateResponse(true);
     }
 
     @JsonProperty
