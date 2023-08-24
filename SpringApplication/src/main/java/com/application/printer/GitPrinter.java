@@ -108,7 +108,7 @@ public class GitPrinter extends Printer {
      *
      * @return true in case of success, on Error return false
      */
-    private boolean pullRepository() {
+    public boolean pullRepository() {
         File repositoryPath = new File(this.working_directory);
 
         try (Git git = Git.open(repositoryPath)) {
@@ -117,7 +117,8 @@ public class GitPrinter extends Printer {
             pullCommand.call();
             return true;
 
-        } catch (IOException | GitAPIException ex) {
+        } catch (IOException | GitAPIException | JGitInternalException exception) {
+            System.out.println("fuck");
             return false;
         }
     }
