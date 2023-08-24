@@ -131,9 +131,10 @@ public class GitPrinter extends Printer {
         try {
             Git git = Git.open(new File(this.working_directory));
             git.rebase().setUpstream("origin/master");
+            git.pull();
             return true;
         } catch (IOException | RefNotFoundException ex) {
-            throw new OverleafGitException("ENTER HERE TODO");
+            throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + ex.getMessage());
         }
     }
 
