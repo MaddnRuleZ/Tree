@@ -122,18 +122,18 @@ public class GitPrinter extends Printer {
         }
     }
 
-    public boolean checkForChanges() throws OverleafGitException {
+    public boolean checkForChanges() throws OverleafGitException, IOException {
+        this.pullRepository();
         File repositoryPath = new File(this.working_directory);
 
         try (Git git = Git.open(repositoryPath)) {
-            PullCommand pullCommand = git.pull().setCredentialsProvider(credentialsProvider);
-            pullCommand.setStrategy(MergeStrategy.RESOLVE);
-            Status status = git.status().call();
-            return !status.isClean();
-        } catch (IOException e) {
-            throw new OverleafGitException("Fehler beim Öffnen des Repos (IO), pull zuerst" + e.getMessage());
+            if(git.status().call().isClean()) {
+                return false;
+            } else {
+                return true;
+            }
         } catch (GitAPIException e) {
-            throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + e.getMessage());
+            throw new OverleafGitException("Pull");
         }
     }
 

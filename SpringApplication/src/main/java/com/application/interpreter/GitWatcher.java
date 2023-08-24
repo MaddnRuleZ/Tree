@@ -68,15 +68,14 @@ public class GitWatcher {
 
                 try {
                     this.lockManager.acquireStructureWriteLock();
-                    //if (printer.checkForChanges()) {
-                        printer.export();
-                        printer.pullRepository();
+                    printer.export();
+                    if (printer.checkForChanges()) {
                         Root.resetInstance();
                         Parser parser = new Parser(printer.getPath());
                         user.setRoot((Root) parser.startParsingText());
                         System.out.println(user.getRoot().toJsonEditor());
                         changes = true;
-                    //}
+                    }
                 } catch (ProcessingException | IOException e) {
                     failureMessage = e.getMessage();
                     failure = true;
