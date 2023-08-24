@@ -75,7 +75,8 @@ public class GitPrinter extends Printer {
             git.commit().setMessage("Extern Overleaf Commit TreeX").call();
             git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
             return true;
-
+        } catch (JGitInternalException ex) {
+            throw new OverleafGitException(ex.getMessage());
         } catch (IOException ex) {
             throw new OverleafGitException("Fehler beim Öffnen des Repos (IO), pull zuerst" + ex.getMessage());
         } catch (GitAPIException ex) {
@@ -120,25 +121,6 @@ public class GitPrinter extends Printer {
             return false;
         }
     }
-
-    /**
-     * todo
-     *
-     * @return
-     * @throws OverleafGitException
-     */
-    public boolean rebase() throws OverleafGitException {
-        try {
-            Git git = Git.open(new File(this.working_directory));
-            git.rebase().setUpstream("origin/master");
-            git.pull();
-            return true;
-        } catch (IOException | RefNotFoundException ex) {
-            throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + ex.getMessage());
-        }
-    }
-
-
 
     public boolean checkForChanges() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
