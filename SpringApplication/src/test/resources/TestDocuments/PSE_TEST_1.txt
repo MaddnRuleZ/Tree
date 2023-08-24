@@ -76,7 +76,7 @@
         X
         X
         X
-        \input{InputTest.txt}
+        \input{InputTest}
 \part{Part_2}
     \chapter{haw haw}
         X7
