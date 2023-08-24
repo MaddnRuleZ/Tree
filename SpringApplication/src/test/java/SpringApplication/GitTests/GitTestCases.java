@@ -27,4 +27,12 @@ public class GitTestCases {
                 "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
         gitPrinter.commitAndPush();
     }
+
+
+    @Test
+    public void checkForChangeTest() throws OverleafGitException {
+        GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
+                "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
+        gitPrinter.checkForChanges();
+    }
 }

@@ -7,6 +7,7 @@ import com.application.tree.interfaces.LaTeXTranslator;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.RefNotFoundException;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -120,6 +121,24 @@ public class GitPrinter extends Printer {
         }
     }
 
+    /**
+     * todo
+     *
+     * @return
+     * @throws OverleafGitException
+     */
+    public boolean rebase() throws OverleafGitException {
+        try {
+            Git git = Git.open(new File(this.working_directory));
+            git.rebase().setUpstream("origin/master");
+            return true;
+        } catch (IOException | RefNotFoundException ex) {
+            throw new OverleafGitException("ENTER HERE TODO");
+        }
+    }
+
+
+
     public boolean checkForChanges() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
 
@@ -133,26 +152,6 @@ public class GitPrinter extends Printer {
         } catch (GitAPIException e) {
             throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + e.getMessage());
         }
-    }
-
-    private void fetch(Git git) throws GitAPIException {
-        git.fetch().setCredentialsProvider(this.credentialsProvider).call();
-    }
-
-    private void merge(Git git) throws GitAPIException, IOException {
-        git.merge().include(git.getRepository().resolve("origin/master")).call();
-    }
-
-    private void add(Git git) throws GitAPIException {
-        git.add().addFilepattern(".").call();
-    }
-
-    private void commit(Git git) throws GitAPIException {
-        git.commit().setMessage("Extern Overleaf Commit TreeX").call();
-    }
-
-    private void push(Git git) throws GitAPIException {
-        git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
     }
 
     @Override
