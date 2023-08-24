@@ -7,7 +7,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.Test;
 
 public class GitTestCases {
-    private String workingDirectory = "src/test/java/SpringApplication/GitTests/GitTesting/";
+    private String workingDirectory = "src/test/java/SpringApplication/GitTests/GitTesting";
     private String overleafConnectionString = "https://git.overleaf.com/64b430167d4b3be6afb4389c";
     private User user;
 

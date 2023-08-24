@@ -187,7 +187,7 @@ public class AddElementTest {
                 ),
                 new ElementTestCase(
                         "\\begin{algorithmic} \\State $i \\gets 0$ \n \\end{algorithmic}",
-                        "\\State $i \\gets 0$",
+                        "\\State $i \\gets 0$ \n",
                         null,
                         "algorithmic",
                         List.of()

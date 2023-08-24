@@ -126,5 +126,4 @@ public class AutoExportTest {
         File file = new File(path);
         return file.getAbsolutePath();
     }
-
 }
