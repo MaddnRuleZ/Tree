@@ -15,7 +15,8 @@ import java.util.Map;
  * printer for exporting the tree to a file
  */
 public class FilePrinter extends Printer {
-    boolean testing = false;
+
+    private boolean testing = false;
 
     /**
      * @param path file to export to
@@ -24,6 +25,8 @@ public class FilePrinter extends Printer {
         super(path, user);
         setDirectoryPath(Path.of(path).getParent().toString());
     }
+
+
 
     /**
      * exports the tree structure to a file
@@ -49,6 +52,7 @@ public class FilePrinter extends Printer {
                 currentPath = Path.of(key);
             }
 
+
             Files.move(tempFile.toPath(), currentPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
             tempFile.delete();
         }
@@ -71,9 +75,14 @@ public class FilePrinter extends Printer {
         return path;
     }
 
+    /**
+     * sets the testing variable
+     * @param testing true if testing
+     */
     public void setTesting(boolean testing) {
         this.testing = testing;
     }
+
     // -------------------------------------------
 
 }

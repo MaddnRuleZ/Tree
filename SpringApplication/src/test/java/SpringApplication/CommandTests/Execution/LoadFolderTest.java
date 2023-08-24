@@ -3,6 +3,7 @@ package SpringApplication.CommandTests.Execution;
 import com.application.User;
 import com.application.command.types.LoadFromFolderCommand;
 import com.application.exceptions.ProcessingException;
+import com.application.printer.FilePrinter;
 import com.application.printer.Printer;
 import com.application.tree.elements.roots.Root;
 import org.junit.jupiter.api.AfterEach;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +34,12 @@ public class LoadFolderTest {
     String path = "src/test/resources/TestDocuments/PSE_TEST_1.txt";
 
     /**
+     * Printer to print the tree
+     */
+    Printer printer;
+
+
+    /**
      * Sets up the test environment before each test
      */
     @BeforeEach
@@ -46,14 +55,14 @@ public class LoadFolderTest {
      */
     @Test
     void DoubleLoadTest() throws ProcessingException {
-        this.command.setPath(path);
+        this.command.setPath(calculatePath());
         command.execute();
         assertTrue(command.isSuccess(), "Command should execute successfully");
 
         Root firstRoot = user.getRoot();
         Printer firstPrinter = user.getPrinter();
 
-        this.command.setPath(path);
+        this.command.setPath(calculatePath());
         command.execute();
         assertTrue(command.isSuccess(), "Command should execute successfully");
 
@@ -92,5 +101,12 @@ public class LoadFolderTest {
     @AfterEach
     void tearDown() {
         user = null;
+        command = null;
+        printer = null;
+    }
+
+    private String calculatePath() {
+        File file = new File(path);
+        return file.getAbsolutePath();
     }
 }

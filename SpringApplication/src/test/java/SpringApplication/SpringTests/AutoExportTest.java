@@ -84,19 +84,22 @@ public class AutoExportTest {
     }
 
     private void load() throws Exception {
+        String path = "src/test/resources/JsonFiles/LoadFromFolderTest_1.json";
 
-        String jsonContent = loadJsonFile("src/test/resources/JsonFiles/LoadFromFolderTest_1.json");
+        String jsonContent = loadJsonFile(calculatePath(path));
 
         mvc.perform(post("/api")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonContent))
                 .andExpect(status().isOk());
+
         ((FilePrinter) user.getPrinter()).setTesting(true);
     }
 
 
     private void change() throws Exception {
-        String jsonContent = loadJsonFile(Path.of("src/test/resources/JsonFiles/CorrectCommands/AddElement.json").toAbsolutePath().toString());
+        String path = "src/test/resources/JsonFiles/CorrectCommands/AddElement.json";
+        String jsonContent = loadJsonFile(calculatePath(path));
 
         mvc.perform(post("/api")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -117,6 +120,11 @@ public class AutoExportTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String calculatePath(String path) {
+        File file = new File(path);
+        return file.getAbsolutePath();
     }
 
 }
