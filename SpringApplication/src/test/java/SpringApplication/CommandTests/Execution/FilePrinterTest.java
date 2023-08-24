@@ -3,15 +3,19 @@ package SpringApplication.CommandTests.Execution;
 import SpringApplication.TestStubs.TestTree;
 import com.application.User;
 import com.application.exceptions.FileInvalidException;
+import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.printer.FilePrinter;
 import com.application.printer.Printer;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Input;
+import com.application.tree.elements.roots.Root;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -67,16 +71,15 @@ class FilePrinterTest {
      * Tests if the export is aborted if the path is wrong
      */
     @Test
-    public void wrongInputPath() {
+    public void wrongInputPath() throws UnknownElementException, IOException, OverleafGitException {
         Input input = new Input();
         input.setContentManually(null);
 
         tree.root.addChildOnIndex(0, input);
+        Root.getInstance().addChildOnIndex(0, input);
         input.setParent(null);
+        assertThrows(UnknownElementException.class, () -> printer.export());
 
-        assertThrows(UnknownElementException.class, () -> {
-            printer.export();
-        });
     }
 
     @AfterEach

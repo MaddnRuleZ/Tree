@@ -15,6 +15,7 @@ import java.util.Map;
  * printer for exporting the tree to a file
  */
 public class FilePrinter extends Printer {
+    boolean testing = false;
 
     /**
      * @param path file to export to
@@ -34,18 +35,19 @@ public class FilePrinter extends Printer {
         map.put(this.getPath(), new StringBuilder());
         this.getUser().getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL, this.isExportSummary(), this.isExportComments());
         for (String key : map.keySet()) {
-            if (key == null) {
+            if (key == null || key.equals(Printer.getDirectoryPath() + "/") || key.equals(Printer.getDirectoryPath() + "/null")){
                 throw new UnknownElementException(null, "File Path");
             }
             File tempFile = File.createTempFile(key, "tex");
             Files.writeString(tempFile.toPath(), map.get(key));
 
+            Path currentPath;
 
-            Path currentPath = Path.of(key);
-            //Redirect Output for testing purposes---------------
-            //Path currentPath = Path.of(randomFilePath());
-            //--------------------------------------------------
-
+            if(testing) {
+                currentPath = Path.of(randomFilePath());
+            } else {
+                currentPath = Path.of(key);
+            }
 
             Files.move(tempFile.toPath(), currentPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
             tempFile.delete();
@@ -67,6 +69,10 @@ public class FilePrinter extends Printer {
         String path = Path.of(this.getPath()).getParent().getParent().toString() + "/PrinterTestOutput/exportFile" + fileCount + ".tex";
         fileCount++;
         return path;
+    }
+
+    public void setTesting(boolean testing) {
+        this.testing = testing;
     }
     // -------------------------------------------
 

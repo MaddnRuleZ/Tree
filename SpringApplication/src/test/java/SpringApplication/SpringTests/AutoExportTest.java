@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,12 +50,15 @@ public class AutoExportTest {
     AutoExport autoExport;
     @Autowired
     RequestInterceptor interceptor;
+    @Autowired
+    User user;
+
 
     @Test
     public void testAutoExport() throws Exception {
         load();
 
-        Thread.sleep(interceptor.getTimeThresholdInMilliseconds() * 2);
+        Thread.sleep(interceptor.getTimeThresholdInMilliseconds() * 1);
 
         assertFalse(autoExport.isFailure());
         assertFalse(interceptor.hasChanges());
@@ -72,7 +76,7 @@ public class AutoExportTest {
         change();
         change();
 
-        Thread.sleep(interceptor.getTimeThresholdInMilliseconds()* 2);
+        Thread.sleep(interceptor.getTimeThresholdInMilliseconds()* 1);
 
         assertFalse(autoExport.isFailure());
         assertFalse(interceptor.hasChanges());
@@ -87,12 +91,12 @@ public class AutoExportTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonContent))
                 .andExpect(status().isOk());
-
+        ((FilePrinter) user.getPrinter()).setTesting(true);
     }
 
 
     private void change() throws Exception {
-        String jsonContent = loadJsonFile("src/test/resources/JsonFiles/CorrectCommands/AddElement.json");
+        String jsonContent = loadJsonFile(Path.of("src/test/resources/JsonFiles/CorrectCommands/AddElement.json").toAbsolutePath().toString());
 
         mvc.perform(post("/api")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -114,4 +118,5 @@ public class AutoExportTest {
             throw new RuntimeException(e);
         }
     }
+
 }

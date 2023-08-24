@@ -147,6 +147,8 @@ public class GitPrinter extends Printer {
         File repositoryPath = new File(this.working_directory);
 
         try (Git git = Git.open(repositoryPath)) {
+            PullCommand pullCommand = git.pull().setCredentialsProvider(credentialsProvider);
+            pullCommand.setStrategy(MergeStrategy.RESOLVE);
             Status status = git.status().call();
             return !status.isClean();
         } catch (IOException e) {
