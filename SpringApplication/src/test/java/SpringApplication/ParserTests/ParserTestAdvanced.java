@@ -5,6 +5,7 @@ import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.Parser;
 import com.application.tree.elements.roots.Root;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -24,5 +25,10 @@ public class ParserTestAdvanced {
         map.put("root", new StringBuilder());
         root.toLaTeX(map, "root", 0, true, true);
         System.out.println(map.get("root").toString());
+    }
+
+    @AfterEach
+    public void resetPrinter() {
+        Root.resetInstance();
     }
 }

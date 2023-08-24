@@ -7,6 +7,7 @@ import com.application.interpreter.Parser;
 import com.application.interpreter.Scanner;
 import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -247,6 +248,11 @@ public class ParserTest {
 
         root =  (Root) parserTwo.startParsingText();
         System.out.println("spacer");
+    }
+
+    @AfterEach
+    public void reset() {
+        Root.resetInstance();
     }
 
 

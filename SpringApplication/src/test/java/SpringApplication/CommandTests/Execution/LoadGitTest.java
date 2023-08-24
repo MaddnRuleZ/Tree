@@ -24,7 +24,7 @@ public class LoadGitTest {
     /**
      * Path to the test file
      */
-    private String workingDirectory = "src/TestDocuments/gitTesting/";
+    private String workingDirectory = "src/TestDocuments/gitTesting";
     /**
      * Path to the test file
      */
