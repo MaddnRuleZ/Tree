@@ -28,10 +28,6 @@ public class LoadFolderTest {
      * User on which the test is executed on
      */
     User user;
-    /**
-     * Path to the test file
-     */
-    String path = "src/test/resources/TestDocuments/PSE_TEST_1.txt";
 
     /**
      * Printer to print the tree
@@ -55,14 +51,15 @@ public class LoadFolderTest {
      */
     @Test
     void DoubleLoadTest() throws ProcessingException {
-        this.command.setPath(calculatePath());
+        String path = "src/test/resources/TestDocuments/PSE_TEST_1.txt";
+        this.command.setPath(calculatePath(path));
         command.execute();
         assertTrue(command.isSuccess(), "Command should execute successfully");
 
         Root firstRoot = user.getRoot();
         Printer firstPrinter = user.getPrinter();
 
-        this.command.setPath(calculatePath());
+        this.command.setPath(calculatePath(path));
         command.execute();
         assertTrue(command.isSuccess(), "Command should execute successfully");
 
@@ -82,7 +79,7 @@ public class LoadFolderTest {
                             "src/test/resources/LoadTestPaths",
                             "src/test/resources/LoadTestPaths/NotExistingFile.tex"})
     public void wrongFilePath(String path) {
-        this.command.setPath(path);
+        this.command.setPath(calculatePath(path));
         command.execute();
         assertFalse(command.isSuccess(), "Command should not execute successfully");
     }
@@ -103,9 +100,10 @@ public class LoadFolderTest {
         user = null;
         command = null;
         printer = null;
+
     }
 
-    private String calculatePath() {
+    private String calculatePath(String path) {
         File file = new File(path);
         return file.getAbsolutePath();
     }

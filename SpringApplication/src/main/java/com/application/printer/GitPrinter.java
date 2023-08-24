@@ -148,7 +148,7 @@ public class GitPrinter extends Printer {
             }
             Files.writeString(Path.of(key), map.get(key));
         }
-        this.commitAndPush();
+        this.pullOrCloneRepository();
 
         System.out.println("Exported to Overleaf Git Repository");
     }

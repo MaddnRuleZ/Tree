@@ -13,8 +13,9 @@
     % comment2
     X
     X
+    \input{Pfad.tex}
     %\start{summary}
-        \input{test.tex}
+
         %X
         %X
     %\finish{summary}
