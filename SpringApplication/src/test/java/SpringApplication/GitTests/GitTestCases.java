@@ -3,6 +3,7 @@ package SpringApplication.GitTests;
 import com.application.exceptions.OverleafGitException;
 import com.application.printer.GitPrinter;
 import com.application.User;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.Test;
 
@@ -27,4 +28,12 @@ public class GitTestCases {
                 "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
         gitPrinter.commitAndPush();
     }
+
+    @Test
+    public void hawhaw() {
+        GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
+                "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
+        gitPrinter.pullRepository();
+    }
+
 }
