@@ -115,4 +115,8 @@ public class Summary implements LaTeXTranslator {
         this.summaryText.clear();
         this.summaryText.addAll(Arrays.asList(text.split("\n")));
     }
+
+    public boolean isListeningOnDocument() {
+        return this.listeningOnDocument;
+    }
 }

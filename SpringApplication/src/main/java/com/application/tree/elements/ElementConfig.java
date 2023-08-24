@@ -141,8 +141,6 @@ public enum ElementConfig {
                 String path = matcher.group(1);
                 path = ensureTexExtension(path);
 
-
-
                 try {
                     Parser parser = new Parser(Printer.getDirectoryPath() + "/" + path);
                     return (Input) parser.startParsingText();

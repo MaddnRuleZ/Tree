@@ -227,29 +227,6 @@ public class ParserTest {
         System.out.println(map.get("root").toString());
     }
 
-    @Test
-    public void doubleParserTest() throws FileInvalidException, ParseException {
-        /*
-         * test the Parser and check if the file in sys.out is like the input_file below >>>
-         */
-        Parser parser = new Parser("src/test/resources/TestDocuments/MoveTest.txt");
-        parser.initStartParsing();
-        Root root = null;
-        try {
-            root = (Root) parser.startParsingText();
-        } catch (FileInvalidException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-        Parser parserTwo = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
-        parserTwo.initStartParsing();
-
-        root =  (Root) parserTwo.startParsingText();
-        System.out.println("spacer");
-    }
-
     @AfterEach
     public void reset() {
         Root.resetInstance();

@@ -83,7 +83,7 @@ public class Scanner {
             // End current Environment
             return lastElement.getParentElement();
 
-        } else if (lastElement != null && lastElement.getEndPart() != null && lastElement.getEndPart().equals(Environment.DEFAULT_ENDING)) {
+        } else if ((lastElement != null && lastElement.getEndPart() != null && lastElement.getEndPart().equals(Environment.DEFAULT_ENDING)) || lastElement != null && lastElement.getSummary().isListeningOnDocument()) {
             // Don't Parse Custom Environments
             return null;
 
