@@ -4,6 +4,7 @@ import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.ParseException;
 import com.application.interpreter.Parser;
 import com.application.interpreter.TextFileReader;
+import com.application.printer.Printer;
 import com.application.tree.Element;
 import com.application.tree.elements.childs.Child;
 import com.application.tree.elements.parent.Environment;
@@ -140,7 +141,7 @@ public enum ElementConfig {
                 String path = matcher.group(1);
 
                 try {
-                    Parser parser = new Parser(path);
+                    Parser parser = new Parser(Printer.getDirectoryPath() + "/" + path + ".tex");
                     return (Input) parser.startParsingText();
 
                 } catch (FileInvalidException e) {
@@ -178,38 +179,6 @@ public enum ElementConfig {
      * @return new Generated Element already initiated
      */
     abstract Element getElement(String currentLine) throws ParseException;
-
-    /**
-     * Create a new Element based on the line the Scanner read in the TextFile
-     * Scan the Elements in the Config if any match, return it.
-     * alternatively check if the Line can be Recognized to any Unrecognized Environment
-     *
-     * @param startPartLine textLine containing one of the startParts
-     * @return return the new Created Element, null in case no found
-     */
-    public static Element createElement2(String startPartLine) throws ParseException {
-        String additionalText = getSubstringAfterLastClosingBraceOrBracket(startPartLine);
-        additionalText = TextFileReader.removeSpacesFromStart(additionalText);
-
-        for (final ElementConfig sectioning: ElementConfig.values()) {
-            if (startPartLine.contains(sectioning.startPart)) {
-                Element createdElement = sectioning.getElement(startPartLine);
-                createdElement.setContent(startPartLine);
-                createdElement.setOptions(startPartLine);
-                createdElement.addTextBlockToElem(additionalText);
-                return createdElement;
-            }
-        }
-
-        if (startPartLine.contains(Environment.DEFAULT_OPENING)) {
-            Element createdElement = new Environment(startPartLine, Environment.DEFAULT_OPENING, Environment.DEFAULT_ENDING, ENVIRONMENT_DEFAULT_LEVEL);
-            createdElement.setContent(startPartLine);
-            createdElement.setOptions(startPartLine);
-            createdElement.addTextBlockToElem(additionalText);
-            return createdElement;
-        }
-        return null;
-    }
 
     public static Element createElement(String startPartLine) throws ParseException {
         String additionalText = getSubstringAfterLastClosingBraceOrBracket(startPartLine);

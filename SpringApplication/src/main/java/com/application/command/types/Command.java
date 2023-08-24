@@ -18,7 +18,6 @@ import java.io.IOException;
  */
 @SuppressWarnings("CanBeFinal")
 public abstract class Command {
-
     private final LockManager lockManager = LockManager.getInstance();
     /**
      * indicates success of processing the command
@@ -36,7 +35,6 @@ public abstract class Command {
      * @return JsonNode of response
      */
     public abstract JsonNode execute();
-
 
     /**
      * generates response for frontend
@@ -99,7 +97,6 @@ public abstract class Command {
     public void setUser(User user) {
         this.user = user;
     }
-
     public LockManager getLockManager() {
         return lockManager;
     }

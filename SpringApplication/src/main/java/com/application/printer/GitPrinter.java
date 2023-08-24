@@ -68,11 +68,12 @@ public class GitPrinter extends Printer {
     public boolean commitAndPush() throws OverleafGitException {
         try {
             Git git = Git.open(new File(this.working_directory));
-            fetch(git);
-            merge(git);
-            add(git);
-            commit(git);
-            push(git);
+
+            git.fetch().setCredentialsProvider(this.credentialsProvider).call();
+            git.merge().include(git.getRepository().resolve("origin/master")).call();
+            git.add().addFilepattern(".").call();
+            git.commit().setMessage("Extern Overleaf Commit TreeX").call();
+            git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
             return true;
 
         } catch (IOException ex) {
@@ -102,7 +103,7 @@ public class GitPrinter extends Printer {
 
     /**
      * git pull the Repository from the Overleaf -GitRepo
-     * resolve merge conflicts
+     * resolves merge conflicts
      *
      * @return true in case of success, on Error return false
      */
@@ -113,34 +114,11 @@ public class GitPrinter extends Printer {
             PullCommand pullCommand = git.pull().setCredentialsProvider(credentialsProvider);
             pullCommand.setStrategy(MergeStrategy.RESOLVE);
             pullCommand.call();
+            return true;
 
         } catch (IOException | GitAPIException ex) {
             return false;
         }
-        return true;
-    }
-
-    /**
-     * Delete the Directory and every file in it.
-     *
-     * @param directory Directory to Delete
-     */
-    private void deleteDirectoryRecursively(File directory) {
-        if (!directory.exists()) {
-            return;
-        }
-
-        File[] contents = directory.listFiles();
-        if (contents != null) {
-            for (File file : contents) {
-                if (file.isDirectory()) {
-                    deleteDirectoryRecursively(file);
-                } else {
-                    file.delete();
-                }
-            }
-        }
-        directory.delete();
     }
 
     public boolean checkForChanges() throws OverleafGitException {

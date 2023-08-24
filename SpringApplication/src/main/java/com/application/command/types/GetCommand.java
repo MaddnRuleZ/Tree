@@ -12,7 +12,6 @@ public class GetCommand extends Command {
      */
     private final boolean isEditorGet;
 
-
     public GetCommand(User user, boolean isEditorGet) {
         this.isEditorGet = isEditorGet;
         this.setUser(user);
