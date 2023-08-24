@@ -118,7 +118,6 @@ public class GitPrinter extends Printer {
             return true;
 
         } catch (IOException | GitAPIException | JGitInternalException exception) {
-            System.out.println("fuck");
             return false;
         }
     }
