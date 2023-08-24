@@ -31,13 +31,6 @@ public class Parser {
     }
 
     /**
-     * Call this function when starting the Parsing of a full new Directory
-     */
-    public void initStartParsing() {
-        Root.resetInstance();
-    }
-
-    /**
      * Start Parsing the Document
      * get the Text from the File and call the Scanner for Scanning the Doc
      *

@@ -4,15 +4,11 @@ import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.ParseException;
 import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.Parser;
-import com.application.interpreter.Scanner;
 import com.application.tree.elements.roots.Root;
-import com.application.tree.elements.roots.Roots;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -173,7 +169,6 @@ public class ParserTest {
         root.toLaTeX(map, "root", 0, true, true);
         System.out.println(map.get("root").toString());
     }
-
 
     @Test
     public void summaryTest() throws UnknownElementException {

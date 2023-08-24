@@ -6,6 +6,7 @@ import com.application.exceptions.UnknownElementException;
 import com.application.tree.interfaces.LaTeXTranslator;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -94,7 +95,7 @@ public class GitPrinter extends Printer {
                     .setCredentialsProvider(this.credentialsProvider)
                     .call();
             return true;
-        } catch (GitAPIException ex) {
+        } catch (GitAPIException | JGitInternalException ex) {
             throw new OverleafGitException("Fehler beim Klonen des Repositories: " + ex.getMessage());
         }
     }
