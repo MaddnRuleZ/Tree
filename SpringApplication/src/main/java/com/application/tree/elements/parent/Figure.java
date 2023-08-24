@@ -89,7 +89,7 @@ public class Figure extends Environment {
 
         graphic = extractContent(graphicsString);
         graphicOptions = extractOptions(graphicsString);
-        return graphic != null && graphicOptions != null;
+        return graphic != null || graphicOptions != null;
     }
 
     /**

@@ -31,7 +31,6 @@ public class LaTeXParserTest {
         Root.resetInstance();
     }
 
-
     @ParameterizedTest
     @ValueSource(strings = {
             "src/test/resources/TestDocuments/BeginOnSection.tex"

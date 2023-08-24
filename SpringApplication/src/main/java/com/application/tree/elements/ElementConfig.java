@@ -141,7 +141,7 @@ public enum ElementConfig {
                 String path = matcher.group(1);
 
                 try {
-                    Parser parser = new Parser(Printer.getDirectoryPath() + "/" + path + ".tex");
+                    Parser parser = new Parser(Printer.getDirectoryPath() + "/" + path ); //+ ".tex"
                     return (Input) parser.startParsingText();
 
                 } catch (FileInvalidException e) {

@@ -26,8 +26,6 @@ public class FilePrinter extends Printer {
         setDirectoryPath(Path.of(path).getParent().toString());
     }
 
-
-
     /**
      * exports the tree structure to a file
      * @throws IOException if an error occurs while writing to the file

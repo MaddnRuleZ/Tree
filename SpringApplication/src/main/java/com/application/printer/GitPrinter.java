@@ -68,7 +68,6 @@ public class GitPrinter extends Printer {
     public boolean commitAndPush() throws OverleafGitException {
         try {
             Git git = Git.open(new File(this.working_directory));
-            git.fetch().setCredentialsProvider(this.credentialsProvider).call();
             git.rebase().setUpstream("origin/master");
             git.add().addFilepattern(".").call();
             git.commit().setMessage("Extern Overleaf Commit TreeX").call();

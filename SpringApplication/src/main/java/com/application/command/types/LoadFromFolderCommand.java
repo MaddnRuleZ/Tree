@@ -42,6 +42,4 @@ public class LoadFromFolderCommand extends Command implements ILoadCommand {
     public void setPath(String path) {
         this.path = path;
     }
-
-
 }

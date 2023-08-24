@@ -10,7 +10,6 @@ import com.application.tree.elements.roots.Roots;
 
 public interface ILoadCommand {
 
-
     /**
      * parses a tree structure, sets the root of the user and the printer
      * @param user user that holds information of LaTeX-Project
@@ -22,13 +21,11 @@ public interface ILoadCommand {
         Parser parser = new Parser(path);
         user.resetUser();
         Roots root = parser.startParsingText();
-        if(root instanceof Root) {
+        if (root instanceof Root) {
             user.setRoot((Root) root);
             user.setPrinter(printer);
         } else {
             throw new ParseException(this.getClass().getSimpleName(), root.getClass().getSimpleName(), Root.class.getSimpleName());
         }
     }
-
-
 }
