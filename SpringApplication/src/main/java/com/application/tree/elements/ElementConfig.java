@@ -139,9 +139,12 @@ public enum ElementConfig {
             Matcher matcher = Pattern.compile(Element.CONTENT_REGEX).matcher(currentLine);
             if (matcher.find()) {
                 String path = matcher.group(1);
+                path = ensureTexExtension(path);
+
+
 
                 try {
-                    Parser parser = new Parser(Printer.getDirectoryPath() + "/" + path ); //+ ".tex"
+                    Parser parser = new Parser(Printer.getDirectoryPath() + "/" + path);
                     return (Input) parser.startParsingText();
 
                 } catch (FileInvalidException e) {
@@ -245,6 +248,15 @@ public enum ElementConfig {
         }
         return "";
     }
+    public static String ensureTexExtension(String filename) {
+        if (filename.endsWith(".tex")) {
+            return filename;
+        } else {
+            return filename + ".tex";
+        }
+    }
+
+
 
     public static int GET_ENVIRONMENT_DEFAULT_LEVEL() {
         return ENVIRONMENT_DEFAULT_LEVEL;

@@ -232,7 +232,7 @@ public class ParserTest {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/resources/TestDocuments/MoveTEST.txt");
+        Parser parser = new Parser("src/test/resources/TestDocuments/MoveTest.txt");
         parser.initStartParsing();
         Root root = null;
         try {
@@ -254,6 +254,4 @@ public class ParserTest {
     public void reset() {
         Root.resetInstance();
     }
-
-
 }
