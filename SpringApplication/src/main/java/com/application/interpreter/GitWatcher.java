@@ -70,6 +70,7 @@ public class GitWatcher {
                     this.lockManager.acquireStructureWriteLock();
                     //if (printer.checkForChanges()) {
                         printer.export();
+                        printer.pullRepository();
                         Root.resetInstance();
                         Parser parser = new Parser(printer.getPath());
                         user.setRoot((Root) parser.startParsingText());
