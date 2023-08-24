@@ -65,14 +65,13 @@ public class AutoExport {
     @Scheduled(fixedRate = timeThresholdInMilliseconds)
     public void check() {
         if(user.getPrinter() != null) {
-            System.out.println("checking");
+            System.out.println("Checking for recent requests");
             boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
 
             if (!noRecentRequests && requestInterceptor.hasChanges()) {
                 try {
                     this.lockManager.acquireStructureReadLock();
                     user.getPrinter().export();
-
                 } catch (ProcessingException e) {
                     failureMessage = e.getMessage();
                     failure = true;

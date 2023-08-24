@@ -4,13 +4,12 @@ import com.application.User;
 import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.UnknownElementException;
 
-import java.io.File;
 import java.io.IOException;
 
 public abstract class Printer {
     private String path;
     private final User user;
-    private static String FIGURE_PATH = "";
+    private static String DIRECTORY_PATH = "";
     private boolean exportComments = true;
     private boolean exportSummary = true;
 
@@ -37,12 +36,12 @@ public abstract class Printer {
         return user;
     }
 
-    public static String getFigurePath() {
-        return FIGURE_PATH;
+    public static String getDirectoryPath() {
+        return DIRECTORY_PATH;
     }
 
-    public static void setFigurePath(String path) {
-        FIGURE_PATH = path.replace("\\", "/");
+    public static void setDirectoryPath(String path) {
+        DIRECTORY_PATH = path.replace("\\", "/");
     }
 
     public boolean isExportComments() {

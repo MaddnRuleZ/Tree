@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,11 +35,11 @@ public class GitPrinter extends Printer {
      * @param workingDir    The working directory where Git operations will be performed.
      */
     public GitPrinter(String overleafUrl, String username, String password, String workingDir, User user) {
-        super(workingDir, user);
+        super(workingDir + "/" + MAIN_ENDING, user);
         credentialsProvider = new UsernamePasswordCredentialsProvider(username, password);
         this.overleafUrl = overleafUrl;
         this.working_directory = workingDir;
-        setFigurePath(this.working_directory);
+        setDirectoryPath(this.working_directory);
     }
 
     /**
@@ -144,6 +143,19 @@ public class GitPrinter extends Printer {
         directory.delete();
     }
 
+    public boolean checkForChanges() throws OverleafGitException {
+        File repositoryPath = new File(this.working_directory);
+
+        try (Git git = Git.open(repositoryPath)) {
+            Status status = git.status().call();
+            return !status.isClean();
+        } catch (IOException e) {
+            throw new OverleafGitException("Fehler beim Öffnen des Repos (IO), pull zuerst" + e.getMessage());
+        } catch (GitAPIException e) {
+            throw new OverleafGitException("Fehler beim Ausführen von Git-Befehlen: " + e.getMessage());
+        }
+    }
+
     private void fetch(Git git) throws GitAPIException {
         git.fetch().setCredentialsProvider(this.credentialsProvider).call();
     }
@@ -167,8 +179,8 @@ public class GitPrinter extends Printer {
     @Override
     public void export() throws IOException, UnknownElementException, OverleafGitException {
         Map<String, StringBuilder> map = new HashMap<>();
-        map.put(this.getPath() + "/" + MAIN_ENDING, new StringBuilder());
-        this.getUser().getRoot().toLaTeX(map, this.getPath()+ "/" + MAIN_ENDING, LaTeXTranslator.INIT_INDENTATION_LEVEL, this.isExportSummary(), this.isExportComments());
+        map.put(this.getPath(), new StringBuilder());
+        this.getUser().getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL, this.isExportSummary(), this.isExportComments());
         for(String key : map.keySet()) {
             if (key == null) {
                 throw new UnknownElementException(null, "File Path");
@@ -176,5 +188,7 @@ public class GitPrinter extends Printer {
             Files.writeString(Path.of(key), map.get(key));
         }
         this.commitAndPush();
+
+        System.out.println("Exported to Overleaf Git Repository");
     }
 }

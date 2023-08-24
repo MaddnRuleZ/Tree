@@ -21,7 +21,7 @@ public class FilePrinter extends Printer {
      */
     public FilePrinter(String path, User user) {
         super(path, user);
-        setFigurePath(Path.of(path).getParent().toString());
+        setDirectoryPath(Path.of(path).getParent().toString());
     }
 
     /**
@@ -40,10 +40,11 @@ public class FilePrinter extends Printer {
             File tempFile = File.createTempFile(key, "tex");
             Files.writeString(tempFile.toPath(), map.get(key));
 
-            //TODO -----------Remove---------------
-            //Path currentPath = Path.of(key);
-            Path currentPath = Path.of(randomFilePath());
-            //-------------------------------------
+
+            Path currentPath = Path.of(key);
+            //Redirect Output for testing purposes---------------
+            //Path currentPath = Path.of(randomFilePath());
+            //--------------------------------------------------
 
 
             Files.move(tempFile.toPath(), currentPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);

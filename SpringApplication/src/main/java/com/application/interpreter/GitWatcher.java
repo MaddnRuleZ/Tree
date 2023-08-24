@@ -2,10 +2,15 @@ package com.application.interpreter;
 
 import com.application.User;
 import com.application.command.LockManager;
+import com.application.exceptions.OverleafGitException;
+import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * watches the git repository for changes
@@ -52,18 +57,21 @@ public class GitWatcher {
     public void check() {
         if(user.getPrinter() != null && user.getPrinter() instanceof GitPrinter) {
             GitPrinter printer = (GitPrinter) user.getPrinter();
-            /*if(printer.isRemoteRepositoryChanged()) {
+            System.out.println("Checking for changes in git repository");
+
                 try {
-                    this.lockManager.acquireStructureWriteLock();
-                    printer.pullRepository();
-                    changes = true;
-                } catch (ProcessingException e) {
+                    if (printer.checkForChanges()) {
+                        this.lockManager.acquireStructureWriteLock();
+                        printer.export();
+                        changes = true;
+                    }
+                } catch (ProcessingException | IOException e) {
                     failureMessage = e.getMessage();
                     failure = true;
                 } finally {
                     this.lockManager.releaseStructureWriteLock();
                 }
-            }*/
+
         }
     }
 

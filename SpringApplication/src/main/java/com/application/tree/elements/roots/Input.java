@@ -1,6 +1,7 @@
 package com.application.tree.elements.roots;
 
 import com.application.exceptions.UnknownElementException;
+import com.application.printer.Printer;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
 import com.application.tree.elements.childs.BlockElement;
@@ -52,7 +53,7 @@ public class Input extends Parent implements Roots {
 
         text.append(indentation).append(this.getStartPart()).append("{").append(this.content).append("}").append("\n");
 
-        String newKey = this.content;
+        String newKey = Printer.getDirectoryPath() + "/" + this.content;
         map.put(newKey, new StringBuilder());
         if (this.children != null && !this.children.isEmpty()) {
             for (Element child : this.children) {

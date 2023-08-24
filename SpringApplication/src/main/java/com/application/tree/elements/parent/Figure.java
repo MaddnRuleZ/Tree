@@ -1,6 +1,5 @@
 package com.application.tree.elements.parent;
 
-import com.application.exceptions.ImageException;
 import com.application.exceptions.ProcessingException;
 import com.application.exceptions.UnknownElementException;
 import com.application.printer.Printer;
@@ -155,7 +154,7 @@ public class Figure extends Environment {
     }
 
     @Override
-    public JsonNode toJsonTree() throws NullPointerException, IOException {
+    public JsonNode toJsonTree() throws NullPointerException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
@@ -186,12 +185,11 @@ public class Figure extends Environment {
     /**
      * Converts the graphic on the specified Path to a String representation and extracts the MIME-Type
      * @return String[] with the first entry being the Base64 encoded String and the second entry being the MIME-Type
-     * @throws IOException if the file could not be read
      */
-    private String[] convertFile() throws IOException {
+    private String[] convertFile() {
         String[] file = new String[2];
         try {
-            Path location = Paths.get(Printer.getFigurePath() + "/" + this.graphic);
+            Path location = Paths.get(Printer.getDirectoryPath() + "/" + this.graphic);
 
             Resource resource = new UrlResource(location.toUri());
 
@@ -199,9 +197,8 @@ public class Figure extends Environment {
             file[0] = Base64.getEncoder().encodeToString(imageBytes);
             file[1] = Files.probeContentType(Path.of(this.graphic));;
         } catch (IOException | NullPointerException e) {
-            Path location = Paths.get("src/main/resources/Images/ImageNotFound.txt");
-            file[1] = "image/jpg";
-            file[0] = Files.readString(location);
+            file[1] = null;
+            file[0] = null;
         }
         return file;
     }
