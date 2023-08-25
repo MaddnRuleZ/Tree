@@ -45,7 +45,7 @@ public class MoveElementCommand extends Command implements IMoveElementCommand {
                     throw new ElementNotFoundException("Parent");
                 }
                 if(!(newParentElement instanceof Parent)) {
-                    throw new TypeException(newParent.getClass().getSimpleName(), Parent.class.getSimpleName());
+                    throw new TypeException(newParentElement.getClass().getSimpleName(), Parent.class.getSimpleName());
                 }
             }
 

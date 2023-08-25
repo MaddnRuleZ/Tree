@@ -3,6 +3,7 @@ package com.application.interpreter;
 import com.application.RequestInterceptor;
 import com.application.User;
 import com.application.command.LockManager;
+import com.application.command.types.interfaces.ILoadCommand;
 import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
 import com.application.tree.elements.roots.Root;
@@ -74,9 +75,12 @@ public class GitWatcher {
                     if (printer.isRemoteChanged() && !this.selfPushed) {
                         printer.pullRepository();
                         System.out.println("Git has changes");
+
                         Root.resetInstance();
                         Parser parser = new Parser(printer.getPath());
-                        user.setRoot((Root) parser.startParsingText());
+                        Root root = (Root) parser.startParsingText();
+                        user.setRoot(root);
+
                         System.out.println(user.getRoot().toJsonEditor());
 
                         this.setChanges(true);
