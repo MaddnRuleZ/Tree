@@ -115,7 +115,6 @@ public class Controller {
             gitWatcher.setChanges(false);
             status = HttpStatus.OK;
         }
-        printJsonString(response);
 
         return new ResponseEntity<>(response, status);
     }
