@@ -187,13 +187,6 @@ public class GitPrinter extends Printer {
             pullCommand.setStrategy(MergeStrategy.RESOLVE);
             pullCommand.call();
 
-            // Rebase the local changes on top of the pulled changes
-            RebaseCommand rebaseCommand = git.rebase();
-            rebaseCommand.setUpstream("origin/master"); // Change to your desired branch
-            rebaseCommand.setPreserveMerges(true); // If you want to preserve merge commits during rebase
-            rebaseCommand.setOperation(RebaseCommand.Operation.BEGIN);
-            rebaseCommand.call();
-
             return true;
 
         } catch (IOException | GitAPIException | JGitInternalException exception) {

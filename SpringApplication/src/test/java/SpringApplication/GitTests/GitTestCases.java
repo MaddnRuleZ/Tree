@@ -29,9 +29,24 @@ public class GitTestCases {
         gitPrinter.commitAndPush();
     }
 
+    @Test
+    public void gitPullTest() throws OverleafGitException {
+        GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
+                "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
+
+        if (gitPrinter.isRemoteChanged())
+        {
+            System.out.println("pulled");
+            gitPrinter.pullRepository();
+
+            gitPrinter.commitAndPush();
+        }
+    }
+
+
 
     @Test
-    public void isRemoteChanged() throws IOException, OverleafGitException {
+    public void isRemoteChanged() {
         GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
                 "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
         System.out.println(gitPrinter.isRemoteChanged());

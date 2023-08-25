@@ -1,16 +1,12 @@
 package com.application;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class Tools {
     public static void openBrowserInstance() {
         String url = "http://localhost:8080";
 
         String os = System.getProperty("os.name").toLowerCase();
-
         Runtime rt = Runtime.getRuntime();
 
         try {
@@ -27,7 +23,7 @@ public class Tools {
                         opened = true;
                         break;
                     } catch (IOException e) {
-                        // Continue trying other browsers
+                        // ignore Browser Starting if no suitable found
                     }
                 }
                 if (!opened) {

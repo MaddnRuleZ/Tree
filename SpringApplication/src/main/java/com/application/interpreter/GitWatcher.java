@@ -69,36 +69,29 @@ public class GitWatcher {
             GitPrinter printer = (GitPrinter) user.getPrinter();
             System.out.println("Checking for changes in git repository");
 
-                try {
-                    this.lockManager.acquireStructureWriteLock();
-                    printer.print();
-                    if (printer.isRemoteChanged() && !this.selfPushed) {
-                        printer.pullRepository();
-                        System.out.println("Git has changes");
+            try {
+                this.lockManager.acquireStructureWriteLock();
+                printer.commitAndPush();
+                if (printer.isRemoteChanged()) {
+                    printer.pullRepository();
+                    System.out.println("Git has changes");
 
-                        Root.resetInstance();
-                        Parser parser = new Parser(printer.getPath());
-                        Root root = (Root) parser.startParsingText();
-                        user.setRoot(root);
+                    Root.resetInstance();
+                    Parser parser = new Parser(printer.getPath());
+                    Root root = (Root) parser.startParsingText();
+                    user.setRoot(root); // Breakpoint
 
-                        System.out.println(user.getRoot().toJsonEditor());
+                    System.out.println(user.getRoot().toJsonEditor());
 
-                        this.setChanges(true);
-                    } else {
-                        selfPushed = false;
-                    }
-                    boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
-                    if (!noRecentRequests && requestInterceptor.hasChanges()) {
-                        printer.commitAndPush();
-                        selfPushed = true;
-                    }
-                } catch (ProcessingException | IOException e) {
-                    failureMessage = e.getMessage();
-                    failure = true;
-                } finally {
-                    this.requestInterceptor.resetChanges();
-                    this.lockManager.releaseStructureWriteLock();
+                    this.setChanges(true);
                 }
+            } catch (ProcessingException | IOException e) {
+                failureMessage = e.getMessage();
+                failure = true;
+            } finally {
+                this.requestInterceptor.resetChanges();
+                this.lockManager.releaseStructureWriteLock();
+            }
 
         }
     }
