@@ -134,15 +134,6 @@ public class GitPrinter extends Printer {
         return false;
     }
 
-    private RevCommit getLastCommit(Repository repository) throws IOException {
-        try (RevWalk revWalk = new RevWalk(repository)) {
-            ObjectId headId = repository.resolve(Constants.HEAD);
-            return revWalk.parseCommit(headId);
-        }
-    }
-
-
-
     /**
      * git pull the Repository from the Overleaf -GitRepo
      * resolves merge conflicts
