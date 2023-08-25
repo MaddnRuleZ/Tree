@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * A class representing an Element's NewLine Parts.
- *
+ * <p>
  * NewLines Separate two TextBLockElements from each other. And will be stored in this Additional Container
  * Each TextBLockElement can only have one NewLineCharacter and multiple in one line will all be stored in one line too.
  */

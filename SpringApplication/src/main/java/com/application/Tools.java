@@ -10,7 +10,7 @@ public class Tools {
 
     /**
      * Start a Browser -instance of one of the Following BrowserTypes
-     *
+     * <p>
      * On Error print the Error
      */
     public static void openBrowserInstance() {

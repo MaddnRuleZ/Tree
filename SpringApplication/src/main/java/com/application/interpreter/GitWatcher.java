@@ -3,7 +3,6 @@ package com.application.interpreter;
 import com.application.RequestInterceptor;
 import com.application.User;
 import com.application.command.LockManager;
-import com.application.command.types.interfaces.ILoadCommand;
 import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
 import com.application.tree.elements.roots.Root;

@@ -15,9 +15,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class Application {
 
-	@Autowired
-	private User user;
-
 	/**
 	 * starts the application and initializes the spring boot context
 	 * @param args

@@ -7,13 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A class representing an Element's Summary.
  * Elements hold exact one or none Summary, the summaryText Represent the Text Line by Line
- *
+ * <p>
  * This class holds a List of Strings which represent the Summary of a Structure Element
  */
 public class Summary implements LaTeXTranslator {
@@ -28,7 +26,7 @@ public class Summary implements LaTeXTranslator {
 
     /**
      * Creates a new Summary instance.
-     *
+     * <p>
      * This constructor initializes the summary list as an empty ArrayList and sets the
      * 'listeningOnDocument' status to false.
      */

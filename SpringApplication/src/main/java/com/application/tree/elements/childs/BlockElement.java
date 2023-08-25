@@ -10,7 +10,6 @@ import java.util.Map;
 
 /**
  * BlockElement Class
- *
  * The BlockElement represents a child element within the LaTeX Composite Tree.
  * BlockElements are undetected Blocks of Text which represent no detected Structure Element and
  * still hold the Text in Between Structure Elements
@@ -30,7 +29,6 @@ public class BlockElement extends Child {
      * if there is a newLineCharacter generate a new TextBlock on the same level
      * extract summary and comment if present,
      * and check for graphic and caption command if current TextBlock is inside a Figure
-     *
      * @param line line to Scan for Summary Comment or NewLine
      */
     @Override

@@ -1,12 +1,10 @@
 package com.application.command.types;
 
 import com.application.command.types.interfaces.ILoadCommand;
-import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.eclipse.jgit.api.errors.GitAPIException;
 
 /**
  * command to load a tree from a git repository
