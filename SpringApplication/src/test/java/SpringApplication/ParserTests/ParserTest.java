@@ -6,6 +6,7 @@ import com.application.exceptions.UnknownElementException;
 import com.application.interpreter.Parser;
 import com.application.tree.elements.roots.Root;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -17,13 +18,22 @@ import java.util.Map;
  *
  */
 public class ParserTest {
+
+    Root root;
+
+    @BeforeEach
+    public void init() {
+        Root.resetInstance();
+        root = Root.getInstance();
+    }
+
     @Test
     public void testParserSelfmadeTestDocument() throws UnknownElementException, FileInvalidException, ParseException {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
-        Root root = null;
+        Root.resetInstance();
 
         root = (Root) parser.startParsingText();
         if (root == null) {
@@ -43,7 +53,7 @@ public class ParserTest {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_2.txt");
-        Root root = null;
+        root = null;
 
         try {
             root = (Root) parser.startParsingText();
@@ -68,7 +78,7 @@ public class ParserTest {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/advancedTest.tex");
-        Root root = null;
+        root = null;
 
         try {
             root = (Root) parser.startParsingText();
@@ -96,7 +106,7 @@ public class ParserTest {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/DemoFileText.tex");
-        Root root = null;
+        root = null;
 
         try {
             root = (Root) parser.startParsingText();
@@ -122,7 +132,7 @@ public class ParserTest {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_ENV.txt");
-        Root root = null;
+        root = null;
 
         try {
             root = (Root) parser.startParsingText();
@@ -148,7 +158,7 @@ public class ParserTest {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/ErrorCatchingTest.tex");
-        Root root = null;
+        root = null;
 
         try {
             root = (Root) parser.startParsingText();
@@ -174,7 +184,7 @@ public class ParserTest {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/SummaryTestDocument.txt");
-        Root root = null;
+        root = null;
 
         try {
             root = (Root) parser.startParsingText();
@@ -200,7 +210,7 @@ public class ParserTest {
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/StartBlockText.tex");
-        Root root = null;
+        root = null;
 
         try {
             root = (Root) parser.startParsingText();

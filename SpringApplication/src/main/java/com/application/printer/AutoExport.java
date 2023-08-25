@@ -43,7 +43,7 @@ public class AutoExport {
      * time threshold in milliseconds after which the structure is exported
      * At the moment, the threshold is set to 1 minutes
      */
-    private final long timeThresholdInMilliseconds = 1 * 60 * 1000;
+    private final long timeThresholdInMilliseconds = 60 * 1000;
 
     /**
      * Constructor for AutoExport

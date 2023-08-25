@@ -15,9 +15,9 @@ import java.util.UUID;
 
 /**
  * Element Composite's Parent Abstract Class
- *
+ * <p>
  * The Parent abstract class represents a container element that groups and organizes child elements within the Parser.
- *
+ * <p>
  * A Parent element is defined by its startPart and endPart strings, which are used to identify the beginning and
  * end of the parent container within the program.
  * The hierarchical level (level) represents the nesting depth of this parent element in relation to other elements.

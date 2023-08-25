@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * A class representing an Element's Comments.
- *
+ * <p>
  * Store each Comment separately in the Comment List
  */
 public class Comment implements LaTeXTranslator {

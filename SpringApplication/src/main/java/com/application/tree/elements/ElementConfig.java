@@ -17,11 +17,11 @@ import java.util.regex.Pattern;
 
 /**
  * Class Containing the Configuration of ALL the Structural Elements that wil be detected by the Scan -Algorithm
- *
+ * <p>
  * Elements are Sorted in the Tree in an SEMI-ORDER identified by the Element's Level
  * When comparing two Elements, how they are Related to Each other the Level decides which is Parent and which Child.
  * So the Tree gets Balanced:
- *
+ * <p>
  * [will be sorted to ->]
  * \Part         \Part{}              [indentation represents here who is parent and child]
  * \Section          \Section{}
@@ -130,7 +130,7 @@ public enum ElementConfig {
 
     /**
      * Document inside this Document detected, start a new Parser
-     *
+     * <p>
      * Level gets set to Max in Input Class
      */
     INPUT("\\input", null, GET_BLOCK_ELEMENT_LEVEL()) {

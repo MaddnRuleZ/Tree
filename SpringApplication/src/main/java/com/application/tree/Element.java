@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -26,7 +25,7 @@ import java.util.regex.Pattern;
 
 /**
  * Element representing a LaTeX Command starting with the character "\"
- *
+ * <p>
  * This class serves as the base abstract class for different LaTeX elements
  * that can be part of a document structure. It contains common functionality
  * and attributes that are shared among its subclasses.

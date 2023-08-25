@@ -24,12 +24,12 @@ import java.util.Map;
 
 /**
  * Figure Class
- *
+ * <p>
  * The Figure class represents an environment that contains graphical elements with captions in the Parser.
- *
+ * <p>
  * The Figure environment typically includes graphics identified by "\\includegraphics" and their corresponding
  * captions identified by "\\caption". The "graphic" field stores the "\\includegraphics" content for this figure.
- *
+ * <p>
  * The captions are stored in the "captions" list, which can contain multiple captions associated with the figure.
  */
 public class Figure extends Environment {

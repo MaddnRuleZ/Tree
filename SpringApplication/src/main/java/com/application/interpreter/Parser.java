@@ -2,12 +2,11 @@ package com.application.interpreter;
 
 import com.application.exceptions.FileInvalidException;
 import com.application.exceptions.ParseException;
-import com.application.tree.elements.roots.Root;
 import com.application.tree.elements.roots.Roots;
 
 /**
  * Class for recursively Parsing a single Latex Document,
- *
+ * <p>
  * input statement in this Doc will trigger recursive call of this Class
  */
 public class Parser {

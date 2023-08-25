@@ -21,7 +21,7 @@ import java.util.UUID;
 
 /**
  * Root of the Composite- LaTeXTree.
- *
+ * <p>
  * Root holds the first set of LaTeX -Element Children
  * is implemented in a Singleton Pattern
  */

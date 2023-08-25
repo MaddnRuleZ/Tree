@@ -8,13 +8,11 @@ import com.application.tree.elements.childs.BlockElement;
 import com.application.tree.elements.parent.Parent;
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
  * Class Represents an Input Statement in the LateX file and is also an Element
- *
+ * <p>
  * Represents an Input Document inside the main.tex file and Stores all Items of the Document inside it as its Children
  */
 public class Input extends Parent implements Roots {

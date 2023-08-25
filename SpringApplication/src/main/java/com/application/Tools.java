@@ -2,12 +2,15 @@ package com.application;
 
 import java.io.IOException;
 
+/**
+ * Responsible for automatically starting the browser and opening the tab
+ */
 public class Tools {
 
 
     /**
      * Start a Browser -instance of one of the Following BrowserTypes
-     *
+     * <p>
      * On Error print the Error
      */
     public static void openBrowserInstance() {

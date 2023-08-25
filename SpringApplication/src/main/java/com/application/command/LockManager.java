@@ -12,11 +12,20 @@ public class LockManager {
      */
     private final ReentrantReadWriteLock structureLock;
 
+    /**
+     * ReadWriteLock on the gitWatcher hasChanges
+     */
     private final ReentrantReadWriteLock hasUpdatesGitWatcherLock;
 
+
+    /**
+     * ReadWriteLock on the interceptor hasChanges
+     */
     private final ReentrantReadWriteLock hasRecentRequestsInterceptorLock;
 
-
+    /**
+     * instance of the LockManager
+     */
     private static final LockManager instance = new LockManager();
 
     private LockManager() {
@@ -61,35 +70,56 @@ public class LockManager {
         structureLock.readLock().unlock();
     }
 
-
+    /**
+     * try to acquire the write-hasUpdatesGitWatcherLock
+     */
     public void acquireGitWatcherReadLock() {
         hasUpdatesGitWatcherLock.readLock().lock();
     }
 
+    /**
+     * release the write-hasUpdatesGitWatcherLock
+     */
     public void releaseGitWatcherReadLock() {
         hasUpdatesGitWatcherLock.readLock().unlock();
     }
-
+    /**
+     * try to acquire the write-hasUpdatesGitWatcherLock
+     */
     public void acquireGitWatcherWriteLock() {
         hasUpdatesGitWatcherLock.writeLock().lock();
     }
-
+    /**
+     * release the write-hasUpdatesGitWatcherLock
+     */
     public void releaseGitWatcherWriteLock() {
         hasUpdatesGitWatcherLock.writeLock().unlock();
     }
 
+    /**
+     * try to acquire the write-hasRecentRequestsInterceptorLock
+     */
     public void acquireInterceptorReadLock() {
         hasRecentRequestsInterceptorLock.readLock().lock();
     }
 
+    /**
+     *  release the write-hasRecentRequestsInterceptorLock
+     */
     public void releaseInterceptorReadLock() {
         hasRecentRequestsInterceptorLock.readLock().unlock();
     }
 
+    /**
+     * try to acquire the write-hasRecentRequestsInterceptorLock
+     */
     public void acquireInterceptorWriteLock() {
         hasRecentRequestsInterceptorLock.writeLock().lock();
     }
 
+    /**
+     * release the write-hasRecentRequestsInterceptorLock
+     */
     public void releaseInterceptorWriteLock() {
         hasRecentRequestsInterceptorLock.writeLock().unlock();
     }

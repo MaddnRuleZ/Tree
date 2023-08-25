@@ -9,9 +9,9 @@ import java.util.Map;
 
 /**
  * Sectioning Class
- *
+ * <p>
  * The Sectioning class represents a parent element that groups more elements within
- *
+ * <p>
  * A Sectioning element is defined by its startPart string and the hierarchical level (level) of the section.
  * It doesn't require an endPart, as it only specifies the start of the section.
  */

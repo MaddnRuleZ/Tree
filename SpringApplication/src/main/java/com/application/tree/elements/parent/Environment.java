@@ -1,16 +1,15 @@
 package com.application.tree.elements.parent;
 
 import com.application.exceptions.UnknownElementException;
-import com.application.interpreter.TextFileReader;
 import com.application.tree.Element;
 
 import java.util.Map;
 
 /**
  * Environment Class
- *
+ * <p>
  * The Environment class represents a parent container that holds elements within a program.
- *
+ * <p>
  * An Environment typically groups and organizes various child elements within a specific context.
  * It is defined by its startPart and endPart strings, which are used to identify the beginning and
  * end of the environment container within the program. The hierarchical level (level) represents the

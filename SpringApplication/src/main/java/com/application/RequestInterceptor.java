@@ -29,7 +29,7 @@ public class RequestInterceptor implements HandlerInterceptor {
      * By Default the threshold is set to 1 minute
      * {@link AutoExport} sets the threshold if initialized
      */
-    private long timeThresholdInMilliseconds = 1 * 60 * 1000;
+    private long timeThresholdInMilliseconds = 60 * 1000;
 
     /**
      * shows if a request came in since the last time it was resetted {@link AutoExport}
