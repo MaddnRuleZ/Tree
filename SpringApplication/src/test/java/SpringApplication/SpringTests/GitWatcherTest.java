@@ -24,8 +24,4 @@ public class GitWatcherTest {
     @Autowired
     private MockMvc mvc;
 
-    @Test
-    public void noChangesTest() {
-
-    }
 }

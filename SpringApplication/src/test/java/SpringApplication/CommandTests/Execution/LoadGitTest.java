@@ -21,14 +21,6 @@ public class LoadGitTest {
      * User on which the test is executed on
      */
     User user;
-    /**
-     * Path to the test file
-     */
-    private String workingDirectory = "src/TestDocuments/gitTesting";
-    /**
-     * Path to the test file
-     */
-    private String overleafConnectionString = "https://git.overleaf.com/64b430167d4b3be6afb4389c";
 
 
     /**
@@ -47,7 +39,15 @@ public class LoadGitTest {
      */
     @Test
     void loadTest() {
+        /**
+         * Path to the test file
+         */
+        String overleafConnectionString = "https://git.overleaf.com/64b430167d4b3be6afb4389c";
         this.command.setUrl(overleafConnectionString);
+        /**
+         * Path to the test file
+         */
+        String workingDirectory = "src/TestDocuments/gitTesting";
         this.command.setPath(workingDirectory);
         this.command.setPassword("WhatWasMyPass??");
         this.command.setUsername("ueteb@student.kit.edu");

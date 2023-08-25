@@ -21,7 +21,7 @@ public class GitWatcher {
     /**
      * lockManager for locking the structure Lock
      */
-    private LockManager lockManager;
+    private final LockManager lockManager;
 
     /**
      * user that holds information of LaTeX-Project

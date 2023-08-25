@@ -10,11 +10,11 @@ public class LockManager {
     /**
      * ReadWriteLock on the treeStructure, always locks whole tree
      */
-    private ReentrantReadWriteLock structureLock;
+    private final ReentrantReadWriteLock structureLock;
 
-    private ReentrantReadWriteLock hasUpdatesGitWatcherLock;
+    private final ReentrantReadWriteLock hasUpdatesGitWatcherLock;
 
-    private ReentrantReadWriteLock hasRecentRequestsInterceptorLock;
+    private final ReentrantReadWriteLock hasRecentRequestsInterceptorLock;
 
 
     private static final LockManager instance = new LockManager();

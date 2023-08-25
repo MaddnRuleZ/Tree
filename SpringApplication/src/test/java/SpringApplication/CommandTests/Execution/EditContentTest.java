@@ -31,7 +31,7 @@ public class EditContentTest {
     /**
      * path to the test file
      */
-    String testPath = "src/test/resources/PrinterTestOutput/EditTest.txt";
+    final String testPath = "src/test/resources/PrinterTestOutput/EditTest.txt";
     /**
      * TestTree on which the test is executed on
      */
@@ -155,7 +155,7 @@ public class EditContentTest {
     }
 
 
-    String randomString = "\\part{options_text}[content_test]\n" +
+    final String randomString = "\\part{options_text}[content_test]\n" +
             "    X1\n" +
             "    X\n" +
             "    % comment1\n" +

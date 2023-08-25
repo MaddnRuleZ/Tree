@@ -20,7 +20,7 @@ public class ComplexTestTree extends TestTree{
     public int childCounter = 0;
     public int envCounter = 0;
 
-    UUID[] uuids = {
+    final UUID[] uuids = {
             UUID.fromString("6ba18b12-10e1-4e0e-9a49-24ca4b4e1bc2"),
             UUID.fromString("4d6e8d14-6a47-437f-ba79-8ebec503b5ea"),
             UUID.fromString("4e8a9e7c-56ac-43f5-9f17-02a32c52c7f3"),

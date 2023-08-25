@@ -36,7 +36,7 @@ public class RequestInterceptor implements HandlerInterceptor {
      */
     private boolean changes = false;
 
-    private LockManager lockManager;
+    private final LockManager lockManager;
 
     public RequestInterceptor() {
         this.lockManager = LockManager.getInstance();

@@ -195,7 +195,7 @@ public class Figure extends Environment {
 
             byte[] imageBytes = resource.getInputStream().readAllBytes();
             file[0] = Base64.getEncoder().encodeToString(imageBytes);
-            file[1] = Files.probeContentType(Path.of(this.graphic));;
+            file[1] = Files.probeContentType(Path.of(this.graphic));
         } catch (IOException | NullPointerException e) {
             file[1] = null;
             file[0] = null;

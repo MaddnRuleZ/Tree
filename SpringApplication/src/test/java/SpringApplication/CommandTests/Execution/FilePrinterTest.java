@@ -23,7 +23,7 @@ class FilePrinterTest {
     /**
      * Path to the test file
      * */
-    String pathOfPrinter = "src/test/resources/PrinterTestOutput/PSE_TEST_1_FilePrinter.txt";
+    final String pathOfPrinter = "src/test/resources/PrinterTestOutput/PSE_TEST_1_FilePrinter.txt";
     /**
      * Printer to print the tree
      */

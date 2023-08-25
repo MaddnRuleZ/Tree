@@ -81,8 +81,8 @@ public abstract class Parent extends Element {
         this.children.add(index, newChild);
     }
 
-    public boolean removeChild(Element element) {
-        return this.children.remove(element);
+    public void removeChild(Element element) {
+        this.children.remove(element);
     }
 
     public List<Element> getChildren() {

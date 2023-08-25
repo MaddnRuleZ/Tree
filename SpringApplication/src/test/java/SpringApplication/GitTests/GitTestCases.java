@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 public class GitTestCases {
-    private String workingDirectory = "src/test/java/SpringApplication/GitTests/GitTesting";
-    private String overleafConnectionString = "https://git.overleaf.com/64b430167d4b3be6afb4389c";
+    private final String workingDirectory = "src/test/java/SpringApplication/GitTests/GitTesting";
+    private final String overleafConnectionString = "https://git.overleaf.com/64b430167d4b3be6afb4389c";
     private User user;
 
     /*

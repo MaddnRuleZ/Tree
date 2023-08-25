@@ -46,7 +46,7 @@ public class EditCommentTest {
      * new comment of the element that is stored in the element
      * equals newCommentIncoming without the %
      */
-    ArrayList<String> newCommentStored = new ArrayList<>();
+    final ArrayList<String> newCommentStored = new ArrayList<>();
 
     /**
      * Sets up the test environment before each test

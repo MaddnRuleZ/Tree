@@ -221,12 +221,12 @@ public class AddElementTest {
 
 
     public static class ElementTestCase {
-        private String input;
-        private String expectedContent;
-        private String expectedOptions;
-        private List<String> expectedComment;
+        private final String input;
+        private final String expectedContent;
+        private final String expectedOptions;
+        private final List<String> expectedComment;
 
-        private String expectedHeader;
+        private final String expectedHeader;
 
         public ElementTestCase(String input, String expectedContent, String expectedOptions, String expectedHeader, List<String> expectedComment) {
             this.input = input;

@@ -13,7 +13,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.*;
 
 import java.io.File;
@@ -53,14 +52,12 @@ public class GitPrinter extends Printer {
      * Pull Repo if already exists, else clone the Repo from Overleaf-Git
      * working_directory will be deleted in 'clone' scenario
      *
-     * @return true in case of success, else false
      * @throws OverleafGitException
      */
-    public boolean pullOrCloneRepository() throws OverleafGitException {
+    public void pullOrCloneRepository() throws OverleafGitException {
         if (pullRepository()) {
-            return true;
         } else {
-            return cloneRepository();
+            cloneRepository();
         }
     }
 
@@ -69,17 +66,15 @@ public class GitPrinter extends Printer {
      * do in Order:
      * Fetch, Merge, Add Commit and then Push the new Changes to given Repository
      *
-     * @return true in case successful
      * @throws OverleafGitException throws Exception on Upload Error
      */
-    public boolean commitAndPush() throws OverleafGitException {
+    public void commitAndPush() throws OverleafGitException {
         try {
             Git git = Git.open(new File(this.working_directory));
             git.rebase().setUpstream("origin/master");
             git.add().addFilepattern(".").call();
             git.commit().setMessage(DEFAULT_COMMIT_MSG).call();
             git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
-            return true;
         } catch (JGitInternalException ex) {
             throw new OverleafGitException(ex.getMessage());
         } catch (IOException ex) {
@@ -211,11 +206,7 @@ public class GitPrinter extends Printer {
         File repositoryPath = new File(this.working_directory);
 
         try (Git git = Git.open(repositoryPath)) {
-            if (git.status().call().isClean() && isExternChange()) {
-                return false;
-            } else {
-                return true;
-            }
+            return !git.status().call().isClean() || !isExternChange();
         } catch (GitAPIException | JGitInternalException e) {
             throw new OverleafGitException("Pull " + e.getMessage());
         }
