@@ -77,6 +77,7 @@ public class GitPrinter extends Printer {
             git.add().addFilepattern(".").call();
             git.commit().setMessage(DEFAULT_COMMIT_MSG).call();
             git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
+
         } catch (JGitInternalException ex) {
             throw new OverleafGitException(ex.getMessage());
         } catch (IOException ex) {
