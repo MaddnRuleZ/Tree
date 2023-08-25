@@ -106,7 +106,7 @@ public class Root implements JsonParser, LaTeXTranslator, Roots {
                 return i;
             }
         }
-        return -1;
+        return -2;
     }
 
 

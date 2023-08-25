@@ -49,6 +49,7 @@ public class GitWatcher {
     private final long timeThresholdInMilliseconds = 10000;
     private final RequestInterceptor requestInterceptor;
 
+
     @Autowired
     public GitWatcher(User user, RequestInterceptor requestInterceptor) {
         this.user = user;
@@ -70,7 +71,8 @@ public class GitWatcher {
             try {
                 this.lockManager.acquireStructureWriteLock();
                 printer.commitAndPush();
-                if (printer.isRemoteChanged()) {
+
+                if(printer.isRemoteChanged()){
                     printer.pullRepository();
                     System.out.println("Git has changes");
 
@@ -79,11 +81,9 @@ public class GitWatcher {
                     Root root = (Root) parser.startParsingText();
                     user.setRoot(root);
 
-                    System.out.println(user.getRoot().toJsonEditor());
-
                     this.setChanges(true);
                 }
-            } catch (ProcessingException | IOException e) {
+            } catch (ProcessingException e) {
                 failureMessage = e.getMessage();
                 failure = true;
             } finally {

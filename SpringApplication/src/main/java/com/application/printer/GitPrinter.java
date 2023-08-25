@@ -1,6 +1,5 @@
 package com.application.printer;
 
-
 import com.application.User;
 import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.UnknownElementException;
@@ -9,9 +8,7 @@ import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -23,9 +20,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-
 /**
  * Git Class for updating a Git -Overleaf repository with JGIT
+ *
  */
 public class GitPrinter extends Printer {
     private final String overleafUrl;
@@ -88,7 +85,6 @@ public class GitPrinter extends Printer {
 
     /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.
-     *
      */
     private boolean cloneRepository() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
@@ -104,6 +100,7 @@ public class GitPrinter extends Printer {
             throw new OverleafGitException("Fehler beim Klonen des Repositories: " + ex.getMessage());
         }
     }
+
 
     public boolean isRemoteChanged() {
         try {
@@ -133,15 +130,6 @@ public class GitPrinter extends Printer {
         }
         return false;
     }
-
-    private RevCommit getLastCommit(Repository repository) throws IOException {
-        try (RevWalk revWalk = new RevWalk(repository)) {
-            ObjectId headId = repository.resolve(Constants.HEAD);
-            return revWalk.parseCommit(headId);
-        }
-    }
-
-
 
     /**
      * git pull the Repository from the Overleaf -GitRepo

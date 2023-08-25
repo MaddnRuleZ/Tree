@@ -99,8 +99,8 @@ public class Controller {
     public ResponseEntity<JsonNode> processCheckForUpdates() {
         ObjectNode response = new ObjectMapper().createObjectNode();
         HttpStatus status;
-        boolean hasChanges = gitWatcher.hasChanges();
 
+        boolean hasChanges = gitWatcher.hasChanges();
         if(hasChanges){
             gitWatcher.setChanges(false);
         }
