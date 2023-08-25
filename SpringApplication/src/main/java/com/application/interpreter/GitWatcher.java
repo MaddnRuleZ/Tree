@@ -70,7 +70,7 @@ public class GitWatcher {
             try {
                 this.lockManager.acquireStructureWriteLock();
                 printer.commitAndPush();
-                if (printer.isRemoteChanged()) {
+                if (printer.isRemoteChanged3()) {
                     printer.pullRepository();
                     System.out.println("Git has changes");
 

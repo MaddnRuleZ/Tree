@@ -1,5 +1,6 @@
 package com.application.printer;
 
+
 import com.application.User;
 import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.UnknownElementException;
@@ -8,7 +9,12 @@ import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.*;
 
 import java.io.File;
@@ -17,9 +23,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+
 /**
  * Git Class for updating a Git -Overleaf repository with JGIT
- *
  */
 public class GitPrinter extends Printer {
     private final String overleafUrl;
@@ -82,6 +88,7 @@ public class GitPrinter extends Printer {
 
     /**
      * Clone or Overwrite a Git repository from the specified URL into the working directory.
+     *
      */
     private boolean cloneRepository() throws OverleafGitException {
         File repositoryPath = new File(this.working_directory);
@@ -98,6 +105,34 @@ public class GitPrinter extends Printer {
         }
     }
 
+    public boolean isRemoteChanged3() {
+        try {
+            FileRepository localRepo = new FileRepository(working_directory + "/.git");
+            Git git = new Git(localRepo);
+
+            FetchResult fetchResult = git.fetch().setCredentialsProvider(credentialsProvider)
+                    .setRemote(overleafUrl)
+                    .setRefSpecs(new RefSpec("+refs/heads/*:refs/remotes/origin/*"))
+                    .call();
+
+            Collection<TrackingRefUpdate> trackingRefUpdates = fetchResult.getTrackingRefUpdates();
+
+            if (!trackingRefUpdates.isEmpty()) {
+                String remoteBranch = trackingRefUpdates.iterator().next().getRemoteName();
+                ObjectId remoteHead = fetchResult.getAdvertisedRef(remoteBranch).getObjectId();
+
+                RevWalk revWalk = new RevWalk(localRepo);
+                RevCommit commit = revWalk.parseCommit(remoteHead);
+                String commitMessage = commit.getFullMessage();
+                System.out.println("Last commit message on remote repository: " + commitMessage);
+                revWalk.dispose();
+                return !commitMessage.equals(DEFAULT_COMMIT_MSG);
+            }
+        } catch (IOException | GitAPIException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean isRemoteChanged() {
         try {
@@ -110,12 +145,29 @@ public class GitPrinter extends Printer {
                     .call();
 
             Collection<TrackingRefUpdate> trackingRefUpdates = fetchResult.getTrackingRefUpdates();
-            return !trackingRefUpdates.isEmpty();
+            if (!trackingRefUpdates.isEmpty()) {
+                RevCommit lastCommit = getLastCommit(localRepo);
+                System.out.println("Last commit message: " + lastCommit.getShortMessage());
+
+                if (!lastCommit.getShortMessage().equals(DEFAULT_COMMIT_MSG)) {
+                    return true;
+                }
+                return false;
+            }
         } catch (IOException | GitAPIException e) {
             e.printStackTrace();
         }
         return false;
     }
+
+    private RevCommit getLastCommit(Repository repository) throws IOException {
+        try (RevWalk revWalk = new RevWalk(repository)) {
+            ObjectId headId = repository.resolve(Constants.HEAD);
+            return revWalk.parseCommit(headId);
+        }
+    }
+
+
 
     /**
      * git pull the Repository from the Overleaf -GitRepo
