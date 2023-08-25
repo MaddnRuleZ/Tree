@@ -97,4 +97,16 @@ public class GitWatcher {
     public boolean isFailure() {
         return failure;
     }
+
+    public void setFailureMessage(String failureMessage) {
+        this.failureMessage = failureMessage;
+    }
+
+    public void setFailure(boolean failure) {
+        this.failure = failure;
+    }
+
+    public void setChanges(boolean changes) {
+        this.changes = changes;
+    }
 }

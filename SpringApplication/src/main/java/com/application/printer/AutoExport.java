@@ -64,7 +64,7 @@ public class AutoExport {
      */
     @Scheduled(fixedRate = timeThresholdInMilliseconds)
     public void check() {
-        if(user.getPrinter() != null) {
+        if(user.getPrinter() != null && user.getPrinter() instanceof FilePrinter) {
             System.out.println("Checking for recent requests");
             boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
 
@@ -94,6 +94,10 @@ public class AutoExport {
         return failure;
     }
 
-
-
+    public void setFailureMessage(String failureMessage) {
+        this.failureMessage = failureMessage;
+    }
+    public void setFailure(boolean failure) {
+        this.failure = failure;
+    }
 }

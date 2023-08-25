@@ -25,19 +25,23 @@ public class Controller {
     private final User user;
     private final AutoExport autoExport;
 
+    private final GitWatcher gitWatcher;
+
 
 
     /**
      * Constructor using reflection
+     *
      * @param commandHandler handler to process commands
-     * @param user user that holds information of LaTeX-Project
+     * @param user           user that holds information of LaTeX-Project
+     * @param gitWatcher    watcher to check for changes on download
      */
     @Autowired
-    public Controller(CommandHandler commandHandler, User user, AutoExport autoExport) {
+    public Controller(CommandHandler commandHandler, User user, AutoExport autoExport, GitWatcher gitWatcher) {
         this.commandHandler = commandHandler;
         this.user = user;
         this.autoExport = autoExport;
-
+        this.gitWatcher = gitWatcher;
     }
 
     /**
@@ -89,21 +93,26 @@ public class Controller {
 
     /**
      * Processes a GET-request for changes
-     * @param gitWatcher watcher to check for errors on download
      * @return if changes happened and if an error occurred
      */
-    @GetMapping("/checkForUpdates")
-    public ResponseEntity<JsonNode> processCheckForUpdates(GitWatcher gitWatcher) {
+    @GetMapping("/CheckForUpdates")
+    public ResponseEntity<JsonNode> processCheckForUpdates() {
         ObjectNode response = new ObjectMapper().createObjectNode();
         HttpStatus status;
         response.put("hasUpdates", gitWatcher.hasChanges());
         if(gitWatcher.isFailure()) {
             status = HttpStatus.BAD_REQUEST;
             response.put("error", gitWatcher.getFailureMessage());
+            gitWatcher.setChanges(false);
+            gitWatcher.setFailure(false);
+            gitWatcher.setFailureMessage(null);
         } else if(autoExport.isFailure()){
             status = HttpStatus.BAD_REQUEST;
             response.put("error", autoExport.getFailureMessage());
+            autoExport.setFailure(false);
+            autoExport.setFailureMessage(null);
         } else {
+            gitWatcher.setChanges(false);
             status = HttpStatus.OK;
         }
         printJsonString(response);
