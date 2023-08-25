@@ -2,6 +2,9 @@ package com.application;
 
 import java.io.IOException;
 
+/**
+ * Responsible for automatically starting the browser and opening the tab
+ */
 public class Tools {
     public static void openBrowserInstance() {
         String url = "http://localhost:8080";

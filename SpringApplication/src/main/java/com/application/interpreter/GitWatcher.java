@@ -43,10 +43,8 @@ public class GitWatcher {
      */
     private boolean changes = false;
 
-    private boolean selfPushed = false;
-
     /**
-     * time threshold in milliseconds after which the structure is exported
+     * time threshold in milliseconds after which the structure is pulled from git
      * At the moment, the threshold is set to 1 minutes
      */
     private final long timeThresholdInMilliseconds = 10000;
@@ -62,6 +60,7 @@ public class GitWatcher {
     /**
      * checks for changes in the git repository
      * if changes were found, the structure will be updated
+     * exports the structure
      */
     @Scheduled(fixedRate = timeThresholdInMilliseconds)
     public void check() {
@@ -79,7 +78,7 @@ public class GitWatcher {
                     Root.resetInstance();
                     Parser parser = new Parser(printer.getPath());
                     Root root = (Root) parser.startParsingText();
-                    user.setRoot(root); // Breakpoint
+                    user.setRoot(root);
 
                     System.out.println(user.getRoot().toJsonEditor());
 
@@ -96,6 +95,11 @@ public class GitWatcher {
         }
     }
 
+    /**
+     * returns true if changes were found
+     * locks the variable before reading
+     * @return true if changes were found
+     */
     public boolean hasChanges() {
         this.lockManager.acquireGitWatcherReadLock();
         boolean changes = this.changes;
@@ -119,6 +123,10 @@ public class GitWatcher {
         this.failure = failure;
     }
 
+    /**
+     * sets the changes variable
+     * locks the variable before writing
+     */
     public void setChanges(boolean changes) {
         this.lockManager.acquireGitWatcherWriteLock();
         this.changes = changes;
