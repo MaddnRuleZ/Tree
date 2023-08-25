@@ -47,9 +47,7 @@ public class GitWatcher {
      * At the moment, the threshold is set to 1 minutes
      */
     private final long timeThresholdInMilliseconds = 10000;
-
     private final RequestInterceptor requestInterceptor;
-
 
     @Autowired
     public GitWatcher(User user, RequestInterceptor requestInterceptor) {

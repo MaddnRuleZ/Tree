@@ -3,9 +3,9 @@ package SpringApplication.GitTests;
 import com.application.exceptions.OverleafGitException;
 import com.application.printer.GitPrinter;
 import com.application.User;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 public class GitTestCases {
     private String workingDirectory = "src/test/java/SpringApplication/GitTests/GitTesting";
@@ -29,11 +29,11 @@ public class GitTestCases {
         gitPrinter.commitAndPush();
     }
 
+
     @Test
-    public void hawhaw() {
+    public void isRemoteChanged() throws IOException, OverleafGitException {
         GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
                 "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
-        gitPrinter.pullRepository();
+        System.out.println(gitPrinter.isRemoteChanged());
     }
-
 }

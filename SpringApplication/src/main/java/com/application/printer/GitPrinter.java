@@ -7,26 +7,31 @@ import com.application.tree.interfaces.LaTeXTranslator;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Git Class for updating a Git -Overleaf repository with JGIT
+ *
  */
 public class GitPrinter extends Printer {
     private final String overleafUrl;
     private final String working_directory;
     private final CredentialsProvider credentialsProvider;
     private static final String MAIN_ENDING = "main.tex";
+    private static final String DEFAULT_COMMIT_MSG = "Extern Overleaf Commit TreeX";
 
     /**
      * Constructs a new instance of the GitPrinter class with the specified parameters.
@@ -72,7 +77,7 @@ public class GitPrinter extends Printer {
             Git git = Git.open(new File(this.working_directory));
             git.rebase().setUpstream("origin/master");
             git.add().addFilepattern(".").call();
-            git.commit().setMessage("Extern Overleaf Commit TreeX").call();
+            git.commit().setMessage(DEFAULT_COMMIT_MSG).call();
             git.push().setCredentialsProvider(this.credentialsProvider).setRemote(overleafUrl).call();
             return true;
         } catch (JGitInternalException ex) {
@@ -101,6 +106,77 @@ public class GitPrinter extends Printer {
             throw new OverleafGitException("Fehler beim Klonen des Repositories: " + ex.getMessage());
         }
     }
+
+
+    public boolean isRemoteChanged() {
+        try {
+            FileRepository localRepo = new FileRepository(working_directory + "/.git");
+            Git git = new Git(localRepo);
+
+            FetchResult fetchResult = git.fetch().setCredentialsProvider(credentialsProvider)
+                    .setRemote(overleafUrl)
+                    .setRefSpecs(new RefSpec("+refs/heads/*:refs/remotes/origin/*"))
+                    .call();
+
+            Collection<TrackingRefUpdate> trackingRefUpdates = fetchResult.getTrackingRefUpdates();
+            return !trackingRefUpdates.isEmpty();
+        } catch (IOException | GitAPIException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isExternChange() throws OverleafGitException, IOException, GitAPIException {
+        Git git = Git.open(new File(this.working_directory));
+
+        FetchCommand fetchCommand = git.fetch().setCredentialsProvider(credentialsProvider);
+        fetchCommand.setRemote(overleafUrl);
+        FetchResult fetchResult = fetchCommand.call();
+        System.out.println("Fetch completed. Result: " + fetchResult.getMessages());
+
+        try (Repository repository = git.getRepository()) {
+            try (RevWalk revWalk = new RevWalk(repository)) {
+                RevCommit latestCommit = revWalk.parseCommit(repository.resolve("HEAD"));
+                String commitMessage = latestCommit.getFullMessage();
+                revWalk.dispose();
+
+                System.out.println(commitMessage);
+                return !commitMessage.equals(DEFAULT_COMMIT_MSG);
+            }
+        } catch (Exception e) {
+            throw new OverleafGitException("OverLeaf Git Exception" + e.getMessage());
+        }
+    }
+
+
+    public boolean isExternChange2() throws OverleafGitException, IOException, GitAPIException {
+        Git git = Git.open(new File(this.working_directory));
+
+        FetchCommand fetchCommand = git.fetch().setCredentialsProvider(credentialsProvider);
+        fetchCommand.setRemote(overleafUrl);
+        FetchResult fetchResult = fetchCommand.call();
+        System.out.println("Fetch completed. Result: " + fetchResult.getMessages());
+
+        try (Repository repository = git.getRepository()) {
+            Ref remoteBranchRef = repository.exactRef("refs/remotes/origin/master");
+            if (remoteBranchRef == null) {
+                throw new OverleafGitException("Remote branch not found.");
+            }
+
+            try (RevWalk revWalk = new RevWalk(repository)) {
+                RevCommit latestCommit = revWalk.parseCommit(remoteBranchRef.getObjectId());
+                String commitMessage = latestCommit.getFullMessage();
+                revWalk.dispose();
+
+                System.out.println(commitMessage);
+                return !commitMessage.equals(DEFAULT_COMMIT_MSG);
+            }
+        } catch (Exception e) {
+            throw new OverleafGitException("OverLeaf Git Exception" + e.getMessage());
+        }
+    }
+
+
 
     /**
      * git pull the Repository from the Overleaf -GitRepo
@@ -135,15 +211,16 @@ public class GitPrinter extends Printer {
         File repositoryPath = new File(this.working_directory);
 
         try (Git git = Git.open(repositoryPath)) {
-            if(git.status().call().isClean()) {
+            if (git.status().call().isClean() && isExternChange()) {
                 return false;
             } else {
                 return true;
             }
-        } catch (GitAPIException e) {
-            throw new OverleafGitException("Pull");
+        } catch (GitAPIException | JGitInternalException e) {
+            throw new OverleafGitException("Pull " + e.getMessage());
         }
     }
+
 
     @Override
     public void export() throws IOException, UnknownElementException, OverleafGitException {
