@@ -99,7 +99,12 @@ public class Controller {
     public ResponseEntity<JsonNode> processCheckForUpdates() {
         ObjectNode response = new ObjectMapper().createObjectNode();
         HttpStatus status;
-        response.put("hasUpdates", gitWatcher.hasChanges());
+        boolean hasChanges = gitWatcher.hasChanges();
+        if(hasChanges){
+            gitWatcher.setChanges(false);
+        }
+        response.put("hasUpdates", hasChanges);
+
         if(gitWatcher.isFailure()) {
             status = HttpStatus.BAD_REQUEST;
             response.put("error", gitWatcher.getFailureMessage());
@@ -112,7 +117,6 @@ public class Controller {
             autoExport.setFailure(false);
             autoExport.setFailureMessage(null);
         } else {
-            gitWatcher.setChanges(false);
             status = HttpStatus.OK;
         }
 

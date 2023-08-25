@@ -1,5 +1,6 @@
 package com.application;
 
+import com.application.command.LockManager;
 import com.application.printer.AutoExport;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,6 +36,14 @@ public class RequestInterceptor implements HandlerInterceptor {
      */
     private boolean changes = false;
 
+    private LockManager lockManager;
+
+    public RequestInterceptor() {
+        this.lockManager = LockManager.getInstance();
+    }
+
+
+
     /**
      * adds the current timestamp to the queue and removes old timestamps
      * @param request the request
@@ -69,13 +78,18 @@ public class RequestInterceptor implements HandlerInterceptor {
         return requestTimestamps.isEmpty();
     }
     public boolean hasChanges() {
+        this.lockManager.acquireInterceptorReadLock();
+        boolean changes = this.changes;
+        this.lockManager.releaseInterceptorReadLock();
         return changes;
     }
     /**
      * resets changes to false
      */
     public void resetChanges() {
+        this.lockManager.acquireInterceptorWriteLock();
         this.changes = false;
+        this.lockManager.releaseInterceptorWriteLock();
     }
 
     public long getTimeThresholdInMilliseconds() {

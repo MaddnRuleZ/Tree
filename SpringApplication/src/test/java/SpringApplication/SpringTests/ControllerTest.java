@@ -73,7 +73,7 @@ public class ControllerTest {
 
     @Test
     public void testHasChangesEndpoint() throws Exception {
-        mvc.perform(get("/checkForUpdates"))
+        mvc.perform(get("/CheckForUpdates"))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

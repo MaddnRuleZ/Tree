@@ -42,6 +42,8 @@ public class GitWatcher {
      */
     private boolean changes = false;
 
+    private boolean selfPushed = false;
+
     /**
      * time threshold in milliseconds after which the structure is exported
      * At the moment, the threshold is set to 1 minutes
@@ -69,17 +71,22 @@ public class GitWatcher {
                 try {
                     this.lockManager.acquireStructureWriteLock();
                     printer.print();
-                    if (printer.checkForChanges()) {
+                    if (printer.isRemoteChanged() && !this.selfPushed) {
+                        printer.pullRepository();
                         System.out.println("Git has changes");
                         Root.resetInstance();
                         Parser parser = new Parser(printer.getPath());
                         user.setRoot((Root) parser.startParsingText());
                         System.out.println(user.getRoot().toJsonEditor());
-                        changes = true;
+
+                        this.setChanges(true);
+                    } else {
+                        selfPushed = false;
                     }
                     boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
                     if (!noRecentRequests && requestInterceptor.hasChanges()) {
                         printer.commitAndPush();
+                        selfPushed = true;
                     }
                 } catch (ProcessingException | IOException e) {
                     failureMessage = e.getMessage();
@@ -93,6 +100,9 @@ public class GitWatcher {
     }
 
     public boolean hasChanges() {
+        this.lockManager.acquireGitWatcherReadLock();
+        boolean changes = this.changes;
+        this.lockManager.releaseGitWatcherReadLock();
         return changes;
     }
 
@@ -113,6 +123,8 @@ public class GitWatcher {
     }
 
     public void setChanges(boolean changes) {
+        this.lockManager.acquireGitWatcherWriteLock();
         this.changes = changes;
+        this.lockManager.releaseGitWatcherWriteLock();
     }
 }
