@@ -121,58 +121,6 @@ public class GitPrinter extends Printer {
         return false;
     }
 
-    public boolean isExternChange() throws OverleafGitException, IOException, GitAPIException {
-        Git git = Git.open(new File(this.working_directory));
-
-        FetchCommand fetchCommand = git.fetch().setCredentialsProvider(credentialsProvider);
-        fetchCommand.setRemote(overleafUrl);
-        FetchResult fetchResult = fetchCommand.call();
-        System.out.println("Fetch completed. Result: " + fetchResult.getMessages());
-
-        try (Repository repository = git.getRepository()) {
-            try (RevWalk revWalk = new RevWalk(repository)) {
-                RevCommit latestCommit = revWalk.parseCommit(repository.resolve("HEAD"));
-                String commitMessage = latestCommit.getFullMessage();
-                revWalk.dispose();
-
-                System.out.println(commitMessage);
-                return !commitMessage.equals(DEFAULT_COMMIT_MSG);
-            }
-        } catch (Exception e) {
-            throw new OverleafGitException("OverLeaf Git Exception" + e.getMessage());
-        }
-    }
-
-
-    public boolean isExternChange2() throws OverleafGitException, IOException, GitAPIException {
-        Git git = Git.open(new File(this.working_directory));
-
-        FetchCommand fetchCommand = git.fetch().setCredentialsProvider(credentialsProvider);
-        fetchCommand.setRemote(overleafUrl);
-        FetchResult fetchResult = fetchCommand.call();
-        System.out.println("Fetch completed. Result: " + fetchResult.getMessages());
-
-        try (Repository repository = git.getRepository()) {
-            Ref remoteBranchRef = repository.exactRef("refs/remotes/origin/master");
-            if (remoteBranchRef == null) {
-                throw new OverleafGitException("Remote branch not found.");
-            }
-
-            try (RevWalk revWalk = new RevWalk(repository)) {
-                RevCommit latestCommit = revWalk.parseCommit(remoteBranchRef.getObjectId());
-                String commitMessage = latestCommit.getFullMessage();
-                revWalk.dispose();
-
-                System.out.println(commitMessage);
-                return !commitMessage.equals(DEFAULT_COMMIT_MSG);
-            }
-        } catch (Exception e) {
-            throw new OverleafGitException("OverLeaf Git Exception" + e.getMessage());
-        }
-    }
-
-
-
     /**
      * git pull the Repository from the Overleaf -GitRepo
      * resolves merge conflicts
@@ -193,18 +141,6 @@ public class GitPrinter extends Printer {
             return false;
         }
     }
-
-    public boolean checkForChanges() throws OverleafGitException, IOException {
-        this.pullRepository();
-        File repositoryPath = new File(this.working_directory);
-
-        try (Git git = Git.open(repositoryPath)) {
-            return !git.status().call().isClean() || !isExternChange();
-        } catch (GitAPIException | JGitInternalException e) {
-            throw new OverleafGitException("Pull " + e.getMessage());
-        }
-    }
-
 
     @Override
     public void export() throws IOException, UnknownElementException, OverleafGitException {
