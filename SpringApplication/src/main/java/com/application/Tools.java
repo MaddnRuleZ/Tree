@@ -3,6 +3,13 @@ package com.application;
 import java.io.IOException;
 
 public class Tools {
+
+
+    /**
+     * Start a Browser -instance of one of the Following BrowserTypes
+     *
+     * On Error print the Error
+     */
     public static void openBrowserInstance() {
         String url = "http://localhost:8080";
 
