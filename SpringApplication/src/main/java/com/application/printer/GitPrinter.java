@@ -147,6 +147,13 @@ public class GitPrinter extends Printer {
 
     @Override
     public void export() throws IOException, UnknownElementException, OverleafGitException {
+        print();
+        this.commitAndPush();
+
+        System.out.println("Exported to Overleaf Git Repository");
+    }
+
+    public void print() throws UnknownElementException, IOException {
         Map<String, StringBuilder> map = new HashMap<>();
         map.put(this.getPath(), new StringBuilder());
         this.getUser().getRoot().toLaTeX(map, this.getPath(), LaTeXTranslator.INIT_INDENTATION_LEVEL, this.isExportSummary(), this.isExportComments());
@@ -156,8 +163,5 @@ public class GitPrinter extends Printer {
             }
             Files.writeString(Path.of(key), map.get(key));
         }
-        this.commitAndPush();
-
-        System.out.println("Exported to Overleaf Git Repository");
     }
 }

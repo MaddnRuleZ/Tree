@@ -1,12 +1,11 @@
 package com.application.interpreter;
 
+import com.application.RequestInterceptor;
 import com.application.User;
 import com.application.command.LockManager;
-import com.application.exceptions.OverleafGitException;
 import com.application.exceptions.ProcessingException;
 import com.application.printer.GitPrinter;
 import com.application.tree.elements.roots.Root;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -47,12 +46,15 @@ public class GitWatcher {
      * time threshold in milliseconds after which the structure is exported
      * At the moment, the threshold is set to 1 minutes
      */
-    private final long timeThresholdInMilliseconds = 1 * 60 * 1000;
+    private final long timeThresholdInMilliseconds = 10000;
+
+    private final RequestInterceptor requestInterceptor;
 
 
     @Autowired
-    public GitWatcher(User user) {
+    public GitWatcher(User user, RequestInterceptor requestInterceptor) {
         this.user = user;
+        this.requestInterceptor = requestInterceptor;
         this.lockManager = LockManager.getInstance();
     }
 
@@ -68,18 +70,24 @@ public class GitWatcher {
 
                 try {
                     this.lockManager.acquireStructureWriteLock();
-                    printer.export();
+                    printer.print();
                     if (printer.checkForChanges()) {
+                        System.out.println("Git has changes");
                         Root.resetInstance();
                         Parser parser = new Parser(printer.getPath());
                         user.setRoot((Root) parser.startParsingText());
                         System.out.println(user.getRoot().toJsonEditor());
                         changes = true;
                     }
+                    boolean noRecentRequests = requestInterceptor.hasNoRecentRequests();
+                    if (!noRecentRequests && requestInterceptor.hasChanges()) {
+                        printer.commitAndPush();
+                    }
                 } catch (ProcessingException | IOException e) {
                     failureMessage = e.getMessage();
                     failure = true;
                 } finally {
+                    this.requestInterceptor.resetChanges();
                     this.lockManager.releaseStructureWriteLock();
                 }
 
