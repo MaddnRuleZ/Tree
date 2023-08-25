@@ -13,21 +13,19 @@ import java.util.Map;
 
 /**
  *
+ *
+ *
  */
 public class ParserTest {
     @Test
-    public void testParserSelfmadeTestDocument() throws UnknownElementException {
+    public void testParserSelfmadeTestDocument() throws UnknownElementException, FileInvalidException, ParseException {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
         Parser parser = new Parser("src/test/resources/TestDocuments/PSE_TEST_1.txt");
         Root root = null;
 
-        try {
-            root = (Root) parser.startParsingText();
-        } catch (FileInvalidException | ParseException e) {
-
-        }
+        root = (Root) parser.startParsingText();
         if (root == null) {
             System.out.println("Root null, document not correctly loaded");
             return;
@@ -221,6 +219,60 @@ public class ParserTest {
         root.toLaTeX(map, "root", 0, true, true);
         System.out.println(map.get("root").toString());
     }
+
+    @Test
+    public void tmp() throws UnknownElementException {
+        /*
+         * test the Parser and check if the file in sys.out is like the input_file below >>>
+         */
+        Parser parser = new Parser("src/test/resources/TestDocuments/tmp2.tex");
+        Root root = null;
+
+        try {
+            root = (Root) parser.startParsingText();
+        } catch (FileInvalidException e) {
+            System.out.println("Invalid File Used");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        if (root == null) {
+            System.out.println("Root null, document not correctly loaded");
+            return;
+        }
+
+        Map<String, StringBuilder> map = new HashMap<>();
+        map.put("root", new StringBuilder());
+        root.toLaTeX(map, "root", 0, true, true);
+        System.out.println(map.get("root").toString());
+    }
+
+    @Test
+    public void tmp3() throws UnknownElementException {
+        /*
+         * test the Parser and check if the file in sys.out is like the input_file below >>>
+         */
+        Parser parser = new Parser("src/test/resources/TestDocuments/tmp3.tex");
+        Root root = null;
+
+        try {
+            root = (Root) parser.startParsingText();
+        } catch (FileInvalidException e) {
+            System.out.println("Invalid File Used");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        if (root == null) {
+            System.out.println("Root null, document not correctly loaded");
+            return;
+        }
+
+        Map<String, StringBuilder> map = new HashMap<>();
+        map.put("root", new StringBuilder());
+        root.toLaTeX(map, "root", 0, true, true);
+        System.out.println(map.get("root").toString());
+    }
+
+
 
     @AfterEach
     public void reset() {

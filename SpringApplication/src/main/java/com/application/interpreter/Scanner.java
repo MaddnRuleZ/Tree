@@ -55,6 +55,11 @@ public class Scanner {
             }
 
             newElement = scanCurrentLine(lastElement, line);
+            if (newElement == null && lastElement instanceof Environment && line.contains(Environment.DEFAULT_ENDING)) {
+                lastElement = null;
+                continue;
+            }
+
 
             if (newElement != null) {
                 lastElement = newElement;
@@ -81,6 +86,7 @@ public class Scanner {
         if (checkLineEndsEnvironment(lastElement, currentLine)) {
             lastElement.addTextBlockToElem(getSubstringBeforeEnd(currentLine));
             // End current Environment
+
             return lastElement.getParentElement();
 
         } else if ((lastElement != null && lastElement.getEndPart() != null && lastElement.getEndPart().equals(Environment.DEFAULT_ENDING)) || lastElement != null && lastElement.getSummary().isListeningOnDocument()) {
