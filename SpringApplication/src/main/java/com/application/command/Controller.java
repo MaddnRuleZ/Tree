@@ -100,6 +100,7 @@ public class Controller {
         ObjectNode response = new ObjectMapper().createObjectNode();
         HttpStatus status;
         boolean hasChanges = gitWatcher.hasChanges();
+
         if(hasChanges){
             gitWatcher.setChanges(false);
         }
@@ -155,8 +156,8 @@ public class Controller {
             String jsonString = response.toString();
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(jsonString);
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode));
-            System.out.println("\n \n \n \n \n");
+            //System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode));
+            //System.out.println("\n \n \n \n \n");
         } catch (Exception e) {
             e.printStackTrace();
         }
