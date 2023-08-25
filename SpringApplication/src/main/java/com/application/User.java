@@ -35,6 +35,7 @@ public class User {
         this.printer = null;
         Root.resetInstance();
         this.autoExport = null;
+        this.root = Root.getInstance();
     }
 
     public void setPrinter(Printer Printer) {
