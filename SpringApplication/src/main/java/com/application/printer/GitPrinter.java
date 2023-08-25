@@ -105,7 +105,7 @@ public class GitPrinter extends Printer {
         }
     }
 
-    public boolean isRemoteChanged3() {
+    public boolean isRemoteChanged() {
         try {
             FileRepository localRepo = new FileRepository(working_directory + "/.git");
             Git git = new Git(localRepo);
@@ -127,32 +127,6 @@ public class GitPrinter extends Printer {
                 System.out.println("Last commit message on remote repository: " + commitMessage);
                 revWalk.dispose();
                 return !commitMessage.equals(DEFAULT_COMMIT_MSG);
-            }
-        } catch (IOException | GitAPIException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean isRemoteChanged() {
-        try {
-            FileRepository localRepo = new FileRepository(working_directory + "/.git");
-            Git git = new Git(localRepo);
-
-            FetchResult fetchResult = git.fetch().setCredentialsProvider(credentialsProvider)
-                    .setRemote(overleafUrl)
-                    .setRefSpecs(new RefSpec("+refs/heads/*:refs/remotes/origin/*"))
-                    .call();
-
-            Collection<TrackingRefUpdate> trackingRefUpdates = fetchResult.getTrackingRefUpdates();
-            if (!trackingRefUpdates.isEmpty()) {
-                RevCommit lastCommit = getLastCommit(localRepo);
-                System.out.println("Last commit message: " + lastCommit.getShortMessage());
-
-                if (!lastCommit.getShortMessage().equals(DEFAULT_COMMIT_MSG)) {
-                    return true;
-                }
-                return false;
             }
         } catch (IOException | GitAPIException e) {
             e.printStackTrace();

@@ -5,8 +5,6 @@ import com.application.printer.GitPrinter;
 import com.application.User;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 public class GitTestCases {
     private final String workingDirectory = "src/test/java/SpringApplication/GitTests/GitTesting";
     private final String overleafConnectionString = "https://git.overleaf.com/64b430167d4b3be6afb4389c";
@@ -40,6 +38,6 @@ public class GitTestCases {
     public void isRemoteChanged() {
         GitPrinter gitPrinter = new GitPrinter(overleafConnectionString,
                 "ueteb@student.kit.edu", "WhatWasMyPass??", workingDirectory, user);
-        System.out.println(gitPrinter.isRemoteChanged3());
+        System.out.println(gitPrinter.isRemoteChanged());
     }
 }
