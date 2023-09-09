@@ -50,10 +50,14 @@ public abstract class Parent extends Element {
             return this;
         }
 
-        if (summary.extractSummary(line) || (summary.getSummary().isEmpty() && getComment().extractComment(line))) {
+        if (summary.extractSummary(line)) {
+            this.setChooseManualSummary(true);
             return this;
         }
 
+        if (summary.getSummary().isEmpty() && getComment().extractComment(line)) {
+            return this;
+        }
         BlockElement block = generateTextBlockAsChild();
         block.addTextBlockToElem(line);
         return block;

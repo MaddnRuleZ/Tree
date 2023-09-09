@@ -60,7 +60,6 @@ public class Scanner {
                 continue;
             }
 
-
             if (newElement != null) {
                 lastElement = newElement;
             } else if (lastElement != null) {
@@ -71,7 +70,6 @@ public class Scanner {
         }
         return root;
     }
-
 
     /**
      * Scan the line for new Structure Element
@@ -86,7 +84,6 @@ public class Scanner {
         if (checkLineEndsEnvironment(lastElement, currentLine)) {
             lastElement.addTextBlockToElem(getSubstringBeforeEnd(currentLine));
             // End current Environment
-
             return lastElement.getParentElement();
 
         } else if ((lastElement != null && lastElement.getEndPart() != null && lastElement.getEndPart().equals(Environment.DEFAULT_ENDING)) || lastElement != null && lastElement.getSummary().isListeningOnDocument()) {

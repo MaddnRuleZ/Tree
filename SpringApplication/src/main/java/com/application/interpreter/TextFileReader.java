@@ -76,11 +76,12 @@ public class TextFileReader {
      */
     public static String removeSpacesFromStart(String textLine) {
         int index = 0;
-        while (index < textLine.length() && (textLine.charAt(index) == ' ')) {
+        while (index < textLine.length() && (textLine.charAt(index) == ' ' || textLine.charAt(index) == '\t')) {
             index++;
         }
         return textLine.substring(index);
     }
+
 
     /**
      * Extracts a portion of an array of strings.

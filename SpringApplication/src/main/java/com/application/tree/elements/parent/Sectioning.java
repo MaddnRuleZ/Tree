@@ -52,7 +52,6 @@ public class Sectioning extends Parent {
     public void toLaTeX(Map<String,StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         super.toLaTeXStart(map, key, level, exportComment, exportSummary);
         String indentation = getIndentation(level);
-
         StringBuilder text = map.get(key);
 
         // \section[options]{content} or \section*{content}
@@ -62,8 +61,17 @@ public class Sectioning extends Parent {
         } else if (this.options != null) {
             text.append("[").append(this.options).append("]");
         }
-        text.append("{").append(this.content).append("}");
-        text.append("\n");
+        text.append("{").append(this.content).append("}").append("\n");
+
+        if (hasComment()) {
+            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
+        }
+
+        if (hasSummary()) {
+            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
+        }
+
+
 
         //children
         if (this.children != null && !this.children.isEmpty()) {

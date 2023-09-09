@@ -274,18 +274,14 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public void toLaTeXStart(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
-        if (hasComment()) {
-            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
+
     }
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
-        if (hasSummary()) {
-            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
 
-        if(hasNewLine()) {
+
+        if (hasNewLine()) {
             this.newLine.toLaTeX(map, key, level, exportComment, exportSummary);
         }
     }
@@ -324,7 +320,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
         return this.chooseManualSummary && !(this.summary == null)  && !this.summary.getSummary().isEmpty();
     }
 
-    private boolean hasComment() {
+    protected boolean hasComment() {
         return this.comment != null && !this.comment.getComments().isEmpty();
     }
 

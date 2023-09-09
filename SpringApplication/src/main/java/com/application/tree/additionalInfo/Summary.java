@@ -53,10 +53,26 @@ public class Summary implements LaTeXTranslator {
             return true;
 
         } else if (listeningOnDocument) {
-            summaryText.add(TextFileReader.removeSpacesFromStart(currentLine));
+            String summaryLine = currentLine;
+            summaryLine = TextFileReader.removeSpacesFromStart(summaryLine);
+            summaryLine = removeFirstPercent(summaryLine);
+            summaryText.add(summaryLine);
             return true;
         }
         return false;
+    }
+
+    /**
+     *
+     * @param inputString
+     * @return
+     */
+    public String removeFirstPercent(String inputString) {
+        if (inputString.contains("%")) {
+            return inputString.replaceFirst("%", "");
+        } else {
+            return inputString;
+        }
     }
 
     /**
@@ -76,17 +92,17 @@ public class Summary implements LaTeXTranslator {
         if(!exportSummary){
             return;
         }
+        level++;
 
         String indentationHead = getIndentation(level);
         String indentationBody = getIndentation(level+1);
         StringBuilder text = map.get(key);
 
-        text.append(indentationHead).append("\n");
         text.append(indentationHead).append(START_SUMMARY).append("\n");
         for(String line : summaryText){
             text.append(indentationBody).append("% ").append(line).append("\n");
         }
-        text.append(indentationHead).append(END_SUMMARY).append("\n");
+        text.append(indentationHead).append(END_SUMMARY).append("\n").append("\n");
     }
 
     /**

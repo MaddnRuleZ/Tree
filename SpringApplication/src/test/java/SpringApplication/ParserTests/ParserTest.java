@@ -18,7 +18,6 @@ import java.util.Map;
  *
  */
 public class ParserTest {
-
     Root root;
 
     @BeforeEach
@@ -261,7 +260,7 @@ public class ParserTest {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/resources/TestDocuments/tmp3.tex");
+        Parser parser = new Parser("src/test/resources/TestDocuments/tempTesting.txt");
         Root root = null;
 
         try {
@@ -281,8 +280,6 @@ public class ParserTest {
         root.toLaTeX(map, "root", 0, true, true);
         System.out.println(map.get("root").toString());
     }
-
-
 
     @AfterEach
     public void reset() {

@@ -42,7 +42,12 @@ public class BlockElement extends Child {
             return generateTextBlockSameLevel();
         }
 
-        if (summary.extractSummary(line) || comment.extractComment(line)) {
+        if (summary.extractSummary(line)) {
+            this.setChooseManualSummary(true);
+            return this;
+        }
+
+        if (comment.extractComment(line)) {
             return this;
         }
 
@@ -51,7 +56,6 @@ public class BlockElement extends Child {
                 return this;
             }
         }
-
         addTextToContent(line);
         return this;
     }
@@ -74,6 +78,13 @@ public class BlockElement extends Child {
             for (String line : this.content.split("\n")) {
                 text.append(indentation).append(line).append("\n");
             }
+        }
+        if (hasComment()) {
+            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
+        }
+
+        if (hasSummary()) {
+            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
         }
         super.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }

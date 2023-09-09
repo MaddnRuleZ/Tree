@@ -120,7 +120,14 @@ public class Figure extends Environment {
 
         // \includegraphics{graphic}
         text.append(indentationBody).append(GRAPHICS_IDENTIFIER).append(this.graphicOptions).append("{").append(this.graphic).append("}");
-        text.append("\n");
+
+        if (hasComment()) {
+            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
+        }
+
+        if (hasSummary()) {
+            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
+        }
 
         // children
         if (this.children != null && !this.children.isEmpty()) {

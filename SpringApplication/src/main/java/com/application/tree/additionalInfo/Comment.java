@@ -56,7 +56,7 @@ public class Comment implements LaTeXTranslator {
         if (!exportComment){
             return;
         }
-
+        level++;
         StringBuilder text = map.get(key);
         String indentation = getIndentation(level);
 
