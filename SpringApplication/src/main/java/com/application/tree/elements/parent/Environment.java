@@ -57,14 +57,6 @@ public class Environment extends Parent {
     public void toLaTeX(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
         this.toLaTeXStart(map, key, level, exportComment, exportSummary);
 
-        if (hasComment()) {
-            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
-
-        if (hasSummary()) {
-            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
-
         String indentationBody = getIndentation(level + 1);
         StringBuilder text = map.get(key);
 

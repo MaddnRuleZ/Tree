@@ -119,15 +119,11 @@ public class Figure extends Environment {
         }
 
         // \includegraphics{graphic}
-        text.append(indentationBody).append(GRAPHICS_IDENTIFIER).append(this.graphicOptions).append("{").append(this.graphic).append("}");
-
-        if (hasComment()) {
-            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
+        text.append(indentationBody).append(GRAPHICS_IDENTIFIER);
+        if(this.options != null) {
+            text.append(this.graphicOptions);
         }
-
-        if (hasSummary()) {
-            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
+        text.append("{").append(this.graphic).append("}").append("\n");
 
         // children
         if (this.children != null && !this.children.isEmpty()) {

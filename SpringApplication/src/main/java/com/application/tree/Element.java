@@ -279,7 +279,13 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
 
     @Override
     public void toLaTeXEnd(Map<String, StringBuilder> map, String key, int level, boolean exportComment, boolean exportSummary) throws UnknownElementException {
+        if (hasSummary()) {
+            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
+        }
 
+        if (hasComment()) {
+            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
+        }
 
         if (hasNewLine()) {
             this.newLine.toLaTeX(map, key, level, exportComment, exportSummary);

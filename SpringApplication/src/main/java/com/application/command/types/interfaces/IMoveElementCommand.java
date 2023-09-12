@@ -5,6 +5,7 @@ import com.application.exceptions.LevelException;
 import com.application.exceptions.OwnChildException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
+import com.application.tree.elements.parent.Figure;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
 
@@ -80,7 +81,6 @@ public interface IMoveElementCommand {
     default boolean checkPossibleParent(Element element, Parent newParent) {
         if (element instanceof Parent) {
             return !newParent.checkOwnChild(element);
-        }
-        return true;
+        } else return !(newParent instanceof Figure);
     }
 }
