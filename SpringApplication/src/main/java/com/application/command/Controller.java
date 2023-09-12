@@ -11,6 +11,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.web.server.ConfigurableWebServerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -18,9 +22,15 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @Component
 public class Controller {
+
+    @Autowired
+    private ConfigurableWebServerFactory webServerFactory;
+
+    @Autowired
+    private ApplicationContext context;
+
     private final CommandHandler commandHandler;
     private final User user;
     private final AutoExport autoExport;
@@ -122,6 +132,12 @@ public class Controller {
         }
 
         return new ResponseEntity<>(response, status);
+    }
+
+    @PostMapping("/ChangePort")
+    public void changePort(@RequestParam int newPort) {
+        webServerFactory.setPort(newPort);
+        SpringApplication.exit(context);
     }
 
 
