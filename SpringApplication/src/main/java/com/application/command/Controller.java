@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @Component
 public class Controller {
     private final CommandHandler commandHandler;
