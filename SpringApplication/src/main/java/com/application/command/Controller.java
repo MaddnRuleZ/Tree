@@ -134,12 +134,6 @@ public class Controller {
         return new ResponseEntity<>(response, status);
     }
 
-    @PostMapping("/ChangePort")
-    public void changePort(@RequestParam int newPort) {
-        webServerFactory.setPort(newPort);
-        SpringApplication.exit(context);
-    }
-
 
     /**
      * creates a ResponseEntity for getData requests

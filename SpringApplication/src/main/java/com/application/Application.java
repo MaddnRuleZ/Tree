@@ -28,11 +28,4 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 		Tools.openBrowserInstance();
 	}
-
-	@Bean
-	public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
-		return factory -> {
-			factory.setPort(DEFAULT_PORT);
-		};
-	}
 }
