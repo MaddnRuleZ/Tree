@@ -13,7 +13,6 @@ import com.application.tree.elements.roots.Roots;
 
 /**
  * Scanner Class for Disassembling a Document into its Latex Structure Elements
- *
  */
 public class Scanner {
     private final String[] text;
