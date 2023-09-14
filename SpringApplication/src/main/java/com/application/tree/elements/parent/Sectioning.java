@@ -63,16 +63,6 @@ public class Sectioning extends Parent {
         }
         text.append("{").append(this.content).append("}").append("\n");
 
-        if (hasComment()) {
-            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
-
-        if (hasSummary()) {
-            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
-
-
-
         //children
         if (this.children != null && !this.children.isEmpty()) {
             for (Element child : this.children) {

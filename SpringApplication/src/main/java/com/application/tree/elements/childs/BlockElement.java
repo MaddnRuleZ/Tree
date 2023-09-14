@@ -79,13 +79,7 @@ public class BlockElement extends Child {
                 text.append(indentation).append(line).append("\n");
             }
         }
-        if (hasComment()) {
-            this.comment.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
 
-        if (hasSummary()) {
-            this.summary.toLaTeX(map, key, level, exportComment, exportSummary);
-        }
         super.toLaTeXEnd(map, key, level, exportComment, exportSummary);
     }
 }

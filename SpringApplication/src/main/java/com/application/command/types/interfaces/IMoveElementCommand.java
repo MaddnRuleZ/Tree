@@ -3,8 +3,10 @@ package com.application.command.types.interfaces;
 import com.application.exceptions.ElementNotFoundException;
 import com.application.exceptions.LevelException;
 import com.application.exceptions.OwnChildException;
+import com.application.exceptions.ProcessingException;
 import com.application.tree.Element;
 import com.application.tree.elements.ElementConfig;
+import com.application.tree.elements.parent.Figure;
 import com.application.tree.elements.parent.Parent;
 import com.application.tree.elements.roots.Root;
 
@@ -17,7 +19,7 @@ public interface IMoveElementCommand {
     /**
      * moves an element in the treeStructure
      */
-    default void moveElement(Element element, Parent newParent, UUID previousElement, int minLevel) throws OwnChildException, LevelException, ElementNotFoundException {
+    default void moveElement(Element element, Parent newParent, UUID previousElement, int minLevel) throws ProcessingException {
         if(newParent == null) {
             int indexPreviousElement = Root.getInstance().getIndexOfChild(previousElement);
             if(indexPreviousElement == -2) {
@@ -38,6 +40,9 @@ public interface IMoveElementCommand {
 
         if(checkPossibleLevel(element, newParent, minLevel)){
             if(checkPossibleParent(element, newParent)) {
+                if(newParent instanceof Figure) {
+                    throw new ProcessingException("Der neue Elternknoten darf keine Figure sein");
+                }
                 int indexPreviousElement = newParent.getIndexOfChild(previousElement);
                 if(indexPreviousElement == -2) {
                     throw new ElementNotFoundException("PreviousElement");

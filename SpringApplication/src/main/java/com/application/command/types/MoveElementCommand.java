@@ -54,6 +54,7 @@ public class MoveElementCommand extends Command implements IMoveElementCommand {
                 throw new ElementNotFoundException("Element");
             }
 
+
             moveElement(element, (Parent) newParentElement, previousElement, Root.getInstance().getMinLevel());
             this.setSuccess(true);
 
