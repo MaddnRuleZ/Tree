@@ -46,11 +46,14 @@ public class Scanner {
 
         for (int i = 0; i < text.length; i++) {
             String line = text[i];
+
             if (line.contains(Root.START_DOCUMENT)) {
                 Root.getInstance().addStartHeader(TextFileReader.extractStrings(text, 0, i));
                 continue;
             } else if (line.contains(Root.END_DOCUMENT)) {
                 break;
+            } else if (line.contains(Input.START_PART) && Root.getInstance().startHeaderExists()) {
+                continue;
             }
 
             newElement = scanCurrentLine(lastElement, line);

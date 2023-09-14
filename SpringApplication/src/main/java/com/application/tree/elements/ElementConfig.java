@@ -11,6 +11,7 @@ import com.application.tree.elements.parent.Environment;
 import com.application.tree.elements.parent.Figure;
 import com.application.tree.elements.parent.Sectioning;
 import com.application.tree.elements.roots.Input;
+import com.application.tree.elements.roots.Root;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -130,7 +131,7 @@ public enum ElementConfig {
 
     /**
      * Document inside this Document detected, start a new Parser
-     * <p>
+     *
      * Level gets set to Max in Input Class
      */
     INPUT("\\input", null, GET_BLOCK_ELEMENT_LEVEL()) {
@@ -187,6 +188,7 @@ public enum ElementConfig {
 
         for (final ElementConfig sectioning: ElementConfig.values()) {
             if (startPartLine.contains(sectioning.startPart)) {
+
                 Element createdElement = sectioning.getElement(startPartLine);
                 createdElement.setContent(startPartLine);
                 createdElement.setOptions(startPartLine);

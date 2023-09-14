@@ -16,7 +16,7 @@ import java.util.Map;
  * Represents an Input Document inside the main.tex file and Stores all Items of the Document inside it as its Children
  */
 public class Input extends Parent implements Roots {
-    private static final String START_PART = "\\\\input";
+    public static final String START_PART = "\\input";
 
     /**
      * Input Constructor, call Constructor of Parent

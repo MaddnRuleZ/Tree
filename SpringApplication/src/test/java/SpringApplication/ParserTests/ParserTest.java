@@ -270,6 +270,7 @@ public class ParserTest {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+
         if (root == null) {
             System.out.println("Root null, document not correctly loaded");
             return;
