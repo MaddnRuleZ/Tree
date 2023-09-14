@@ -260,7 +260,7 @@ public class ParserTest {
         /*
          * test the Parser and check if the file in sys.out is like the input_file below >>>
          */
-        Parser parser = new Parser("src/test/resources/TestDocuments/tempTesting.txt");
+        Parser parser = new Parser("src/test/resources/TestDocuments/inputBForStartDoc.tex");
         Root root = null;
 
         try {

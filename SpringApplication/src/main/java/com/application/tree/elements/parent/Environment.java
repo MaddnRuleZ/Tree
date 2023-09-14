@@ -101,7 +101,6 @@ public class Environment extends Parent {
         text.append("\n");
     }
 
-
     /**
      * Export the newline and summary of the Environment;
      * adds the \end{header}

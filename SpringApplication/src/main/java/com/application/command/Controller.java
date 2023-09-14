@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @Component
@@ -26,8 +25,6 @@ public class Controller {
     private final AutoExport autoExport;
 
     private final GitWatcher gitWatcher;
-
-
 
     /**
      * Constructor using reflection

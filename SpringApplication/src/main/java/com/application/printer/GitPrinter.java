@@ -102,7 +102,6 @@ public class GitPrinter extends Printer {
         }
     }
 
-
     public boolean isRemoteChanged() {
         try {
             FileRepository localRepo = new FileRepository(working_directory + "/.git");

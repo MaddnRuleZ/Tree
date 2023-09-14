@@ -1,0 +1,41 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2017/10/04
+%
+\documentclass[runningheads]{llncs}
+%
+\input{InputTest.tex}
+
+\begin{document}
+%
+\title{Active Learning for Regression with Drifting Oracles}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{Anonym \orcidID{0000-1111-2222-3333} \and
+Anonym \orcidID{1111-2222-3333-4444} \and
+Anonym \orcidID{2222--3333-4444-5555}}
+%
+\authorrunning{A. Anonym et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{Karlsruhe Institute of Technology, Karlsruhe, Germany}
+%
+\maketitle              % typeset the header of the contribution
+%
+\begin{abstract}
+Current work on Active Learning (AL) tends to assume that the relationship between input and target variables does not change, i.e. the oracle is static.
+But oracles can drift in many ways, making their formal description difficult.
+Furthermore, input and target variables can be continuous, and measurements can be imprecise.
+Current work on AL has not addressed these points in combination -- balancing data efficiency and estimation accuracy in such settings is challenging.
+We formally describe drifting oracles for continuous variables and develop a new data synthesis model for common drift types.
+We then propose a new AL model that can estimate its error due to drift.
+Whenever the estimated error reaches a user-specified threshold, it performs measurements for self-recalibration.
+We also propose a new kernel that allows our model to do this even with imprecise measurements.
+Our drift-aware model requires up to 95\% fewer measurements than traditional drift correction methods.
+
+\keywords{Concept Drift  \and Active Learning \and Integral Kernel \and Uncertain and Dynamic Environments.}
+\end{abstract}
