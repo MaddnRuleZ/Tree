@@ -163,7 +163,7 @@ public abstract class Element implements JsonParser, LaTeXTranslator, IElement {
      */
     public void setComment(String comment) {
         this.comment.getComments().clear();
-        for (String line: comment.split(Comment.COMMENT_START_CHARACTER)) {
+        for (String line: comment.split("\n")) {
             if(!line.isBlank()) {
                 this.comment.addComment(line);
             }

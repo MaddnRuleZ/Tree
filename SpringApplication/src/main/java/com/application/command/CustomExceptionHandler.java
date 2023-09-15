@@ -13,7 +13,6 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<JsonNode> handleException(Exception ex) {
-        // Customize the error response here
         System.out.println("An Internal Server Error occurred: " + ex.getMessage());
 
         ObjectMapper objectMapper = new ObjectMapper();

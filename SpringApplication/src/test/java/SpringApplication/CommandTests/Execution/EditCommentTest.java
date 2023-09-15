@@ -69,7 +69,7 @@ public class EditCommentTest {
     public void editCommentTest() {
         Sectioning sec = tree.sectioningList.get(3);
         oldComment = sec.getComment().toString();
-        newCommentIncoming = "%newComment";
+        newCommentIncoming = "newComment";
         newCommentStored.add("newComment");
 
         command.setElement(sec.getId());
